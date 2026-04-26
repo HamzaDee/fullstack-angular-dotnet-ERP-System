@@ -87,6 +87,7 @@ export class AddGeneralSettingsComponent implements OnInit {
       useDisburseEntity:[],
       useLandedCost:[],
       accLinkType:[0],
+      taxType:[0],
     })
   }
   SaveForms() {
@@ -100,7 +101,17 @@ export class AddGeneralSettingsComponent implements OnInit {
         {
           this.alert.ShowAlert("PlaseSelectCountry",'error');
           return;
+        }        
+        if(this.generalSettingForm.value.taxType <= 0)
+        {
+          this.alert.ShowAlert("PlaseSelectTaxType",'error');
+          return;
         } 
+      }
+      else
+      {
+        this.generalSettingForm.get("taxCountryId")?.setValue(0);
+        this.generalSettingForm.get("taxType")?.setValue(0);
       }
 
     this.generalSettingForm.value.PrintCostCenter
@@ -124,8 +135,7 @@ export class AddGeneralSettingsComponent implements OnInit {
     const formGroup = form;
     this.generalSettingForm.patchValue(formGroup);
   }
-  FormGroupFromAccountig(form: FormGroup) {    
-    debugger
+  FormGroupFromAccountig(form: FormGroup) {        
     const formGroup = form;
     this.generalSettingForm.patchValue(formGroup);
   }

@@ -62,14 +62,24 @@
                         translate}}</label>
                 </div>
 
-                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer" style="flex-grow: 1;"
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer " style="flex-grow: 1;"
                     [hidden]="isTaxSystem == false">
                     <label>{{"COUNTRY" | translate }}</label>
                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
                         [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
                         styleClass="input border w-full" optionValue="id" [filter]="true" filterBy="text"
                         appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="countryList"
-                        formControlName="taxCountryId">
+                        formControlName="taxCountryId" [ngClass]="{ 'invalid-field': accountSystemForm.get('taxCountryId').value <= 0 && isTaxSystem} ">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer" style="flex-grow: 1;" 
+                    [hidden]="isTaxSystem == false">
+                    <label>{{"TaxType" | translate }}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full" optionValue="id" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="taxTypesList"
+                        formControlName="taxType" [ngClass]="{ 'invalid-field': accountSystemForm.get('taxType').value <= 0 && isTaxSystem} ">
                     </p-dropdown>
                 </div>
             </div>

@@ -20,6 +20,7 @@ export class AccountingSystemFormComponent implements OnInit {
   usersList: any;
   salesCycleList:any;
   purchaseCycleList:any;
+  taxTypesList:any;
   linkingAccountsMethodsList:any;
   /** checkBox status */
   isuseCostCenter: boolean = false;
@@ -59,6 +60,7 @@ export class AccountingSystemFormComponent implements OnInit {
     this.accountSystemForm.get("useTaxSystem")?.setValue(this.isTaxSystem);
     if(this.isTaxSystem == false){
       this.accountSystemForm.value.taxCountryId = 0;
+      this.accountSystemForm.value.taxType = 0;
     }
     if(this.useCustomerNumbering == false)
       {
@@ -93,6 +95,7 @@ export class AccountingSystemFormComponent implements OnInit {
       getCustMaxByYear:[0],
       useLandedCost:[0],
       accLinkType:[0],
+      taxType:[0],
     })
   }
 
@@ -116,6 +119,7 @@ export class AccountingSystemFormComponent implements OnInit {
       this.isTaxSystem = result.useTaxSystem;
       this.printCostCenter = result.printCostCenter;
       this.useLandedCost = result.useLandedCost;
+      this.taxTypesList = result.taxTypesList;
       this.isuseTax = result.useTax;
       this.isuseProjects = result.useProjects;
       this.isuseHis = result.useHIS;
@@ -134,6 +138,7 @@ export class AccountingSystemFormComponent implements OnInit {
         this.accountSystemForm.get("taxCountryId")?.setValue(result.taxCountryId);
         this.accountSystemForm.get("getCustMaxByYear")?.setValue(result.getCustMaxByYear);
         this.accountSystemForm.get("accLinkType")?.setValue(result.accLinkType ?? 0);
+        this.accountSystemForm.get("taxType")?.setValue(result.taxType ?? 0);
       });
     })
   }
@@ -153,4 +158,5 @@ export class AccountingSystemFormComponent implements OnInit {
         })
       }
   }
+
 }

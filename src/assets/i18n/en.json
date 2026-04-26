@@ -3509,4 +3509,5 @@
     ,"IncomeSourceNo":"Income Source Number"
     ,"ClientId":"Billing User Number"
     ,"SecretKey":"Billing Secret Key"
+    ,"PlaseSelectTaxType": "Please Select Tax Type"
 }
