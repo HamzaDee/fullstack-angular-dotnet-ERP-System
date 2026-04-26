@@ -1,0 +1,497 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="manufEquationsAddForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"EquationNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="id" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(manufEquationsAddForm.get('id').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"EquationDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="equationDate" (blur)="isValidVoucherDate($event)"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': !validDate}">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"EquationDesc"|translate}}</label>
+                    <input type="text" formControlName="equationDesc" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ProductedItem"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="prodItemsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="itemId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        (onChange)="onChangeProductedItem($event)" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': manufEquationsAddForm.get('itemId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Unit"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsUnitList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="unitId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': manufEquationsAddForm.get('unitId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Quantity"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="qty" class="input border w-full mt-1 " [readonly]="true"
+                        [ngClass]="{ 'invalid-field': manufEquationsAddForm.get('qty').value <= 0}"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isActive"
+                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none w-full">{{"Active"|translate}}</label>
+                </div>
+            </div>
+
+
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"RawMaterial"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"WorkCenters"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"OverheadCosts"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="ManufEquationsDTList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"
+                                                [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+
+                                        <th class="head_tb" style="width: 30%" pSortableColumn="itemId">
+                                            {{"materialName"|translate}}<p-sortIcon field="itemId"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 10%" pSortableColumn="unitId">
+                                            {{"Unit"|translate}} <p-sortIcon field="unitId"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="qty">{{"Qty"|translate}}
+                                            <p-sortIcon field="qty"></p-sortIcon>
+                                        </th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="wastePerc">
+                                            {{"WastePerc"|translate}} <p-sortIcon field="wastePerc"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="cost">
+                                            {{"Cost"|translate}} <p-sortIcon field="cost"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 10%" pSortableColumn="cost">
+                                            {{"TotalCost"|translate}} <p-sortIcon field="cost"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 30%" pSortableColumn="note">
+                                            {{"Note"|translate}} <p-sortIcon field="note"></p-sortIcon></th>
+
+                                        <th style="width: 3%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <!--  -->
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-accVouchersDTsList
+                                    let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="accVouchersDTsList.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="accVouchersDTsList.hDId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="rawItemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="accVouchersDTsList.itemId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': accVouchersDTsList.itemId <= 0}"
+                                                (onChange)="onChangeItem(accVouchersDTsList,i)" [disabled]="disableAll">
+                                            </p-dropdown></td>
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.unitsList[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="accVouchersDTsList.unitId"
+                                                [ngClass]="{ 'invalid-field': accVouchersDTsList.unitId <= 0}"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="accVouchersDTsList.qty"
+                                                [ngClass]="{ 'invalid-field': accVouchersDTsList.qty <= 0}"
+                                                (blur)="claculateTotal()"[ngModelOptions]="{standalone: true}"
+                                                class="input border w-full mt-1"[disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="accVouchersDTsList.wastePerc"                                                
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="accVouchersDTsList.cost"
+                                                [ngClass]="{ 'invalid-field': accVouchersDTsList.cost <= 0}"
+                                                (blur)="claculateTotal()" [ngModelOptions]="{standalone: true}"
+                                                class="input border w-full mt-1" [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="text" [value]="formatCurrency(accVouchersDTsList.totalCost)"
+                                                [ngClass]="{ 'invalid-field': accVouchersDTsList.totalCost <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" [readonly]="true">
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="accVouchersDTsList.note"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class=""
+                                                type="button">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button mat-menu-item (click)="onAddRowBefore(i)"
+                                                    [disabled]="disableAll">
+                                                    <i class="material-icons" style="color:green">add</i>
+                                                    &nbsp;{{"AddRowBefore"|translate}}
+                                                </button>
+                                                <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                        class="material-icons" style="color:red">delete</i>
+                                                    &nbsp;{{"Delete"|translate}} </button>
+                                            </mat-menu>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="WorkCentersDTList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineWorkCenters()"
+                                                [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" style="width: 10%" pSortableColumn="phaseName">
+                                            {{"StageName"|translate}}<p-sortIcon field="phaseName"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="workCenter">
+                                            {{"WorkCenter"|translate}} <p-sortIcon field="workCenter"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="standardTime">
+                                            {{"StandardTime"|translate}} <p-sortIcon field="standardTime"></p-sortIcon>
+                                        </th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="minuteCost">
+                                            {{"CostPerMinute"|translate}} <p-sortIcon field="minuteCost"></p-sortIcon>
+                                        </th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="phaseCost">
+                                            {{"StageCost"|translate}} <p-sortIcon field="phaseCost"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 20%" pSortableColumn="notes">
+                                            {{"Note"|translate}} <p-sortIcon field="notes"></p-sortIcon></th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <!--  -->
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-row let-i="rowIndex">
+                                    <tr>
+
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="row.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="row.hDId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="row.phaseName"
+                                            [ngClass]="{ 'invalid-field': isEmpty(row.phaseName) }"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="row.workCenter"
+                                            [ngClass]="{ 'invalid-field': isEmpty(row.workCenter) }"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="number" [(ngModel)]="row.standardTime"
+                                             [ngClass]="{ 'invalid-field': row.standardTime <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="number" [(ngModel)]="row.minuteCost" (blur)="claculatephaseCost()"
+                                            [ngClass]="{ 'invalid-field': row.minuteCost <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" >
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [value]="formatCurrency(row.phaseCost)"  
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" [readonly]="true">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="row.notes"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowWorkCenter(i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f03">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="OverheadCostsList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineOverheadCosts()"
+                                                [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" style="width: 20%" pSortableColumn="costType">
+                                            {{"CostType"|translate}}<p-sortIcon field="costType"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 10%" pSortableColumn="calculationMethod">
+                                            {{"CalculationMethod"|translate}} <p-sortIcon
+                                                field="calculationMethod"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="value">
+                                            {{"ValuePercentage"|translate}} <p-sortIcon field="value"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="time">
+                                            {{"time"|translate}} <p-sortIcon field="time"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="amount">
+                                            {{"FinalAmount"|translate}} <p-sortIcon field="amount"></p-sortIcon></th>
+                                        <th class="head_tb" style="width: 5%" pSortableColumn="notes">
+                                            {{"Note"|translate}} <p-sortIcon field="notes"></p-sortIcon></th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <!--  -->
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-row let-i="rowIndex">
+                                    <tr>
+
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="row.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="row.hDId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="CostTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.costType" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': row.costType <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown></td>
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="CalculationMethodList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.calculationMethod"
+                                                [ngClass]="{ 'invalid-field': row.calculationMethod <= 0}"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                (onChange)="onChangeCalculate(row,i)">
+                                            </p-dropdown>
+                                        </td>
+
+                                        <td>
+                                            <input type="number" [(ngModel)]="row.value" (ngModelChange)="onChangeCalculate(row,i)"
+                                            [ngClass]="{ 'invalid-field': row.value <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="number" [(ngModel)]="row.time" (ngModelChange)="onChangeCalculate(row,i)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="text"  [value]="formatCurrency(row.amount)" (ngModelChange)="OnAmountChange()"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [readonly]="true"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="row.notes"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowOverhead(i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f04">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="materialValue"class="control-label font-weight-bold">{{"Costofrawmaterials"|translate}}</label>
+                            <input id="materialValue" type="number" class="input border w-full mt-1 " [readonly]="true" [value]="formatCurrency(finaltotalCost)">
+                        </div>
+
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="materialAmtDollar" class="control-label font-weight-bold">{{"Costofproductionstages"|translate}}</label>
+                            <input id="materialAmtDollar" type="number"  class="input border w-full mt-1 " [readOnly]="true" [value]="formatCurrency(finalPhaseCost)">
+                        </div>
+
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="materialValue"class="control-label font-weight-bold">{{"Additionalcosts"|translate}}</label>
+                            <input id="materialValue" type="number" class="input border w-full mt-1 " [readonly]="true" [value]="formatCurrency(finalAmount)">
+                        </div>  
+                        
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="materialAmtDollar" class="control-label font-weight-bold">{{"Finalunitcost"|translate}}</label>
+                            <input id="materialAmtDollar" type="number"  class="input border w-full mt-1 " [readOnly]="true" [value]="formatCurrency(finalUnitCost)">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="manufEquationsAddForm.invalid || !this.validDate || disableSave" type="submit"
+                    [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintManfuequations(this.manufEquationsAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="manufEquationsAddForm.invalid" type="button">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="manufEquationsAddForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteVoucher(this.manufEquationsAddForm.value.id)">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/ManfuEquations/ManfuequationsList']">
+                </p-button>
+
+            </div>
+        </form>

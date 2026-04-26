@@ -1,0 +1,104 @@
+<form [formGroup]="RepairsOilForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+
+            <div class="card-header text-center mt-5">
+                <h1 class="text-3xl">{{data.title}}</h1>
+            </div>
+
+
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <input hidden formControlName="id">
+                    <input hidden formControlName="comapnyId">
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"MechanismNumber"|translate}}<span class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' 
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [disabled]="disableAll"
+                             [filter]="true"filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="vehicleId" [options]="VehicleList"
+                             [ngClass]="{ 'invalid-field': RepairsOilForm.get('vehicleId')?.value <= 0}" >
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"InvoiceNumber"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1" min="1" formControlName="billNo" [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': RepairsOilForm.get('billNo')?.value <= 0}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Date"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1 " formControlName="voucherDate"  [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Shop"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1 " formControlName="station"  [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"WithTheDriver"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1 " formControlName="driverName"  [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+   
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"MeterNumber"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1 " formControlName="odometerNo"  [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Maintenance"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1 " formControlName="maintenance"  [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(RepairsOilForm.get('maintenance')?.value)}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"TheAmount"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1 " formControlName="amount"  [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': RepairsOilForm.get('amount')?.value <= 0}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"MaintenanceType"|translate}}<span class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' 
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                             [filter]="true"filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="maintenanceTypeId" [options]="MaintenanceTypeList"
+                             [ngClass]="{ 'invalid-field': RepairsOilForm.get('maintenanceTypeId')?.value <= 0}" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>                    
+                </div>
+
+                <div class="card" class="card-blue">
+                    <div class="intro-y box px-5 pt-5 mt-5">
+                        <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                            <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;" class="py-4 sm:mr-8 active">{{"VoucherAttachments"|translate}}</a>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="id"></app-app-general-attachment>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" *ngIf="!disableAll"
+                    [disabled]="RepairsOilForm.invalid"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" (click)="dialogRef.close(false)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+            </div>
+
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,213 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="ActivitesAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="activityName" class="control-label font-weight-bold">{{"ActivityName"|translate}}<span class="required-asterisk">*</span></label>
+                    <input id="activityName" type="text" formControlName="activityName" class="input border w-full mt-1 "  [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(ActivitesAddForm.get('activityName').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="fromDate" class="control-label font-weight-bold">{{"ActivityFromDate"|translate}}<span class="required-asterisk">*</span></label>
+                    <input id="fromDate" type="date" formControlName="fromDate"  class="input border w-full mt-1 " [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="toDate" class="control-label font-weight-bold">{{"ActivityToDate"|translate}}<span class="required-asterisk">*</span></label>
+                    <input id="toDate" type="date" formControlName="toDate"  class="input border w-full mt-1 " [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="activityLocation" class="control-label font-weight-bold">{{"ActivityLocation"|translate}}<span class="required-asterisk">*</span></label>
+                    <input id="activityLocation" type="text" formControlName="activityLocation" class="input border w-full mt-1 "  [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(ActivitesAddForm.get('activityLocation').value)}">
+                </div>                
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="governorateId" class="control-label font-weight-bold">{{"Governorate"|translate}} <span class="required-asterisk">*</span> </label>
+                    <p-dropdown id="governorateId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="governorateList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="governorateId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': ActivitesAddForm.get('governorateId').value <= 0}"
+                        (onChange)="FilterDistricts(ActivitesAddForm.get('governorateId').value)">
+                    </p-dropdown>
+                </div>       
+                
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="governorateId" class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                    <p-dropdown id="districtId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="filtereddistricts"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="districtId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        (onChange)="FilterAreas(ActivitesAddForm.get('districtId').value)">
+                    </p-dropdown>
+                </div>   
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="governorateId" class="control-label font-weight-bold">{{"AREA"|translate}}</label>
+                    <p-dropdown id="areaId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="filterareas"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="areaId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>  
+            </div>
+             <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="volunteersRequested" class="control-label font-weight-bold">{{"RequestedVolunteer"|translate}}<span class="required-asterisk">*</span></label>
+                    <input id="volunteersRequested" type="number" formControlName="volunteersRequested" class="input border w-full mt-1 "  [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(ActivitesAddForm.get('volunteersRequested').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="actualVolunteers" class="control-label font-weight-bold">{{"ActualVolunteer"|translate}}</label>
+                    <input id="actualVolunteers" type="number" formControlName="actualVolunteers" class="input border w-full mt-1 "  [readOnly]="true">
+                </div>
+             </div>
+
+
+             
+
+
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VolunteersIncludedInTheActivity"|translate}}</a>
+                    </div>
+                </div>
+
+                 <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="activitesList"  dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 12%" >{{"VolunteerName"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%" >{{"TotalVolunteerHours"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%" >{{"Evaluation"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%" >{{"Notes"|translate}}</th>
+                                        <th class="head_tb" style="width: 5% ; text-align: center;"  >{{"Certificate"|translate}} </th>
+                                        <th class="head_tb" style="width: 10%"  >{{"CertificateNotes"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-activity let-i="rowIndex">
+                                    <tr>   
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="activity.id" 
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td> 
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="activity.activityId" 
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>                                                                                          
+                                       <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="volunteersList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="activity.volunteerId" 
+                                            styleClass="input border w-full mt-1"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [ngClass]="{ 'invalid-field': activity.volunteerId <= 0}"
+                                            [disabled]="disableAll">
+                                        </p-dropdown>
+                                        </td>                                     
+                                        <td>
+                                            <input type="number"
+                                                [(ngModel)]="activity.totalVolunteerHours" 
+                                                [ngClass]="{ 'invalid-field': activity.totalVolunteerHours <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [disabled]="disableAll">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="evaluationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="activity.evaluationId" 
+                                            styleClass="input border w-full mt-1"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [ngClass]="{ 'invalid-field': activity.evaluationId <= 0}" [disabled]="disableAll">
+                                        </p-dropdown>
+                                        </td>    
+                                        <td>
+                                            <input type="Text"
+                                                [(ngModel)]="activity.notes" [disabled]="disableAll"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" >
+                                        </td>  
+                                        <td style="text-align: center;">
+                                            <input 
+                                              type="checkbox" 
+                                              [(ngModel)]="activity.certificate"
+                                              class="form-checkbox h-5 w-5 text-theme-1"
+                                              [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                          </td>
+                                        <td>
+                                            <input type="Text"
+                                                [(ngModel)]="activity.certificateNotes" [disabled]="disableAll"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRow(i)"[disabled]="disableAll"> <i
+                                                class="material-icons" style="color:red">delete</i>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <!-- <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td colspan="12"></td>
+                                    </tr>                                    
+                                </ng-template> -->
+                            </p-table>
+                        </div>
+                    </div>            
+                </div> 
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end" mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ActivitesAddForm.invalid  || disableSave" type="submit"[hidden]="showsave"></p-button>
+                <!-- <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ActivitesAddForm.invalid" type="button" (onClick)="PrintPurchaseRequest(this.ActivitesAddForm.value.id)"></p-button> -->
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ActivitesAddForm.invalid" type="button"[hidden]="showsave" (onClick)="DeleteVoucher(this.ActivitesAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/Activities/Activitylist']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

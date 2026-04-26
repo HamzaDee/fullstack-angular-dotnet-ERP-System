@@ -1,0 +1,15 @@
+::ng-deep .table-tooltip {
+  max-width: 220px;
+  background-color: #197dcf;
+  border-radius: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+}
+
+::ng-deep .table-tooltip .p-tooltip-text {
+  color: #fff;
+}
+
+::ng-deep .table-tooltip .p-tooltip-arrow {
+  border-top-color: #217346;
+}

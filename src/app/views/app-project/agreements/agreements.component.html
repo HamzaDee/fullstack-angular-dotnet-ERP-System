@@ -1,0 +1,124 @@
+<app-argumentadvancedsearch-component (searchResultEvent)="handleSearchResult($event)"></app-argumentadvancedsearch-component>
+<div class="container">
+    <p-table #dt [value]="AgreementList" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['id','dealName', 'dealNo', 'dealarTypeName', 'dealSignDate', 'dealFromDate', 'dealToDate', 'dealAmount','userName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{ 'showing' | translate }} {first} {{ 'to' | translate }} {last} {{ 'of' | translate }} {totalRecords} {{ 'entries' | translate }}"
+        [showCurrentPageReport]="true">
+        
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder="{{ 'search' | translate }}" />
+                    </span>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                    <p-button label="{{ 'AddNew' | translate }}"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="pi pi-plus" (click)="AddNewAgreements(0)"></p-button>
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <i class="pi pi-star-fill" [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)" title="{{ 'AddToFavourite' | translate }}"
+                        tooltipposition="bottom"></i>
+
+                    <button title="{{ 'ExportToExcel' | translate }}" class="mr-2 button px-2 mr-1 mb-2 text-gray-700" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)" tooltipposition="bottom">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+
+                    <button title="{{ 'ExportToPdf' | translate }}" class="mr-2 button px-2 mr-1 mb-2 text-gray-700" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-pdf" ptooltip="PDF" (click)="exportPdf(dt)" tooltipposition="bottom">
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="head_tb" pSortableColumn="id">{{'SerialNo' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealName">{{'AgreementName' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealNo">{{'AgreementNo' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealarTypeName">{{'AgreementType' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealSignDate">{{'AgreementSignatureDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealFromDate">{{'FromDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealToDate">{{'ToDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealAmount">{{'AgreementsValue' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealToDate">{{'FirstParty' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealAmount">{{'SecondParty' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealSignDate">{{'EntryDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="dealSignDate">{{'EditDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="userName">{{'Username' | translate}}</th>
+                <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" class="p-datatable-tbody" let-Agreement>
+            <tr>
+                <td style="text-align: justify;">{{ Agreement.id }}</td>
+                <td style="text-align: justify;">{{ Agreement.dealName }}</td>
+                <td style="text-align: justify;">{{ Agreement.dealNo }}</td>
+                <td style="text-align: justify;">{{ Agreement.dealarTypeName}}</td>
+                <td style="text-align: justify;">{{ Agreement.dealSignDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Agreement.dealFromDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Agreement.dealToDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Agreement.dealAmount }}</td>
+                <td style="text-align: justify;">{{ Agreement.firstPartyName }}</td>
+                <td style="text-align: justify;">{{ Agreement.secondPartyName }}</td>
+                <td style="text-align: justify;">{{ Agreement.stampDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Agreement.editDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Agreement.userName}}</td>
+            
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+
+                        <button mat-menu-item (click)="ShowDetailsOnly(Agreement.id)"> <!-- تفاصيل -->
+                            <i class="material-icons">remove_red_eye</i> &nbsp;{{"showDetails"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="EditAgreement(Agreement.id,false)"><!-- تعديل -->
+                          <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="DeleteAgreement(Agreement.id, Agreement)"> <!--  حذف -->
+                           <i class="material-icons" style="color:red">delete</i>
+                           &nbsp;{{"Delete"|translate}}
+                        </button>
+
+      <!--                   <button mat-menu-item (click)="PrintAgreement(Agreement.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i>
+                            &nbsp;{{"PrintAction"|translate}}
+                        </button> -->
+
+                        <button mat-menu-item (click)="AttachmentAgreement(Agreement.id)"> <!-- مرفقات السند -->
+                            <i class="material-icons" style="color:black">attachment</i>
+                            &nbsp;{{"Attachments"|translate}}
+                        </button>  
+
+                    </mat-menu>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="10">{{ 'noEntriesFoundLabel' | translate }}</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>
+<!-- <div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div> -->

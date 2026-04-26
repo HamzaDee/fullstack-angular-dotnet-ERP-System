@@ -1,0 +1,480 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+
+        <form [formGroup]="AuthoritiesForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+                <!-- UPDATE 04-11-2025 -->
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <mat-vertical-stepper [linear]="false" class="w-full">
+
+                        <!-- Step 1 – المعلومات الأساسية -->
+                        <mat-step label="{{ 'BasicInformation' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"AuthorityNumber"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="number" class="input border w-full mt-1" readonly formControlName="id"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"NationalNumber"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="nationalNo"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"AuthorityNameAr"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="entityName"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('entityName')?.value)}">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"AuthorityNameEn"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="entityEName"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('entityEName')?.value)}">
+                                </div>
+                                 <div class="radio-align col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-2">
+                                    <input type="radio" name="inJordan" [value]="1" formControlName="inJordan"
+                                        [attr.disabled]="disableAll ? 'disabled' : null" (change)="onInJordanChange(1)">
+                                    <label
+                                        class="radio-align control-label mb-8 mr-2">{{"InsideJordan"|translate}}</label>
+                                </div>
+
+                                <div class="radio-align col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-2">
+                                    <input type="radio" name="inJordan" [value]="2" formControlName="inJordan"
+                                        [attr.disabled]="disableAll ? 'disabled' : null" (change)="onInJordanChange(2)">
+                                    <label
+                                        class="radio-align control-label mb-8 mr-2">{{"OutsideJordan"|translate}}</label>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!-- Step 2 – التصنيف والحالة -->
+                        <mat-step label="{{ 'ClassificationAndStatus' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"AuthorityClassification"|translate}}<span class="required-asterisk">*</span></label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body"
+                                        [options]="AuthorityClassificationList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="entityId"
+                                        [ngClass]="{ 'invalid-field': AuthoritiesForm.get('entityId')?.value <= 0}">
+                                    </p-dropdown>
+                                </div>
+                                
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"DescribeTheAuthority"|translate}}<span class="required-asterisk">*</span></label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body"
+                                        [options]="AuthorityAttributeList" [disabled]="disableAll ? 'disabled' : null"
+                                        autoWidth="false" [virtualScroll]="false" formControlName="authorityAttribute"
+                                        [ngClass]="{ 'invalid-field': AuthoritiesForm.get('authorityAttribute')?.value <= 0}">
+                                    </p-dropdown>
+                                </div>
+                                
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label for="developmentDirectId"
+                                        class="control-label font-weight-bold">{{"TheDevelopmentDirectorateToWhichTheRegionBelongs"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="magDirList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="developmentDirectId">
+                                    </p-dropdown>
+                                </div>
+
+                                
+
+                                
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"StatusOfAuthority"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" (onChange)="getBookInfo($event)"
+                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                        appendTo="body" [options]="StatusOfAuthorityList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="status"
+                                        [ngClass]="{ 'invalid-field': AuthoritiesForm.get('status')?.value <= 0}">
+                                    </p-dropdown>
+                                </div>
+
+                               
+
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperPrevious class="mr-2">{{"Previous"|translate}}</button>
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!-- Step 3 – العنوان والموقع الجغرافي -->
+                        <mat-step label="{{ 'Addressandgeographicallocation' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"COUNTRY"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="CountryList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="countryId"
+                                        [ngClass]="{ 'invalid-field': AuthoritiesForm.get('countryId')?.value <= 0}"
+                                        (onChange)="Filtercountries(AuthoritiesForm.get('countryId')?.value)">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Governorate"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="filteredCountries"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="governorateId"
+                                        (onChange)="Filtergovernorate(AuthoritiesForm.get('governorateId')?.value)">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label
+                                        class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="filtergovernorate"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="districtId">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"judiciary"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="SubDistrictList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="subDistrictId">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Region"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="AreaList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="areaId">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1"
+                                    *ngIf="AuthoritiesForm.get('inJordan')?.value == 2">
+                                    <label class="control-label font-weight-bold">{{"AREA"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="areaName"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperPrevious
+                                    class="mr-2">{{"Previous"|translate}}</button>&nbsp;
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!-- Step 4 – إحداثيات الخريطة -->
+                        <mat-step label="{{ 'Mapcoordinates' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"RegistrationDate"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="date" class="input border w-full mt-1"
+                                        formControlName="registrationDate"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Address"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1"
+                                        formControlName="detailedAddress"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-2">
+                                    <label class="control-label font-weight-bold">{{"MapLocation"|translate}} :</label>
+                                </div>
+                                <!-- google maps  -->
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label for="mapLng"
+                                        class="control-label font-weight-bold">{{"MapLng"|translate}}</label>
+                                    <input type="number" class="input border w-full mt-1" formControlName="mapLng"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-3"
+                                        *ngIf="AuthoritiesForm.get('mapLat')?.value && AuthoritiesForm.get('mapLng')?.value">
+                                        <div class="mt-1">
+                                            <a [href]="getGoogleMapLink()" target="_blank"
+                                                class="text-blue-600 underline">
+                                                {{ getGoogleMapLink() }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label for="mapLat"
+                                        class="control-label font-weight-bold">{{"Maplat"|translate}}</label>
+                                    <input type="number" class="input border w-full mt-1" formControlName="mapLat"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperPrevious
+                                    class="mr-2">{{"Previous"|translate}}</button>&nbsp;
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!-- Step 5 – بيانات الاتصال -->
+                        <mat-step label="{{ 'Contactinformation' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"PhoneNumber"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="phone"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('phone')?.value)}">
+                                </div>
+
+                               <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label for="mobileNo"
+                                        class="control-label font-weight-bold">{{"Mobile"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="mobileNo"
+                                        [ngClass]="{ 'invalid-field': isInvalid('mobileNo') }">
+
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"faxNumber"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="fax"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Facebook"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="facebook"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Twitter"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="twitter"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Website"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="website"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'border-red-500': this.AuthoritiesForm.get('website')?.invalid }">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Email"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="email"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('email')?.value)}">
+                                </div>
+
+
+
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperPrevious
+                                    class="mr-2">{{"Previous"|translate}}</button>&nbsp;
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!-- Step 6 – الشخص المفوض -->
+                        <mat-step label="{{ 'Authorizedperson' | translate }}">
+                            <div class="grid grid-cols-12 gap-5 mt-5">
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label
+                                        class="control-label font-weight-bold">{{"Nametheheadoftheentity"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1"
+                                        formControlName="entityManagerName"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"CaseBookNumber"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="number" class="input border w-full mt-1" formControlName="bookNo"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"CaseBookDate"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="date" class="input border w-full mt-1" formControlName="bookDate"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="notes"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label
+                                        class="control-label font-weight-bold">{{"NameOfAuthorizedPerson"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1"
+                                        formControlName="authorizedPersonName"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('authorizedPersonName')?.value)}">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Shphonenumber"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1"
+                                        formControlName="authorizedPersonPhone"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('authorizedPersonPhone')?.value)}">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label
+                                        class="control-label font-weight-bold">{{"AdministrativeCapacity"|translate}}<span
+                                            class="required-asterisk">*</span></label>
+                                    <input type="text" class="input border w-full mt-1"
+                                        formControlName="authorizedPersonPosition"
+                                        [attr.disabled]="disableAll ? 'disabled' : null"
+                                        [ngClass]="{ 'invalid-field': isEmpty(AuthoritiesForm.get('authorizedPersonPosition')?.value)}">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"
+                                    [hidden]="HiddenBookNoAndDate">
+                                    <label class="control-label font-weight-bold">{{"calceledBookNo"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1" formControlName="calceledBookNo"
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"
+                                    [hidden]="HiddenBookNoAndDate">
+                                    <label class="control-label font-weight-bold">{{"calceledDate"|translate}}</label>
+                                    <input type="date" class="input border w-full mt-1" style="margin:10px;"
+                                        formControlName="calceledDate" [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+
+                            </div>
+                            <div class="mt-5 text-right">
+                                <button type="button" mat-raised-button matStepperPrevious
+                                    class="mr-2">{{"Previous"|translate}}</button>&nbsp;
+                                <button type="button" mat-raised-button matStepperNext>{{"Next"|translate}}</button>
+                            </div>
+                        </mat-step>
+
+                    </mat-vertical-stepper>
+                </div>
+
+                <!-- END UPDATE 04-11-2025 -->
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+
+                    <div class="intro-y box tab-content">
+                        <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+
+                            <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                class="py-4 sm:mr-8 active">{{"Ratings"|translate}}</a>
+
+                            <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                                class="py-4 sm:mr-8 ">{{"VoucherAttachments"|translate}}</a>
+
+                        </div>
+                    </div>
+
+                    <div class="intro-y box tab-content">
+
+                        <div class="tab-content__pane active" id="f01">
+                            <div class="intro-y box px-5 pt-5">
+                                <app-authorities-evaluation [disabled]="disableAll"></app-authorities-evaluation>
+                            </div>
+                        </div>
+
+                        <div class="tab-content__pane" id="f02">
+                            <div class="intro-y box px-5 pt-5">
+                                <app-app-general-attachment [voucherId]="id"></app-app-general-attachment>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <br>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit" [hidden]="showsave"
+                    [disabled]="AuthoritiesForm.invalid || disableSave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    [hidden]="showsave" [disabled]="AuthoritiesForm.invalid "
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button" (click)="DeleteAuthoritie(this.AuthoritiesForm.value.id)">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    [routerLink]="['/Authorities/AuthoritiesList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component">
+                </p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,72 @@
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center mt-5">
+            <h1>{{data.title}}</h1>
+        </div>
+        <div class="intro-y box px-5 py-5  mt-2">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-4 sm:col-span-4 xxl:col-span-4">
+                    <label class="control-label font-weight-bold">{{"unit"|translate}}
+                    </label>
+                    <input disabled type="text" [value]="getUintName()" class="input border w-full mt-1 ">
+                </div>
+
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-4 sm:col-span-4 xxl:col-span-4" style="display: flex;
+                justify-content: space-between;">
+                    <p-button 
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-4 text-white p-button p-component"
+                        type="button" (click)="setAllPrices()">{{'UniformPriceForAllCategories'|translate}}</p-button>
+                    <p-button
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="button" (click)="setAllDiscounts()">{{'UniformDiscountForAllCategories'|translate}}</p-button>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-3">
+                <p-table [value]="unitsPriceList" dataKey="key" [paginator]="true"
+                    [rows]="4" styleClass="p-datatable-gridlines" [rowHover]="true"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 50%;">{{"categoryPrice"|translate}}
+                            <th>{{"price"|translate}}
+                            <th>{{"DiscountPercentage"|translate}}
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemPrice>
+                        <tr>
+                            <td style="width: 50%;">{{itemPrice.text}}
+                                <!-- <input type="text" disabled [value]="itemPrice.text"
+                                    [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 "> -->
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="itemPrice.price" [ngModelOptions]="{standalone: true}"
+                                    class="input border w-full mt-1 ">
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="itemPrice.discount"
+                                    [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 ">
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                (click)="onSave()" type="button"></p-button>
+            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                (click)="dialogRef.close(selectedPrice)"></p-button>
+        </div>
+    </div>
+</div>

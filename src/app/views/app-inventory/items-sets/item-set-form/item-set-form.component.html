@@ -1,0 +1,141 @@
+<form [formGroup]="itemSetForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"setNameA"|translate}}</label> <span class="required-asterisk">*</span>
+                        <input
+                            [ngClass]="{'invalid-field': itemSetForm.get('setNameA').hasError('required') && itemSetForm.get('setNameA').touched}"
+                            type="text" class="input border w-full mt-1" formControlName="setNameA">
+                        <span class="required-asterisk mt-1"
+                            *ngIf="itemSetForm.get('setNameA').hasError('required') && itemSetForm.get('setNameA').touched">
+                            {{"required"|translate}}
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"setNameE"|translate}}</label> <span class="required-asterisk">*</span>
+                        <input
+                            [ngClass]="{'invalid-field': itemSetForm.get('setNameE').hasError('required') && itemSetForm.get('setNameE').touched}"
+                            type="text" class="input border w-full mt-1" formControlName="setNameE">
+                        <span class="required-asterisk mt-1"
+                            *ngIf="itemSetForm.get('setNameE').hasError('required') && itemSetForm.get('setNameE').touched">
+                            {{"required"|translate}}
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"barcode"|translate}}</label> <span class="required-asterisk">*</span>
+                        <input
+                            [ngClass]="{'invalid-field': (itemSetForm.get('barcode').invalid||itemSetForm.get('barcode').hasError('required')) && itemSetForm.get('barcode').touched}"
+                            (keyup)="isValidBarcode($event.target.value)" type="text" class="input border w-full mt-1"
+                            formControlName="barcode">
+                        <span class="required-asterisk mt-1"
+                            *ngIf="itemSetForm.get('barcode').hasError('required')">
+                            {{"required"|translate}}
+                        </span>
+                        <span class="required-asterisk mt-1"
+                            *ngIf="itemSetForm.get('barcode').hasError('isValidItemCode')">
+                            {{"ItemaCodeExists"|translate}}
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"Price"|translate}}</label> <span class="required-asterisk">*</span>
+                        <input
+                            [ngClass]="{'invalid-field': itemSetForm.get('setPrice').hasError('required') && itemSetForm.get('setPrice').touched}"
+                            type="text" class="input border w-full mt-1" formControlName="setPrice" min="1">
+                        <span class="required-asterisk mt-1"
+                            *ngIf="itemSetForm.get('setPrice').hasError('required') && itemSetForm.get('setPrice').touched">
+                            {{"required"|translate}}
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"notes"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="note">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <input id="stopped" type="checkbox" [formControl]="itemSetForm.get('stopped')"
+                            class="input border mr-2 mr-3 ml-3 mt-3" />
+                        <label class="cursor-pointer select-none" for="stopped">{{"stopped"|translate}}</label>
+                    </div>
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="alternativeItemFormArray.controls" styleClass="p-datatable-gridlines"
+                            dataKey="id">
+                            <ng-template pTemplate="caption">
+                                <div class="row mb-8">
+                                    <div class="col-md-6">
+                                        <i class="material-icons cursor-pointer" style="color:green"
+                                            (click)="addNewRow()">add_box</i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>{{"category"|translate}}
+                                    <th>{{"unit"|translate}}
+                                    <th>{{"Quantity"|translate}}
+
+                                    <th><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-alternativeItemForm let-i="rowIndex">
+                                <tr [formGroup]="alternativeItemForm">
+                                    <td style="width:35%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="itemList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [formControl]="alternativeItemForm.get('itemId')"
+                                            [ngClass]="{'invalid-field': 
+                                            alternativeItemForm.get('itemId').value<=0}"
+                                            (onChange)="onChangeItem($event.value,i)">
+                                        </p-dropdown>
+                                    </td>
+                                    <td style="width:30%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="unitsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [formControl]="alternativeItemForm.get('unitId')"
+                                            [ngClass]="{'invalid-field': 
+                                            alternativeItemForm.get('unitId').value<=0 }">>
+                                        </p-dropdown>
+                                    </td>
+                                    <td style="width:25%">
+                                        <input type="number"
+                                            [ngClass]="{'invalid-field': alternativeItemForm.get('qty').value<=0}"
+                                            formControlName="qty" class="input border w-full mt-1">
+                                    </td>
+                                    <td style="width:10%">
+                                        <i class="material-icons cursor-pointer" style="color:green"
+                                            (click)="addNewRow()">add_box</i>
+                                        <i class="material-icons cursor-pointer"
+                                            (click)="deleteRow(getUnitFormGroupIndex(alternativeItemForm))"
+                                            style="color:red">delete</i>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button [disabled]="itemSetForm.invalid || disableSave" label='{{"Save"|translate}}' icon="pi pi-save"
+                        class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(false)"></p-button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

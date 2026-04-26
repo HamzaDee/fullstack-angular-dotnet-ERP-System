@@ -1,0 +1,375 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <br>
+    <form [formGroup]="FixedassetsListForm" (ngSubmit)="OnSaveForms()">
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <input hidden formControlName="id" [(ngModel)]="Data.id">  
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+
+                    <label
+                        class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        style="padding: 9px 22.5px;">
+                        <input type="file" #image (change)="onUploadIamge($event.target.files)" />
+                        Upload
+                    </label>
+                    <br><br>
+                    <p-button (click)="ClearImagePath(image)" label='{{"Delete"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        type="button" icon="pi pi-undo">
+                    </p-button>
+
+                </div>
+                
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <div class="mb-4 d-flex justify-content-center">
+                        <img [src]="FixedImage" alt="example placeholder" class="FixedImage" />
+                    </div>
+                </div>
+
+                    
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"OriginalType"|translate}}<span class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}"  (onChange)="GetOriginalTypeInfo()"
+                            styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="TypeOfAssestList" formControlName="typeId"  [disabled]="disableAll"
+                            [ngClass]="{ 'invalid-field': FixedassetsListForm.get('typeId').value <= 0}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"OriginalNumber"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="fano"  [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(FixedassetsListForm.get('fano').value)}">
+                    </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ArabicName"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="fanameA"   [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(FixedassetsListForm.get('fanameA').value)}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"EnglishName"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="fanameE"   [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(FixedassetsListForm.get('fanameE').value)}">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                        <label class="cursor-pointer select-none w-full" >{{"SubjectToConsumption"|translate}}</label>
+                        <input  type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isDepreciable"  [attr.disabled]="disableAll ? 'disabled' : null"/>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DepreciationRatio"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" formControlName="depreciationPercentage"  [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CalculationMethod"|translate}}<span class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" 
+                            styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="calculationMethodList" formControlName="depreciationMethod"   [disabled]="disableAll"
+                            [ngClass]="{ 'invalid-field': FixedassetsListForm.get('depreciationMethod').value <= 0}">
+                        </p-dropdown>
+                    </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"PreviousDepreciationBalance"|translate}}</label>
+                                <input type="number"  class="input border w-full mt-1 " formControlName="previousDeprBalance"  [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"branch"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                    styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="BranchList" formControlName="branchId"  [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"Location"|translate}}<span class="required-asterisk">*</span></label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                    styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="LocationList"  formControlName="locationId"   [disabled]="disableAll"
+                                    [ngClass]="{ 'invalid-field': FixedassetsListForm.get('locationId').value <= 0}">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"Building"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                    styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="BuildingList"  formControlName="buildingId" [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"department"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                    styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="SectionList" formControlName="sectionId"  [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"Management"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                    styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AdministrationList" formControlName="departmentId"  [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Floor"|translate}}</label>
+                            <input type="number" class="input border w-full mt-1" formControlName="floorNo"  [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Custodian"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="CustodianList" formControlName="employeeId"   [disabled]="disableAll">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                            <label class="control-label mb-4">{{"DateOfStartOfUse"|translate}}</label>
+                            <input type="date" class="input w-full border mt-1" formControlName="startDateUse" [ngModel]="Data.startDateUse | date:'yyyy-MM-dd'" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"status"|translate}}<span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="StatusList" formControlName="status"   [disabled]="disableAll"
+                                [ngClass]="{ 'invalid-field': FixedassetsListForm.get('status').value <= 0}">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Ammount"|translate}}<span class="required-asterisk">*</span></label>
+                            <input type="number" class="input border w-full mt-1" formControlName="amount"  [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': FixedassetsListForm.get('amount').value <= 0}">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ExpectedValueOfWaste"|translate}}<span class="required-asterisk">*</span></label>
+                            <input type="number" class="input border w-full mt-1" formControlName="salvageValue"  [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': FixedassetsListForm.get('salvageValue').value <= 0}">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                            <label class="control-label mb-4">{{"TheDateOfPurchase"|translate}}</label>
+                            <input type="date" class="input w-full border mt-1" formControlName="purchaseDate" [ngModel]="Data.purchaseDate | date:'yyyy-MM-dd'" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"PurchaseInvoiceNumber"|translate}}</label>
+                            <input type="number" class="input border w-full mt-1" formControlName="purchaseInvNo"  [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                            <label class="control-label mb-4">{{"DepreciationStartDate"|translate}}</label>
+                            <input type="date" class="input w-full border mt-1" formControlName="startDepreciationDate" [ngModel]="Data.startDepreciationDate | date:'yyyy-MM-dd'" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"OriginalAccount"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AccountsModelList" formControlName="assetAccId"  [attr.disabled]="disableAll ? 'disabled' : null">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ConsumptionCalculation"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AccountsModelList"  formControlName="depreriationAccId"  [disabled]="disableAll">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"AccumulatedDepreciationAccount"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AccountsModelList" formControlName="accumulatedDeprAccId"  [disabled]="disableAll">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"MaintenanceAccount"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AccountsModelList" formControlName="expensesAccId"  [disabled]="disableAll">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CapitalGainsAndLossesAccount"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" 
+                                styleClass="input border w-full mt-1"optionLabel="text" optionValue="id"[filter]="true" filterBy="text" 
+                                appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="AccountsModelList" formControlName="profitLossAccId"  [disabled]="disableAll">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"barcode"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="barcode" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"AssestCategory"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}"  styleClass="input border w-full mt-1"optionLabel="text"
+                                optionValue="id"[filter]="true" filterBy="text"   appendTo="body" autoWidth="false" [virtualScroll]="false" 
+                                [options]="AssestCategoryList"  formControlName="categoryId"  [disabled]="disableAll">
+                        </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Type"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}"  styleClass="input border w-full mt-1"optionLabel="text"
+                                optionValue="id"[filter]="true" filterBy="text"   appendTo="body" autoWidth="false" [virtualScroll]="false" 
+                                [options]="TypeList"  formControlName="brandId"  [disabled]="disableAll">
+                        </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"model"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}"  styleClass="input border w-full mt-1"optionLabel="text"
+                                optionValue="id"[filter]="true" filterBy="text"   appendTo="body" autoWidth="false" [virtualScroll]="false" 
+                                [options]="ModelList"  formControlName="modelId"  [disabled]="disableAll">
+                        </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"SerialNumber"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="serialNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"LanMacAddress"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="lanMacAddress" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"WiFiMacAddress"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="wiFiMacAddress" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"DeviceSource"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}"  styleClass="input border w-full mt-1"optionLabel="text"
+                                optionValue="id"[filter]="true" filterBy="text"   appendTo="body" autoWidth="false"
+                                [options]="DeviceSourceList"  formControlName="fASource"  [disabled]="disableAll"
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                    
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                            <label class="cursor-pointer select-none w-full" >{{"HasWarranty"|translate}}</label>
+                            <input  type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="hasWarranty"  [attr.disabled]="disableAll ? 'disabled' : null"/>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                            <label class="control-label mb-4">{{"WarrantyEndDate"|translate}}</label>
+                            <input type="date" class="input w-full border mt-1" formControlName="warrantyEndDate" [ngModel]="Data.warrantyEndDate | date:'yyyy-MM-dd'"  [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="ramSize" class="control-label font-weight-bold">{{"RAMSize"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="ramSize" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="hddType" class="control-label font-weight-bold">{{"HDDType"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="hDDType" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                            <label for="domainMember" class="cursor-pointer select-none w-full" >{{"DomainMember"|translate}}</label>
+                            <input  type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="domainMember"  [attr.disabled]="disableAll ? 'disabled' : null"/>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="osActivationKey" class="control-label font-weight-bold">{{"OSActivationKey"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="oSActivationKey" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="officeActivationKey" class="control-label font-weight-bold">{{"OfficeActivationKey"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="officeActivationKey" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="ipAddress" class="control-label font-weight-bold">{{"IPAddress"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="iPAddress" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="supplierCompany" class="control-label font-weight-bold">{{"SupplierCompany"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="supplierCompany" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="internetSecurity" class="control-label font-weight-bold">{{"InternetSecurity"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="internetSecurity" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"OBQty"|translate}}</label>
+                            <input type="number" class="input border w-full mt-1"  formControlName="obQty" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                            <input type="text" class="input border w-full mt-1"  formControlName="note"  [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                    </div>
+<!-- -->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [hidden]="showsave" [disabled]="FixedassetsListForm.invalid || disableSave" 
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit"></p-button>
+    
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" [routerLink]="['/FixedAssetsList/FixedAseetsList']"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+                </div>
+    </form>
+
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

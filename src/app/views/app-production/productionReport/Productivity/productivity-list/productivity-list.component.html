@@ -1,0 +1,39 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div class="grid grid-cols-12 gap-3 pt-2">
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+            <div>
+                <label class="control-label font-weight-bold">{{"FromYear"|translate}} </label>
+                <input type="number" class="input border w-full mt-1" [(ngModel)]="fromYear">
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+            <div>
+                <label class="control-label font-weight-bold">{{"ToYear"|translate}}</label>
+                <input type="number" class="input border w-full mt-1" [(ngModel)]="toYear">
+            </div>
+        </div>
+        <br>
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+            <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetReport()"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+            &nbsp;
+            <p-button label='{{"NewSearch"|translate}}'
+                styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+        </div>
+    </div>
+    <br>
+    <div class="col-md-12" id="htmlData">
+        <div class="grid grid-cols-12 gap-5 mt-5">
+            <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                <div class="card mb-0 col-md-12">
+                    <div class="card-body">
+                        <div style="width: 100%;"></div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

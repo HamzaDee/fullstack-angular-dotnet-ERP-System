@@ -1,0 +1,152 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+        <form [formGroup]="ReceivingDeliveringForm" (ngSubmit)="OnSaveForms()">
+            <input hidden formControlName="id" [(ngModel)]="Data.id">
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="radio-align col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer">
+                            <label class="radio-align control-label mb-8">{{"OriginalDelivery"|translate}}</label>
+                            <input type="radio" name="transTypeId" [value]="105" class="input w-full border mt-1"
+                                formControlName="transTypeId" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                        <div class="radio-align col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer">
+                            <label class="radio-align control-label mb-8">{{"ReceiptOfOriginal"|translate }}</label>
+                            <input type="radio" name="transTypeId" [value]="106" class="input w-full border mt-1"
+                                formControlName="transTypeId" [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+                    </div>  
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"TransNumber"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="transNo" [readOnly]="true">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label class="control-label mb-4">{{"transDate"|translate}}</label>
+                    <input type="date" class="input w-full border mt-1" formControlName="transDate" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Statement"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="transNote" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+              <!--   <div class="intro-y box tab-content"> -->
+                     <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1"> 
+                        <p-table #dt [value]="ReceivingList" dataKey="id" [loading]="loading" [globalFilterFields]="['',]"
+                            styleClass="p-datatable-gridlines" [style]="{width:'100%'}" [scrollable]="true"
+                            [rowHover]="true" dataKey="id" currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                            [showCurrentPageReport]="true">
+    
+                            <ng-template pTemplate="caption">
+                                <div class="grid grid-cols-12 gap-5 ">
+                                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                        <p-button label='{{"AddLine"|translate}}'
+                                            styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            icon="pi pi-plus" (click)="AddNewLine()"  [disabled]="disableAll">
+                                        </p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+    
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 15%" class="head_tb" pSortableColumn="employeeId">{{"Employee"|translate}} </th>
+                                    <th style="width: 15%" class="head_tb" pSortableColumn="fromLocationId">{{"theOrigin"|translate}} </th>
+                                    <th style="width: 20%" class="head_tb" pSortableColumn="deliveryStatus">{{"Originalconditionupondelivery"|translate}} </th>
+                                    <th style="width: 20%" class="head_tb" pSortableColumn="receiptStatus">{{"Originalconditionuponreceipt"|translate}} </th>
+                                    <th style="width: 20%" class="head_tb" pSortableColumn="transNote">{{"Statement"|translate}} </th>
+                                    <th> <i class="pi pi-cog"style="font-size: 1.2rem"></i></th>
+                                </tr>
+                            </ng-template>
+    
+                            <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+    
+                                <tr>
+                                    <td style="width: 15%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            [ngModelOptions]="{standalone: true}" appendTo="body" autoWidth="false"
+                                            [virtualScroll]="false" [options]="EmployeeList" [(ngModel)]="row.employeeId"
+                                            (onChange)="GetOriginalConditionUponReceipt(i ,row)" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            [ngClass]="{ 'invalid-field':row.employeeId <= 0}" [disabled]="disableAll">
+                                        </p-dropdown>
+                                    </td>
+    
+                                    <td style="width: 15%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            [ngModelOptions]="{standalone: true}" appendTo="body" autoWidth="false"
+                                            [virtualScroll]="false" [options]="AssestList" [(ngModel)]="row.assetId" [disabled]="disableAll"
+                                            (onChange)="GetOriginalConditionUponReceipt(i ,row)" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            [ngClass]="{ 'invalid-field':row.assetId <= 0}">
+                                        </p-dropdown>
+                                    </td>
+    
+                                    <td style="width: 20%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                            [filter]="true" filterBy="text" appendTo="body"
+                                            [ngModelOptions]="{standalone: true}" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                                            [(ngModel)]="row.deliveryStatus" [disabled]="isDropdownDisabled" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            [options]="unitsList[i]">
+                                        </p-dropdown>
+                                    </td>
+    
+                                    <td style="width: 20%">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [disabled]="disableAll"
+                                            [ngModelOptions]="{standalone: true}" appendTo="body" autoWidth="false" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            [virtualScroll]="false" [options]="StatusList" [(ngModel)]="row.receiptStatus">
+                                        </p-dropdown>
+                                    </td>
+    
+                                    <td style="width: 20%">
+                                        <input type="text" class="input border w-full mt-1 " [disabled]="disableAll"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="row.note">
+                                    </td>
+    
+                                    <td>
+                                        <button mat-menu-item (click)="deleteRow(i)"  [disabled]="disableAll"> <i class="material-icons"
+                                                style="color:red">delete</i>
+                                        </button>
+                                    </td>
+                                    
+                                </tr>
+                            </ng-template>
+    
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="6"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+    
+                        </p-table>
+                   <!--  </div> -->
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [disabled]="ReceivingDeliveringForm.invalid || disableSave" [hidden]="showsave"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" [disabled]="disabled == true">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" [routerLink]="['/ReceivingDeliveringAnOriginalToAnEmployee/ReceivingDeliveringAnOriginalToAnEmployee']"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component">
+                </p-button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

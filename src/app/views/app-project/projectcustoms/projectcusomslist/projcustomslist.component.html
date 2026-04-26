@@ -1,0 +1,115 @@
+<div class="container">   
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+        [globalFilterFields]="['projectName','donorList','voucherNo','receiptDate','incomingFrom','clearanceType','transportType','arrivalDate','qty','valueJOD','valueUSD']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="caption">
+            
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>                    
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="AddProjectCustomsForm(0)"></p-button>
+                </div>                 
+            
+                
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5 text-left">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px" alt="Excel Icon">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px" alt="PDF Icon">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="head_tb" pSortableColumn="planNo">{{"ProjectName"|translate}} <p-sortIcon field="planNo"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="projectName">{{"AuthorityDonor"|translate}} <p-sortIcon field="projectName"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="planTypesList">{{"VoucherNo"|translate}} <p-sortIcon field="planTypesList"></p-sortIcon>
+                <th class="head_tb" pSortableColumn="autoritiesList">{{"ReceipteDate"|translate}} <p-sortIcon field="autoritiesList"></p-sortIcon></th>                       
+                <th class="head_tb" pSortableColumn="distDate">{{"IncomingFrom"|translate}} <p-sortIcon field="distDate"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="distTime">{{"ClearanceType"|translate}} <p-sortIcon field="distTime"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="representative">{{"TransportType"|translate}} <p-sortIcon field="representative"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="siteLocationList">{{"ArrivalDate"|translate}} <p-sortIcon field="siteLocationList"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="transportationList">{{"Count"|translate}} <p-sortIcon field="transportationList"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="transportationList">{{"CashAmountDinar"|translate}} <p-sortIcon field="transportationList"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="transportationList">{{"CashAmountDollar"|translate}} <p-sortIcon field="transportationList"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="transportationList">{{"Paymentstatus"|translate}} <p-sortIcon field="transportationList"></p-sortIcon></th>
+                <th class="text-center-m w-0"><i class="pi pi-cog" style="font-size: 1.2rem ; margin-left: 70px;"></i></th>
+            </tr>            
+        </ng-template>
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-project >
+            <tr>
+                <td [hidden]="true">{{project.id}}</td>
+                <td [hidden]="true">{{project.projectId}}</td>
+                <td style="text-align: justify;">{{project.projectName}}</td>
+                <td style="text-align: justify;">{{project.donorList}}</td>
+                <td style="text-align: justify;">{{project.voucherNo}}</td>
+                <td style="text-align: justify;">{{project.receiptDate | date: 'yyyy-MM-dd'}}</td>
+                <td style="text-align: justify;">{{project.incomingFrom}}</td>
+                <td style="text-align: justify;">{{project.clearanceType}}</td>
+                <td style="text-align: justify;">{{project.transportType}}</td>
+                <td style="text-align: justify;">{{project.arrivalDate | date: 'yyyy-MM-dd'}}</td>
+                <td style="text-align: justify;">{{project.qty}}</td>
+                <td style="text-align: justify;">{{project.valueJOD}}</td>
+                <td style="text-align: justify;">{{project.valueUSD}}</td>
+                <td style="text-align: justify;">{{ (project.paid === true) ? 'مسددة' : 'غير مسددة' }}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenDetailsForm(project.id)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="EditProjectCustomsForm(project.id,false)" >
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}}  </button>
+                        <button mat-menu-item (click)="DeleteProjectsCustoms(project.id)" > 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>   
+                        <button mat-menu-item (click)="ProjectCustomsAttachment(project.id)"> <!-- مرفقات السند -->
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}}
+                        </button>                            
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td style="vertical-align: top;" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td style="vertical-align: top;" colspan="9"> </td>
+                <td>{{"total"|translate}}</td>
+                <td>{{CalculateTotal()}}</td>
+                <td>{{CalculateTotalDollar()}}</td>
+                <td colspan=""></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,83 @@
+<form [formGroup]="PrintChequeForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <input type="number" formControlName="id" class="form-control " formControlName="id" hidden>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ChequeNo"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="chequeNo">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ChequeDate"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1" formControlName="cheqDate">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <div class="flex items-center gap-2">
+                            <label>{{"DrawerName"|translate}} <span class="required-asterisk">*</span></label>
+                            <input type="checkbox" id="newDrawer" [(ngModel)]="isNewDrawer" (change)="toggleNewDrawer()" [ngModelOptions]="{standalone: true}">
+                            <span>جديد</span>
+                        </div>
+                        <p-dropdown *ngIf="!isNewDrawer" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="text" [options]="drawerList" [filter]="true"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                             formControlName="drawerName">
+                        </p-dropdown>
+                        <input *ngIf="isNewDrawer" type="text" class="input border w-full mt-1" formControlName="drawerName">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"TheAmount"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1" formControlName="amount">
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"fils"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1" formControlName="amtFils">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CheqStamp"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="cheqStamp">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"AndThatAbout"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="reason">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                        align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            [disabled]="PrintChequeForm.invalid" type="submit">
+                        </p-button>
+
+                        <!--                   <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" [disabled]="PrintChequeForm.invalid"
+                           styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                           type="button" (click)="PrintPrintCheque(this.PrintChequeForm.value.id)">
+                        </p-button> -->
+
+                        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            (click)="dialogRef.close(false)">
+                        </p-button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

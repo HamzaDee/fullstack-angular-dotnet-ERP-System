@@ -1,0 +1,257 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="MaintenanceRequestReportForm">
+
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"PlaceOfOrder"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [options]="PlaceOfOrderList" formControlName="inRequest">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"OrderType"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [options]="RequestTypeList" formControlName="requestType" [virtualScroll]="true">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"PRIORATYDGREE"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="PriorityList" formControlName="priorityId">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="BranchList" formControlName="branchId">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-5 pt-5">
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="technicianId" class="control-label font-weight-bold">{{"Technician"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="TechnicianList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="technicianId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="serialNo" class="control-label font-weight-bold">{{"Serials"|translate}}</label>
+                <input id="serialNo" type="text" formControlName="serialNo" class="input border w-full mt-1 ">
+            </div>
+
+
+            <!--             <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="serialNo" class="control-label font-weight-bold">{{"Serials"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="SerialsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="serialNo" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div> -->
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="itemId" class="control-label font-weight-bold">{{"materialName"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="ItemsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="itemId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="underWarranty" class="control-label font-weight-bold">{{"Sponsors"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="underWarrantyList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="underWarranty" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-5 pt-5">
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="damageId" class="control-label font-weight-bold">{{"Damage"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="DamageList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="damageId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="areaId" class="control-label font-weight-bold">{{"Area"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="AreaList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="areaId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="customerId" class="control-label font-weight-bold">{{"Client"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="SuppliersList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="customerId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="model" class="control-label font-weight-bold">{{"model"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="modelList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="model" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+
+        </div>
+        <br>
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+
+            <p-button label='{{"ShowTransactions"|translate}}' class="ml-4" (onClick)="GetReport()"
+                styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+
+
+            <p-button label='{{"NewSearch"|translate}}' (onClick)="clearFormData()"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+
+        </div>
+
+        <br>
+
+        <div>
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5">
+                        <div class="col-md-12" id="htmlData">
+
+                            <p-table #dt [value]="Data" [rows]="10" [paginator]="true"
+                                [globalFilterFields]="['requestNo','requestDate','requestTypeName','requestSource','technicianName','customerName','address','itemName','serialNo','modelName' ,'damageName','damageDecr','warrantyStatus','statusName']"
+                                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText
+                                                    type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                            align="end">
+                                            <i class="pi pi-star-fill"
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                                (click)="exportExcel()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="PDF"
+                                                (click)="exportPdf()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="requestNo">{{"OrderNumber"|translate}}</th>
+                                        <th pSortableColumn="requestDate">{{"OrderDate"|translate}}</th>
+                                        <th pSortableColumn="requestTypeName">{{"OrderType"|translate}} </th>
+                                        <th pSortableColumn="requestSource">{{"PlaceOfOrder"|translate}}</th>
+                                        <th pSortableColumn="technicianName">{{"Technician"|translate}}</th>
+                                        <th pSortableColumn="customerName">{{"Client"|translate}}</th>
+                                        <th pSortableColumn="address">{{"Address"|translate}} </th>
+                                        <th pSortableColumn="itemName">{{"materialName"|translate}} </th>
+                                        <th pSortableColumn="serialNo">{{"Serials"|translate}} </th>
+                                        <th pSortableColumn="modelName">{{"model"|translate}}</th>
+                                        <th pSortableColumn="damageName">{{"Damage"|translate}}</th>
+                                        <th pSortableColumn="damageDecr">{{"DamageDecr"|translate}} </th>
+                                        <th pSortableColumn="warrantyStatus">{{"Sponsors"|translate}} </th>
+                                        <th pSortableColumn="statusName">{{"status"|translate}} </th>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                                    <tr>
+                                        <td style="text-align: justify;">{{item.requestNo}}</td>
+                                        <td style="text-align: justify;">{{item.requestDate | date: 'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: justify;">{{item.requestTypeName}}</td>
+                                        <td style="text-align: justify;">{{item.requestSource}}</td>
+                                        <td style="text-align: justify;">{{item.technicianName}}</td>
+                                        <td style="text-align: justify;">{{item.customerName}}</td>
+                                        <td style="text-align: justify;">{{item.address}}</td>
+                                        <td style="text-align: justify;">{{item.itemName}}</td>
+                                        <td style="text-align: justify;">{{item.serialNo}}</td>
+                                        <td style="text-align: justify;">{{item.modelName}}</td>
+                                        <td style="text-align: justify;">{{item.damageName}}</td>
+                                        <td style="text-align: justify;">{{item.damageDecr}}</td>
+                                        <td style="text-align: justify;">{{item.warrantyStatus}}</td>
+                                        <td style="text-align: justify;">{{item.statusName}}</td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="14"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</div>

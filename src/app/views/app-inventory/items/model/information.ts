@@ -1,0 +1,33 @@
+export class Information {
+    productionCompany: any;
+    categoryId: any;
+    countryOrigin: any;
+    brandId: any;
+    modelId: any;
+    colorId: any;
+    supplierId: any;
+    taxId: any;
+    maxQty: any;
+    minQty: any;
+    expDateReminder:any;
+    orderQty: any;
+    length: any;
+    width: any;
+    height: any;
+    weight: any;
+    specifications: any;
+    priorityLevelId: any;
+    sizeId: any;
+    season: any;
+    storeId:any;
+    prioritiesLevelsList: any;
+    sizesList: any;
+    suppliersList: any;
+    taxesList: any;
+    colorsList: any;
+    modelsList: any;
+    brandIsList: any;
+    countriesOriginList: any;
+    categoriesList: any;
+    storesList: any;
+}

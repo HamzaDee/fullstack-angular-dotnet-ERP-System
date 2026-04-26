@@ -1,0 +1,49 @@
+<p-table #dt  [value]="itemsLocationsFormArray.controls" styleClass="p-datatable-gridlines" dataKey="id">
+    <ng-template pTemplate="caption">
+        <div class="row mb-8">
+            <div class="col-md-6">
+                <i class="material-icons cursor-pointer" style="color:green" (click)="addNewRow()">add_box</i>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>            
+            <th>{{"store"|translate}}
+            <th>{{"storageLocation"|translate}}
+            <th>{{"maxQty"|translate}}
+            <th>{{"minQty"|translate}}
+            <th>{{"orderQty"|translate}}
+            <th><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemLocationForm>
+        <tr [formGroup]="itemLocationForm">
+            <td style="width:35%">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                    [formControl]="itemLocationForm.get('storeId')" [ngClass]="{'invalid-field': 
+                    itemLocationForm.get('storeId').value<=0 && itemLocationForm.get('storeId').touched}">>
+                </p-dropdown>
+            </td>
+            <td style="width:20%">
+                <input type="text" formControlName="location" class="input border w-full mt-1">
+            </td>
+            <td style="width:15%">
+                <input type="number" formControlName="maxQty" class="input border w-full mt-1">
+            </td>
+            <td style="width:15%">
+                <input type="number" formControlName="minQty" class="input border w-full mt-1">
+            </td>
+            <td style="width:15%">
+                <input type="number" formControlName="orderQty" class="input border w-full mt-1">
+            </td>
+
+            <td style="width:5%">
+                <i class="material-icons cursor-pointer" style="color:green"(click)="addNewRow()">add_box</i>
+                <i class="material-icons cursor-pointer"  (click)="deleteRow(getUnitFormGroupIndex(itemLocationForm))"
+                    style="color:red">delete</i>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

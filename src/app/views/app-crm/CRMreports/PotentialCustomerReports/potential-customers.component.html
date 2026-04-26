@@ -1,0 +1,169 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="PotentialCustomersReportForm">
+
+
+        <div class="grid grid-cols-12 gap-3 pt-2">
+
+            <div class="col-span-5 sm:col-span-2 xl:col-span-2 cursor-pointer mt-5">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+            <div class="col-span-9 sm:col-span-2 xl:col-span-2 cursor-pointer mt-5">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+
+        <div class="col-span-4 sm:col-span-6 xl:col-span-2 cursor-pointer mt-5">
+                <label class="font-weight-bold">{{"SalesEmployee"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"SalesEmployee"|translate}}' [options]="groupsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="assignedTo">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-4 sm:col-span-6 xl:col-span-2 cursor-pointer mt-5">
+                <label class="font-weight-bold">{{"Source"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"Source"|translate}}' [options]="typesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                    appendTo="body" autoWidth="false" formControlName="sourceId"
+                    [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-4 sm:col-span-6 xl:col-span-2 cursor-pointer mt-5">
+                <label class="font-weight-bold">{{"Status"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"Status"|translate}}' [options]="statusList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="status">
+                </p-dropdown>
+            </div>
+                <div class="col-span-4 sm:col-span-6 xl:col-span-2 cursor-pointer mt-5">
+                    <label for="branchId" class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                    <p-dropdown id="branchId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="branchList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="branchId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" formControlName="branchId">
+                    </p-dropdown>
+                </div>
+
+
+        </div>
+<div class="grid grid-cols-12 gap-3 pt-2">
+    
+</div>
+<div class="grid grid-cols-12 gap-3 pt-2">
+
+</div>
+        <div class="grid grid-cols-12 gap-1 ">
+            <div class="col-span-4 sm:col-span-3 xxl:col-span-2 cursor-pointer mb-1">
+                <p-button label='{{"ShowRecord"|translate}}'
+                    styleClass="p-ripple p-element button w-32  mb-1 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="PotentialCustomersReportForm.invalid"></p-button>
+            </div>
+            <div class="col-span-4 sm:col-span-3 xxl:col-span-1 cursor-pointer mb-1 ">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32  mb-1 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>         
+        </div>
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                    [globalFilterFields]="['leadId','customerName','mainContactName','mainContactPhone','employeeName','sourceName','statusName']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:10%" class="head_tb" pSortableColumn="leadId">{{"LeadId"|translate}}</th>
+                            <th style="width:15%" class="head_tb" pSortableColumn="customerName">{{"CustomerName"|translate}}</th>
+                            <th style="width:15%" class="head_tb" pSortableColumn="mainContactName">{{"MainContactName"|translate}}</th>
+                            <th style="width:12%" class="head_tb" pSortableColumn="mainContactPhone">{{"MainContactPhone"|translate}}</th>
+                            <th style="width:12%" class="head_tb" pSortableColumn="employeeName">{{"SalesEmployee"|translate}}</th>
+                            <th style="width:12%" class="head_tb" pSortableColumn="expectedValue">{{"ExpectedValue"|translate}}</th>
+                            <th style="width:10%" class="head_tb" pSortableColumn="createdAt">{{"Date"|translate}}</th>
+                            <th style="width:10%" class="head_tb" pSortableColumn="sourceName">{{"Source"|translate}}</th>
+                            <th style="width:10%" class="head_tb" pSortableColumn="branchName">{{"branch"|translate}}</th>
+                            <th style="width:10%" class="head_tb" pSortableColumn="statusName">{{"Status"|translate}}</th>
+                            
+                            <th class="head_tb" style="width: 5% !important;"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-item>
+                        <tr>
+                            <td>{{item.leadId }}</td>
+                            <td>{{item.customerName }}</td>
+                            <td>{{item.mainContactName }}</td>
+                            <td>{{item.mainContactPhone }}</td>
+                            <td>{{item.employeeName }}</td>
+                            <td>{{item.expectedValue }}</td>
+                            <td>{{(item.createdAt ) ? ((item.createdAt ) | date:'yyyy-MM-dd') : ''}}</td>
+                            <td>{{item.sourceName }}</td>
+                            <td>{{item.branchName }}</td>
+                            <td>{{item.statusName }}</td>
+
+                            <td><i class="material-icons cursor-pointer"
+                                (click)="ShowDetailsOnly(item.leadId)"style="color:blue"title="{{ 'CustomerStatement' | translate }}">
+                                visibility
+                            </i>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="footer">
+                                <tr>
+                                    <td colspan="1">{{"NumberClients"|translate}}</td>
+                                        <td class="total_b"> {{ (dt.filteredValue ? dt.filteredValue.length : (voucherData?.length || 0)) }} </td>
+                                    <td colspan="9"></td>
+                                </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

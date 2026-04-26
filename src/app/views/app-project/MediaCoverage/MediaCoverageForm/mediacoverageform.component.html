@@ -1,0 +1,140 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="MediaCoverageAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="id" class="control-label font-weight-bold">{{"EventNumber"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="id" type="text" formControlName="id" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': MediaCoverageAddForm.get('id').value <= 0}" [readonly]="true">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="transDate" class="control-label font-weight-bold">{{"Date"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="transDate" type="date" formControlName="transDate" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="eventName" class="control-label font-weight-bold">{{"EventName"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="eventName" type="text" formControlName="eventName" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(MediaCoverageAddForm.get('eventName').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="eventDateTime" class="control-label font-weight-bold">{{"DateTimeEvent" |
+                        translate}}<span class="required-asterisk">*</span></label>
+                    <input id="eventDateTime" type="datetime-local" formControlName="eventDateTime"
+                        class="input border w-full mt-1" [attr.disabled]="disableAll ? true : null">
+                </div>
+
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="eventType" class="control-label font-weight-bold">{{"EventType"|translate}}</label>
+                    <p-dropdown id="eventType" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="eventTypesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="eventType" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="placeId" class="control-label font-weight-bold">{{"Covid19Location"|translate}}</label>
+                    <p-dropdown id="placeId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="locationsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="placeId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="authorityId"
+                        class="control-label font-weight-bold">{{"AuthorityDonor"|translate}}</label>
+                    <p-dropdown id="authorityId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="authoritiesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="authorityId" filterBy="text" appendTo="body" autoWidth="false"
+                        [disabled]="disableAll" [virtualScroll]="true" [lazy]="true"
+                        (onLazyLoad)="AuthloadLazyOptions($event)" [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+        
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="coverageType"
+                            class="control-label font-weight-bold">{{"CoverTypeNeeded"|translate}}</label>
+                        <p-multiSelect id="coverageType" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="coverageTypesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            formControlName="coverageType" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [disabled]="disableAll">
+                        </p-multiSelect>
+                    </div>
+
+
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="empId"
+                        class="control-label font-weight-bold">{{"Liaisonofficer"|translate}}</label>
+                    <p-dropdown id="empId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="EmployeeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="empId" filterBy="text" appendTo="body" autoWidth="false"
+                        [disabled]="disableAll" [virtualScroll]="true" [lazy]="true"
+                         [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="eventDescr" class="control-label font-weight-bold">{{"Briefdescriptionoftheevent"|translate}}</label>
+                    <input id="eventDescr" type="text" formControlName="eventDescr" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="notes" class="control-label font-weight-bold">{{"Additionalnotes"|translate}}</label>
+                    <input id="notes" type="text" formControlName="notes" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+            <br>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MediaCoverageAddForm.invalid  || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MediaCoverageAddForm.invalid" type="button"
+                    (onClick)="PrintMediaCoveraget(this.MediaCoverageAddForm.value.id)"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MediaCoverageAddForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteMediaCoverage(this.MediaCoverageAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/MediaCoverage/Mediacoveragelist']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,24 @@
+::ng-deep .p-datatable tfoot>tr {
+    background-color: #2196f3;
+    color: white;
+    text-align-last: center;
+    /* Set text color to white or any contrasting color */
+}
+
+.custom-star-icon {
+    color: gold; 
+    font-size: 24px;
+    margin-right: 16px;
+  }
+
+  .custom-star-icon2  
+  {
+    color: gray; 
+    font-size: 24px;
+    margin-right: 16px;
+  }
+  .hdlbl {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: x-large;
+}

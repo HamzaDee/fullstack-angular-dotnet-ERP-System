@@ -1,0 +1,106 @@
+<app-beneficariesadvancedsearch (searchResultEvent)="handleSearchResult($event)"></app-beneficariesadvancedsearch>
+<div class="container">   
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+         [globalFilterFields]="['benName','nationalityName','documentTypeName','documentNo','phoneNo1','birthDate','age','governorateName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="caption">
+            
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>                    
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="AddBeneficiariesForm(0)"></p-button>
+                </div>                 
+            
+                
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5 text-left">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px" alt="Excel Icon">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px" alt="PDF Icon">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>                    
+                <th class="head_tb" pSortableColumn="benName">{{"BeneficiarieName"|translate}}</th>
+                <th class="head_tb" pSortableColumn="nationalityName">{{"Nationality"|translate}}</th>   
+                <th class="head_tb" pSortableColumn="documentTypeName">{{"documentType"|translate}}</th>
+                <th class="head_tb" pSortableColumn="documentNo">{{"NationalORDocNumber"|translate}}</th>
+                <th class="head_tb" pSortableColumn="governorateName">{{"Governorate"|translate}}</th>
+                <th class="head_tb" pSortableColumn="phoneNo1">{{"PhoneNumber"|translate}}</th> 
+                <th class="head_tb" pSortableColumn="birthDate">{{"BirthdayDate"|translate}}</th>                      
+                <th class="head_tb" pSortableColumn="age">{{"Age"|translate}}</th>
+                <th class="head_tb" pSortableColumn="age">{{"Gender"|translate}}</th>
+                <th style="text-align: justify;"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>            
+        </ng-template>
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-vol >
+            <tr>
+                <td hidden="true">{{vol.id}}</td>
+                <td style="text-align: justify;">{{vol.benName}}</td>
+                <td style="text-align: justify;">{{vol.nationalityName}}</td>
+                <td style="text-align: justify;">{{vol.documentTypeName}}</td>
+                <td style="text-align: justify;">{{vol.documentNo}}</td>
+                <td style="text-align: justify;">{{vol.governorateName}}</td>
+                <td style="text-align: justify;">{{vol.phoneNo1}}</td>
+                <td style="text-align: justify;">{{vol.birthDate |date:'yyyy/MM/dd'}}</td>
+                <td style="text-align: justify;">{{vol.age}}</td>
+                <td style="text-align: justify;">{{vol.genderName}}</td>
+                <td>
+                    
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+
+                        <button mat-menu-item (click)="OpenDetailsForm(vol.id)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} 
+                        </button>
+
+                        <button mat-menu-item (click)="OpenBeneficiariesForm(vol.id,false)" >
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}}  
+                        </button>
+
+                        <button mat-menu-item (click)="DeleteBeneficiaries(vol.id)" > 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} 
+                        </button>  
+                        
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td style="vertical-align: top;" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

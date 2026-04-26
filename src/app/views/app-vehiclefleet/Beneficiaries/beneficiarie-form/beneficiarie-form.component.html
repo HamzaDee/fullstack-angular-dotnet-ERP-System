@@ -1,0 +1,504 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="BeneficiarieForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Nationality"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="nationalityId"
+                        [options]="NationalityList" (onChange)="onNationalityChange($event)"
+                        [ngClass]="{ 'invalid-field': BeneficiarieForm.get('nationalityId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"documentType"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="documentTypeId"
+                        [options]="IdentityProofList"
+                        [ngClass]="{ 'invalid-field': BeneficiarieForm.get('documentTypeId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" *ngIf="isJordanian">
+                    <label class="control-label font-weight-bold">{{"NationalNumber"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="documentNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': BeneficiarieForm.get('documentNo').value <= 0}">
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanian">
+                    <label for="documentNo" class="control-label font-weight-bold">{{"documentNumber"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="documentNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': BeneficiarieForm.get('documentNo').value <= 0}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanian">
+                    <label class="control-label font-weight-bold">{{"SecurityIDNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="securityNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanian">
+                    <label class="control-label font-weight-bold">{{"CommissionNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="committeeNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanian">
+                    <label class="control-label font-weight-bold">{{"RegistrationNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="registrationNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BeneficiarieName"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="benName"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(BeneficiarieForm.get('benName')?.value)}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BirthdayDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1 " formControlName="birthDate"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="phoneNo1" class="control-label font-weight-bold">{{"PhoneNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="phoneNo1"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PhoneNumber1"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="phoneNo2"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Address"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="address"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Governorate"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="governorateId"
+                        [options]="GovernorateList"
+                        (onChange)="FilterGover(BeneficiarieForm.get('governorateId')?.value)">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="districtId"
+                        [options]="filteredDistrictList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"AREA"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="areaId"
+                        [options]="AreaList">
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Gender"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="genderId"
+                        [options]="GenderList"
+                        [ngClass]="{ 'invalid-field': BeneficiarieForm.get('genderId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+
+
+               <!--  -------------------------  ------------------------- --------------------------->
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SupportType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="supportType"
+                        [options]="SupportTypeList" (onChange)="OnChangeSupportType($event)">
+                    </p-dropdown>
+                </div> -->
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"AuthorityDonor"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="donorId"
+                        [options]="AuthorityList" [virtualScroll]="true">
+                    </p-dropdown>
+                </div> -->
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"AuthorityIntermediary"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="intermediaryId"
+                        [options]="IntermediaryList" [virtualScroll]="true">
+                    </p-dropdown>
+                </div> -->
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SupportValueInDinarsDollars"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="totalAmount"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div> -->
+
+                <!--  -------------------------  ------------------------- --------------------------->
+
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isSample">
+                    <label class="control-label font-weight-bold">{{"PayType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="supportWay"
+                        [options]="SupportWayList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isSample">
+                    <label class="control-label font-weight-bold">{{"WalletOrATMCardNumber"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="cardNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isSample">
+                    <label class="control-label font-weight-bold">{{"serviceProvider"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="serviceProvider"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div> -->
+                
+            </div>
+
+            <!--  *ngIf="!isSample && !isCash"-------------------------  ------------------------- --------------------------->
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SponsorCode"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="sponsorCode"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SponsorNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="sponsorNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"GuardianName"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="guardianName"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"GrPhoneNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="grPhoneNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Relationship"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="grRelationshipId"
+                        [options]="RelationshipIdList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"GuardianNationality"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="grNationalityId"
+                        [options]="NationalityList" (onChange)="onNationalityGuardianChange($event)">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SponsorDocumentType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="grDocTypeId"
+                        [options]="GuardianDocTypeList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorNationalNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grDocNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorDocumentNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grDocNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorSecurityIDNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grSecurityNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorCommissionNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grCommitteeNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input id="isBreadwinner" [checked]="isBreadwinner == 1" formControlName="isBreadwinner"
+                        (change)="checkIsBreadwinner($event)" type="checkbox" class="input border mr-3 ml-3 mt-5"
+                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none" for="isBreadwinner"> {{"IsGeBreadwinner" | translate}}
+                    </label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"NumberOfBreadwinners"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="dependentsNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"NumberofMales"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="malesNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"NumberofMalesLessThan18"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="malesNoLess18"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"NumberofFeMales"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="femalesNo"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"NumberofFeMalesLessThan18"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="femalesNoLess18"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"HousingType"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="housingType"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <input id="isSpecialNeed" [checked]="isSpecialNeed == 1" formControlName="isSpecialNeed"
+                        (change)="checkIsSpecialNeed($event)" type="checkbox" class="input border mr-3 ml-3 mt-5"
+                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none" for="isSpecialNeed"> {{"IsSpecialNeed" | translate}}
+                    </label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"specialNeed"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="specialNeed"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5" >
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"incomeSource"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="incomeSource"
+                        [options]="IncomeSourceList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"monthlyIncomeAmt"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="monthlyIncomeAmt"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input id="isOtherIncomeSource" [checked]="isOtherIncomeSource == 1"
+                        formControlName="isOtherIncomeSource" (change)="checkisOtherIncomeSource($event)"
+                        type="checkbox" class="input border mr-3 ml-3 mt-5"
+                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none" for="isOtherIncomeSource"> {{"IsOtherIncomeSource" |
+                        translate}}
+                    </label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OtherIncomeSource"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="otherIncomeSource"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5"></div>
+           
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                         <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"class="py-4 sm:mr-8 active">{{"DetailsOfTheSupportProvided"|translate}}</a>
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content"> 
+                      <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="benConVouchersList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <!-- <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template> -->
+                               <ng-template pTemplate="header">
+                                    <tr>
+                                                                            
+                                        <th class="head_tb" style="width: 10%">{{"ExitVoucherNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"AuthorityDonor"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"PlanNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"materialName"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"Quantity"|translate}}</th>                                       
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-invdt let-i="rowIndex">
+                                    <tr>   
+                                       <td><input type="text" [(ngModel)]="invdt.voucherNo"
+                                                class="input border w-full mt-1 " [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td>                                                                                     
+                                        <td><input type="text" [(ngModel)]="invdt.project"
+                                                class="input border w-full mt-1 " [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td> 
+                                        <td><input type="text" [(ngModel)]="invdt.projectPlan"
+                                                class="input border w-full mt-1 " [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td> 
+                                        <td><input type="text" [(ngModel)]="invdt.itemName"
+                                                class="input border w-full mt-1 " [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td> 
+                                         <td><input type="text" [(ngModel)]="invdt.qty"
+                                                class="input border w-full mt-1 " [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td> 
+                                        
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>                               
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="BeneficiarieForm.invalid  || disableSave" type="submit" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/Beneficiaries/BeneficiariesList']">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

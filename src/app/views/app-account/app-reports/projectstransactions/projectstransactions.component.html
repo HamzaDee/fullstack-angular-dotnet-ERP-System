@@ -1,0 +1,255 @@
+<form [formGroup]="ProjectsTrasnactionsAddForm">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center">
+            </div>
+            <input type="number" class="form-control" formControlName="id" hidden>
+            <div class="card-body">
+                <div class="intro-y box p-5 mt-12 sm:mt-5">
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Projects"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="projectsList" [(ngModel)]="selectedprojId"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="projectId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"AccountNo"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="accountsList" [(ngModel)]="selectedacc"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="accId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="userbranchList" [(ngModel)]="selectedbranch"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"VoucherStatus"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="statusList"
+                             [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="voucherStatus" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"FromDate"|translate}}<span
+                                    class="required-asterisk">*</span></label>
+                            <input type="date" formControlName="fromdate" class="input border w-full mt-1">
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ToDate"|translate}}<span
+                                    class="required-asterisk">*</span></label>
+                            <input type="date" formControlName="todate" class="input border w-full mt-1 ">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CurrentPeriod"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="periodsList"
+                                [(ngModel)]="selectedper" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="yearId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" (ngModelChange)="GetPeriods()">
+
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <input type="checkbox" formControlName="projtotals" class="input border mr-2 mr-3 ml-3"
+                                [(ngModel)]="showProjtotals" (click)="EmptyForm()" (change)="costchange()">
+                            <label class="cursor-pointer select-none w-full"
+                                for="projtotals">{{"ShowProjectsTotals"|translate}}</label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <input type="checkbox" formControlName="accountstotals" class="input border mr-2 mr-3 ml-3"
+                                [(ngModel)]="showAccountstotals" (click)="EmptyForm()" (change)="accountchange()">
+                            <label class="cursor-pointer select-none w-full"
+                                for="accountstotals">{{"ShowAccountsTotals"|translate}}</label>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input type="text" class="input border w-full mt-1 " [hidden]="true">
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-12 gap-5 mr-2">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"ShowRecord"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="GetReport()"
+                                [disabled]="ProjectsTrasnactionsAddForm.invalid"></p-button>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"NewSearch"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="clearFormData()"></p-button>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"Print"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon=""></p-button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- stadndered Table ============================================================================= START -->
+                <div>
+                    <div class="intro-y box tab-content">
+                        <div class="tab-content__pane active">
+                            <div class="intro-y box px-5 pt-5">
+                                <div class="col-md-12" id="htmlData">
+
+                                    <p-table #dt [value]="voucherData" [rows]="16" [paginator]="true"
+                                        [globalFilterFields]="['voucherNumber','voucherName','voucherStatement','costCenterName','accountNumber','accountName','debit','credit']"
+                                        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                        dataKey="id"
+                                        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                        [showCurrentPageReport]="true">
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div
+                                                    class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                                    <span class="p-input-icon-left">
+                                                        <i class="pi pi-search"></i>
+                                                        <input class="pInputText input border w-full mt-1" pInputText
+                                                            type="text"
+                                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                            placeholder=' {{"search"|translate}} ' />
+                                                    </span>
+                                                </div>
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                                    align="end">
+                                                    <i class="pi pi-star-fill"
+                                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                        (click)="updateFavourite(this.screenId)"
+                                                        title="{{'AddToFavourite' | translate}}"
+                                                        tooltipposition="bottom">
+                                                    </i>
+
+                                                    <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="XLS" (click)="exportExcel1()" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/excel.svg"
+                                                            width="20px">
+                                                    </button>
+                                                    <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="PDF" (click)="exportPdf1()" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                                            width="20px">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"VoucherNo"|translate}} </th>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"VoucherType"|translate}} </th>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"VoucherDate"|translate}} </th>
+                                                <th class="head_tb" style="width: 20% !important;">
+                                                    {{"ProjectName"|translate}} </th>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"AccountNo"|translate}} </th>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"AccountName"|translate}} </th>
+                                                <th class="head_tb" style="width: 10% !important;">{{"Note"|translate}}
+                                                </th>
+                                                <th class="head_tb" style="width: 10% !important;">{{"Debit"|translate}}
+                                                </th>
+                                                <th class="head_tb" style="width: 10% !important;">
+                                                    {{"Credit"|translate}} </th>
+                                                <th style="width: 5%"><i class="pi pi-cog"
+                                                        style="font-size: 1.2rem"></i></th>
+
+                                        </ng-template>
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row
+                                            let-i="rowIndex">
+                                            <tr>
+                                                <td [hidden]="hidden">{{row.id}}</td>
+                                                <td [hidden]="hidden">{{row.categoryId}}</td>
+                                                <td>{{ row.voucherNumber }}</td>
+                                                <td>{{ row.voucherName }}</td>
+                                                <td>{{ row.voucherDate | date: 'yyyy-MM-dd'}}</td>
+                                                <td>{{ row.projectName }}</td>
+                                                <td>{{ row.accountNumber}}</td>
+                                                <td>{{ row.accountName}}</td>
+                                                <td>{{ row.voucherStatement}}</td>
+                                                <td>{{ row.debit | number: '1.3-3' }}</td>
+                                                <td>{{ row.credit | number: '1.3-3' }}</td>
+                                                <td>
+                                                    <i class="material-icons cursor-pointer"
+                                                        (click)="OpenVoucher(row.id,row.categoryId)" style="color:blue"
+                                                        title="{{ 'showDetails' | translate }}">
+                                                        visibility
+                                                    </i>
+                                                </td>
+                                                <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id"
+                                                        [ngModelOptions]="{standalone: true}"></td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="footer">
+                                            <tr>
+                                                <td style="flex: 0 0 90rem" colspan="6"></td>
+                                                <td style="flex: 0 0 7rem">{{"total"|translate}}</td>
+                                                <td style="flex: 0 0 7rem">
+                                                    <input type="text" [value]="this.tot1Formatted" style="width:100%;"
+                                                        class="input border w-full mt-1" [disabled]="true">
+                                                </td>
+                                                <td style="flex: 0 0 7rem">
+                                                    <input type="text" [value]="this.tot2Formatted" style="width: 100%;"
+                                                        class="input border w-full mt-1" [disabled]="true">
+                                                </td>
+
+                                                <td style="flex: 0 0 33rem" [attr.colspan]="12"></td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- stadndered Table ============================================================================= ===================End  -->
+
+
+            </div>
+        </div>
+    </div>
+</form>

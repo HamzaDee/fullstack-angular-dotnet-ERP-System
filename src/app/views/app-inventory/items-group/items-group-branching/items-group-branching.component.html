@@ -1,0 +1,91 @@
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <!-- <div class="card-header text-center mt-5">
+        <h1>{{data.title}}</h1>
+    </div> -->
+    <br /> <br />
+    <form [formGroup]="ItemsGroupsForm" (ngSubmit)="OnSaveForms()">
+        <div style="text-align-last: center;">
+            <label>{{"MainCollection"| translate}} : {{receivedData.name}}</label>
+            <div style="display: flex;justify-content: space-around;margin-top: 25px;">
+                <label>{{"Discount"| translate}} : {{receivedData.discount}}</label>
+                <label>{{"Tax"| translate}} : {{receivedData.tax}}</label>
+                <label>{{"Category"| translate}} : {{receivedData.category}}</label>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="itemsModelList" dataKey="id" [loading]="loading"
+                    styleClass="p-datatable-gridlines" [rowHover]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="flex align-items-center justify-content-between">
+                            <p-button label='{{"AddNew"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="pi pi-plus" (click)="AddNewLine(0)"></p-button>
+                        </div>
+                        <br /> <br />
+
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5%" pSortableColumn="CollectionNumber">
+                                {{"CollectionNumber"|translate}}
+                                <p-sortIcon field="CollectionNumber"></p-sortIcon>
+                            </th>
+                            <th style="width: 10%" pSortableColumn="CollectionArabicName">
+                                {{"CollectionArabicName"|translate}}
+                                <p-sortIcon field="CollectionArabicName"></p-sortIcon>
+                            </th>
+                            <th style="width: 10%" pSortableColumn="CollectionEnglishName">
+                                {{"CollectionEnglishName"|translate}}
+                                <p-sortIcon field="CollectionEnglishName"></p-sortIcon>
+                            </th>
+                            <th style="width: 8%" pSortableColumn="isMain">{{"IsMain"|translate}} <p-sortIcon
+                                    field="isMain"></p-sortIcon></th>
+                            <th style="width: 15%" pSortableColumn="Notes">{{"Notes"|translate}}
+                                <p-sortIcon field="Notes"></p-sortIcon>
+                            </th>
+
+                            <th style="width: 5%"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemsGroupsList>
+                        <tr>
+                            <td><input type="text" [(ngModel)]="itemsGroupsList.id" class="input border w-full mt-1 "
+                                    [ngModelOptions]="{standalone: true}" [disabled]="true"></td>
+                            <td><input type="text" [(ngModel)]="itemsGroupsList.groupNameA"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                    [disabled]="itemsGroupsList.isExist"></td>
+                            <td><input type="text" [(ngModel)]="itemsGroupsList.groupNameE"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                    [disabled]="itemsGroupsList.isExist"></td>
+                            <td><input [checked]="itemsGroupsList.isMain" type="checkbox"  [(ngModel)]="itemsGroupsList.isMain"
+                                [ngModelOptions]="{standalone: true}" [disabled]="itemsGroupsList.isExist" class="input border mr-2 mr-3 ml-3" />
+                            </td>
+                            <td><input type="text" [(ngModel)]="itemsGroupsList.note" class="input border w-full mt-1 "
+                                    [ngModelOptions]="{standalone: true}" [disabled]="itemsGroupsList.isExist"></td>
+                            <td>
+                                <button *ngIf="!itemsGroupsList.isExist" (click)="DeleteItem(itemsGroupsList.id)">
+                                    <i class="material-icons" style="color:red">delete</i>
+                                    &nbsp;{{"Delete"|translate}} </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                type="submit"></p-button>
+
+            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                [routerLink]="['/ItemsGroups/ItemsGroupsList']"></p-button>
+        </div>
+    </form>
+</div>

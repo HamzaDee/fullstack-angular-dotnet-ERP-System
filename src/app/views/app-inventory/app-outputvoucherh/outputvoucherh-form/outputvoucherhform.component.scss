@@ -1,0 +1,11 @@
+::ng-deep .p-dropdown.p-component {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+::ng-deep .p-dropdown-label {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* يخفي النص الزائد */
+}

@@ -1,0 +1,230 @@
+<div class="container">
+    <div class="intro-y box">
+        <form [formGroup]="CostCenterBudgetsAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="transNo" class="form-control " hidden>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-2  ">
+                        <label class="control-label font-weight-bold">{{"TransDate"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1" formControlName="transDate">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-2  ">
+                        <label class="control-label font-weight-bold">{{"YEAR"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="fiscalYearList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="yearId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [(ngModel)]="selectedyear"
+                            (onChange)="ClearTable()">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-8">
+                        <input [checked]="devideByMonths==1" (change)="devideByMonths=(devideByMonths==0)?1:0"
+                            id="check_Months" (click)="checkTexts()" type="checkbox"
+                            class="input border mr-2 mr-3 ml-3 " formControlName="devideByMonths" />
+                        <label class="cursor-pointer select-none w-full"
+                            for="check_Months">{{"devideByMonths"|translate}}</label>
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4  "></div>
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12  " align="end">
+                        <p-button (click)="DeleteCostCenterBudgets()"
+                            class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component">
+                            {{"DelAll"|translate}}</p-button>
+                        &nbsp;
+                        
+                        <p-button (click)="GetCostcenter()"
+                            class="p-ripple p-element button w-48  mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                            {{"ViewAllCostCenter"|translate}}</p-button>
+                        &nbsp;
+                        <p-button (click)="AddNewRowCostCenterBudget()"
+                            class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            styleClass="p-button-success p-button-sm" icon="pi pi-plus"></p-button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5">
+                        <div class="col-md-12" id="htmlData">
+
+                            <p-table #dt [value]="NewCostCenterBudgetsList" [rows]="16" [paginator]="true"
+                                [globalFilterFields]="['',]" styleClass="p-datatable-gridlines" 
+                                responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+                                <ng-template pTemplate="caption"></ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 20% !important;" >{{"CostCenter"|translate}} </th>
+                                        <th class="head_tb">{{"branch"|translate}} </th>
+                                        <th class="head_tb">{{"Amount"|translate}} </th>
+                                        <th class="head_tb">{{"Month1"|translate}} </th>
+                                        <th class="head_tb">{{"Month2"|translate}} </th>
+                                        <th class="head_tb">{{"Month3"|translate}} </th>
+                                        <th class="head_tb">{{"Month4"|translate}} </th>
+                                        <th class="head_tb">{{"Month5"|translate}} </th>
+                                        <th class="head_tb">{{"Month6"|translate}} </th>
+                                        <th class="head_tb">{{"Month7"|translate}} </th>
+                                        <th class="head_tb">{{"Month8"|translate}} </th>
+                                        <th class="head_tb">{{"Month9"|translate}} </th>
+                                        <th class="head_tb">{{"Month10"|translate}} </th>
+                                        <th class="head_tb">{{"Month11"|translate}} </th>
+                                        <th class="head_tb">{{"Month12"|translate}} </th>
+                                        <th class="head_tb">{{"Policy"|translate}} </th>
+                                        <th class="head_tb"><i class="pi pi-cog"></i> </th>
+                                        <th class="head_tb"><i class="pi pi-cog"></i> </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                    <tr>
+                                        <td  style="text-align: justify;" style="width: 20% !important;">
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="costcentersList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.costcenterId" [ngModelOptions]="{standalone: true}"
+                                                (onChange)="CheckCostCenter($event,row,i)"
+                                                (keydown)="handleF3Key($event, row,i)">
+                                            </p-dropdown>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="BranchesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.branchId" [ngModelOptions]="{standalone: true}"
+                                                (keydown)="handleF3Key($event, row,i)"
+                                                (onChange)="CheckBranch($event,row,i)">
+                                            </p-dropdown>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="amt" type="number" style="width: 100px;" #inputField
+                                                (blur)="updateValueField(inputField.value, row,'amount')"
+                                                [value]="row.amount" [disabled]="true" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m01" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month1')"
+                                                [value]="row.month1" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m02" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month2')"
+                                                [value]="row.month2" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m03" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month3')"
+                                                [value]="row.month3" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m04" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month4')"
+                                                [value]="row.month4" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m05" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month5')"
+                                                [value]="row.month5" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m06" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month6')"
+                                                [value]="row.month6" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m07" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month7')"
+                                                [value]="row.month7" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m08" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month8')"
+                                                [value]="row.month8" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m09" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month9')"
+                                                [value]="row.month9" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m10" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month10')"
+                                                [value]="row.month10" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m11" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month11')"
+                                                [value]="row.month11" (keydown)="handleF3Key($event, row,i)"/>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <input class="m12" type="number" style="width: 100px;"
+                                                (blur)="updateValueField($event.target.value, row, 'month12')"
+                                                [value]="row.month12" (keydown)="handleF3Key($event, row,i)"  />
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="PolicysList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.policyId" [ngModelOptions]="{standalone: true}"
+                                                (keydown)="handleF3Key($event, row,i)">
+                                            </p-dropdown>
+                                        </td>
+
+
+                                        <td  style="text-align: justify;">
+                                            <button mat-menu-item (click)="deleteRow(i)"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                        <td  style="text-align: justify;">
+                                            <button mat-menu-item (click)="CopyRow(row,i)"> <i
+                                                class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i>
+                                            &nbsp;{{"CopyRow"|translate}} </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div mat-dialog-actions align="end">
+                <!-- <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-button-sm"
+                                    type="submit"></p-button>
+                                <p-button label='{{"Cancel"|translate}}' [routerLink]="['/Budget/AccountsbudgetsList']"
+                                    styleClass="p-button-danger p-button-sm" type="button" icon="pi pi-undo"></p-button> -->
+
+                <p-button [disabled]="!CostCenterBudgetsAddForm.valid" label='{{"Save"|translate}}' icon="pi pi-save"
+                    class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit">
+                </p-button>
+                <p-button label='{{"Cancel"|translate}}' [routerLink]="['/CostCenterBudgets/CostcenterbudgetsList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                    type="button" icon="pi pi-undo">
+                </p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+
+<hr>

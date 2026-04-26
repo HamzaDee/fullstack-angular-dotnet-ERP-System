@@ -1,0 +1,10 @@
+.p-multiselect-items li {
+  white-space: normal !important;
+}
+::ng-deep .p-multiselect-item {
+  white-space: normal !important; /* السماح بكسر السطر للنصوص الطويلة */
+  overflow: visible !important;   /* عرض النص بالكامل */
+  text-overflow: clip !important; /* لا تقص النص */
+  direction: rtl;                 /* لمحاذاة النصوص العربية لليمين */
+}
+

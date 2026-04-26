@@ -1,0 +1,280 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="BeginingChequesAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <!-- <input type="text" formControlName="amount" class="form-control " hidden> -->
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+<!-- =================================================================================================-->
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                      <label class="control-label font-weight-bold ml-3">{{ "Incoming" | translate }}:</label>
+                      <input type="radio" [value]="1" [checked]="selectedRadioValue == 1" id="radioIncoming" formControlName="receipt" class="input border w-full mt-1" [(ngModel)]="selectedRadioValue" (change)="onRadioChange(1)" 
+                      [attr.disabled]="disableAll ? 'disabled' : null"/>
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                      <label class="control-label font-weight-bold ml-3">{{ "Outgoing" | translate }}:</label>
+                      <input type="radio" [value]="0" [checked]="selectedRadioValue == 0" id="radioOutgoing" formControlName="receipt" class="input border w-full mt-1" [(ngModel)]="selectedRadioValue" (change)="onRadioChange(0)" 
+                      [attr.disabled]="disableAll ? 'disabled' : null"/>
+                    </div>
+                  </div>
+                  
+                  
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{ "VoucherType" | translate }}
+                          <span class="required-asterisk">*</span>
+                        </label>
+                        <p-dropdown emptyFilterMessage="{{ 'noEntriesFoundLabel' | translate }}"
+                          [options]="defaultList"
+                          [style]="{ 'minWidth': '100%', 'width': '100%' }"
+                          styleClass="input border w-full mt-1"
+                          optionLabel="value" optionValue="label"
+                          [filter]="true"
+                          formControlName="voucherTypeId"
+                          filterBy="text"
+                          appendTo="body"
+                          autoWidth="false"
+                          [virtualScroll]="false"
+                          (onChange)="getVoucherNo($event,0)"                          
+                          [ngClass]="{ 'invalid-field': BeginingChequesAddForm.get('voucherTypeId').value <= 0 }"
+                          [disabled]="disableAll || disableVouchertype">
+                        </p-dropdown>
+                      </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"VoucherNo"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="text" formControlName="voucherNo" class="input border w-full mt-1 " 
+                            [ngClass]="{ 'invalid-field': isEmpty(BeginingChequesAddForm.get('voucherNo').value)}"
+                            (blur)="voucherNoBlur(BeginingChequesAddForm.value.voucherNo, BeginingChequesAddForm.value.voucherTypeId)"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"VoucherDate"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)" 
+                            class="input border w-full mt-1 " [ngClass]="{ 'invalid-field': !validDate}"
+                            [attr.disabled]="allowEditDate||disableAll ? 'disabled' : null">
+                        <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                    </div> 
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                            [ngClass]="{ 'invalid-field': BeginingChequesAddForm.get('currencyId').value <= 0}"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)"
+                            [disabled]="disableAll">                            
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ConverionFactor"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="number" formControlName="currRate" class="input border w-full mt-1 "  [readOnly]="disableCurrRate"
+                        [ngClass]="{ 'invalid-field': isEmpty(BeginingChequesAddForm.get('currRate').value)}"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                        </label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="allowEditBranch||disableAll">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-9 xxl:col-span-9 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+<!-- =================================================================================================Details-->
+<div class="card" class="card-blue">
+            <div class="intro-y box px-5 pt-5 mt-5">
+                <!-- <label class="control-label font-weight-bold hdlbl">{{"DebitAccounts"|translate}}</label> -->
+                <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">                    
+                    <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                        class="py-4 sm:mr-8 ">{{"Cheques"|translate}}</a>                    
+                    <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                        class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                </div>
+            </div>
+
+            <div class="intro-y tab-content">
+                <div class="tab-content__pane active" id="f01">
+                    <div class="intro-y box px-5 pt-5">
+                        <p-table #dt [value]="chequesList" dataKey="id" [loading]="loading" [scrollable]="true" [paginator]="false"
+                        [style]="{width:'100%'}" [responsive]="true" [resizableColumns]="true" 
+                        styleClass="p-datatable-gridlines" [rowHover]="true" scrollDirection="horizontal">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"AddLine"|translate}}'
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="AddNewLine(1,1)" [disabled]="disableAll"></p-button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 20rem">{{"CreditAccount"|translate}}</th>
+                                <th style="width: 20rem" pSortableColumn="chequeAccId">{{"ChequesGLAccount"|translate}}<p-sortIcon field="chequeAccId"></p-sortIcon></th>
+                                <th style="width: 15rem" pSortableColumn="chequeNo">{{"ChequeNo"|translate}}<p-sortIcon field="chequeNo"></p-sortIcon></th>
+                                <th style="width: 10rem" pSortableColumn="dueDate">{{"DueDate"|translate}}<p-sortIcon field="dueDate"></p-sortIcon></th>
+                                <th style="width: 20rem" pSortableColumn="bankId">{{"Bank"|translate}}<p-sortIcon field="bankId"></p-sortIcon></th>
+                                <th style="width: 15rem">{{"TheAmount"|translate}}</th>
+                                <th style="width: 21rem">{{"DrawerName"|translate}}</th>
+                                <th style="width: 10rem">{{"ChequeStatus"|translate}}</th>                                
+                                <th style="width: 3rem"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-accountList
+                                    let-i="rowIndex">
+                                    <tr>
+                                        <td style="width: 20rem"><p-dropdown
+                                            emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="suppliersList" 
+                                            styleClass="input border w-full mt-1" optionLabel="text"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false" [(ngModel)]="accountList.dealerId"
+                                            [ngClass]="{ 'invalid-field': accountList.dealerId <= 0}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (onChange)="CheckCheq(accountList,i)"
+                                            [disabled]="disableAll"(keydown)="handleF3Key($event, accountList,i)"></p-dropdown>
+                                    </td>
+                                        <td style="width: 20rem"><p-dropdown
+                                                emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="accountsList" styleClass="input border w-full mt-1"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body"  autoWidth="true" 
+                                                [(ngModel)]="accountList.chequeAccId" 
+                                                [ngClass]="{ 'invalid-field': accountList.chequeAccId <= 0}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)"></p-dropdown>
+                                        </td>
+                                        <td style="width: 15rem"><input type="number" [(ngModel)]="accountList.chequeNo"
+                                                class="input border w-full mt-1 " [style]="{'width': '100%'}"
+                                                [ngClass]="{ 'invalid-field': accountList.chequeNo <= 0 }"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (blur)="CheckCheq(accountList,i)"
+                                                [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)">
+                                        </td>
+                                        <td style="width: 10rem"><input type="date" [(ngModel)]="accountList.dueDate"
+                                                [ngClass]="{ 'invalid-field': isOneEmpty(accountList) }"
+                                                class="input border w-full mt-1 "                                               
+                                                [ngModelOptions]="{standalone: true}"
+                                                [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)">
+                                        </td>
+
+                                        <td style="width: 20rem"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="bankList" 
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="accountList.bankId"
+                                                [ngClass]="{ 'invalid-field': accountList.bankId <= 0}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="CheckCheq(accountList,i)"
+                                                [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)"></p-dropdown>
+                                        </td>
+
+                                        <td style="width: 15rem"><input type="number" [(ngModel)]="accountList.amount" (blur)="formatAmt(accountList)"
+                                                class="input border w-full mt-1 "
+                                                [ngClass]="{ 'invalid-field': accountList.amount <= 0}"
+                                                (ngModelChange)="calculateSum()"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)">
+                                        </td>
+
+                                        <td style="width: 21rem"><input type="text" [(ngModel)]="accountList.drawerName"
+                                                class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                [ngClass]="{ 'invalid-field': accountList.drawerName <= 0 }" (keydown)="handleF3Key($event, accountList,i)">
+                                        </td>
+
+                                        <td style="width: 10rem"><p-dropdown
+                                                emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="deafultStatusList" 
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="accountList.chequeStatus"
+                                                [ngClass]="{ 'invalid-field': accountList.chequeStatus <= 0}"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)">
+                                            </p-dropdown>
+                                        </td>
+                                        
+                                        <td style="width: 3rem">
+                                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class=""
+                                                 type="button">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button mat-menu-item (click)="onAddRowBefore(i,1)" [disabled]="disableAll">
+                                                    <i class="material-icons" style="color:green">add</i>
+                                                    &nbsp;{{"AddRowBefore"|translate}}
+                                                </button>
+                                                <button mat-menu-item (click)="deleteRow(i,1)" [disabled]="accountList.isProccessing == true||disableAll"> <i
+                                                        class="material-icons" style="color:red">delete</i>
+                                                    &nbsp;{{"Delete"|translate}} </button>
+                                                <button mat-menu-item (click)="CopyRow(accountList,i)"> <i
+                                                        class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i>
+                                                    &nbsp;{{"CopyRow"|translate}} </button>
+                                            </mat-menu>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <tr>
+                                <td style="width: 80rem" colspan="4">{{"total"|translate}}</td>
+                                <td style="width: 24rem">{{ this.total | number: '1.3-3'}}</td>
+                                <td style="width: 30rem" colspan="4"></td>
+                            </tr>
+                        </ng-template>                                  
+                        </p-table>                       
+                    </div>
+                </div>
+                
+            
+            <div class="tab-content__pane" id="f02">
+                <div class="intro-y box px-5 pt-5">
+                    <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+        [disabled]="BeginingChequesAddForm.invalid || !this.validDate || disableSave"  *ngIf="!showsave" type="submit"></p-button>
+    <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrinBeginingCheckVoucher(this.BeginingChequesAddForm.value.id)"
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+        [disabled]="BeginingChequesAddForm.invalid" type="button"></p-button>
+    <p-button label='{{"Delete"|translate}}' (onClick)="DeleteVoucher(this.BeginingChequesAddForm.value.id)" color="warn" icon="pi pi-trash" class="ml-4"
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+        [disabled]="BeginingChequesAddForm.invalid" type="button"  *ngIf="!showsave"></p-button>
+    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+        [routerLink]="['/BeginningCheques/BeginingchequesList']"></p-button>
+</div>   
+        </form>
+        
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,200 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="PromotionPlansAddForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PlanNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="planNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(PromotionPlansAddForm.get('planNo').value)}" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PlanDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="planDate"  class="input border w-full mt-1 "
+                      [attr.disabled]="disableAll ? 'disabled' : null">
+                    <span  class="required-asterisk"></span>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Year"|translate}} <span class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="yearNo"  class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': PromotionPlansAddForm.get('yearNo').invalid && PromotionPlansAddForm.get('yearNo').touched }"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    <span  class="required-asterisk"></span>
+                    <div *ngIf="PromotionPlansAddForm.get('yearNo').touched && PromotionPlansAddForm.get('yearNo').invalid" class="error-text">
+                        <span *ngIf="PromotionPlansAddForm.get('yearNo').errors?.required">
+                          {{"Yearisrequired"|translate}}
+                        </span>
+                        <span *ngIf="PromotionPlansAddForm.get('yearNo').errors?.invalidYear">
+                          {{"Enteravalidyear(e.g.,2021)"|translate}}
+                        </span>
+                    </div>
+                </div>                 
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Market"|translate}} <span
+                        class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countriesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="countryId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        (onChange)="getCustomers($event.value)"
+                        [ngClass]="{ 'invalid-field': PromotionPlansAddForm.get('countryId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Agent"|translate}} <span
+                        class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="filteredAgentsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="data2" [filter]="true" formControlName="agentId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': PromotionPlansAddForm.get('agentId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ExpectedValue"|translate}}
+                        <input type="text" formControlName="expectedValue" class="input border w-full mt-1 " [readOnly]="true">
+                    </label>                    
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>                          
+            </div>
+
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VoucherDetails"|translate}}</a>                       
+                    </div>
+                </div>
+
+                 <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="promotionPlanDTList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mb-5">
+                                            <p-button label='{{"AddPromItem"|translate}}' 
+                                                styleClass="p-ripple p-element button mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" *ngIf="isdisabled"></th>
+                                        <th class="head_tb" style="width: 20%" >{{"ProductedItem"|translate}}</th>
+                                        <th class="head_tb" style="width: 20%" >{{"PromotionalItem"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%" >{{"Cost"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%"  >{{"Qty"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%"  >{{"ExpectedCost"|translate}}</th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-promoList let-i="rowIndex">
+                                    <tr>   
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="promoList.id" 
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td> 
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="promoList.idHD" 
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>                                                                                          
+                                       <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="productedItemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="promoList.prodItemNo" 
+                                            styleClass="input border w-full mt-1"
+                                            [ngModelOptions]="{standalone: true}" 
+                                            (onChange)="GetPromotionalItems(promoList.prodItemNo,i)"
+                                            [ngClass]="{ 'invalid-field': promoList.prodItemNo <= 0}" [disabled]="disableAll">
+                                        </p-dropdown></td>
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.promotionalItemsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="promoList.itemNo"  (onChange)="GetPromItemCost(promoList.itemNo,i)"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': promoList.itemNo <= 0}" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="number"
+                                                [(ngModel)]="promoList.price" 
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [disabled]="disableAll"
+                                                [ngModelChange]="CalculateCost(promoList)">
+                                        </td>  
+                                        <td>
+                                            <input type="number"
+                                                [(ngModel)]="promoList.qty"  [ngModelChange]="CalculateCost(promoList)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [disabled]="disableAll"
+                                                [ngClass]="{ 'invalid-field': promoList.qty <= 0}">
+                                        </td>  
+                                        <td>
+                                            <input type="number"
+                                                [(ngModel)]="promoList.expectedCost" 
+                                               
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [disabled]="disableTableFields">
+                                        </td>                                                                           
+                                        <td>
+                                            <button mat-menu-item (click)="deleteRow(i)"> <i class="material-icons " *ngIf="!showsave" 
+                                                style="color:red">delete</i>
+                                        </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td style="flex: 0 0 50rem" colspan="2"></td>
+                                        <td style="flex: 0 0 10rem">{{"Total"|translate}}</td>                                        
+                                        <td style="flex: 0 0 15rem">{{this.SumQty}}</td>
+                                        <td style="flex: 0 0 15rem">{{this.SumCost}}</td>                                   
+                                        <td style="flex: 0 0 5rem" colspan="4"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>                   
+                </div> 
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="PromotionPlansAddForm.invalid || !this.validDate || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="PromotionPlansAddForm.invalid" type="button"[hidden]="showsave" (onClick)="DeleteVoucher(this.PromotionPlansAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/PromotionItemsPlans/PromotionPlanslist']"></p-button>
+                <p-button label='{{"Approval"|translate}}' icon="pi pi-check" class="ml-4"
+                    (click) = "ApproveOrder(PromotionPlansAddForm.get('id').value)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="PromotionPlansAddForm.invalid" type="button" *ngIf="approval"></p-button>
+            </div>
+        </form>

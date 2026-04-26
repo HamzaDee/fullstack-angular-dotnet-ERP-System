@@ -1,0 +1,172 @@
+<form [formGroup]="itemDetailsForm" (ngSubmit)="onConfirm()">
+    <div class="content">
+        <div class="card"> 
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                
+                    <div class="grid grid-cols-12 gap-5 pt-5">                       
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label for="itemName" class="control-label font-weight-bold">{{"materialName"|translate}}</label>
+                            <input type="text" [value]="itemName"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <!-- <div class="col-span-4 sm:col-span-4 xxl:col-span-4">
+                            <p-button
+                                styleClass="p-ripple p-element button mr-2 mb-2 flex items-center justify-center bg-theme-4 text-white p-button p-component"
+                                type="button"
+                                (click)="AddNewLine()">{{"enterAutoSequenceLikeFristSequence"|translate}}
+                            </p-button>
+                        </div> -->
+                        <div class="col-span-4 sm:col-span-2 xxl:col-span-2">
+                            <p-button
+                                styleClass="p-ripple p-element button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                                type="button" color="warn" (click)="cleardata()">{{"Delete"|translate}}
+                            </p-button>
+                        </div>                        
+                    </div>
+                <!-- <div class="grid grid-cols-12 gap-5 mt-5">                      -->
+                    <p-table #dt [value]="itemdetailsList" dataKey="id" 
+                        styleClass="p-datatable-gridlines" [rowHover]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"AddLine"|translate}}' 
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="head_tb" *ngIf="isdisabled">{{"id"|translate}}</th>
+                                <th class="head_tb" *ngIf="isdisabled">{{"hdid"|translate}}</th>                                        
+                                <th class="head_tb" style="width: 10%">{{"ItemNo"|translate}}</th>
+                                <th class="head_tb" style="width: 6%">{{"Unit"|translate}}</th>
+                                <th class="head_tb" style="width: 6%">{{"Quantity"|translate}}</th>
+                                <th class="head_tb" style="width: 6%">{{"Price"|translate}}</th>
+                                <!-- <th class="head_tb" style="width: 6%">{{"PalletCount"|translate}}</th> -->
+                                <th class="head_tb" style="width: 6%">{{"Weight"|translate}}</th>
+                                <th class="head_tb" style="width: 6%">{{"Total"|translate}}</th>
+                                <th class="head_tb" style="width: 6%">{{"ExpiryDate"|translate}}</th>
+                                <th class="head_tb" style="width: 8%">{{"notes"|translate}}</th>                                      
+                                <th class="text-center-m w-0" style="width: 3%"><i class="pi pi-cog"style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-invdt let-i="rowIndex">
+                            <tr>   
+                                <td style="text-align: justify;" *ngIf="isdisabled">
+                                    <input type="number" [(ngModel)]="invdt.id" 
+                                    [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                </td> 
+                                <td *ngIf="isdisabled">
+                                    <input type="number" [(ngModel)]="invdt.invVoucherDTID" 
+                                    [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                </td>     
+                                 <td *ngIf="isdisabled">
+                                    <input type="number" [(ngModel)]="invdt.itemDTId" 
+                                    [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                </td>                                                                                          
+                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [options]="itemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text"
+                                        optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                        autoWidth="false"
+                                        [(ngModel)]="invdt.itemId"
+                                        [ngClass]="{ 'invalid-field': invdt.itemId <= 0}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="onChangeItem($event,invdt,i)"
+                                        [disabled]="disableAll" 
+                                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                                    </p-dropdown>                                            
+                                </td>                   
+                                 <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [options]="this.unitsList[i]"
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text"
+                                        optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                        autoWidth="false" [virtualScroll]="false"
+                                        [(ngModel)]="invdt.unitId"
+                                        [ngClass]="{ 'invalid-field': invdt.unitId <= 0}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="onChangeUnit($event,invdt,i)" 
+                                        [disabled]="disableAll">
+                                    </p-dropdown>
+                                </td>
+                                   <td><input type="number" [(ngModel)]="invdt.qty"  
+                                        [ngClass]="{ 'invalid-field': invdt.qty <= 0}"
+                                        class="input border w-full mt-1 "
+                                        [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                        (onChange)="OnQtyChange($event,invdt,i)"
+                                        [disabled]="disableAll" >
+                                </td>
+                                <td><input type="number" [(ngModel)]="invdt.price"
+                                        class="input border w-full mt-1 "
+                                        [ngClass]="{ 'invalid-field': invdt.price <= 0}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="OnPriceChange( invdt)"
+                                        (blur)="OnPriceBlur( invdt)" [disabled]="disableAll">
+                                </td>
+         <!--                            <td><input type="number" [(ngModel)]="invdt.pallets"
+                                        class="input border w-full mt-1 "
+                                        [ngModelOptions]="{standalone: true, updateOn: 'blur'}"                                                
+                                        [disabled]="disableAll">
+                                </td> -->
+                                <td><input type="number" [(ngModel)]="invdt.weight"
+                                        class="input border w-full mt-1 "
+                                        [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                </td>
+                                <td><input type="number" [(ngModel)]="invdt.total"
+                                        class="input border w-full mt-1 "
+                                        [ngClass]="{ 'invalid-field': invdt.total <= 0}"
+                                        [ngModelOptions]="{standalone: true}" readonly [disabled]="disableAll">
+                                </td>
+                                <td>
+                                    <div style="width: 100%; display: flex">
+                                        <span>
+                                            <input type="date" [(ngModel)]="invdt.expiryDate"
+                                                class="input border w-full mt-1 "                                                        
+                                                [ngModelOptions]="{standalone: true}"                                                        
+                                                [disabled]="disableAll" [ngClass]="{ 'invalid-field': isRequierdEx(invdt,i) }">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><input type="text" [(ngModel)]="invdt.notes"
+                                        class="input border w-full mt-1 "
+                                        [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                </td> 
+                               
+                                <td style="width:2%"> <button (click)="deleteRow(i)"> <i class="material-icons" style="color:red">delete</i></button></td>   
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <tr>   
+                                <td colspan="5"></td>                
+                                <td>{{"total"|translate}}</td>
+                                <td>{{calculateSum()}}</td>
+                                <td colspan="4"></td>
+                            </tr>                                    
+                        </ng-template>
+                    </p-table>                        
+                <!-- </div> -->
+                 <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" (onClick)="onConfirm()"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (onClick)="onCancel()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

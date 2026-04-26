@@ -1,0 +1,52 @@
+<mat-toolbar class="topbar mat-bg-card">
+  <!-- Sidenav toggle button -->
+  <button *ngIf="layoutConf.sidebarStyle !== 'compact'" mat-icon-button id="sidenavToggle" (click)="toggleSidenav()"
+    matTooltip="Toggle Hide/Open">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span fxFlex></span>
+  <!-- Language Switcher -->
+  <button mat-button [matMenuTriggerFor]="menu">
+    <span class="flag-icon {{currentLang.flag}}" style="margin: 10px;"></span>
+    <span>{{currentLang.name}}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let lang of availableLangs" (click)="setLang(lang)">
+      <span class="flag-icon {{lang.flag}}" style="margin: 10px;"></span>
+      <span>{{lang.name}}</span>
+    </button>
+  </mat-menu>
+  <egret-search-input-over placeholder="Country (e.g. US)" resultPage="/search">
+  </egret-search-input-over>
+  <!-- Open "views/search-view/result-page.component" to understand how to subscribe to input field value -->
+  <!-- Notification toggle button -->
+  <button mat-icon-button matTooltip="Notifications" (click)="toggleNotific()" [style.overflow]="'visible'"
+    class="topbar-button-right">
+    <mat-icon>messages</mat-icon>
+    <span class="notification-number mat-bg-warn">3</span>
+  </button>
+  <!-- Top left user menu -->
+  <button mat-icon-button [matMenuTriggerFor]="accountMenu" class="topbar-button-right img-button">
+    <img src="assets/images/avatars/001-man.svg" alt="" />
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+  <span>&nbsp;</span>
+  <mat-menu #accountMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/Profile/overview']">
+      <mat-icon>account_box</mat-icon>
+      <span>{{"PROFILE"| translate }}</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/Profile/settings']">
+      <mat-icon>settings</mat-icon>
+      <span>{{"ACCOUNTSETTING"| translate }}</span>
+    </button>
+    <button mat-menu-item (click)="PopupChangePasswordForm()">
+      <mat-icon>lock</mat-icon>
+      <span>{{"CHANGEPASSWORD"| translate }}</span>
+    </button>
+    <button mat-menu-item (click)="jwtAuth.signout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>{{"SIGNOUT"| translate }}</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

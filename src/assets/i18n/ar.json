@@ -1,0 +1,3619 @@
+{
+    "DASHBOARD": "الصفحة الرئيسية",
+    "APPNAME": "نظام المستشفيات",
+    "Password": "كلمة المرور",
+    "Username": "اسم المستخدم",
+    "rememberMe": "تذكر هذا الجهاز",
+    "SelectAll": "تحديد الكل",
+    "DeSelectAll": "إلغاء تحديد الكل",
+    "MainModule": "النظام",
+    "GrantedActions": "أوامر المستخدم",
+    "MsgatLeasOneTest": "يجب ادخال على الأقل فحص واحد في الجدول للحفظ",
+    "ExternalLaboratoryTestsRequest": "قائمة طلبات الفحوصات المخبرية",
+    "DragDropListsNote": "سحب و إفلات",
+    "OpenAction": "فتح",
+    "AddNormalRange": "اضافة حد طبيعي",
+    "Details": "تفاصيل",
+    "DeleteFaild": "لايمكن الحذف",
+    "showing": "اظهار",
+    "To": "إلى",
+    "From": "من",
+    "entries": "مدخل",
+    "AddGroup": "اضافة مجموعة",
+    "LaboratoeryTestList/AddLabTst": "قائمة الفحوصات المخبرية  / أضافة فحص مخبري",
+    "LaboratoeryTestList/LaboratoryTestsGroup": "قائمة الفحوصات المخبرية  / تعريف مجموعة فحوصات مخبرية",
+    "DialysisFiles/AddDialysisFile": "ملفات غسيل الكلى / إضافة ملف غسيل كلى",
+    "LaboratoryTestsGroup": "تعريف مجموعة فحوصات مخبرية",
+    "AddLaboratoryTestsGroup": "اضافة مجموعة فحوصات مخبرية",
+    "EditLaboratoryTestsGroup": "تعديل مجموعة فحوصات مخبرية",
+    "Lab": "المختبر",
+    "SerialNo": "رقم التسلسل",
+    "FileTime": "وقت تسجيل الملف",
+    "DeviceType": "نوع الجهاز",
+    "Months": "شهور",
+    "ResultPrint": "طباعة النتائج",
+    "SaveReportPeriod": "مدة الاحتفاظ بالتقرير",
+    "needPreviousReservation": "بحاجة إلى حجز موعد مسبق",
+    "SampleType": "نوع العينة",
+    "EditNormalRange": "تعديل حد طبيعي",
+    "SampleSize": "حجم العينة",
+    "SampleContainer": "وعاء العينة",
+    "requiredTimeToTest": "الوقت اللازم لاجراء الفحص",
+    "ReportType": "نوع التقرير",
+    "ResultType": "نوع النتيجة",
+    "DefaultValue": "النتيجة التلقائية",
+    "SearchByTableAndSub": "البحث من خلال جدول رئيسي -فرعي",
+    "TestDetails": "تفاصيل الفحص",
+    "SampleDetails": "تفاصيل العينة",
+    "NormalRange": "الحد الطبيعي",
+    "TextNormalRange": "الحد الطبيعي النصي",
+    "lowRange": "الحد  الادنى",
+    "highRange": "الحد  الاعلى",
+    "ServiceUnit": "وحدة القياس",
+    "SERVFACTORUNIT": "المقياس العالمي",
+    "pretestInstructions": "تعليمات ما قبل الفحص",
+    "ServiceOutCharge": "سعر الفحص الخارجي",
+    "ServiceCharge": "سعر الفحص ",
+    "FileDate": " تاريخ تسجيل الملف",
+    "SessionNo": " رقم الجلسة ",
+    "CoverType": " نوع التغطية",
+    "MedicalFileNo": "رقم الملف الطبي",
+    "Personal": "على حسابه الشخصي",
+    "Insurance": "شركة تأمين",
+    "prescription": "الوصفة الطبية",
+    "ArabicDescription": "الوصف بالعربية ",
+    "SaveSuccess": "تم الحفظ بنجاح",
+    "DeleteSuccess": "تم الحذف بنجاح",
+    "SaveFalid": "حدث خطأ لم يتم الحفظ",
+    "user": "المستخدم",
+    "noEntriesFoundLabel": "لايوجد نتائج",
+    "search": "بحث",
+    "UserPermission": "صلاحيات المستخدمين",
+    "FieldMinValue": "يجب أن تكون قيمة الحقل أكبر من 0",
+    "PleaseSelect": "الرجاء الأختيار",
+    "PermissinsFail": "هذا المستخدم لا يملك صلاحية",
+    "Dialysis": "غسيل الكلى",
+    "TheSystemAdminAndSecurity": "ادارة النظام والحماية",
+    "user-permission": "صلاحيات المستخدمين",
+    "AddNew": "إضافة جديد",
+    "CoverageAgreements": "إتفاقيات جهة التغطية",
+    "AddCoverageAgreements": "إضافة إتفاقيات جهة التغطية",
+    "AddDialysisFile": "إضافة ملف غسيل  كلى",
+    "Attachments": "المرفقات",
+    "HardwareCheck": "فحص الأجهزة",
+    "AgreementServices": "خدمات الأتفاقية",
+    "basicinformation": " البيانات الأساسية",
+    "ContractNumber": "رقم الأتفاقية",
+    "PayorCompany": "شركة التأمين",
+    "ContractDate": "تاريخ الاتفاقية",
+    "PhoneNumber": "رقم الهاتف",
+    "Note": "ملاحظات",
+    "Active": "نشط",
+    "ServiceType": "نوع الخدمة",
+    "Area": "الدائرة",
+    "SessionsSchedule": "جدول الجلسات",
+    "UsedTempletNumber": "نوع الكت المستخدم",
+    "TableArabicDesription": "وصف الجدول العربي",
+    "TableEnglishDesription": "وصف الجدول الانجليزي",
+    "WorkDays": "أيام العمل",
+    "TypeNumber": "رقم النوع",
+    "Actions": "الأجراءات",
+    "Edit": "تعديل",
+    "Delete": "حذف",
+    "DialysisScheduleTypes": "أنواع جداول المواعيد",
+    "Add": "أضافة جديد",
+    "AddNewType": "أضافة/تعديل نوع جدول",
+    "Close": "اغلاق",
+    "DoWantToContinue": "هل تريد الاستمرار ؟",
+    "AreYouSure?": "هل انت متأكد ؟",
+    "YouWontBeAbleToRevertThis!": "لن تتمكن من استرجاع الحذف",
+    "Yes,deleteit!": "نعم",
+    "DoneDelete!": "تم الحذف بنجاح !",
+    "DeleteFalid": "حدث خطأ! لم يتم الحذف",
+    "ThereisNoData": "لا يوجد نتائج!",
+    "Cancel": "رجوع",
+    "MajorDepartment": "الدائرة الرئيسة",
+    "SubMajorDepartment": "القسم الفرعي",
+    "branch": "الفرع",
+    "MedicalServiceNumber": "رقم الخدمة الطبية",
+    "MedicalServiceDescription": "وصف الخدمة الطبية",
+    "ServiceRepeatindays": "تكرار الخدمة كل /الأيام",
+    "Instructions": "تعليمات",
+    "AddAgreementServices": "إضافة خدمات الأتفاقية",
+    "AddLabOrder": "إضافة طلب مختبر",
+    "EditLabOrder": " تعديل طلب مختبر ",
+    "EditOrder": " تعديل طلب مختبر ",
+    "AddPresecriptionOrder": "إضافة طلب وصفة طبية",
+    "EditPresecriptionOrder": " تعديل وصفة طبية ",
+    "ُEditAgreementServices": "تعديل خدمات الأتفاقية",
+    "required": "الحقل مطلوب",
+    "Cancelled!": "!لم يتم الحذف",
+    "DialysisSessionsList": "قائمة جلسات غسيل الكلى",
+    "DialysisSessionsListForToday": "جلسات غسيل اليوم",
+    "DialysisSessionsSearch": "استعلام الجلسات",
+    "FileNumber": "رقم الملف",
+    "SessionNumber": "رقم الجلسة",
+    "PatientNumber": "رقم المريض",
+    "PatientName": "اسم المريض",
+    "Doctor": "الطبيب",
+    "SessionDate": "تاريخ الجلسة",
+    "StartTime": "وقت البدء",
+    "EndTime": "وقت الانتهاء",
+    "SessionStatus": "حالة الجلسة",
+    "RegistrationSession": "تسجيل جلسة غسيل كلى",
+    "RegistrationDialysisSessionComponent": "تسجيل جلسة غسيل كلى",
+    "VisitNumber": "رقم الزيارة",
+    "VisitDate": "تاريخ الزيارة",
+    "VisitTime": "وقت الزيارة",
+    "SessionInformation": "معلومات الجلسة",
+    "TemplateType": "نوع الكت",
+    "SuppliesTable": "قائمة المستلزمات",
+    "SupplyCode": "رقم المستلزم",
+    "SupplyName": "اسم المستلزم",
+    "UnitCode": "رقم الوحدة",
+    "UnitName": "اسم الوحدة",
+    "Quantity": "الكمية",
+    "WithTheTemplate": "شامل الكت",
+    "Price": "السعر",
+    "CurrenyRate": "معامل التحويل",
+    "exchangeFactor": "وحدة الصرف",
+    "TotalAmount": "المبلغ الأجمالي",
+    "ExcludeFromInsurance": "مستثنى من التأمين",
+    "AddSupply": "أضافة/تعديل المستلزمات",
+    "DrugsTable": "قائمة الأدوية",
+    "DrugCode": "رمز الدواء",
+    "DrugName": "اسم الدواء",
+    "Scheduled": "مجدولة",
+    "phone": "رقم الهاتف",
+    "Gender": "الجنس",
+    "FromAge": "من العمر",
+    "ToAge": "إلى العمر",
+    "Age": "العمر",
+    "Height": "الطول",
+    "Weight": "الوزن",
+    "NotFound": "غير موجود",
+    "Cm": "سم",
+    "Kg": "كغ",
+    "BodyMassIndex": "مؤشر كتلة الجسم",
+    "BloodType": "نوع الدم",
+    "CodeDiagnosis": "رمز التشخيص",
+    "AdvancedSearch": "بحث متقدم",
+    "NationalNumber": "الرقم الوطني",
+    "Phone": "رقم الهاتف",
+    "FromDate": "من تاريخ",
+    "ToDate": "الى تاريخ",
+    "PleaseWait": "يرجى الأنتظار جاري الحفظ .....",
+    "Nationality": "الجنسية",
+    "BodySurfaceArea": "مساحة سطح الجسم",
+    "true": "نعم",
+    "false": "لا",
+    "DialysisFiles": "ملفات  غسيل الكلى",
+    "patientNumber": "رقم المريض",
+    "fileNumber": "رقم الملف",
+    "patientName": "الاسم",
+    "NationalNo": "الرقم الوطني",
+    "fileStatus": "حالة الملف",
+    "AddNewDrug": "اضافة دواء جديد",
+    "EditDrug": "تعديل الدواء",
+    "AddNewSupply": "اضافة مستلزم جديد",
+    "EditSupply": "تعديل المستلزم",
+    "AddNewScheduleType": "اضافة نوع جدول جديد",
+    "EditScheduleType": "تعديل نوع الجدول",
+    "CoverBookInfo": " معلومات كتاب التغطية",
+    "CoverBookNo": " رقم كتاب التغطية",
+    "SessionsNo": " عدد الجلسات",
+    "PatientPart": " نسبة تحمل المريض",
+    "PricePerSession": " سعر الجلسة الواحدة",
+    "HospitalAmount": " المبلغ المطلوب للمستشفى",
+    "DoctorAmount": " المبلغ المطلوب للطبيب",
+    "TotalsAmount": "المجموع الكلي",
+    "TreatmentScheduleInformation": " معلومات الجدول العلاجي",
+    "TableType": " نوع الجدول",
+    "TreatmentDays": " ايام العلاج",
+    "DocotrAmountInSession": " مبلغ كشفية الطبيب بالجلسة",
+    "DoctorAmountShouldbeLess": " كشفية الطبيب يجب أن تكون أقل من سعر الجلسة !",
+    "Fileinformation": "بيانات الملف",
+    "AttachFile": "إرفاق ملف",
+    "FileName": "إسم الملف",
+    "FileType": "نوع الملف",
+    "AddHardwareCheck": "اضافة فحص الأجهزة",
+    "EditHardwareCheck": "تعديل فحص الأجهزة",
+    "LaboratorySettings": "اعدادات نظام المختبر",
+    "Laboratory": "نظام المختبر",
+    "showOrderinInvoiceOnStatus": "اظهار الطلب على الفاتورة عند الحالة",
+    "OtherTestNumber": "رقم الفحص العام",
+    "EnablePasswordOnTheTest": "تفعيل الرقم السري على تدقيق الفحص",
+    "enableTheScreen": "تفعيل الشاشة الموحدة لأدخال و استقبال و تدقيق النتائج",
+    "enableCovid19": "تفعيل ربط فحص كورونا مع وزارة الصحة",
+    "SettingsCovid19WithHealthMinistry": "اعدادات ربط مع وزارة الصحة (كورونا)",
+    "COVID19WEBAPILINK": "عنوان موقع الويب",
+    "COVID19USERNAME": "اسم المستخدم",
+    "COVID19PASSWORD": "كلمة المرور",
+    "Covid19ServiceID": "رقم الفحص المعتمد",
+    "Covid19Location": "الموقع",
+    "UserCode": "User Code",
+    "InpatientOrdersList": "قائمة طلبات المريض الداخلي",
+    "OrderDate": "تاريخ الطلب",
+    "OrderTime": "وقت الطلب",
+    "DoctorWhoOrdered": "الطبيب الطالب",
+    "OrderStatus": "حالة الطلب",
+    "RegistrationOrderSession": "تسجيل جلسة",
+    "InpatientOrdersForm": "معالجة جلسة المريض الداخلي",
+    "department": "القسم",
+    "EndTimeBiggerThanStartTime": "وقت الانتهاء يجب أن يكون أكبر من وقت البدء",
+    "DialysisPatients": "قائمة مرضى غسيل الكلى",
+    "timeRequried": "يرجى ادخال وقت البدء و الأنتهاء",
+    "AddFile": "اضافة ملف كلى جديد",
+    "AddPatient": "اضافة مريض",
+    "firstNameInArabic": "الأسم الأول بالعربي",
+    "FatherNameInArabic": "اسم الاب بالعربي",
+    "GrandPaNameInArabic": "اسم الجد بالعربي",
+    "FamilyNameInArabic": "اسم العائلة بالعربي",
+    "FirstNameInEnglish": "الأسم الأول بالأنجليزي",
+    "FatherNameInEnglish": "اسم الأب بالأنجليزي",
+    "GrandPaInEnglish": "اسم الجد بالأنجليزي",
+    "FamilyNameInEnglish": "اسم العائلة بالأنجليزي",
+    "MotherName": "اسم الأم",
+    "GuardianName": "اسم ولي الأمر",
+    "RelativeNameWithHisNumber": "الشخص الاقرب و هاتفه",
+    "MobileNumber": "رقم الخلوي",
+    "PlaceOfBirth": "مكان الولادة",
+    "BirthdayDate": "تاريخ الميلاد",
+    "documentType": "نوع الوثيقة",
+    "documentNumber": "رقم الوثيقة",
+    "NationalNumberApproved": "اعتماد الرقم الوطني",
+    "placeOfIssue": "مكان الاصدار",
+    "DateOfIssue": "تاريخ الاصدار",
+    "clientAccountNumber": "رقم حساب العميل",
+    "note": "ملاحظة",
+    "gender": "الجنس",
+    "religon": "الديانة",
+    "maritalStatus": "الحالة الاجتماعية",
+    "PatientDetails": "تفاصيل المريض",
+    "patientInsurance": "تأمين المريض",
+    "male": "ذكر",
+    "female": "أنثى",
+    "baby": "طفل",
+    "islam": "الأسلام",
+    "christian": "المسيحية",
+    "anotherReligon": "ديانة أخرى",
+    "single": "أعزب",
+    "married": "متزوج",
+    "divorced": "مطلق",
+    "Widower": "أرمل",
+    "bloodType": "نوع الدم",
+    "phoneNumber": "رقم الهاتف",
+    "faxNumber": "الفاكس",
+    "Email": "البريد الألكتروني",
+    "Address": "العنوان",
+    "mailbox": "صندوق البريد",
+    "zipCode": "رمز البريد",
+    "CompanyType": "نوع الشركة",
+    "CoverageType": "جهة التغطية",
+    "InsuranceType": "نوع التأمين",
+    "InsurancePercantage": "نسبة التأمين/الكشفية",
+    "PatientPercantage": "نسبة المريض/الكشفية",
+    "InsuranceCardNumber": "رقم بطاقة التأمين",
+    "expireDateForInsuranceCard": "تاريخ انتهاء بطاقة التأمين",
+    "InsuranceEmployeeName": "أسم موظف شركة التأمين",
+    "EmployeeNumber": "رقم الموظف",
+    "LabInsurancePercentage": "نسبة مساهمة التأمين للمختبر",
+    "RadInsurancePercentage": "نسبة مساهمة التأمين للأشعة",
+    "PharmacyInsurancePercentage": "نسبة مساهمة التأمين للصيدلية",
+    "ProceduresInsurancePercentage": "نسبة مساهمة التأمين للأجراءات",
+    "SuppliesInsurancePercentage": "نسبة مساهمة التأمين للمستلزمات",
+    "PrescriptionInsurancePercentage": "نسبة مساهمة التأمين لوصفة الخروج",
+    "LabPatientPercentage": "نسبة مساهمة المريض للمختبر",
+    "RadPatientPercentage": "نسبة مساهمة المريض للأشعة",
+    "PharmacyPatientPercentage": "نسبة مساهمة المريض للصيدلية",
+    "ProceduresPatientPercentage": "نسبة مساهمة المريض للأجراءات",
+    "SuppliesPatientPercentage": "نسبة مساهمة المريض للمستلزمات",
+    "PrescriptionPatientPercentage": "نسبة مساهمة المريض لوصفة الخروج",
+    "ExternalLaboratories": "تعريف المختبرات الخارجية",
+    "Yes": "نعم",
+    "No": "لا",
+    "DialysisPatients/AddPatient": "قائمة مرضى غسيل الكلى  /  أضافة مريض",
+    "InpatientOrdersList/InpatientOrdersForm": "قائمة طلبات المريض الداخلي / معالجة جلسة المريض الداخلي",
+    "AddNewInsurance": "أضافة تأمين جديد",
+    "genderValidation": "يرجى ادخال الجنس",
+    "ReligonValidation": "يرجى ادخال الديانة",
+    "MartialStatusValidation": "يرجى ادخال الحالة الأجتماعية",
+    "showAll": "عرض الكل",
+    "status": "الحالة",
+    "ExportToExcel": "تصدير لأكسل",
+    "ExportToPdf": "PDF تصدير لملف",
+    "SettlementOfExternalLaboratory": "تسوية فحوصات المختبرات الخارجية",
+    "SettlementNumber": "رقم التسوية",
+    "SettlementDate": "تاريخ التسوية",
+    "LaboratoryName": "اسم المختبر",
+    "LaboratoryExternalName": "اسم المختبر الخارجي",
+    "SettlementLaboratoryForm": "اضافة رقم تسوية لمختبر خارجي",
+    "SettlementOfExternalLaboratory/SettlementLaboratoryForm": "تسوية فحوصات المختبرات الخارجية  /  اضافة رقم تسوية",
+    "retriveData": "استرجاع المعلومات",
+    "Show": " إستعراض",
+    "LaboratoryTestsforOutpatient": "إضافة طلب فحص مختبر خارجي ",
+    "EditLaboratoryTestsforOutpatient": "إضافة طلب فحص مختبر خارجي ",
+    "totalPrice": "المجموع النهائي",
+    "AddPatientFile": "فتح ملف",
+    "SubPayor": "شركة التأمين الفرعية",
+    "NoPatientInsurance": "لا يوجد تأمين لهذا المريض",
+    "SaveFaildDueToOtherFunctions": "لم يتم الحذف بسبب ارتباطها بحركات أخرى",
+    "quantityNotEnough": "الكمية غير كافية",
+    "PatientPrice": "مبلغ المريض",
+    "InsurancePrice": "مبلغ التأمين",
+    "InstractionDesc": "وصف التعليمات",
+    "ExternalLabPrice": "سعر المختبر الخارجي",
+    "ExternalLabName": "إسم المختبر الخارجي",
+    "Referencetype": "نوع المراجع",
+    "IncomingTests": "الفحوصات الواردة",
+    "SentTests": "الفحوصات المرسلة",
+    "thereIsNoExtLabs": "الرجاء استرجاع فحوصات لتسويتها !",
+    "ApprovalNo": "رقم الموافقة",
+    "PleaseAddOneTestatLeast": "الرجاء إضافة فحص واحد على الأقل",
+    "Surgery": "العمليات",
+    "SurgeryDevicesDefinitionList": "قائمة تعريف الأجهزة",
+    "DeviceID": "رقم الجهاز",
+    "DeviceName": "اسم الجهاز",
+    "identifierDevice": "الجهاز المعرف",
+    "SurgeryDevicesDefinitionForm": "تعريف جهاز",
+    "SurgeryDevicesDefinitionList/SurgeryDevicesDefinitionForm": "قائمة تعريف الأجهزة / تعريف الجهاز",
+    "DeviceNameArabic": "الوصف العربي",
+    "DeviceNameEnglish": "الوصف الأنجليزي",
+    "priceConditions": "السعر حسب",
+    "UseByTime": "حسب الوقت",
+    "AllPartIsOne": "الاحتساب عند دخول أي جزء بالفترة",
+    "TimePeriodInMin": "الوقت بالدقائق",
+    "SurgeryRequest": "طلبات العمليات",
+    "SurgeryDesc": "وصف العملية",
+    "SurgeryRequestForm": "طلب عملية",
+    "ShowInstractionsBeforeSurgery": "إظهار التعليمات قبل العملية",
+    "InstractionsBeforeSurgery": "التعليمات قبل العملية",
+    "SurgeryDate": "تاريخ العملية",
+    "SurgeryTime": "وقت العملية",
+    "BedRoom": "الغرفه/السرير",
+    "RequestedDoctor": "الطبيب الطالب",
+    "InstractionNumber": "رقم التعليمه",
+    "Description": "الوصف",
+    "DoctorNumber": "رقم الطبيب ",
+    "Surgeons": "الأطباء الجراحين",
+    "ToDateValidation": "يجب أن يكون تاريخ النهاية أكبر او يساوي تاريخ البداية",
+    "SurgeryMaterialDefinitionList": "قائمة تعريف المواد",
+    "SurgeryMaterialDefinitionForm": "تعريف مادة",
+    "SubMajorTable": "الجدول الفرعي",
+    "materialNumber": "رقم المادة",
+    "materialName": "اسم المادة",
+    "price": "السعر",
+    "SurgeryMaterialDefinitionList/SurgeryMaterialDefinitionForm": "قائمة تعريف المواد / تعريف مادة ",
+    "AddNewMaterial": "اضافة مادة",
+    "EditMaterial": "تعديل المادة",
+    "ItemNumberAlreadyExist": "رقم المادة موجود مسبقا !",
+    "pleaseFillTheSettings": "الرجاء ادخال أيام العطل في شاشة اعدادات الكلى ! ",
+    "pleaseEnterWorkDays": "الرجاء ادخال أيام العمل !",
+    "WorkDaysUsedBefore": "أيام العمل تتعارض مع فترة أخرى !",
+    "SurgeriesDefinitionList": "قائمة تعريف العمليات",
+    "SurgeryNumber": "رقم العملية",
+    "SurgeryName": "اسم العملية",
+    "SubDivision": "القسم الفرعي",
+    "ICDCode": "ICD كود",
+    "requiredTime": "الوقت المطلوب / دقيقة",
+    "available": "متوفرة",
+    "SurgeriesDefinitionForm": "بيانات العملية الأساسية",
+    "SurgeriesDefinitionList/SurgeriesDefinitionForm": "قائمة تعريف العمليات / تعريف عملية",
+    "ServiceAvailable": "الخدمة متوفرة",
+    "Number": "رقم التعليمة",
+    "description": "الوصف",
+    "InsructionBeforeSurgery": "تعليمات قبل العملية",
+    "addInstruction": "اضافة تعليمات قبل العملية",
+    "EditInstruction": "تعديل تعليمات قبل العملية",
+    "InstructionDesc": "التعليمات",
+    "NumberDevice": "رقم الجهاز",
+    "descriptionDevice": "وصف الجهاز",
+    "SurgeryDevices": "أجهزة العملية",
+    "addDevice": "اضافة جهاز",
+    "EditDevice": "تعديل جهاز",
+    "CodeNumberIsExist": "رقم العملية موجود مسبقا !",
+    "SurgeryRequest/SurgeryRequestForm": "طلبات العمليات / طلب عملية",
+    "Doctoralreadyexist": "الطبيب موجود بالفعل في قائمة الاطباء الجراحين",
+    "SurgeryDateValidation": "يجب أن يكون تاريخ العملية أكبر او يسواي تاريخ الطلب",
+    "SurgeryTimeValidation": "يجب أن يكون وقت العملية أكبر او يسواي وقت الطلب",
+    "maxDiscount": "أعلى نسبة خصم",
+    "RequestMedicalSuppliesList": "قائمة طلبات تزويد مستلزمات طبية من الأقسام",
+    "RequestMedicalSuppliesList/RequestMedicalSuppliesForm": "قائمة طلبات تزويد مستلزمات طبية من الأقسام / طلب تزويد مستلزمات طبية من الأقسام",
+    "RequestMedicalSuppliesForm": "طلب تزويد مستلزمات طبية من الأقسام",
+    "DeptNameAndNumber": "رقم / اسم القسم ",
+    "StoreNameAndNumber": "رقم / اسم المستودع ",
+    "Entrance": "المدخل",
+    "Approval": "موافقة",
+    "ApprovalRequest": "اعتماد الطلب",
+    "Copy": "نسخ",
+    "TransNumber": "رقم الحركه",
+    "TransDate": "تاريخ الحركة",
+    "EntranceNameAndNumber": "رقم / اسم مدخل الطلب ",
+    "FromStoreNameAndNumber": "من مستودع",
+    "NoStoreRelatedThisSection": "لا يوجد مخزن مرتبط بهذا القسم",
+    "FromStoreRequerid": "يجب ادخال من مستودع",
+    "RequestApproved": "تمت الموافقة على الطلب",
+    "PleaseAddOneSuppliseatLeast": "الرجاء إضافة مستلزم واحد على الأقل",
+    "FinalRequestApproved": "تم اعتماد الطلب",
+    "SaveSessionStatusConfirmed": "تم تأكيد الجلسة بنجاح",
+    "confirmedTheSession": "تأكيد الجلسة",
+    "changeSessionStatusToConfirm": "من تغير حالة الجلسة الى مؤكدة",
+    "CancelTheSession": "الغاء الجلسة",
+    "changeSessionStatusToCancel": "من تغير حالة الجلسة الى ملغية",
+    "SaveSessionStatusCanceled": "تم الغاء الجلسة بنجاح",
+    "cancelationReason": "سبب الغاء الجلسة",
+    "theReason": "السبب",
+    "CheckTheFinancial": "أرجو مراجعة المالية !",
+    "SessionDetails": "استعراض الجلسة",
+    "sessionNameGiven": "معطاة",
+    "sessionNameConfirmed": "مؤكدة",
+    "showDetails": "عرض",
+    "RequestTheTest": "طلب الفحص",
+    "SurgeryRecord": "سجل العملية",
+    "SurgeryRequest/SurgeryRecord": "طلبات العمليات / سجل العملية",
+    "Surgerybasicinformation": "بيانات العملية",
+    "Surgerystaff": "كادر العملية",
+    "Surgeryprocedure": "إجراءات العملية",
+    "Pharmaceutical": "الأدوية",
+    "Supplies": "المستلزمات",
+    "MaterialforSale": "مواد برسم البيع",
+    "Radiology": "الأشعة",
+    "Entrydegree": "درجة الدخول",
+    "SurgeryDetails": "تفاصيل العملية",
+    "SurgeriesRoom": "غرفة العمليات",
+    "SurgerySize": "حجم العملية",
+    "MajorSurgery": "العملية الرئيسية",
+    "SurgeryStatus": "حالة العملية",
+    "SubSections": "الاقسام الفرعية",
+    "NumberOfHours": "عدد الساعات",
+    "SurgeryDeal": "صفقة العملية",
+    "DealAmount": "مبلغ الصفقة",
+    "PatientDischargeSuspension": "تعليق خروج المريض",
+    "Surgeryclean": "نظيفة",
+    "Surgeryinflamed": "ملتهبة",
+    "testStatus": "حالة الفحص",
+    "SampleReception": "استلام العينة",
+    "EnterAResult": "ادخال نتيجة",
+    "Auditing": "تدقيق",
+    "CancelAuditing": "الغاء التدقيق",
+    "EditTest": "تعديل الفحص",
+    "EditRequestDate": "تعديل تاريخ طلب فحص مختبر",
+    "Reciption": "استلام",
+    "principalTest": "الفحص الرئيسي",
+    "CriticalResult": "النتيجة حرجة",
+    "EnterAResultForTest": "ادخال نتيجة فحص مختبري",
+    "YouWantToAuditTheTest": "من تدقيق الفحص !",
+    "YouWantToCancelAuditTheTest": "من الغاء التدقيق !",
+    "EditLabTest": "تعديل فحوصات المختبر",
+    "ResultNumber": "رقم النتيجة",
+    "ResultText": "النتيجة كتابة",
+    "originalPrice": "السعر الأصلي",
+    "DiscountPrice": "مبلغ الخصم",
+    "DiscountPercentage": "نسبة الخصم",
+    "insurancePercantage": "نسبة مشاركة التأمين",
+    "NotAllowedDiscount": "نسبة الخصم غير مسموح بها !",
+    "pleaseEnterPassWord": "الرجاء ادخال كلمة السر لهذه العملية",
+    "NewRequestDate": "تاريخ الطلب الجديد",
+    "inValidPasssword": "كلمة السر خاطئة !",
+    "resultRequired": "الرجاء ادخال النتيجة ",
+    "checkResultTest": "تدقيق فحص مخبري",
+    "pleaseEnterTheResultForTests": "قم بادخال نتيجة الفحص !",
+    "ActiveFileAlready": "يوجد ملف فعال لهذا المريض !",
+    "NationalIDExist": "الرقم الوطني موجود مسبقا!",
+    "EnglishDescription": "الوصف بالانجليزية ",
+    "shortArabicName": "وصف مختصر بالعربية",
+    "shortEnglishName": "وصف مختصر بالانجليزية",
+    "TestDescription": "وصف الفحص",
+    "SaveFaildFieldRequired": "يجب ان يتم تعبئة الحقول المطلوبة في بيانات الملف",
+    "LabRequest": "طلبات المختبر",
+    "LaboratoryTestList": "قائمة الفحوصات المخبرية",
+    "AddLabTest": "اضافة فحص مخبري",
+    "Enter": "دخول",
+    "Screen": "الشاشة",
+    "select": "اختر",
+    "ScreenNo": "رقم الشاشة",
+    "ScreenName": "اسم الشاشة",
+    "AddAction": "اضافة",
+    "EditAction": "تعديل",
+    "DeleteAction": "حذف",
+    "PrintAction": "طباعة",
+    "TestNumber": "رقم الفحص",
+    "TestName": "اسم الفحص",
+    "SubTest": "الفحص الفرعي",
+    "FullTestName": "اسم الفحص كامل",
+    "ShortTestName": "اسم الفحص مختصر",
+    "NotAvailableTest": "الفحص غير متوفر",
+    "ShowInManagementReport": "يظهر بالكشف الخاص بالادارة",
+    "PrintPreviousResults": "طباعةالنتائج السابقة",
+    "Result": "النتيجة",
+    "methodOfGivining": "طريقة الاعطاء",
+    "APPS": "Apps",
+    "Login": "دخول",
+    "INBOX": "Inbox",
+    "CHAT": "Chat",
+    "CALENDAR": "Calendar",
+    "DIALOGS": "Dialogs",
+    "CONFIRM": "Confirm",
+    "LOADER": "Loader",
+    "DevelopedBy": "مجموعة المجرة الدولية",
+    "MATERIAL": "Material",
+    "BUTTONS": "Buttons",
+    "CARDS": "Cards",
+    "AUTOCOMPLETE": "Autocomplete",
+    "INPUT": "Input",
+    "CHECKBOX": "Checkbox",
+    "DATEPICKER": "Datepicker",
+    "RADIO": "Radio",
+    "TOOLBAR": "Toolbar",
+    "LISTS": "Lists",
+    "GRIDS": "Grids",
+    "PROGRESS": "Progress",
+    "TABS": "Tabs",
+    "SWITCH": "Switch",
+    "TOOLTIP": "Tooltip",
+    "MENU": "Menu",
+    "MEMBER": "Member",
+    "SAVE": "Save",
+    "SLIDER": "Slider",
+    "SNACKBAR": "Snackbar",
+    "FORMS": "Forms",
+    "EDITOR": "Editor",
+    "BASIC": "Basic",
+    "UPLOAD": "Upload",
+    "WIZARD": "Wizard",
+    "TABLES": "Tables",
+    "TOUR": "Tour",
+    "FULLSCREEN": "Fullscreen",
+    "PAGING": "Paging",
+    "FILTER": "Filter",
+    "MAP": "Map",
+    "CHARTS": "Charts",
+    "DND": "Drag and Drop",
+    "PAGES": "Pages",
+    "SESSIONS": "Sessions",
+    "SIGNIN": "Signin",
+    "SIGNUP": "Signup",
+    "SIGNOUT": "تسجيل الخروج",
+    "FORGOT": "Forgot",
+    "LOCKSCREEN": "Lockscreen",
+    "OTHERS": "Others",
+    "GALLERY": "Gallery",
+    "PRICINGS": "Pricings",
+    "PROFILE": "الملف الشخصي",
+    "BLANK": "Blank",
+    "MATICONS": "Material Icons",
+    "ADD": "Add",
+    "ITEM": "Item",
+    "SUBITEM": "Subitem",
+    "DOC": "Documentation",
+    "NOTFOUND": "Not Found",
+    "ERROR": "Error",
+    "OVERVIEW": "Overview",
+    "SETTINGS": "Settings",
+    "ECOMMERCE": "Ecommerce",
+    "SHOP": "Shop",
+    "PRODUCTS": "Products",
+    "PRODUCT DETAILS": "Product Details",
+    "CART": "Cart",
+    "CHECKOUT": "Checkout",
+    "LoginValidation": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "BedNumber": "عدد الأسرّة (الأجهزة)",
+    "SessionPeriod": "الوقت المتاح للجلسة الواحدة",
+    "DayHours": "عدد ساعات الدوام",
+    "Department": "رقم القسم ",
+    "Saturday": "السبت",
+    "Sunday": "الأحد",
+    "Monday": "الأثنين",
+    "Tuesday": "الثلاثاء",
+    "Wednesday": "الأربعاء",
+    "Available": "متوفر",
+    "Thursday": "الخميس",
+    "Friday": "الجمعة",
+    "DialysisSetting": "إعدادات غسيل الكلى",
+    "VacationDays": "أيام العطل",
+    "Save": "حفظ",
+    "Saving": "جاري الحفظ الرجاء الانتظار",
+    "Ok": "حسنا",
+    "NationalID": "الرقم الوطني",
+    "TelephoneNumberlessThan10": "رقم الهاتف يجب أن يكون على الأقل 10 أرقام",
+    "birthdayDateValidation": "يجب أن يكون تاريخ الميلاد أقل من تاريخ اليوم!",
+    "issueDateValidation": " تاريخ الاصدار يجب أن لا يكون أكبر من تاريخ اليوم ",
+    "SubCompanyInsurance": "شركة التأمين الفرعية",
+    "Contractalreadyexists": "رقم الاتفاقية موجود من قبل",
+    "Notes": "ملاحظات",
+    "AccountNumber": "رقم الحساب",
+    "DefaultDoctor": "الطبيب التلقائي",
+    "Emergency": "الطوارئ",
+    "EmergencySetting": "أعدادات الطوارئ",
+    "InvoiceAllowDiscount": " نسبة الخصم المسموح بها ",
+    "DefaultNationality": " الجنسية الافتراضية ",
+    "PowerUser": "المستخدم واسع الصلاحيات",
+    "VisitClosingTime": "أقفال تلقائي للزياره بعد/ ساعة",
+    "InvoiceMaxDiscount": "نسبة الخصم العظمى المسموح بها",
+    "InvoicePassMaxDiscount": "كلمة السر الخاصة بالخصم ",
+    "DefaultIdentity": "نوع الوثيقة الافتراضي",
+    "DefaultSex": "الجنس الافتراضي",
+    "Male": "ذكر",
+    "Female": "أنثى",
+    "Baby": "طفل",
+    "UseGaz": "أستخدام الغازات",
+    "EnableMultiPrescription": "السماح باكثر من وصفه خروج",
+    "EnableExceptionTransaction": "أخفاء خيار مستثنى من التأمين",
+    "EnableAutoDelete": "تفعيل حركه الغاء الكشفيه عن ملف المريض في حال وجود أشراف طبي",
+    "NormalRangeDesc": "وصف الحد الطبيعي",
+    "assemplyInvoice": "الفاتورة المجمعة",
+    "EmergencyVisitList": "قائمة الزيارات الطارئة",
+    "EmergencyAddVisit": "أضافه زياره للطوارئ",
+    "Gases": "الغازات",
+    "EmergencyVisitList/EmergencyAddVisit": "اضافة زيارة طوارئ",
+    "Serial": "التسلسل",
+    "ItemNo": "رقم المادة",
+    "DescriptionOfTheMaterial": "وصف الجهاز",
+    "WorkingHours": "عدد ساعات العمل ",
+    "Gas": "الغاز",
+    "TheInsuranceEmployeeWhoGaveconsent": "موظف التأمين الذي أعطى الموافقه ",
+    "Excludedfrominsurance": " مستثنى من التأمين",
+    "Add/Emergencygases": "أضافة الغازات ",
+    "modifyGases": "تعديل الغازات",
+    "Devices": "الأجهزه",
+    "ServiceID": "رقم الجهاز",
+    "ProcedureDoctor": "طبيب الاجراء",
+    "Add/MedicalDevices": "اضافة أجهزة طبية",
+    "modifyMedicalDevices": "تعديل الأجهزة الطبية",
+    "MedicalProcedures": "الأجراءات الطبية",
+    "ActionNumber": "رقم الاجراء",
+    "ProcedureDescription": "وصف الاجراء",
+    "Action": "الاجراء",
+    "ActionDoctor": "طبيب الاجراء",
+    "Add/MedicalProcedures": "أضافة اجراء طبي ",
+    "modifyMedicalProcedures": "تعديل الاجراء الطبي",
+    "LaboratoryTesting": "فحوصات مخبرية ",
+    "CheckNumber": " رقم الفحص",
+    "ExaminationName": "أسم الفحص",
+    "SubSection": "القسم الفرعي ",
+    "InstructionsBeforeExamination": " التعليمات قبل الفحص",
+    "Date": "التاريخ",
+    "TheTime": "الوقت",
+    "CheckStatus": "حالة الفحص",
+    "Add/LaboratoryTesting": "أضافة طلب الفحص مخبري",
+    "modifyLaboratoryTesting": "تعديل طلب الفحص مخبري",
+    "ClinicDoctor": "طبيب العيادة",
+    "Examination": "الفحص",
+    "MedicalSupplies": "المستلزمات الطبية",
+    "SupplierNumber": "رقم المستلزم ",
+    "SupplierName": "أسم المستلزم ",
+    "UnitNumber": "رقم الوحده ",
+    "Add/MedicalSupplies": "أضافه مستلزم ",
+    "modify/MedicalSupplies": "تعديل مستلرم  ",
+    "DeleteFailSessionsAssociated": "لا يمكن الحذف يوجد جلسات مرتبطة بهذا الملف و عليها اجراءات",
+    "TampleteAndReport": "النماذج والتقارير",
+    "SelectTemplate": "أختر النموذج ",
+    "modifyMedicalSupplies": "تعديل مستلرم",
+    "DischargePatient": "اخراج المريض",
+    "InvoiceNumber": " رقم الفاتورة ",
+    "ExitDate": " تاريخ الخروج ",
+    "TimeToGoOut": "وقت الخروج    ",
+    "ExitStatus": "حالة الخروج  ",
+    "inValidBillNumber": "رقم الفاتورة غير موجود !",
+    "VitalSigns": "المؤشرات الحيوية",
+    "VitalSignCode": "رقم المؤشر ",
+    "DescriptionVitalSign": "وصف المؤشر ",
+    "Time": "الوقت ",
+    "Reading": "القراءة ",
+    "TheNurse": "الممرض ",
+    "ReasonForModification": "سبب التعديل",
+    "OldModifications": "تعديلات سابقة ",
+    "Add/VitalSigns": " اضافه علامة حيوية",
+    "modifyVitalSigns": "تعديل علامة حيويه  ",
+    "vitalSignReadNotright": "يرجى ادخال القراءة بشكل صحيح",
+    "PrintPatientLabel": "طباعة ملصق المريض",
+    "EmergencyPatientList": "قائمة مرضى الطوارئ",
+    "AddVisit": "اضافة زيارة",
+    "EmergencyAllVisitsList": "قائمة جميع الزيارات",
+    "EmergencyActiveVisitsList": "قائمة الزيارات الفعالة",
+    "ReferenceNo": "رقم المرجع",
+    "ReferenceDate": "تاريخ المرجع",
+    "ActiveVisit": "الزيارة فعالة و ليست مغلقة",
+    "DetailsVisit": "ملخص الزيارة",
+    "PatientList": "قائمة المرضى",
+    "CancelPatientDischarge": "الغاء أمر خروج المريض",
+    "youWantToCancelDischarge": "من الغاء خروج المريض ؟",
+    "Patient": "المرضى",
+    "visitData": "بيانات الزيارة",
+    "companyName": "اسم المرافق",
+    "relative": "صلة القرابة",
+    "shiftType": "الشفت",
+    "Corona": "كورونا",
+    "endoscopy": "دخول تنظير",
+    "Scouttype": "نوع الكشفية",
+    "Scoutamount": "مبلغ الكشفية",
+    "Patientamount": "مبلغ المريض",
+    "Insuranceamount": "مبلغ التأمين",
+    "Thispatienteffective": "هذا المريض لديه زيارة فعالة",
+    "Evaluating": "الفرز و التقيم",
+    "Residentdoctor": "الطبيب المقيم",
+    "Emergencydoctor": "طبيب الطوارئ",
+    "Emergencyroom": "غرفة الطوارئ",
+    "AccessStatus": "حالة الوصول",
+    "AccessMethod": "طريقة الوصول",
+    "InjuryDate": "تاريخ الأصابة",
+    "procedure": "الأجراءات",
+    "PatientComplaint": "شكوى المريض",
+    "CurriculumVitae": "السيرة الذاتية",
+    "JudicialCase": "الحالة القضائية",
+    "needBlood": "يحتاج دم",
+    "needOperation": "يحتاج عملية",
+    "DrugsRequest": "طلب الأدوية",
+    "OrderNumber": "رقم الطلب",
+    "Add/DrugsRequest": "اضافة طلب دواء",
+    "modifyDrugsRequest": "تعديل طلب دواء",
+    "Status": "الحاله",
+    "specialists": "الاخصائيين",
+    "ProcedureDate": "تاريخ الاجراء",
+    "TheAmount": "المبلغ",
+    "SupervisingDoctor": "الطبيب المشرف",
+    "Add/Specialists": " أضافة أخصائي ",
+    "modifySpecialists": "تعديل أخصائي",
+    "StartDate": "تاريخ البداية ",
+    "EndDate": "تاريخ النهاية ",
+    "ProcedureType": "نوع الاجراء ",
+    "DoctorRating": "تصنيف الطبيب  ",
+    "DoctorAccountNumber": "رقم حساب الطبيب   ",
+    "DoctorMinimumPrice": "الحد الادنى لتسعيرة الطبيب   ",
+    "DoctorMaximumPrice": "الحد الاعلى لتسعيرة الطبيب   ",
+    "ParticipationRate": "نسبة المشاركة ",
+    "PatientAmount": "مبلغ المريض ",
+    "InsuranceAmount": "مبلغ التامين ",
+    "ApprovedAmount": "المبلغ المعتمد ",
+    "ApprovalNumber": "رقم الموافقة ",
+    "TheInsuranceEmployeeWhoGaveTheApproval": "موظف التامين الذي اعطى الموافقة",
+    "DoctorsAmount": "مبلغ الطبيب ",
+    "Error!RepeatTheExamination": "خطا! تكرار الفحص",
+    "Error!RepeatTheProcedures": "خطا! تكرار الاجراء",
+    "Error!RepeatTheSupplies": "خطا! تكرار المستلزم",
+    "Error!RepeatTheGaz": "خطا! تكرار الغاز",
+    "Error!RepeatTheDevice": "خطأ! تكرار الجهاز",
+    "CreateVisitInPatientForm": "إنشاء الزيارة في ملف المريض",
+    "RayExamination": " فحوصات الاشعة ",
+    "Repetition": "التكرار",
+    "DetailedDescription": "وصف تفصيلي",
+    "Add/RayExamination": " اضافة فحص اشعه ",
+    "modifyRayExamination": "  تعديل فحص اشعه ",
+    "MedicalReport": "التقرير الطبي ",
+    "FinalDiagnosis": "التشخيص النهائي",
+    "ReportTemplates": "نماذج التقارير",
+    "LeavePeriodInHours": " مدة الاجازة بالساعات",
+    "PleaseChooseTheLanguageYouWantToSpeak": "الرجاء اختيار اللغع المراد التحدث بها",
+    "ArabicLanguage": "اللغة العربية ",
+    "ُEnglishLanguage": "اللغة الانجليزية ",
+    "DispensingDrugs": "صرف الأدوية",
+    "addDispensingDrug": "اضافة صرف دواء",
+    "EditDispensingDrug": "تعديل صرف دواء",
+    "RepeatedDrug": "الدواء موجود مسبقا!",
+    "NurseSheet": "ورقة ممرض الطوارئ",
+    "DoctorSheet": "ورقة طبيب الطوارئ",
+    "Signature": "توقيع",
+    "SignatureModel": "نموذج التوقيع",
+    "InCorrectPassword": " كلمة المرور خاطئة ",
+    "FormSigned": "تم توقيع النموذج",
+    "SureSignForm": " هل انت متأكد من توقيع هذا النموذج؟",
+    "SortingCategory": "فئة الفرز",
+    "ApproveDischarge": "الموافقه على الخروج",
+    "supervisorDoctor": "الطبيب المشرف",
+    "dischargePrescription": "وصفة الخروج",
+    "pharmacist": "الصيدلاني",
+    "shift": "الشفت",
+    "Participationrate": "نسبة المشاركة",
+    "Drugs": "الأدوية",
+    "ToleranceAmount": "مبلغ التحمل",
+    "TheNetAmount": "الصافي",
+    "dose": "الجرعة",
+    "dosageDescription": "وصف الجرعة",
+    "unit": "الوحدة",
+    "frequency": "التكرار",
+    "ForDuration": "لمدة",
+    "By": "عن طريق",
+    "Ml": "مل",
+    "pill": "حبة",
+    "twoPills": "حبتين",
+    "Pills": "حبات",
+    "Suppository": "تحميلة",
+    "Needle": "ابرة",
+    "vial": "زجاجة",
+    "Capsule": "كبسولة",
+    "Point": "نقطة",
+    "Squirt": "بخة",
+    "Anoint": "دهن",
+    "Daily": "يوميا",
+    "Weekly": "أسبوعيا",
+    "Monthly": "شهريا",
+    "Day": "يوم",
+    "Twodays": "يومين",
+    "Days": "أيام",
+    "Week": "اسبوع",
+    "Month": "شهر",
+    "Year": "سنة",
+    "IfNecessary": "عند اللزوم",
+    "TheMouth": "الفم",
+    "TheAnal": "الشرج",
+    "TheVagina": "المهبل",
+    "TheEye": "العين",
+    "TheEar": "الأذن",
+    "TheVein": "الوريد",
+    "TheMuscle": "العضل",
+    "AnointExternal": "دهون خارجي",
+    "TheNose": "الأنف",
+    "clear": "مسح",
+    "Times": "مرات",
+    "OneTime": "مرة واحدة",
+    "TwoTime": "مرتين",
+    "RepeatedSupply": "المستلزم موجود مسبقا!",
+    "notValidPrescription": "يرجى ادخال دواء أو مستلزم للوصفة !",
+    "VitalSignTimeValidation": "لا يمكن إضافة نفس المؤشر في نفس الوقت",
+    "diagnosis": "التشخيص",
+    "toDateBiggerThanContractToDate": "يجب أن يكون الى تاريخ أقل من تاريخ نهاية الأتفاقية!",
+    "maxNumberOfSession": "تم تجاوز العدد الأقصى من الجلسات و هو ",
+    "personalInsurance": "تأمين شخصي",
+    "Report": "تقرير",
+    "Arabic": "اللغه العربية",
+    "ُEnglish": "اللغه الانجليرية",
+    "SelectLanguge": "الرجاء اختيار اللغه المراد التحدث بها ",
+    "Dose": "الجرعة",
+    "WayOfGiving": "طريقة الاعطاء  ",
+    "EmergencyBills": " قائمة فواتير الطوارئ",
+    "IssuedInvoices": " الفواتير المصدرة",
+    "UnexportedFiles": "ملفات غير مصدرة ",
+    "InvoiceDate": "تاريخ الفاتورة",
+    "InvoiceStoredUser": "المستخدم المخزن للفاتورة",
+    "Print": "طباعة",
+    "VisitID": "رقم الزيارة  ",
+    "IssuingAnInvoice": "اصدار فاتورة  ",
+    "StartsWith": "يبدا ب ",
+    "SeenByDoctor": " تمت رؤيته من قبل الطبيب",
+    "EmergencyVisitList/EmergencyVisitSummary": "قائمة الزيارات  / ملخص الزيارة",
+    "WithinDate": "ضمن تاريخ ",
+    "EmergencyAddBillForm": "اضافة فاتورة طوارئ",
+    "patientAndVisitInfo": "بيانات الزيارة و المريض",
+    "EmergencyDate": "تاريخ الطوارئ",
+    "EmergencyRoom": "غرفة الطوارئ",
+    "insuranceType": "نوع التأمين",
+    "patientService": "خدمات المريض",
+    "serviceDetails": "تفاصيل الخدمة",
+    "serviceName": "اسم الخدمة",
+    "discountpercentage": "نسبة الخصم",
+    "discountAmountInsurance": "مبلغ الخصم تأمين",
+    "netAmount": "المبلغ الصافي",
+    "discountAmount": "مبلغ الخصم",
+    "patientAmount": "مبلغ المريض",
+    "insuranceAmount": "مبلغ التأمين",
+    "total": "المجموع",
+    "requiredFromPatient": "المطلوب من المريض",
+    "patientDiscount": "خصم المريض",
+    "CalculatingTheDateOfBirthInMonths": " إحتساب تاريخ الميلاد بالأشهر ",
+    "CalculatingTheDateOfBirthInYears": " إحتساب تاريخ الميلاد بالسنوات ",
+    "EmergencyReportForMedicalProcedures": "تقرير خاص بالاجراءات الطبية لمريض الطوارئ",
+    "ThePatient": " المريض",
+    "EmergencyPatientAdmissionReport": "تقرير دخولات مرضى الطوارئ",
+    "LegalCase": "حالة قضائية",
+    "TheInsuranceCompany": "جهة التامين  ",
+    "ReviewHour": "ساعة المراجعة ",
+    "RevieDate": "تاريخ المراجعه ",
+    "EmergencyRevenueReportForMedicalProcedures": "تقرير الايرادات للاجراءات الطبيه ",
+    "ProcedureNoInternal": "رقم الأجراء - داخلي",
+    "ProcedureNoEmergency": "  رقم الأجراء - طوارئ",
+    "ProcedureNoOtherSections": "رقم الأجراء - الأقسام الأخرى",
+    "ProcedureNoClinics": "رقم الأجراء - العيادات",
+    "All": "الكل",
+    "InvoicesHaveBeenIssued": "تم اصدار فواتير",
+    "NoInvoicesIssued": "لم يتم أصدار فواتير ",
+    "PatientType": "نوع المريض",
+    "ProcedureNumber": "رقم الاجراء",
+    "EmergencyAdmissionsAccordingToLipsAndDiagnosis": "دخولات حسب الشفت والتشخيص",
+    "Shift": "الشفت",
+    "CodeDiagnostic": "  رمز التشخيص",
+    "CodeFinalDiagnostic": "  رمز التشخيص النهائي ",
+    "diagnosisChild": " أحضار أبناء التشخيص ان وجد",
+    "diagnosisChildFinal": " أحضار أبناء التشخيص النهائي ان وجد",
+    "cumulative": " تجميعي",
+    "EmergencyStatisticsReports": "تقرير إحصائيات الطوارئ",
+    "StatisticType": "نوع الإحصائية*",
+    "NumberOfReviewers": "عدد المراجعين",
+    "EmergencyEntryAndExitStatisticsReport": "تقرير احصائيات حالات الدخول و الخروج",
+    "VisitStatus": "حالة الزيارة",
+    "Closed": "مغلقة",
+    "Open": "فتح",
+    "EmergencyConsumedDrugsReports": "تقرير الأدوية المستهلكة",
+    "EmergencyConsumableSuppliesReport": "تقرير المستلزمات المستهلكة",
+    "EmergencyMedicalProcedureSuccesRateReport": "تقرير نسبة نجاح الإجراءات الطبية",
+    "SaveAndPrint": "حفظ و طباعة",
+    "refresh": "تحديث بيانات",
+    "DeleteFaildInvoice": "لا يمكن حذف فاتورة طوارئ تم اصدار قبض بها !",
+    "patientAccFaild": "رقم الحساب غير مدخل",
+    "billNoIsExist": "رقم الفاتورة موجود مسبقا !",
+    "visitIDValidation": "الرجاء ادخال رقم الزيارة !",
+    "discountMustBeLess": "يجب أن تكون قيمة الخصم أقل او تساوي القيمة الاصلية",
+    "EmrBilServiceDetailsMsgError": "لا يمكن الحفظ بدون تفاصيل الفاتورة  الرجاء التأكد من ملف المريض",
+    "ShowResult": "عرض النتيجة",
+    "AllDrugRequest": "جميع طلبات الأدويه",
+    "CreateNewOrderNumber": "انشاء طلب جديد",
+    "PleseWaitSave": "جاري الحفظ الرجاء الأنتظار",
+    "ShowMessageVisitIsNotAproval": "لا يمكن الحفظ يجب الموافقة على خروج الملف من قبل التمريض",
+    "EmrBillGLErrorMsg": "خطأ في القيد المحاسبي",
+    "BillHasClaimMsgError": "لا يمكن اتمام العملية  تم إصدار مطالبة مالية على الفاتورة",
+    "CloseMonthErrorMsg": "لا يمكن اتمام العملية تم إقفال الشهر من قبل المدير المالي",
+    "UnProcessedDrugOrders": "لا يمكن الحفظ  هناك طلبات أدوية لم يتم تنفيذها",
+    "BillVisitCheck": "هذا الملف له فاتوره مصدرة يرجى مراجعة مسؤول النظام",
+    "NotFoundDoctorAcc": "يرجى تعريف رقم حساب الطبيب الأخصائي في شاشة تعريف الأطباء",
+    "ValidationVisitClosedAlert": "هذه الزيارة مغلقة لا يمكن اجراء اي حركة عليها",
+    "ValidationVisithasBillNoAlert": "هذه الزيارة تم إصدار لها  فاتورة لا يمكن اجراء اي حركة عليها",
+    "AddfromFav": "اضافة من المفضل",
+    "AddDrugFromFavorite": "اضافة دواء من المفضل",
+    "GenericName": "الأسم العلمي",
+    "Unit": "الوحدة",
+    "determineMedicine": "تحديد الدواء",
+    "notFound": "غير موجود",
+    "addToFavorit": "اضافة الى المفضل ",
+    "shouldDetermineDrugs": "الرجاء تحديد الأدوية المراد اضافتها !",
+    "pleaseFillTheDose": "الرجاء ادخال الجرعة للأدوية المحددة !",
+    "PrePaymentAccount": "دفعة تحت الحساب",
+    "PrintDiscretInvoice": "طباعة فاتورة تقديرية",
+    "RefreshData": "تحديث البيانات",
+    "pleaseCheckSelectedDrugs": "الرجاء التأكد من عدم تكرار الأدوية المحددة !",
+    "Reschedule": "اعادة جدولة",
+    "RescheduleSession": "اعادة جدولة الجلسة",
+    "RescheduleAgain": "يوجد جلسة للمريض في هذا اليوم !",
+    "addNewSSession": "اضافة جلسة جديدة",
+    "DialysisInvoiceForm": "اضافة فاتورة كلى",
+    "sesssionDetails": "تفاصيل الجلسات",
+    "choose": "اختيار",
+    "fileDate": "تاريخ الملف",
+    "fileTime": "وقت الملف",
+    "saveFileFirst": "قم بحفظ الملف أولا !",
+    "DialysisBills": "فاتوره غسيل الكلى ",
+    "FileNo": "رقم الملف ",
+    "FileRecordingDate": "تاريخ تسجيل الملف  ",
+    "Name": "الاسم",
+    "changeSessionStatuss": "تغيير حالة الجلسة",
+    "ChangedSessionStatus": "تم تغيير حالة الجلسة بنجاح !",
+    "deleteSession": "حذف الجلسة",
+    "willDeleteScheduledSessions": "سيتم حذف جلسات مجدولة بعد هذا التاريخ ان وجدت !",
+    "pleaseAddAtLeastOneSession": "يرجى اختيار جلسة واحدة على الأقل !",
+    "EditPatientInformation": "تعديل معلومات المريض",
+    "staffType": "نوع الكادر",
+    "service": "الخدمة",
+    "StaffDescription": "وصف الكادر",
+    "Add/SurgeryStaff": "أضافة كادر عملية ",
+    "requiredFromInsurance": "المطلوب من التأمين",
+    "otherProcedures": "الإجراءات الأخرى",
+    "addOtherProcedures": "إضافة إجراء",
+    "EditOtherProcedures": "تعديل إجراء",
+    "theService": "الخدمة",
+    "actionName": "وصف الخدمة",
+    "ServiceNumber": "رقم الخدمة ",
+    "EmergencyVisitForm": "نموذج زيارة الطوارئ",
+    "exitrecipenotimplemented": "هناك وصفة خروج لم يتم تنفيذها هل ترغب بتجاوزها وأتمام  عملية الحفظ",
+    "SavePrescriotion": "حفظ الوصفة",
+    "DeletePrescriotion": "حذف الوصفة",
+    "addToList": "اضافة الى القائمة",
+    "relaySuccess": "تم ترحيل الفاتورة بنجاح !",
+    "relayInvoice": "ترحيل الفاتورة",
+    "invoiceStatus": "حالة الفاتورة",
+    "cantdeleteDischarge": "لا يمكن الحذف لوجود حركة صرف للوصفه",
+    "AddRayFromFavorite": "إضافة أشعة من المفضل",
+    "Repeatedray": "هذا الفحص موجود مسبقا !",
+    "determinerays": "تحديد الأشعة المطلوب إضافتها",
+    "shouldDetermineRads": "الرجاء تحديد الأشعة المراد إضافتها !",
+    "UnrelayInvoice": "فك الترحيل",
+    "unrelaySuccess": "تم فك الترحيل للفاتورة بنجاح !",
+    "continuation": "إستمرار",
+    "CreateLabRequestOnSessionConfirmation": "انشاء طلبات مختبر عند تأكيد الجلسه",
+    "isRepeatedlab": "هذا الفحص موجود مسبقا!",
+    "determineLabs": "تحديد الفحوصات المراد إضافتها",
+    "pleaseFillGivingWay": "قم بإدخال طريقة الإعطاء للأدوية المحددة",
+    "UsePostingInBilling": "استخدام الترحيل في الفواتير ",
+    "BloodUnitType": "نوع وحدة الدم ",
+    "IsPatientPercent": "اعتماد نسبة المريض ",
+    "CantDischargeApproved": "لا يمكن اخراج المريض يجب ادخال المؤشرات الحيويه التاليه اولا",
+    "DialysisInvoicesStatment": "كشف فواتير الكلى",
+    "climeNo": "رقم المطالبة",
+    "sessionDateFrom": "تاريخ الجلسات من",
+    "sessionDatetTo": "تاريخ الجلسات الى",
+    "blood": "بدل إستيفاء وحدات دم",
+    "sessionPrice": "قيمة الجلسة",
+    "sessionsPrice": "قيمة الجلسات",
+    "insuranceRate": "نسبة التحمل",
+    "TotalValue": "قيمة الطوابع",
+    "InvoicesStatmentRpt": "تقرير كشف فواتير الكلى",
+    "claimReq": "يرجى ادخال رقم المطالبة  و إظهار النتائج !",
+    "DialysisPatientRegardTheDoctor": "تقرير مرضى الكلى حسب الطبيب",
+    "number": "الرقم",
+    "firstName": "الإسم الأول",
+    "SecondName": "اسم الأب",
+    "thirdName": "اسم الجد",
+    "familyName": "اسم العائلة",
+    "national": "الرقم الوطني",
+    "birthDate": "تاريخ الميلاد",
+    "telephone": "الهاتف",
+    "address": "العنوان",
+    "fileNo": "رقم الملف",
+    "payorType": "نوع التأمين",
+    "dialysisBegins": "بداية الغسيل",
+    "diagnosiss": "التشخيص",
+    "notes": "الملاحظات",
+    "DialysisPatientRegardTheDoctorReport": "تقرير مرضى الكلى حسب الطبيب",
+    "patientAmountForDoctor": "مبلغ المريض للدكتور",
+    "EmergencyGeneralBillingStatementReport": "تقرير كشف الفواتير العام",
+    "EstimatedBilling": "الفواتير التقديرية ",
+    "doctorService": "خدمة أجر الطبيب",
+    "DischargNotSave": "لا يمكن إضافة وصفه خروج جديده لوجود وصفة معرفة سابقا على النظام القديم",
+    "cantSaveDischarge": "لا يمكن الحفظ لوجود حركة صرف للوصفه",
+    "DialysisPatientRegardToDoctor": "تقرير مرضى الكلى حسب الطبيب",
+    "ForLockedFiles": " للملفات المقفلة ",
+    "ForUnlockedFiles": "للملفات الغير مقفلة ",
+    "LockedFilesWithFollowUpInsurance": "الملفات المقفلة مع متابعة التامن",
+    "AllActiveFiles": "كل الملفات الفعالة",
+    "LockedFilesWithEscapingNoCompletingProcedures": "الملفات المقفلة مع الهروب / عدم اكمال الاجراءات ",
+    "ConvertedFilesTohospital": "الملفات المحولة دخول مستشفى ",
+    "CoveringSide": "جهة التغطية ",
+    "TotalBill": "اجمالي الفاتورة",
+    "PatientDiscount": "خصم على المريض",
+    "TheAmountPaid": "المبلغ المدفوع",
+    "DataEntryName": "اسم مدخل البيانات ",
+    "InvoiceSourceName": "اسم مصدر الفاتورة",
+    "DialysisExemptionReport": "تقرير الإعفاءات",
+    "bookDate": "تاريخ الكتاب",
+    "bookEndDate": "نهاية الكتاب",
+    "doctorCase": "الطبيب المعالج",
+    "GeneralDoctor": "الطبيب العام",
+    "SpecialistDoctor": "الطبيب الاخصائي",
+    "Remittance": "جهة التحويل",
+    "PathologicalCondition": "الحالة المرضيه",
+    "EmergencyNurse": "ممرض الطوارئ ",
+    "PleaseSelectATypeOfStatisticType": "الرجاء اختيار نوع الاحصائية",
+    "DialysisSessionsScheduleReport": "تقرير جدول جلسات الغسيل الكلوي",
+    "ExemptionBookNumber": "رقم كتاب الاعفاء",
+    "TheHospital": "المستشفى",
+    "HistoryOfTheBook": "تاريخ الكتاب",
+    "DoctorName": "اسم الطبيب",
+    "ValidityOfTheBook": "مدة سريان الكتاب",
+    "WashingStartHour": "ساعة بدء الغسيل",
+    "LaundryFinishHour": "ساعة انتهاء الغسيل",
+    "DoctorSignature": "توقيع الطبيب ",
+    "PatientSignature": "توقيع التمريض ",
+    "PleaseSelectedPatient": "الرجاء اختيار اسم المريض",
+    "PleaseSelectedBookRef": "الرجاء اختيار كتاب الاعفاء",
+    "Add/SurgeryMaterialforSale": "اضافة مواد برسم البيع",
+    "modifyMaterialforSale": "تعديل مواد برسم البيع",
+    "comprehensiveInsurance": "شامل التأمين",
+    "AboveForHospitaleTranslatetion": "************************************************************************************************************",
+    "DescriptionMaterial": "وصف المواد",
+    "insuranceEmpName": "اسم موظف الشركة",
+    "Add/Surgerylaboratoery": "اضافة مختبر",
+    "modifySurgerylaboratoery": "تعديل المختبر",
+    "LastTransactions": "اخر الحركات",
+    "InwardCheques": "الشيكات الواردة",
+    "OutwardCheques": "الشيكات الصادرة",
+    "ReminderNoteList": " قائمة ملاحظات التذكير",
+    "Messages": " الرسائل",
+    "VoucherDate": "تاريخ السند",
+    "VoucherType": "نوع السند",
+    "Logo": "الشعار",
+    "Group": "المجموعة",
+    "COMPANYACTIVITY": "نشاط الشركة",
+    "ADDBRANCH": "اضافة فرع",
+    "CompanyInformationManagement": "إدارة معلومات الشركة",
+    "CompanyList": "قائمة الشركات",
+    "WEBSITE": "الموقع الالكتروني",
+    "TAXNO": "رقم المنشأة الضريبي",
+    "ADDRESSA": "العنوان بالعربية",
+    "ADDRESSE": "العنوان بالانجليزية",
+    "MapLng": "خط الطول",
+    "Maplat": "خط العرض",
+    "CompanyForm": "إضافة شركة",
+    "MainSystemDefinitionsList": "تعريفات النظام الأساسية",
+    "CompanyBranchList": "قائمة فروع الشركة",
+    "CompanyDocumentList": "قائمة وثائق الشركة",
+    "DOCUMENTIMAGE": "صورة الوثيقة",
+    "EXPIRYDATE": "تاريخ الصلاحية",
+    "ISSUEDATE": "تاريخ الإصدار",
+    "MAINTABLE": "الجدول الرئيسي",
+    "CompanyBranchForm": "فرع شركة",
+    "CompanyDocumentForm": "وثائق الشركة",
+    "MainSystemDefinitions": "تعريفات النظام الأساسية",
+    "Recorednumber": "رقم السجل",
+    "TransType": "نوع الحركة",
+    "TransDateTime": "تاريخ ووقت الحركة",
+    "IPAddress": "عنوان الIP",
+    "ImportFormOtherCompanies": "استيراد من شركات اخرى",
+    "UsersGroupsList": "مجموعات المستخدمين",
+    "addUserGroup": "اضافة مجموعة مستخدمين",
+    "modifyUserGroup": "تعديل مجموعة المستخدمين",
+    "USERS": "المستخدمين",
+    "TransactionLogsList": "تقرير حركات المستخدمين",
+    "DATETIME": "التاريخ والوقت",
+    "PRIORATYDGREE": "درجة الأهمية",
+    "SEEN": "مقروءة",
+    "DONE": "تمت",
+    "Done": "تم",
+    "MESSAGE": "الرسالة",
+    "MESSAGETYPE": "نوع الرسالة",
+    "FROMUESER": "من المستخدم",
+    "TOUESER": "إلى المستخدم",
+    "UserMessagesList": "رسائل المستخدمين",
+    "NEWMESSAGE": "رسالة جديدة",
+    "NEWMESSAGEDETAILS": "تفاصيل الرسالة",
+    "MODIFYESSAGE": "تعديل الرسالة",
+    "GIVEUSERPERMISSION": "اعطاء الصلاحيات للمستخدم",
+    "LINKINGUSERSCOMPANIESBRANCH": "ربط المستخدمين بالشركات والفروع",
+    "UserDefinitionList": "قائمة المستخدمين",
+    "COUNTRY": "الدولة",
+    "CITY": "المدينة",
+    "AREA": "المنطقة",
+    "CountryName": "اسم الدولة",
+    "CityName": "اسم المدينة",
+    "AreaName": "اسم المنطقة",
+    "CountriesList": "قائمة الدول",
+    "CityList": "قائمة المدن",
+    "AreaList": "قائمة المناطق",
+    "NEWCITY": "مدينة جديدة",
+    "MODIFYCITY": "تعديل المدينة",
+    "NEWCOUNTRY": "دولة جديدة",
+    "MODIFYCOUNTRY": "تعديل دولة",
+    "NEWAREA": "منطقة جديدة",
+    "MODIFYAREA": "تعديل المنطقة",
+    "CostCenterList": "قائمة مراكز الكلف",
+    "AddCostCenter": "اضافة مركز كلفة ",
+    "ModifyCostCenterList": "تعديل مركز الكلفة",
+    "AuditChangesLogsList": "تقرير تعديلات المستخدمين",
+    "FILEDNAME": "اسم الحقل",
+    "OLDVALUE": "القيمة القديمة",
+    "NEWVALUE": "القيمة الجديدة",
+    "AccountingSystemForm": "التعريفات العامة",
+    "StoresForm": "المستودعات",
+    "DefaultAndBaseCurrency": "العملة الافتراضية و الاساسية",
+    "TransactionsConfirmMethod": "طريقة اعتماد الحركات",
+    "CostCenterUse": "استخدام مراكز الكلفة",
+    "AllowMultipleCurrencies": "السماح بتعدد العملات",
+    "AllowMultipleBranches": "استخدام تعدد الفروع",
+    "EstimateBudgetUse": "استخدام الموازنة التقديرية",
+    "AllowTaxUse": "استخدام الضريبة ",
+    "UseProjects": "استخدام المشاريع",
+    "AlertForUnderCollectionchecksbefore": "التنبيه للشيكات برسم التحصيل قبل (بالايام)",
+    "AlertForPostDatedChecksBefore": "التنبيه للشيكات مؤجلة الدفع قبل (بالايام)",
+    "AlertUsers": "تنبيه المستخدمين",
+    "InventoryMethod": "طريقة الجرد",
+    "DefaultStore": "المستودع الافتراضي",
+    "CostingMethod": "طريقة احتساب الكلفة",
+    "EntryVoucherType": "نوع القيود المحاسبية",
+    "UseStoreInGrid": "استخدام المستودع على مستوى الجدول",
+    "UseExpiryDate": "استخدام تاريخ الصلاحية",
+    "AutomaticExpirydate": "اختيار تاريخ الصلاحية تلقائي حسب التاريخ",
+    "UseBatch": "استخدام الباتش",
+    "UseSerial": "استخدام السيريال للمواد",
+    "UseProductDate": "استخدام تاريخ الانتاج",
+    "UseAccountInGrid": "استخدام الحساب المدين/ الدائن على مستوى الجدول",
+    "CanSaleExpiredItems": "السماح باخراج مواد منتهية الصلاحية",
+    "ReminderForItemsThatReachTheOrderLimit": "التنبيه للمواد الواصلة حد الطلب",
+    "AlertExpierDateOfItemsBefore": "التنبيه بانتهاء صلاحية المواد قبل (بالايام)",
+    "AddGeneralSettings": "اعدادات النظام العامة",
+    "DiscountsList": "قائمة الخصومات",
+    "DiscountName": "اسم الخصم",
+    "discountValue": "قيمة الخصم",
+    "percentage": "نسبة (%)",
+    "ACCOUNT": "الحساب",
+    "Value": "القيمة",
+    "NEWDISCOUNT": "خصم جديد",
+    "MODIFYDISCOUNT": "تعديل الخصم",
+    "NEWEMPLOYEE": "اضافة مندوب",
+    "MODIFYEMPLOYEE": "تعديل المندوب",
+    "EmployeesList": "قائمة الموظفين",
+    "TermType": "نوع الشرط",
+    "TermName": "اسم الشرط",
+    "DueDays": "مدة الاستحقاق - يوم",
+    "PaymentTerm": "شرط دفع",
+    "DeliveryTerm": "شرط تسليم",
+    "NEWPaymentDeliveryTerm": "اضافة شرط دفع او تسليم",
+    "MODIFYPaymentDeliveryTerm": "تعديل شرط الدفع اوالتسليم",
+    "PaymentDeliveryTermsList": "شروط الدفع والتسليم",
+    "ArabicSignature": "التواقيع  عربي",
+    "EnglishSignature": "التواقيع  انجليزي",
+    "INFORMATIONS": "معلومات",
+    "OPTIONS": "خيارات",
+    "VoucherTypesList": "قائمة أنواع السندات",
+    "VoucherTypeForm": "أنواع السندات",
+    "VoucherCategory": "فئة السند",
+    "Serialtype": "نوع التسلسل",
+    "IsDefaultVoucherType": "نوع السند الافتراضي",
+    "DebitAccount": "الحساب المدين",
+    "CreditAccount": "الحساب الدائن",
+    "Branch": "فرع",
+    "Currency": "العملة",
+    "Store": "المستودع",
+    "Iftheaccountitemisrepeatedmorethanonce": "في حال تكرار الحساب/المادة في الجدول اكثر من مرة",
+    "Showchequeswithstatus": "إظهار الشيكات التي حالتها",
+    "Transferchequestostatus": "تحويل الشيكات الى الحالة",
+    "ChequesGLAccount": "حساب الشيكات",
+    "Bank": "البنك",
+    "ChequeStatus": "حالة الشيك",
+    "PreventChangingTheDefaultBranch": "منع تغيير الفرع الافتراضي",
+    "Preventautomaticdatechange": "منع تغير التاريخ التلقائي",
+    "SerialbyMonth": "تسلسل حسب الشهر",
+    "Preventautomaticnumberingchange": "منع تغيير الترقيم التلقائي",
+    "PrintAfterSave": "الطباعة بعد الحفظ",
+    "PrintTemplate": "طباعة نموذج",
+    "ReceiptMethod": "طريقة القبض",
+    "TheFirstSignatures": "التوقيع الأول",
+    "TheSecondSignatures": "التوقيع الثاني",
+    "TheThirdSignature": "التوقيع الثالث",
+    "TheFourthSignature": "التوقيع الرابع",
+    "CurrencyRatio": "معامل تحويل العملة",
+    "Symbol": "الرمز",
+    "DecimalPlaces": "الخانات العشرية",
+    "CurrencyList": "قائمة العملات",
+    "ShortArabicName": "الاسم المختصر - عربي",
+    "ShortEnglishName": "الاسم المختصر - انجليزي",
+    "CoinNameEnglish": "اسم العملة الصغرى - انجليزي",
+    "CoinNameArabic": "اسم العملة الصغرى - عربي",
+    "CurrencyMthannaName(Ar)": "اسم العملة المثنى",
+    "CurrencyPluralName": "اسم العملة الجمع",
+    "ExchangeRatio": "معامل التحويل",
+    "NEWCURRENCY": "عملة جديدة",
+    "MODIFYCURRENCY": "تعديل العملة",
+    "AccountName": "اسم الحساب",
+    "TaxType": "نوع الضريبة",
+    "TaxPercentage": "نسبة الضريبة",
+    "TaxList": "قائمة الضرائب",
+    "NEWTAX": "ضريبة جديدة",
+    "MODIFYTAX": "تعديل الضريبة",
+    "Tax": "الضريبة",
+    "ServicesList": "قائمة الخدمات",
+    "NEWService": "خدمة جديدة",
+    "MODIFYService": "تعديل الخدمة",
+    "UserForm": "مستخدم",
+    "CREATENEWPASSWORD": "انشاء كلمة مرور",
+    "ASKTOEDITPASSWORD": "طلب تعديل كلمة المرور",
+    "THECOMPANY": "الشركة",
+    "USERGROUP": "مجموعة المستخدمين",
+    "THECOMPANYBRANCH": "فرع الشركة",
+    "DEFAULT": "الافتراضي",
+    "GIVEGROUPPERMISSION": "اعطاء صلاحيات للمجموعة",
+    "SELECT": "تحديد",
+    "CHANGEPASSWORD": "تغير كلمة المرور",
+    "ACCOUNTSETTING": "اعدادات الحساب",
+    "NEWPASSWORD": "كلمة سر جديدة",
+    "CURRNTPASSWORD": "كلمة السر الحالية",
+    "CONFIRMPASSWORD": "تأكيد كلمة السر",
+    "FiscalyearList": "قائمة السنوات المالية",
+    "FiscalYearName": "اسم السنة",
+    "FiscalYear": " السنة المالية",
+    "MODIFYFiscalYear": "تعديل السنة المالية",
+    "NEWFiscalyear": "سنة مالية جديدة",
+    "PeriodFiscalYearName": "اسم الفترة المالية",
+    "PeriodFiscalYearPeriodNo": "رقم الفترة المالية",
+    "PeriodFiscalYearYearId": "رقم السنة",
+    "periodsFiscalyearList": "الفترات المالية",
+    "PeriodFiscalYear": "السنة",
+    "NEWPeriodsFiscalyear": "شاشة تعريف الفترة المالية",
+    "periodFiscalYear": "السنة المالية",
+    "ArabicName": "الإسم-عربي",
+    "EnglishName": "الإسم-إنجليزي",
+    "MODIFYPeriodsFiscalYear": "تعديل الفترة المالية",
+    "AccountNo": "رمز الحساب",
+    "ParentAccount": "حساب الأب",
+    "AccountType": "نوع الحساب",
+    "AccountNature": "طبيعة الحساب",
+    "Branched": "متفرع",
+    "DefaultCurrency": "العملة الافتراضية",
+    "DefaultCostCenter": "مركز الكلفة الافتراضي",
+    "CostCenterPolicy": "سياسة مركز الكلفة",
+    "BranchAccount": "حساب متفرع",
+    "BalanceSheet": "ميزانية عمومية",
+    "IncomeStatement": "قائمة الدخل",
+    "Both": "كلاهما",
+    "ClosingAccounts": "الحساب الختامي",
+    "SpecialPermession": "صلاحيات خاصة",
+    "UsersWithAccess": "المستخدمين الذين لهم صلاحية الوصول",
+    "AddAccount": "شاشة تعريف حساب",
+    "AccountTree": "شجرة الحسابات",
+    "msgDateCompare": "الى تاريخ يجب ان يكون بعد من تاريخ",
+    "ErrSave": "لا يمكنك الحفظ الفترة معارضة لفترة مسبقة",
+    "YEAR": "السنة المالية",
+    "linkingAccountsForm": "ربط الحسابات",
+    "discountAllowed": "الخصم المسموح به",
+    "discountReceived": "الخصم المكتسب",
+    "AccountsbudgetsList": " الموازنات التقديرية للحسابات",
+    "transNo": "رقم الحركة",
+    "transDate": "تاريخ الحركة",
+    "isCanceled": "ملغي",
+    "msgAccountNameExist": "اسم الحساب مستخدم من قبل",
+    "msgAccountNoExist": "رقم الحساب مستخدم من قبل",
+    "ExpandAll": "اظهار الكل",
+    "CollapseAll": "اخفاء الكل",
+    "devideByMonths": "توزيع الموازنة على شهور السنة بالتساوي",
+    "Amount": "القيمة",
+    "Month1": "شهر 1",
+    "Month2": "شهر 2",
+    "Month3": "شهر 3",
+    "Month4": "شهر 4",
+    "Month5": "شهر 5",
+    "Month6": "شهر 6",
+    "Month7": "شهر 7",
+    "Month8": "شهر 8",
+    "Month9": "شهر 9",
+    "Month10": "شهر 10",
+    "Month11": "شهر 11",
+    "Month12": "شهر 12",
+    "Policy": "السياسة",
+    "msgAccountHasChildren": "لا يمكن حذف الحساب لوجود ابناء له",
+    "msgAccountHasLinks": "لا يمكن حذف الحساب لارتباطه بسجلات أخرى",
+    "msNoPermission": "عفوا ، ليس لديك صلاحية ، اتصل بمسؤول النظام",
+    "BranchAccountScreen": "تفريع حساب رئيسي",
+    "AddSubAcc": "تفريع الحساب",
+    "msgEnterAllData": "تأكد من ادخال جميع المعلومات المطلوبة في الجدول",
+    "AccountStatement": "كشف حساب تفصيلي",
+    "ShowInDashboard": "اظهار في الداشبورد",
+    "HideInDashboard": "اخفاء من الداشبورد",
+    "EntryVouchersList": "قائمة سندات القيد",
+    "VoucherNo": "رقم السند",
+    "Post": "ترحيل",
+    "VoucherIteration": "تكرار السند",
+    "VoucherCopy": "نسخ السند",
+    "ReverseVoucher": "قيد عكسي",
+    "PostSuccess": "تم الترحيل بنجاح",
+    "msgCantDeleteVoucher": "لا يمكن حذف هذا السند لوجود حركات على الشيكات",
+    "msgConfirmPost": "! بمجرد ترحيل المستند ، لن تتمكن من التعديل عليه",
+    "TempSave": "حفظ مؤقت",
+    "VoucherDetails": "تفاصيل السند",
+    "VoucherAttachments": "المرفقات",
+    "Debit": "مدين",
+    "Credit": "دائن",
+    "CostCenter": "مركز الكلفة",
+    "Projects": "المشاريع",
+    "AddLine": "إضافة سطر",
+    "Difference": "الفرق",
+    "msgUnbalancedDebitCredit": "يجب ان يكون مجموع المبالغ المدينة والدائنة متساوية",
+    "msgInvalidDate": "يجب أن يكون التاريخ في فترة مالية نشطة ومفتوحة",
+    "AddRowBefore": "اضافة سطر قبل",
+    "ReEnter": "اعادة ادخال",
+    "DistributeAmtToAllCenters": "توزيع القيمة على كل مراكز الكلف",
+    "Constcenters": "مراكز الكلفة",
+    "Mobile": "الموبايل",
+    "StoreAdminName": "اسم مسؤول المخزن",
+    "StoreDetail": "تفاصيل المخزن",
+    "StoresList": "قائمة المخازن",
+    "StoreArabicName": "اسم المخزن - عربي",
+    "StoreEnglishName": "اسم المخزن - انجليزي",
+    "CanSaleNegativeQuantities": "السماح باخراج كميات بالسالب",
+    "SpicalValidate": "صلاحية خاصة",
+    "CollectionArabicName": "اسم المجموعة-عربي",
+    "CollectionName": "اسم المجموعة",
+    "CollectionEnglishName": "اسم المجموعة-انجليزي",
+    "MainCollection": "المجموعة الرئيسية",
+    "CollectionNumber": "رقم المجموعة",
+    "Category": "الفئة",
+    "ItemsGroups": "مجموعات المواد",
+    "ItemsGroupForm": "مجموعة المواد",
+    "InventoryList": "قائمة المخازن",
+    "Discount": "قيمة الخصم",
+    "StoreAccountNumber": "رقم حساب المخزون",
+    "CostGoodsSoldAccountNumber": "رقم حساب تكلفة البضاعة المباعة",
+    "PurchaseAccountNumber": "حساب المشتريات",
+    "SalesAccountNumber": "حساب المبيعات",
+    "IsMain": "نوع رئيسي",
+    "ShowDetails": "عرض التفاصيل",
+    "UploadFaild": "لم يتم تحميل الملف، حاول مرة أخرى",
+    "Download": "تحميل",
+    "ADDROW": "اضافة سطر",
+    "ConvertFromAccToAcc": "نقل حركات من حساب الى حساب ",
+    "FromAcc": "من حساب",
+    "ToAcc": "الى حساب",
+    "User": "المستخدم",
+    "acctranstransferlist": "قائمة نقل حركات الحسابات ",
+    "CostcenterbudgetsForm": "إضافة موازنة جديدة",
+    "OpeningBalance": "اضافة الأرصدة الأفتتاحية",
+    "EntryVouchers": "ادخال سند",
+    "EntryVoucher": "سند قيد",
+    "CostcenterbudgetsList": "الموازنات التقديرية لمراكز الكلفة",
+    "CostcentersBudgets": "اضافة الموازنة التقديرية لمراكز الكلفة",
+    "OpeningBalanceList": "قائمة الأرصدة الافتتاحية للحسابات",
+    "OpeningBalanceForm": "ادخال الأرصدة الافتتاحية للحسابات",
+    "AccountsbudgetsForm": "ِاضافة موازنة تقديرية للحسابات",
+    "BillType": "نوع الفاتورة",
+    "BillNo": "رقم الفاتورة",
+    "BillDate": "تاريخ الفاتورة",
+    "Customer": "العميل",
+    "Supplier": "المورد",
+    "ServiceInvoiceList": "قائمة فواتير الخدمات",
+    "ServiceInvoiceForm": "ادخال فاتورة خدمات",
+    "CreditAcc": "الحساب الدائن",
+    "PDTerms": "شروط الدفع ",
+    "CustomerName": "اسم العميل",
+    "Man": "المندوب",
+    "CashBill": "فاتورة نقدية",
+    "PriceWithTax": "السعر شامل الضريبة",
+    "Services": "الخدمات",
+    "ServiceDesc": "وصف الخدمة",
+    "Qty": "الكمية",
+    "Total": "المجموع",
+    "DiscountPerc": "الخصم نسبه",
+    "TaxAmt": "مبلغ الضريبة",
+    "NetTotal": "المجموع الصافي",
+    "GrossTotal": "المجموع الاجمالي",
+    "AllowedDiscount": "الخصم المسموح به",
+    "TaxTotal": "مجموع الضريبة",
+    "PaymentVoucherList": "قائمة سندات الصرف",
+    "Paymentform": "سند صرف",
+    "DebitAccounts": "الحسابات المدينة (المدفوع لها)",
+    "CreditAccounts": "الحسابات الدائنة (المدفوع منها)",
+    "Cheques": "الشيكات",
+    "CreditCards": "البطاقة الإئتمانية",
+    "CashAccounts": "الحسابات النقدية",
+    "ChequeNo": "رقم الشيك",
+    "DueDate": "تاريخ الاستحقاق",
+    "DrawerName": "اسم الساحب",
+    "CreditCardNo": "رقم البطاقة الإئتمانية",
+    "CreditCardAccount": "حساب الائتمان",
+    "PaymentDate": "تاريخ التسديد",
+    "BeneficiaryName": "اسم المستفيد",
+    "CreditCardType": "نوع البطاقة",
+    "TotalCredit": "مجموع الحسابات الدائنة",
+    "msgEnterAllDataDebit": "تأكد من ادخال جميع المعلومات المطلوبة في جدول الحسابات المدينة",
+    "msgEnterAllDataCredit": "تأكد من ادخال جميع المعلومات المطلوبة في جدول الحسابات الدائنة",
+    "msgEnterAllDataCheques": "تأكد من ادخال جميع المعلومات المطلوبة في جدول الشيكات",
+    "msgEnterAllDataCards": "تأكد من ادخال جميع المعلومات المطلوبة في جدول البطاقات",
+    "RequiredField": "الرجاء ادخال البيانات المطلوبة",
+    "BranchingGroup": "تفريع المجموعة",
+    "msgRecordHasChildren": "لا يمكن حذف السجل لوجود ابناء له",
+    "msgRecordHasLinks": "لا يمكن حذف السجل لارتباطه بسجلات أخرى",
+    "ItemForm": " تعريف المادة",
+    "itemName-Arabic": "اسم المادة -عربي",
+    "itemName-English": "اسم المادة-انجليزي",
+    "itemPrint-Arabic": "اسم الطباعة-عربي",
+    "itemPrint-English": "اسم الطباعة-انجليزي",
+    "taxable": "خاضغ للضريبة",
+    "hasSerialNo": "مرتبط بسيريال",
+    "hasExpDate": "مرتبط بتاريخ صلاحية",
+    "ItemsList": "  قائمة المواد",
+    "itemNo": "رمز المادة",
+    "itemName": "اسم المادة",
+    "itemGroup": "المجموعة",
+    "category": "الصنف",
+    "brand": "الماركة",
+    "model": "الموديل",
+    "image": "الصورة",
+    "stopped": "موقوفة",
+    "alternativeVarieties": "اصناف بديلة",
+    "itemLocation": "موقع المادة والكميات",
+    "accounts": "الحسابات",
+    "unitsPrices": "الوحدات والاسعار",
+    "informations": "المعلومات",
+    "countryOrigin": "بلد المنشأ",
+    "color": "اللون",
+    "supplier": "المورد",
+    "tax": "الضريبة",
+    "priorityLevel": "درجة الاهمية",
+    "productionCompany": "الشركة المنتجة",
+    "size": "المقاسات",
+    "season": "الموسم",
+    "maxQty": "حد أعلى (الكمية)",
+    "minQty": "حد أدنى (الكمية)",
+    "orderQty": "حد الطلب (الكمية)",
+    "specifications": "المواصفات",
+    "length": "الطول",
+    "width": "العرض",
+    "weight": "الوزن",
+    "height": "الارتفاع",
+    "storeAccNo": "رقم حساب المخزون",
+    "salesAccNo": "حساب المبيعات",
+    "costGoodsSoldAccNo": "رقم حساب تكلفة البضاعة المباعة",
+    "purchaseAccNo": "حساب المشتريات",
+    "alternativeItem": "المادة البديلة",
+    "store": "المستودع",
+    "storageLocation": "مكان التخزين",
+    "categoriesPrice": "اسعار الفئات",
+    "barcode": "الباركود",
+    "minimumUint": "اصغر وحدة",
+    "itemsPricesByCategoryAndUnit": "اسعار المواد حسب الفئة والوحدة",
+    "categoryPrice": "فئة السعر",
+    "UniformPriceForAllCategories": "توحيد السعر لجميع الفئات",
+    "UnPost": "فك الترحيل",
+    "FromVoucher": "من سند رقم",
+    "ToVoucher": "الى سند رقم",
+    "ShowRecord": "إظهار البيانات ",
+    "NewSearch": "بحث جديد ",
+    "Choose": "أختيار ",
+    "postingServiceform": "شاشة ترحيل و فك ترحيل السندات ",
+    "UniformDiscountForAllCategories": "توحيد الخصم لجميع الفئات",
+    "DelAll": "حذف الكل",
+    "GetAllItems": "عرض جميع المواد",
+    "Free": "المجانية",
+    "Bonus": "البونص",
+    "ForecastingList": "قائمة التوقعات",
+    "ParentAcc": "الحساب المتفرع",
+    "OnFiscalYear": "حسب فترات السنة",
+    "OnMonthlyBalance": "حسب اشهر السنة",
+    "OnBranched": "حسب الفرع",
+    "Balance": "الرصيد",
+    "accountsbalances": "تقرير ارصدة الحسابات",
+    "ForecastingForm": "شاشة التوقعات",
+    "MinManufQty": "كمية الحد الأدنى للتصنيع",
+    "RepricingItems": "اعادة تسعير المواد",
+    "EditType": "نوع التعديل",
+    "IncreaseOrDecrease": "زيادة او نقصان",
+    "BondNumber": "رقم السند",
+    "Increase": "زيادة",
+    "Decrease": "نقصان",
+    "FilterItemsBy": "تصفية المواد حسب",
+    "ViewItems": "عرض المواد",
+    "OldPrice": "السعر القديم",
+    "NewPrice": "السعر الجديد",
+    "RepricingItemsForm": "تعديل تسعير المواد",
+    "DetailRepricingItems": "تفاصيل تعديل اسعار المواد",
+    "CategoryPrice": "فئة السعر",
+    "Model": "الموديل",
+    "Brand": "الماركة",
+    "item": "الصنف",
+    "ItemsprodList": "تعديل كمية الحد الأدنى للتصنيع للمواد",
+    "SaveAll": "حفظ الجميع",
+    "PleaseWaitProc": "يرجى الأنتظار جاري العمل ....",
+    "PurchOrderStatusList": "قائمة حالات طلب الشراء",
+    "PurchOrderStatusForm": "تعريف حالة طلب شراء",
+    "VoucherStatus": "حالة السند",
+    "CurrentPeriod": "الفترة المالية",
+    "accountsstatement": "كشف حساب تفصيلي ",
+    "Level": "المستوى",
+    "DontShowZeroBalances": "عدم اظهار الحسابات التي رصيدها صفر",
+    "ShowUnBranchedAccounts": "اظهار الحسابات الفرعية فقط",
+    "ShowTotals": "اجمالي",
+    "ShowOnlyMainAccounts": "اظهار الحسابات الرئيسية فقط",
+    "DebitTransaction": "الحركات المدينة",
+    "CreditTransaction": "الحركات الدائنة",
+    "DebitTransactionTot": "المجموع المدين",
+    "CreditTransactionTot": "المجموع الدائن",
+    "DebitTot": "الرصيد المدين",
+    "CreditTot": "الرصيد الدائن",
+    "trailbalance": "ميزان المراجعة",
+    "Year1Balance": "مجموع السنة 1",
+    "Year2Balance": "مجموع السنة 2",
+    "CompareYears": "مقارنة سنتين",
+    "branchedaccountstatment": "كشف حساب متفرع",
+    "InventoryAmmount": "بضاعة اخر المدة",
+    "incomestatement": "قائمة الدخل",
+    "Partition": "جزئي",
+    "Fully": "كلي",
+    "balancesheet": "الميزانية العمومية",
+    "CostCenterNo": "رقم مركز الكلفة",
+    "CostCenterName": "اسم مركز الكلفة",
+    "costcentersbalance": "تقرير  ارصدة مراكز الكلف",
+    "GroupByAccounts": "تجميعي حسب الحسابات",
+    "costcentertransactions": "كشف حركات مراكز الكلفة",
+    "ShowCostCenterTotals": "اظهار مجموع كل مركز",
+    "ShowAccountsTotals": "اظهار مجموع كل حساب ",
+    "budgets": "تقرير الموازنات التقديرية للحسابات",
+    "EstimateAmount": "القيمة التقديرية",
+    "ActualValue": "القيمة المحققة",
+    "DifferenceAmount": "الفرق",
+    "percentageValue": "نسبة(%)",
+    "costcenterbudgets": "تقرير الموازنة التقديرية لمراكز الكلف",
+    "ProductionLinesList": "قائمة خطوط الانتاج",
+    "ProductionLinesForm": "تعريف خطوط الانتاج",
+    "LineNo": "رقم الخط",
+    "LineDesc": "وصف الخط",
+    "LineDescA": "وصف الخط - عربي",
+    "LineDescE": "وصف الخط - انجليزي",
+    "CapacityQty": "القدرة الانتاجية",
+    "HoursQty": "عدد الساعات",
+    "RunTime": "مدة التشغيل",
+    "msgSelectOneItem": "يجب تحديد مادة واحدة على الأقل",
+    "DealersItemsList": "قائمة مواد الموردين",
+    "DealerNo": "رقم المورد",
+    "AddItems": "اضافة مواد",
+    "DealerItemForm": "اضافة/تعديل مواد مورد",
+    "vouchertransactions": "كشف قيود جميع الحركات",
+    "FromCheq": "من رقم شيك",
+    "ToCheq": "الى رقم شيك",
+    "CheqStatus": "حالة الشيك",
+    "FromAmount": "من قيمة شيك",
+    "ToAmount": "الى قيمة شيك",
+    "CheqNo ": "رقم الشيك",
+    "chequesreport": "كشف الشيكات",
+    "chequestransreport": "كشف حركة شيك",
+    "CheqInformation": "معلومات الشيك",
+    "CheqNumber": "رقم الشيك",
+    "RecievedDate": "تاريخ الاستلام",
+    "CostCenterTrans": "كشف تفصيلي",
+    "CompareDate": "حسب التاريخ",
+    "currencyexhangehistory": "كشف اسعار صرف العملات",
+    "servicesinvoicereport": "كشف فواتير الخدمات التفصيلي",
+    "BillStatus": "حالة الفاتورة",
+    "Employee": "المندوب",
+    "ProjectName": "المشروع",
+    "projecttransactions": "كشف حركات المشاريع",
+    "ShowProjectsTotals": "اظهار مجموع كل مشروع",
+    "unbalancedtransactions": "كشف القيود الغير متزنة",
+    "TotalDeb": "المجموع المدين",
+    "TotalCred": "المجموع الدائن",
+    "projectbalance": "كشف ارصدة المشاريع",
+    "ProjectNo": "رقم المشروع",
+    "DeliveryPeriod": "مدة التسليم/يوم",
+    "MinQtyOrder": "الحد الأدنى للطلب",
+    "PurorderList": "قائمة طلبات الشراء",
+    "PurorderForm": "اضافة/تعديل طلب شراء",
+    "SaveOrderStatus": "حفظ حالة الطلب",
+    "OrderType": "نوع الطلب",
+    "Cost": "الكلفة",
+    "voucherIterationList": "قائمة السندات المكررة",
+    "Repeats": "عدد مرات التكرار",
+    "IterationName": "نوع التكرار -كل",
+    "VoucherIretation": "السندات المكررة",
+    "SalesOrderList": "قائمة طلبات البيع",
+    "DeliveryDate": "تاريخ التسليم",
+    "CompletionPerc": "نسبة الانجاز",
+    "Product": "المنتج",
+    "ProductNo": "رقم المنتج",
+    "ProductStatus": "حالة المنتج",
+    "OtherQty": "كميات أخرى",
+    "SoldOtherQty": "كميات أخرى محققة",
+    "SalesOrderForm": "اضافة/تعديل طلب البيع",
+    "UnAvaliableBankNameA": "اسم البنك العربي معرًف مسبقاً",
+    "UnAvaliableBankNameE": "اسم البنك انجليزي معرًف مسبقاً",
+    "UnAvaliableIBan": "خطأ برقم الأي بان ",
+    "banksList": "قائمة البنوك و الصناديق",
+    "BankType": "نوع البنك",
+    "BankAcc": "رقم حساب البنك",
+    "ResponsiblePerson": "اسم المسؤول",
+    "Edit/AddBank": "اضافة/تعديل البنك",
+    "NameAr": "الأسم-عربي",
+    "NameEn": "الأسم-انجليزي",
+    "Iban": "الأيبان",
+    "SwiftCode": "سويفت كود",
+    "Website": "الموقع الإلكتروني",
+    "PostdatedchecksAccNo": "رقم حساب الشيكات المؤجلة",
+    "Checkaccountnumberforcollectionfee": "رقم حساب الشيكات برسم التحصيل",
+    "CreditCardEndDate": "تاريخ إنتهاء صلاحية البطاقة",
+    "CardType": "نوع البطاقة",
+    "ReceiptVoucherList": "قائمة سندات القبض",
+    "Receiptform": "سندات القبض",
+    "Please Enter Cheq Payment Method": "الرجاء اختيار طريقة دفع شيكات",
+    "Please Enter CreditCards Payment Method": "الرجاء اختيار طريقة دفع بطاقات إئتمانية",
+    "Please Enter Cash Payment Method": "الرجاء اختيار طريقة دفع نقدي",
+    "TotalDebit": "مجموع الحسابات المدينة",
+    "TransferVoucherList": "قائمة سندات التحويل والأيداع النقدي",
+    "TransferVoucherform": "سند التحويل والأيداع النقدي",
+    "BankTransferList": "قائمة سندات الحوالة البنكية",
+    "BankTransferForm": "سند حوالة بنكية",
+    "Incoming": "واردة",
+    "Outgoing": "صادرة",
+    "InternationalTransfer": "حوالة دولية",
+    "CommissionAMT": "مبلغ العمولة",
+    "CommissionACC": "حساب العمولة",
+    "ReceiverName": "اسم المستفيد",
+    "ReceiverAddress": "عنوان المستفيد",
+    "ReceiverBank": "بنك المستفيد",
+    "ReceiverAccNo": "رقم حساب المستفيد",
+    "SenderName": "اسم المرسل",
+    "Swift": "السويفت",
+    "msgEntercommission": "تأكد من ادخال مبلغ العمولة و حساب العمولة او الغائهم !",
+    "BeginingchequesList": "قائمة شيكات اول المدة",
+    "Beginingchequesform": "شيكات اول المدة",
+    "ProdOrderList": "قائمة أوامر الإنتاج",
+    "ProdOrderForm": "اضافة/تعديل أمر انتاج",
+    "Countries": "الدول",
+    "Customers": "العملاء",
+    "AvailableQty": "الكمية المتوفرة",
+    "SoldQty": "الكمية المباعة",
+    "ManfactQty": "كمية التصنيع",
+    "SalesOrderNo": "رقم طلب البيع",
+    "SelectedRecord": "السجل مدخل سابقا",
+    "OrderNo": "رقم الأمر",
+    "RawMaterial": "المواد الأولية",
+    "ProdQty": "كمية الانتاج",
+    "RequiredQty": "الكمية المطلوبة",
+    "FactorQty": "معامل التصنيع",
+    "CheckQty": "فحص كميات المواد الاولية",
+    "msgNoRawMaterial": "لا يمكن الحفظ لعدم توفر كميات من المواد الأولية لبعض المواد",
+    "OpenPO": "فتح أمر شراء للمواد الخام غير المتوفرة",
+    "OpenSPO": "فتح أمر شراء للمواد المحددة",
+    "UnavlItems": "قائمة المواد الخام غير المتوفرة",
+    "SuppliersList": "قائمة الموردين",
+    "SuppliersItem": "الموردين للمادة:",
+    "SelectItems": "الرجاء تحديد المواد",
+    "ManOrderList": "قائمة أوامر التصنيع",
+    "ManOrderForm": "اضافة/تعديل أمر تصنيع",
+    "TubeCapacity": "سعة الانبوب",
+    "PackageSize": "سعة العبوة",
+    "ItemsCount": "عدد المنتجات",
+    "Weighting": "توزين",
+    "Mix": "خلط",
+    "Packing": "تعبئة",
+    "Wrapping": "تغليف",
+    "ItemsdealersList": "قائمة موردي المواد",
+    "ProcincheqList": "قائمة معالجة الشيكات الواردة",
+    "ProcincheqForm": "معالجة الشيكات الواردة",
+    "msgUCantRepeatSameCheqInSameVoucher": "لا يمكنك تكرار الشيك لنفس السند",
+    "msgUCantDeleteTheresACheuesTransactionsInThisVoucher": "لا يمكنك الحذف لوجود حركات شيكات !",
+    "ProcoutcheqList": "قائمة معالجة الشيكات الصادرة",
+    "manfOrderNo": "رقم أمر التصنيع",
+    "MainType": "النوع الرئيسي",
+    "CalculationMethod": "طريقة الحساب ",
+    "DepreciationRatio": "نسبة الاهلاك",
+    "FixedassetsTypelist": "قائمة انواع الاصول الثابته",
+    "AddFixedassetsType": "اضافه اصول ثابتة",
+    "modifiyFixedAssestType": "تعديل الاصول الثابتة",
+    "OriginalAccount": "حساب الاصل ",
+    "ConsumptionCalculation": "حساب الاستهلاك ",
+    "AccumulatedDepreciationAccount": "حساب مجمع الاهلاك ",
+    "MaintenanceAccount": "حساب الصيانة",
+    "CapitalGainsAndLossesAccount": "حساب الارباح والخسائر الراسمالية",
+    "TypePrincipal": "نوع رئيسي",
+    "OriginalNumber": "رقم الاصل",
+    "OriginalType": "نوع الاصل ",
+    "SubjectToConsumption": "خاضع للاستهلاك",
+    "FixedAseetsList": "قائمة الأصول الثابتة",
+    "FixedAseetsListForm": "تعريف الاصل الثابت",
+    "Building": "المبنى",
+    "Management": "ادارة",
+    "Floor": "الطابق",
+    "Custodian": "صاحب العهدة",
+    "DateOfStartOfUse": "تاريخ بداية الاستعمال ",
+    "ExpectedValueOfWaste": "القيمة المتوقعة للنفاية ",
+    "TheDateOfPurchase": "تاريخ الشراء",
+    "PurchaseInvoiceNumber": "رقم فاتورة الشراء",
+    "DepreciationStartDate": "تاريخ بداية الاهلاك",
+    "ArrivalDate": "تاريخ الوصول",
+    "OrdrDate": "تاريخ الأمر",
+    "OrdrStatus": "حالة الأمر",
+    "RunNo": "عدد التشغيلات",
+    "RunCapacity": "حجم التشغيلة",
+    "ِAllQty": "الكمية الكلية",
+    "DistributeQty": "توزيع الكمية",
+    "ProcoutcheqForm": "معالجة الشيكات الصادرة",
+    "BankSattlmentList": "قائمة التسوية البنكية",
+    "BankSattlmentForm": "اضافة او تعديل التسوية البنكية",
+    "SettlementNo": "رقم التسوية",
+    "SettlementTerms": "بنود التسوية",
+    "MovementsThatWereNotSettledInPreviousStatements": "الحركات التي لم تسوى في الكشوفات السابقة",
+    "Equal": "مطابق",
+    "NotEqual": "غير مطابق",
+    "MovementsDuringTheRequiredPeriod": "الحركات خلال الفترة المطلوبة",
+    "CreditAmountsThatAppearInTheBooksAndDoNotAppearInTheBankStatement": "مبالغ دائنة ظاهرة في الدفاتر و غير ظاهرة في كشف البنك",
+    "CreditAmountsThatDoNotAppearInTheBooksButAppearInTheBankStatement": "مبالغ دائنة غير ظاهرة في الدفاتر و ظاهرة في كشف البنك",
+    "BookBalance": "الرصيد الدفتري",
+    "AmountsOwedAppearInTheBooksAndDoNotAppearInTheBankStatement": "مبالغ مدينة ظاهرة في الدفاتر و غير ظاهرة في كشف البنك",
+    "AmountsDebitedThatDoNotAppearInTheBooksAppearInTheBankStatement": "مبالغ مدينة غير ظاهرة في الدفاتر و ظاهرة في كشف البنك",
+    "BalanceInTheBank": "الرصيد في البنك",
+    "TotalDiff": "مجموع الفرق",
+    "CancelSearch": "الغاء البحث",
+    "ItemsTransfers": "قائمة تحويلات المواد",
+    "OldCountry": "الدولة القديمة",
+    "NewCountry": "الدولة الجديدة",
+    "TransferDate": "تاريخ التحويل",
+    "ReserveQty": "حجز الكمية",
+    "DeleteItemFaild": "لا يمكن حذف مادة لها حركات",
+    "PleaseSelectedUint": "الرجاء اختيار وحدة",
+    "ItemaCodeExists": "رمز العنصر موجود",
+    "setNumber": "رقم الطقم",
+    "setName": "اسم الطقم",
+    "ItemSetsHDList": "قائمة اطقم المواد",
+    "newItemSet": "طقم مواد جديد",
+    "modifyItemSet": "تعديل طقم المواد",
+    "setNameA": "اسم الطقم-عربي",
+    "setNameE": "اسم الطقم-انجليزي",
+    "TransactionItemLogs": "كشف حركات المادة",
+    "itemImage": "صورة المادة",
+    "MsgAddAtleastOneRow": "يجب ادخال على الأقل سطر واحد في الجدول للحفظ",
+    "AddToFavourite": "إضافة الى المفضلة",
+    "ChangeFixedAssetsLocationList": "تغيير موقع أصل",
+    "theOrigin": "الاصل ",
+    "FromTheSite": "من موقع",
+    "ToTheSite": "الى موقع ",
+    "Statement": "البيان",
+    "ChangeFixedAssetsLocationForm": "تغيير موقع أصل",
+    "currentLocation": "الموقع الحالي ",
+    "NewLocation": "الموقع الجديد ",
+    "PleaseEnterAssest": "يجب ادخال اصل واحد على الاقل ",
+    "CanntSameLocation": "لا يمكن ان يكون الموقع الجديد نفس الموقع الحالي ",
+    "CanntSameAssestID": " لا يمكن تكرار الاصل, لقد تم اختياره مسبقا",
+    "SuppOpeningBalanceList": "قائمة الأرصدة الأفتتاحية للموردين",
+    "SuppopeningbalanceForm": "الأرصدة الأفتتاحية للموردين",
+    "SupplierNo": "المورد",
+    "SupplierRpt": "كشف حساب المورد",
+    "CustOpeningBalanceList": "قائمة الأرصدة الأفتتاحية للعملاء",
+    "CustopeningbalanceForm": "الأرصدة الأفتتاحية للعملاء",
+    "CustomerRpt": "كشف حساب العميل",
+    "msgVoucherNotBalanced": "السند غير متزن",
+    "msgEnterCashAnmount": "الرجاء ادخال المبلغ النقدي",
+    "msgEnterAccountCash": "الرجاء ادخال حساب النقدية ",
+    "SupppaymentvoucherList": "قائمة سندات صرف موردين",
+    "SupppaymentvoucherForm": "سند صرف مورد",
+    "CashAmmount": "المبلغ النقدي",
+    "CashAccount": "حساب النقدية",
+    "YouCantDeleteTheresATrasnactionsOnTheCheque": "لا يمكنك الحذف لوجود حركات على الشيك",
+    "CustpaymentvoucherList": "قائمة سند صرف العملاء",
+    "CustpaymentvoucherForm": "سند صرف العملاء",
+    "msgEnterPaymentMethodCheques": "الرجاء ادخال طريقة الدفع شيكات",
+    "msgEnterPaymentMethodCards": "الرجاء ادخال طريقة الدفع بطاقات",
+    "TransactionChangeLocationAssets": "حركة تغيير موقع اصل ",
+    "OriginalDelivery": "تسليم اصل ",
+    "ReceiptOfOriginal": "استلام اصل ",
+    "Originalconditionupondelivery": "حالة الاصل عند التسليم ",
+    "Originalconditionuponreceipt": "حالة الاصل عند الاستلام",
+    "MustEnterEmployeeID": "يجب اختيار الموظف",
+    "MustSelectOriginalconditionuponreceipt": "يجب اختبار حالة الاصل عند الاستلام",
+    "ReceivingDeliveringAnOriginalToAnEmployeeForm": "استلام / تسليم أصل",
+    "ReceivingDeliveringAnOriginalToAnEmployee": "قائمة استلام / تسليم أصل ",
+    "DoNotDuplicateForSameEmployee": "الاصل تم تسليمه لموظف آخر",
+    "AssetNotWithEmp": "هذا الاصل غير مسلم لهذا الموظف",
+    "TransactionOriginalReceiptDelivery": "حركة استلام  / تسليم أصل ",
+    "AssetTotal": "مجموع الموجودات",
+    "LiabilityTotal": "مجموع المطلوبات",
+    "EquityTotal": "مجموع حقوق الملكية",
+    "CurrentProfLoss": "ربح/خسارة العام الحالي",
+    "RunNumber": "رقم التشغيلة",
+    "LiabilitiesEquityTotal": "مجموع المطلوبات وحقوق الملكية",
+    "ProdDate": "تاريخ الانتاج",
+    "ExpiryDate": "تاريخ الصلاحية",
+    "QAList": "قائمة الجودة",
+    "SuppReceiptvoucherList": "قائمة سندات قبض الموردين",
+    "SuppReceiptvoucherForm": "سند قبض المورد",
+    "msgEnterPaymentMethodCash": "الرجاء ادخال طريقة الدفع نقدي",
+    "CustRecieptvoucherList": "قائمة سندات قبض العملاء",
+    "CustRecieptvoucherForm": "سند قبض العملاء",
+    "SuppDebitVoucherList": "قائمة اشعارات مدين موردين",
+    "SuppDebitVoucherForm": "اشعار مدين موردين",
+    "CustDebitvoucherList": "قائمة اشعارات مدين عملاء",
+    "Transaction": "حركة",
+    "AssetPurchaseInvoiceList": "فاتورة شراء أصل",
+    "AssetPurchaseInvoiceForm": "شاشة فاتورة شراء الاصل ",
+    "InvoicePurchaseAssets": "فاتورة شراء اصل مستقل",
+    "FromDoc": "من رقم سند",
+    "ToDoc": "الى رقم سند",
+    "Cash": "نقدي",
+    "ThePriceIncludesTax": "السعر شامل الضريبه",
+    "BondTerms": "بنود السند",
+    "Totals": "الاجمالي",
+    "TransactionAssetPurchaseInvoice": " فاتورة شراء أصل ",
+    "AssetPurchaseInvoiceSheet": " ",
+    "AssetSalesInvoice": "فاتورة بيع أصل ",
+    "AssetSalesInvoiceForm": "شاشة فاتورة بيع أصل",
+    "AssetSalesInvoiceSheet": "",
+    "CustDebitvoucherForm": "اشعار مدين عملاء",
+    "SuppCreditVoucherList": "قائمة إشعارات دائن موردين",
+    "SuppCreditVoucherForm": "إشعار دائن موردين",
+    "CustCreditvoucherList": "قائمة إشعارات دائن عملاء",
+    "CustCreditvoucherForm": "إشعار دائن عملاء",
+    "SupplierPurServiceInvoiceList": "قائمة فواتير شراء الخدمات",
+    "SupplierPurServiceInvoiceForm": "اضافة/تعديل فاتورة شراء خدمات",
+    "CustServiceSalesInvoiceList": "قائمة فواتير بيع خدمات",
+    "CustServiceSalesInvoiceForm": "إضافة/تعديل فاتورة بيع خدمات",
+    "DealersList": "قائمة الموردين",
+    "DealersForm": "شاشة الموردين",
+    "DealersList1": "قائمة العملاء",
+    "DealersForm1": "شاشة العملاء",
+    "SupplierClassification": "تصنيف المورد",
+    "SupplierCategory": "فئة المورد",
+    "CustomerClassification": "تصنيف العميل",
+    "CustomerCategory": "فئة العميل",
+    "DeleviryTerms": "شرط التسليم",
+    "PaymentTerms": "شرط الدفع",
+    "PhoneNumber1": "رقم الهاتف 1",
+    "PhoneNumber2": "رقم الهاتف 2",
+    "NationalityNumber": "الرقم الوطني",
+    "AllowedLimits": "الحد المسموح به",
+    "AllowedCheques": "سقف الشيكات",
+    "InCasePassedLimits": "في حال تجاوز الحد",
+    "StartDateDealing": "تاريخ بداية التعامل",
+    "Taxable": "خاضع للضريبة",
+    "Agent": "الوكيل",
+    "ContactInformation": "معلومات الأتصال",
+    "Addresses": "العناوين",
+    "Position": "الوظيفة",
+    "HomePhone": "الهاتف الأرضي",
+    "Classification": "التصنيف",
+    "CantDeleteTheresATransaction": "لا يمكنك الحذف يوجد حركات",
+    "ArabicAddress": "العنوان-عربي",
+    "EnglishAddress": "العنوان-انجليزي",
+    "msgEnterAllDataDealerAddress": "الرجاء ادخال جميع المعلومات المطلوبة بالعناوين",
+    "msgEnterAllDataDealerContacts": "الرجاء ادخال جميع المعلومات المطلوبة بمعلومات الأتصال",
+    "Invalidemailformat": "خطأ في صيغة أدخال البريد الألكتروني",
+    "InvalidwebsiteURL": "خطأ في صيغة أدخال الموقع الألكتروني",
+    "SupplierBalances": "أرصدة الموردين",
+    "SuppliersNo": "رقم المورد",
+    "SuppliersName": "اسم المورد",
+    "CustomerNo": "رقم العميل",
+    "CustomerBalances": "أرصدة العملاء",
+    "OpeningBalanceV": "الرصيد الأفتتاحي",
+    "ReportMaterialLocation": "تقرير مواقع المواد",
+    "ShowReport": "عرض التقرير",
+    "ShowTransactions": "عرض الحركات",
+    "GroupItem": "مجموعة المادة",
+    "Client": "العميل",
+    "DurationOfReservation": "مدة الحجز/يوم",
+    "ReportReservedMaterial": "تقرير المواد المحجوزة",
+    "Location": "الموقع",
+    "PatchNumber": "رقم الباتش",
+    "ShowTheQuantityDependStore": "اظهار الكميات حسب المستودع",
+    "ShowTheExpiredMaterial": "اظهار المواد المنتهية الصلاحية",
+    "DontShowDatesWithZeroBalance": "عدم اظهار التواريخ التي رصيدها صفر",
+    "ShowTheBalances": "عرض الأرصدة",
+    "ReportOfPatchBalancesAndExpirationDatesOfItems": "تقرير ارصدة الباتش وتاريخ صلاحية المواد",
+    "DontShowMaterialsWithZeroBalance": "عدم اظهار المواد التي رصيدها صفر",
+    "DontShowMaterialsWithZeroBalanceOnly": " عدم اظهار المواد التي رصيدها صفر فقط",
+    "ShowCost": "اظهار الكلفة",
+    "BeforeBalance": "رصيد ماقبله",
+    "TotalIncome": "مجموع الداخل",
+    "TotalOutcome": "مجموع الخارج",
+    "MaterialBalance": "تقرير ارصدة المواد",
+    "MinimumQuantity": "حد أدنى (كمية)",
+    "MaximumQuantity": "حد أعلى (كمية)",
+    "QuantityRequired": "الكمية المطلوبة",
+    "RequestLimit": "حد الطلب",
+    "MaterialRequestLimit": "تقرير المواد التي وصلت حد الطلب",
+    "MaterialTransactions": "تقرير حركات المواد",
+    "Origin": "الأصل",
+    "ParentClass": "فئة الأصل",
+    "ParentStatus": "حالة الأصل",
+    "FromPurchaseDate": "من تاريخ الشراء",
+    "PurchaseDate": "تاريخ الشراء",
+    "ToPurchaseDate": "الى تاريخ الشراء",
+    "ParentNumber": "رقم الأصل",
+    "ParentCost": "قيمة الأصل",
+    "RecycledConsumption": "الاستهلاك المدور",
+    "Additions": "الاضافات",
+    "Deleteation": "الانقاصات",
+    "YearlyConsumption": "الاستهلاك السنوي",
+    "NominalValue": "القيمة الدفترية",
+    "AssetsThatHaveBeenImpaired": "الاصول التي تم انقاص قيمتها",
+    "AddedAssets": "الاصول المضاف عليها",
+    "ReportYearlyConsumption": "كشف الاستهلاك السنوي",
+    "PersentConsumption": "نسبة الاستهلاك",
+    "Expenses": "المصاريف",
+    "AccumulatedDepreciation": "مجمع الاهلاك",
+    "AssetInventoryStatement": "كشف جرد الأصول",
+    "AssetTransactionReport": "كشف عمليات الأصول",
+    "MovementStatement": "بيان الحركة",
+    "RegistrationStatus": "حالة القيد",
+    "ExchangeRate": "سعر الصرف",
+    "ListOfAssetDepreciationNotes": "قائمة مذكرة اهلاك الأصول",
+    "FormOfAssetDepreciationNotes": "شاشة مذكرة اهلاك الأصول",
+    "CalculatingMonthlyDepreciation": "احتساب الاهلاك الشهري",
+    "CalculatingToMonthDepreciation": "احتساب الاهلاك لشهر",
+    "CopyBound": "نسخ السند",
+    "AttachmentsBound": "المرفقات",
+    "Unrelay": "ترحيل",
+    "DisplayFixedAssets": "عرض الأصول الثابتة",
+    "DetailsOfAssetDepreciationNote": "تفاصيل مذكرة اهلاك الاصول",
+    "FixedCost": "قيمة الاصل",
+    "PersentDeprecitation": "نسبة الاهلاك",
+    "DeprecitationCost": "قيمة الاهلاك",
+    "FixedAssetOperationList": "قائمة عمليات الاصول",
+    "FixedAssetOperationForm": "شاشة عمليات الاصول",
+    "AssestValue": "قيمة الاصل",
+    "BookValue": "القيمة الدفترية",
+    "OperationType": "نوع العملية",
+    "FixedAssetOperationSheet": "عمليات الاصول",
+    " عمليات الاصول": "",
+    "voucherType": "نوع السند",
+    "voucherNo": "رقم السند",
+    "reserved": "محجوز",
+    "isOpeningBalance": "اول المدة",
+    "voucherDate": "ناريخ السند",
+    "endVoucherNo": "من رقم سند",
+    "startVoucherNo": "الى رقم سند",
+    "vouvherTerms": "بنود السند",
+    "voucherAttatchment": "مرفقات السند",
+    "type": "نوع",
+    "file": "الملف",
+    "EntryVoucherForm": "سند ادخال مواد",
+    "EntryyVoucherForm": "إضافة/تعديل سند الأدخال",
+    "ItemsEntryVoucherList": "قائمة سندات ادخال مواد",
+    "approval": "اعتماد",
+    "cost": "الكلفة",
+    "costCenter": "مراكز الكلفة",
+    "productDate": "تاريخ الانتاج",
+    "batchNumber": "رقم الباتش",
+    "SupplierAccountStatement": "كشف حساب مورد",
+    "CustomerAccountStatement": "كشف حساب عميل",
+    "SupplierTransactions": "كشف حركات الموردين",
+    "TransNote": "بيان الحركة",
+    "CustomerTransactions": "كشف حركات العملاء",
+    "Favourite": "المفضلة",
+    "NO": "الرقم",
+    "SupplierAging": "كشف اعمار الذمم الدائنة",
+    "CustomerStatement": "كشف حساب عميل",
+    "SupplierStatement": "كشف حساب مورد",
+    "CustomerAging": "كشف اعمار ذمم العملاء",
+    "DepreciationList": "مذكرة اهلاك أصول",
+    "DepreciationForm": "تفاصيل مذكرة اهلاك الاصول",
+    "msgSelectAllData": "اكد من اختيار فئة الاصل ",
+    "onlyShowZeroBalance": "اظهار المواد التي رصيدها صفر فقط",
+    "ItemTransactions": "كشف حركة مادة",
+    "ItemsBalances": "تقرير ارصدة المواد",
+    "itemSequencesForm": "تعريف تسلسلات المادة",
+    "enterAutoSequenceLikeFristSequence": "ادخال تسلسل تلقائي حسب اول تسلسل",
+    "pleaseEnterFirstSerial": "يجب ادخال اول سيريال",
+    "pleaseEnterAllSerial": "لا يمكن الحفظ الا بإدخال جميع التسلسلات",
+    "pleaseSelectItemAndQuantity": "الرجاء ادخال المادة والكمية",
+    "Serials": "رقم السيريال",
+    "ItemsTrans": "كشف حركات المواد",
+    "NoItemTransactionsFound": "لا يوجد حركات لهذه المادة",
+    "SmallUnit": "الوحدة الصغرى",
+    "BigUnit": "الوحدة الكبرى",
+    "ShowQuantity": "إظهار الكميات",
+    "ToExpiryDate": "لغاية تاريخ صلاحية",
+    "ForExpiryDate": "حتى تاريخ صلاحية",
+    "ExpiryDates": "تقرير ارصدةالباتش وتاريخ صلاحيةالمواد",
+    "ExpiryyDate": "تاريخ الصلاحية",
+    "RequestParty": "جهة الطلب",
+    "RequestedBy": "صاحب الطلب",
+    "deliveryPeriod": "وقت التسليم",
+    "OriginCountry": "المنشئ",
+    "BounsUnit": "وحدة البونص",
+    "OpenTransaction": "فتح الحركة",
+    "ReserveItems": "تقرير المواد المحجوزة",
+    "ItemsLocation": "تقرير مواقع المواد",
+    "OpenItemCard": "فتح بطاقة المادة",
+    "RequestType": "نوع طلب الشراء",
+    "ConverionFactor": "معامل التحويل ",
+    "AssetsOperationsReport": "كشف عمليات الاصول",
+    "AssetsStockingReport": "كشف جرد الاصول ",
+    "YearlyDepreciationReport": "كشف الاستهلاك السنوي",
+    "AssetsContractsList": "قائمة عقد صيانة أصل ",
+    "FixedAssetsContractsForm": "  عقد صيانة أصل",
+    "ContractsNo": "رقم العقد ",
+    "ContractOFDate": "تاريخ العقد ",
+    "MaintenanceCompany": "شركة الصيانة",
+    "ConversionPrice": "سعر التحويل",
+    "ContractAmmount": "قيمة العقد",
+    "DateOfStartOfContract": "تاريخ بداية العقد",
+    "DateOfEndOfContract": "تاريخ نهاية العقد",
+    "CopyContract": "صورة العقد ",
+    "StartDateGratterThanEndDate": " خطا! يجب ان يكون تاريخ البداية اقل من تاريخ النهاية  ",
+    "ItemsReservationVoucherList": "قائمة سندات حجز مواد",
+    "Duration": "المدة",
+    "ItemsReservationVoucherForm": "سند حجز مواد",
+    "AutomaticCancellationOfReservation": "الغاء الحجز التلقائي",
+    "ExitDocument": "سند اخراج",
+    "ItemsTransferVoucherList": "قائمة سندات نقل المواد",
+    "FromStore": "من مخزن",
+    "ToStore": "الى مخزن",
+    "ItemsTransferVoucherForm": "سند نقل المواد ",
+    "DamageStockVoucherList": "قائمة سندات اتلاف مواد",
+    "DamageStockVoucherForm": "سند اتلاف مواد",
+    "PurchaseRequestForm": "اضافة/تعديل طلب الشراء",
+    "PurchaseRequestList": "قائمة طلبات الشراء",
+    "DeliveryTime": "وقت التسليم",
+    "LinkingUsersToCompaniesBranchesForm": "ربط المستخدمين بالشركات والفروع",
+    "NotificationsSettingsList": "شاشة اعدادات التنبيهات",
+    "WhenOperation": "عند عملية",
+    "DeliveredTo": "جهة الصرف",
+    "TheTableDataWillBeDeleted!": "سيتم حذف بيانات الجدول ",
+    "PleaseEnterStoreToAdd": "الرجاء ادخال المستودع لأضافة سطر",
+    "PleaseEnterUnitID": "الرجاء ادخال الوحدة اولاً",
+    "PleaseEnterStoreID": "الرجاء ادخال المستودع اولاً",
+    "PleaseEnterItemID": "الرجاء ادخال المادة اولاً",
+    "RemainigQty=": "الكمية غير متوفرة، المتوفر =",
+    "RemainingQty=": "الكمية المتوفرة من المادة =",
+    "OutputVoucherForm": "اضافة/تعديل سند اخراج",
+    "DamageVoucherForm": "اضافة/تعديل سند إتلاف",
+    "OutputVoucherList": "قائمة سندات الأخراج",
+    "CantSaveQtyNotEqual": "لا يمكنك التخزين السيريالات المحددة غير متطابقة مع الكمية ",
+    "ADDITEMSINFO": "استعلام المواد",
+    "msgPleaseEnterStore": "الرجاء ادخال المستودع للمادة :",
+    "msgPleaseEnterAccount": "الرجاء ادخال الحساب المدين للمادة:",
+    "msgPleaseEnterBatch": "يرجى تحديد الباتش بالضغط على F3 للمادة :",
+    "msgPleaseEnterExpiryDate": "يرجى تحديد تاريخ الصلاحية بالضغط على F3 للمادة :",
+    "msgPleaseEnterSerial": "الرجاء تحديد السيريالات الخاصة بالمادة :",
+    "SerialsCount": "عدد السيريالات المختارة      :",
+    "msgMinOrderQty": "الكمية يجب ان تكون اكبر او تساوي كمية الحد الأدنى للطلب",
+    "QtyByCountry": "الكميات حسب الدول",
+    "SendResultTo": "ارسال تنبيه الى",
+    "ReminderNotesForm": "قائمة ملاحظات التذكير",
+    "Normal": "عادي",
+    "Middel": "متوسط",
+    "Important": "مهم",
+    "VeryImportent": "مهم جدا",
+    "ReminderNotes": "قائمة ملاحظات التذكير ",
+    "QuantityOfBatchNotEnough": "كمية الباتش غير كافية للمادة المدخلة ",
+    "QuantityOfBatchNotEnough=": "كمية الباتش المدخل غير كافية المتبقي =",
+    "msgCantTransferSameStore": "لا يمكن النقل لنفس المستودع",
+    "CantAddValueLessThanZero": "لا يمكنك ادخال قيمة اقل من صفر ",
+    "TransferToOutput": "تحويل الى سند اخراج",
+    "TransferToSale": "تحويل الى فاتورة بيع",
+    "SalesEmployee": "مندوب المبيعات",
+    "ConversionRatio": "نسبة التحويل ",
+    "SalessRequesList": "قائمة طلبات البيع",
+    "SalesRequestForm": "طلبات البيع ",
+    "CanntSameUnit": "لا يمكن تكرار المادة, لقد تم اختيارها مسبقا",
+    "ConverToSalesInvoice": "تحويل الى فاتورة بيع",
+    "ExpensesTypesList": "تعريف انواع المصاريف",
+    "ExpenseNumber": "رقم المصروف",
+    "ExpenseName": "اسم المصروف",
+    "NEWExpensesTypes": "اضافة مصروف",
+    "MODIFYExpensesTypes": "تعديل مصروف",
+    "DetailedSaleStatement": "كشف المبيعات التفصيلي",
+    "ClientType": "نوع العميل",
+    "CollectInvoices": "تجميع الفواتير",
+    "ItemSalesReport": "كشف مبيعات الاصناف",
+    "TotalQty": "اجمالي الكمية",
+    "SaleValue": "قيمة البيع",
+    "ListOfReturneditemReport": "كشف المواد التي تم ارجاعها",
+    "TotalInvoice": "مجموع الفاتورة",
+    "TotalAfterDiscount": "مجموع ما بعد الخصم ",
+    "NetAfterTax": "الصافي بعد الضريبة",
+    "ItemsTaxReportlist": "كشف ضريبة المواد",
+    "RequestedItemsReportSalesList": "كشف المواد المطلوبة  - طلبات البيع",
+    "QuantityPurchased": "الكمية المشتراة",
+    "SalesTax": "ضريبة المبيعات",
+    "ReturnValue": "قيمة المرتجع",
+    "ReturnTax": "ضريبة المرتجع",
+    "QuantityReceived": "الكمية المستلمة",
+    "QuantityReceivedValue": "قيمة الكميه المفوترة",
+    "remaining": "الكمية المتبقية",
+    "HemsProfitReportList": "كشف ارباح المواد",
+    "Detailed": "تفاصيل",
+    "GoodbeginningPeriod": "بضاعة اول المدة",
+    "Purchase": "المشتريات",
+    "Sales": "المبيعات",
+    "Returns": "المردودات",
+    "Netcostofsales": "صافي كلفة المبيعات",
+    "Profit": "الربح",
+    "NetProfit": "صافي الربح ",
+    "Profitorloss": "الربح او الخسارة",
+    "SalesRepresentativeSalesReportList": "كشف مبيعات المندوبين",
+    "TotalSales": "مجموع المبيعات",
+    "TotalReturns": "مجموع المردودات",
+    "Payment": "الدفع",
+    "MonthlyQuota": "الكوتا الشهرية",
+    "BillExpenses": "مصاريف الفاتورة",
+    "Expense": "المصروف",
+    "AffectsCost": "يؤثر على الكلفة",
+    "BillDetails": "معلومات الفاتورة",
+    "BillAttachments": "مرفقات الفاتورة",
+    "msgPleaseEnterExpiryDate1": "الرجاء ادخال تاريخ الصلاحية للمادة :",
+    "msgPleaseEnterBatch1": "الرجاء ادخال  الباتش للمادة :",
+    "msgPleaseEnterSerial1": "الرجاء ادخال السيريالات الخاصة بالمادة :",
+    "msgEnterAllDataExpenses": "الرجاء ادخال جميع المعلومات المطلوبة في جدول المصاريف",
+    "CantSaveQtyEqual": "لا يمكنك حذف سطر الكمية مطابقة للسيريالات",
+    "CantSaveQtyEntryNotEqual": "لا يمكن التخزين السيريالات المدخلة غير مطابقة للكمية ",
+    "CantExitEntryQtyNotEqual": "لا يمكنك الألغاء السيريالات المدخلة غير مطابقة للكمية ",
+    "PleaseEnterSerialForId": "الرجاء ادخال ارقام السيريلات لجميع الأسطر",
+    "PleaseInsertFirstRowSerialId": "الرجاء تحديد السيريال في السطر الأول لأنشاء تسلسل تلقائي",
+    "CantSaveQtyEntryNotEqualForItem": "لا يمكن التخزين الكمية غير متطابقة مع التسلسلات للمادة المدخلة  :",
+    "PurchaseInvoiceList": "قائمة فواتير الشراء",
+    "PurchaseInvoiceForm": "ادخال/تعديل فاتورة شراء",
+    "GetPurchaseOrder": "احضار من طلب شراء",
+    "GetRecieptVouchers": "احضار اوامر الأستلام",
+    "CantEditBatchHaveTransactions": "لا يمكنك التعديل تم عمل حركات على الباتش",
+    "CantEditSerialHaveTransactions": "لا يمكنك التعديل تم عمل حركات على السيريال",
+    "CantDeleteRowTheresSerialsAttachedWithRow": "لا يمكنك حذف سطر يوجد سيريالات مرتبطة به",
+    "CantRemoveRowSerialHaveTransactions": "لا يمكنك حذف السيريال لأرتباطه بحركات ",
+    "CantDeleteSerialsHaveATransactions": "لا يمكنك حذف السند تم عمل حركات على السيريالات",
+    "PleaseInsertDealer": "الرجاء ادخال المورد ",
+    "PleaseInsertBounsUnit": "الرجاء ادخال وحدة البونص",
+    "SerialCounter": "عدد السيريالات المدخلة",
+    "SalesInvoicesList": "قائمة فواتير البيع",
+    "SalesInvoicesForm": "اضافة/تعديل فاتورة بيع",
+    "FundAccount": "حساب الصندوق",
+    "SalesOrder": "طلبات البيع",
+    "ReturnType": "نوع المرتجع",
+    "ReturnNo": "رقم المرتجع",
+    "ReturnDate": "تاريخ المرتجع",
+    "ReturnCash": "نقدية",
+    "GetPurchaseInvoice": "احضار من فواتير الشراء",
+    "ReturnDetails": "معلومات المرتجع",
+    "BalancesofFinishedGoodsReport": "ارصدة البضاعة الجاهزة",
+    "ProductNumber": "رقم المنتج",
+    "ProductName": "اسم المنتج",
+    "ProducedQuantitiesList": "الكميات المنتجة",
+    "ManufacturedQuantities": "الكميات المصنعة",
+    "ManufacturingListforCountriesList": "قائمة التصنيع للدول",
+    "ManufacturingOrderNumber": "رقم امر التصنيع",
+    "CodeNumber": "رقم التشغيل",
+    "ProductivityList": "الانتاجية",
+    "DatesOfArrivalOfMaterialsList": "تاريخ وصول المواد",
+    "DatesOfArrivalOfMaterials": "تاريخ وصول المواد",
+    "ProductionCapacityList": "السعة الانتاجية",
+    "PharmaceuticalProductLine": "خط المنتجات الدوائية",
+    "LineOfCosmeticProducts": "خط المنتجات التجميلية",
+    "FluidProductLine": "خط منتجات السوائل",
+    "FoamProductsLine": "خط المنتجات الرغوية",
+    "PerformanceList": "الأداء",
+    "annual": "سنوي",
+    "Actualquantityproduced": "الكمية الفعلية المنتجة",
+    "ActualquantityRequired": "الكمية الفعلية المطلوبة",
+    "AnnualProductsStatusList": "حالة المنتجات السنوية",
+    "FromYear": "من سنة",
+    "ToYear": "الى سنة",
+    "WrongCurrentPassword": "كلمة المرور الحالية غير صحيحة",
+    "PasswordMismatch": "كلمة السر غير متطابقة",
+    "Inventoryreceive": "استلام المستودعات",
+    "Received": "تم الاستلام",
+    "ReturnPurInvoiceList": "قائمة مرتجع فواتير الشراء",
+    "ReturnPurInvoiceForm": "إضافة/تعديل مردود مشتريات",
+    "CantAddQuantityMoreThanPurchaseQuantity": "لا يمكنك ادخال كمية للمادة اكبر من كمية المادة بالفاتورة",
+    "ProdNo": "رقم أمر الانتاج",
+    "ImportCompanies": "شركات الاستيراد",
+    "EditCompanyBranchList": "تعديل  /  فرع شركة ",
+    "CountryQty": "كميات الدول",
+    "DistributeQtyByCountries": "توزيع الكمية على الدول",
+    "msgFacQtyLessminFacqty": "كمية التصنيع يجب ان تكون اكبر او تساوي كمية الحد الأدنى للتصنيع",
+    "ViewAllCostCenter": "احضار جميع مراكز الكلف",
+    "msgConfirmyear": "يجب ان تكون السنه المالية ضمن التاريخ المدخل ",
+    "msgErrorYearNo": "لا يجوز تداخل السنوات المالية ",
+    "ReceiptType": "نوع الأستلام",
+    "ReceiptNo": "رقم الأستلام",
+    "ReceiptDate": "تاريخ الأستلام",
+    "ReceiptDetails": "معلومات الأستلام",
+    "ReceiptAttachments": "مرفقات الأستلام",
+    "InvreceiptvoucherList": "قائمة سندات الأستلام",
+    "InvreceiptvoucherForm": "اضافة/تعديل سند إستلام",
+    "CanTAddQuantityMoreThanOrginalQty": " لا يمكنك ادخال اعلى من الكمية المدخلة حسب السند الذي تم اختياره المسموح به للمادة  :",
+    "ReceiptStatus": "حالة الأستلام",
+    "SendReceipt": "سحب الى سند استلام",
+    "SendPurchaseInvoice": "سحب الى فاتورة شراء",
+    "Ammount": "القيمة",
+    "msgEnterCountryQty": "أدخل كميات الدول للمنتجات المستلمة",
+    "msgConQty": "مجموع كمية الدول يجب ان تكون اصغر او تساوي كمية الانتاج",
+    "DeliveryNo": "رقم التسليم",
+    "DeliveryType": "نوع التسليم",
+    "ItemsDeliveryList": "قائمة سندات التسليم",
+    "ItemsDeliveryForm": "إضافة/تعديل سند تسليم",
+    "GetSalesOrder": "احضار من طلبات البيع",
+    "GetSalesInvoices": "احضار من فواتير البيع",
+    "DeliveryDetails": "معلومات التسليم",
+    "DeliveryAttachments": "مرفقات التسليم",
+    "DeliveryVoucher": "سندات التسليم",
+    "SelectOneRecord": "الرجاء تحديد سطر واحد على الأقل",
+    "ReservedQty": "الكمية المحجوزة",
+    "TaxNo": "رقم الضريبة",
+    "Onlynumeric": "يُسمح فقط باستخدام الأحرف الرقمية لرقم الهاتف.",
+    "proditemslist": "قائمة المنتجات المراد تصنيعها",
+    "openPurchaseOrderWithSelectedItems": "طلب شراء مفتوح مع عناصر مختارة",
+    "SerialNoIsAlreadyBeingUsedTryAnother": "هذا السيريال معرف مسبقا للمادة !",
+    "ReturnSalesInvoiceList": "قائمة مردودات المبيعات",
+    "ReturnSalesInvoiceForm": "اضافة/تعديل مردود مبيعات",
+    "GetSalesInvoice": "احضار من فواتير البيع",
+    "Voucher": "السند",
+    "ImageOnly": "الرجاء اختيار صورة فقط",
+    "ReturnAttachments": "مرفقات المرتجع",
+    "material": "المادة",
+    "MaterialRequiredReport": " كشف المواد المطلوبة - طلبات الشراء ",
+    "ProductionDashboard": "Production Dashboard",
+    "LineAvailable": "رقم الخط مدخل سابقا",
+    "WrongParentAcc": "حساب الأب لا يمكن ان يكون هو الحساب نفسه او احد ابنائه",
+    "hasDefaultSmall": "يجب تحديد اصغر وحدة والوحدة الافتراضية",
+    "SmallIsOne": "معامل التحويل يجب ان يكون واحد لاصغر وحدة",
+    "PurchaseOrderNo": "رقم طلب الشراء",
+    "MaterialPurchaseReport": "كشف مشتريات المواد",
+    "Detaile": "تفصيلي",
+    "TotalQuantitiesPurchased": "اجمالي الكميات المشتراة",
+    "TotalQuantitiesReturned": "اجمالي الكميات المرتجعه",
+    "TotalPrice": "اجمالي السعر",
+    "UnitPrice": "سعر الوحدة",
+    "msgDontEnterLatters": "لا يمكن استخدام الاحرف في خانه رقم الهاتف ",
+    "MaxUnit": "اكبر وحدة",
+    "BonusExclude": "استثناء البونص",
+    "WithReturns": "مع مرتجعات",
+    "withoutReturns": "استثناء المرتجعات",
+    "ShowSalesInvoice": "عرض فاتورة المبيعات",
+    "SalesDetailedReport": "كشف المبيعات التفصيلي",
+    "QtyError": "الكمية غير متوفرة لبعض المواد في التاريخ المدخل",
+    "QuantitySales": "الكمية المفوترة",
+    "ShowSalesReturnInvoice": "عرض مردود المبيعات",
+    "ShowSalesOrder": "عرض طلب البيع",
+    "SalesCategoriesReport": "كشف مبيعات الأصناف",
+    "ExchangeMethod": "طريقة الصرف",
+    "CheqNo": "رقم الشيك",
+    "ReportOfItemsReceivedAsPartOfIt": "كشف المواد المستلم جزء منها - طلبات الشراء ",
+    "StoreAccNo": "يجب ادخال حساب المخزون لكل المستودعات من شاشة المخازن",
+    "InventoryAccType": "اعتماد حساب المخزون حسب",
+    "PurOrderNo": "رقم طلب شراء",
+    "ProductPricesForCountries": "اسعار المنتجات للدول",
+    "Countryforecast": "تقرير التوقعات",
+    "msgPleaseEnterMonth": "الرجاء ادخال الشهر ",
+    "msgPleaseEnterYear": "الرجاء ادخال السنة ",
+    "PayType": "طريقة الدفع",
+    "ShowPrice": "إظهار السعر",
+    "PurchaseExpensesStatement": "كشف مصاريف المشتريات",
+    "ExpenseDate": "تاريخ المصروف",
+    "ExpenseValue": "قيمة المصروف",
+    "addServiceInvoice": "اضافة/تعديل فاتورة خدمات",
+    "InvoiceAmount": "قيمة الفاتورة",
+    "TaxAmount": "قيمة الضريبة",
+    "SalesInvoicesTax": "ضريبة فواتير المبيعات",
+    "ReturnSalesInvoicesTax": "ضريبة مردودات المبيعات",
+    "PurchaseInvoicesTax": "ضريبة فواتير الشراء",
+    "ReturnPurchaseInvoicesTax": "ضريبة مردودات الشراء",
+    "ServiceInvoicesTax": "ضريبة فواتير الخدمات",
+    "Cumulative": "تجميعي",
+    "SalesTaxesReportList": "كشف الضرائب",
+    "addCustomerPaymentVoucher": "إضافة/تعديل سند صرف عملاء",
+    "AddCustomerOpeningBalance": "إضافة/تعديل الأرصدة الأفتتاحية للعملاء",
+    "msgDontEnterLattersInHomePhone": "لا يمكن ادخال احرف في خانه الهاتف الارضي ",
+    "PreviousDepreciationBalance": "رصيد الإهلاك السابق",
+    "EnterAccounts": "يجب ادخال حساب المخزون وحساب تكلفة البضاعة المباعة",
+    "EnterStoreAccounts": "يجب ادخال حساب المخزون وحساب تكلفة البضاعة المباعة للمستودع",
+    "EnterItemAccounts": "يجب ادخال حساب المخزون وحساب تكلفة البضاعة المباعة للمادة",
+    "EnterUnifiedAccounts": "يجب ادخال حساب المخزون وحساب تكلفة البضاعة المباعة في الاعدادات العامة",
+    "ComparisonSalesOfCategoryOrItemByYears": "كشف مقارنة مبيعات صنف او مادة حسب السنوات",
+    "msgChoose": "الرجاء اختيار اسم المادة او الصنف",
+    "isValidItemName": "أسم المادة موجود",
+    "VoucherInfo": "معلومات السند",
+    "ShowProjects": "معلومات المشاريع",
+    "ShowCostCenter": "معلومات مراكز الكلف",
+    "voucherstransactions": "كشف قيود جميع الحركات",
+    "UserList": "قائمة المستخدمين",
+    "CountryList": "قائمة الدول",
+    "cheqstransactions": "كشف حركة شيكات",
+    "CantDeleteVoucherConnectedWithoutputVoucher": "لا يمكنك حذف السند لأرتباطه بحركات اخراج",
+    "CantDeleteVoucherSerialsHaveBeenUsed": "لا يمكنك حذف السند تم عمل سندات مرتبطة بتسلسل المواد",
+    "CantAddVoucherByThisDate": "لا يمكنك الأدخال بهذا التاريخ يوجد حركات اخراج بعد التاريخ المدخل لبعض المواد",
+    "CostDecimalPlaces": "عدد الخانات العشرية للكلفة",
+    "profLossAccId": "حساب الأرباح و الخسائر",
+    "CloseYearForm": "الأقفال السنوي",
+    "InventoryStockAccount": "حساب البضاعة و المخزون",
+    "CostOfGoods": "تكلفة البضاعة",
+    "CloseYear": "اقفال السنة",
+    "OpenYear": "فتح السنة",
+    "MakeSureAllPeriodsClosed": "يجب التاكد ان جميع الفترات التابعة للسنة تم اغلاقها لأتمام عملية اقفال السنة ",
+    "OpenYearPeriods": "فتح الفترة",
+    "CloseYearPeriods": "اغلاق الفترة",
+    "ErrorDate": "لا يمكن ان يكون تاريخ البدايه اكبر من تاريخ النهايه  .",
+    "UserPermissionsForm": "صلاحيات المستخدم",
+    "AddspeichalPermissionForTheUser": "إضافة صلاحيات خاصة للمستخدم",
+    "ReturnGroupPermissionToUser": "إرجاع صلاحيات المجموعة للمستخدم",
+    "CopyPermissionsFromUserOrGroup": "نقل الصلاحيات من مستخدم او مجموعة",
+    "AddUserPermissions": "إضافة/تعديل صلاحيات المستخدم",
+    "CopyUserPermissions": "نسخ صلاحيات مستخدم/مجموعة",
+    "Groups": "المجموعات",
+    "Users": "المستخدمين",
+    "PleaseInsertGroupId": "الرجاء تحديد مجموعة المستخدم",
+    "PleaseInsertnameA": "الرجاء ادخال الأسم عربي",
+    "PleaseInsertnameE": "الرجاء ادخال الأسم انجليزي",
+    "PleaseInsertpassword": "الرجاء ادخال كلمة المرور",
+    "PleaseInsertemail": "الرجاء ادخال الإيميل",
+    "PleaseAddAtleastoneCompanyAndGroup": "الرجاء تحديد شركة و مجموعة للمستخدم",
+    "EmailAlreadyExitTryAnotherOne": "لقد تم تخزين الأيميل مسبقاً الرجاء ادخال ايميل اخر",
+    "UcantAddSameGroupToSameUser": "لا يمكنك ادخال نفس المجموعة لنفس المستخدم",
+    "UcantAddSameCompanyToSameUser": "لا يمكن التكرار تم ادخال نفس المعلومات سابقاً",
+    "CopyPermissions": "نقل",
+    "AddGroupPermissions": "إضافة صلاحيات للمجموعة",
+    "UseHIS": "ربط بنظام المستشفيات",
+    "PriceAlreadAvl": "السعر مدخل سابقا لهذه الدولة",
+    "Shipped": "تم الشحن",
+    "UserGroupPermissions": "صلاحيات مجموعة المستخدمين",
+    "SalesorderSheet": "طلب البيع",
+    "ForecastingSheet": "طلب التوقعات",
+    "ReturnServiceInvoiceList": "قائمة مرتجع الخدمات",
+    "ReturnServiceInvoiceForm": "اضافة/تعديل مرتجع خدمات",
+    "GetServiceInvoice": "إحضار من فاتورة خدمات",
+    "MainVoucherServices": "رقم فاتورة الخدمات",
+    "ReturnService": "كشف مردودات الخدمات",
+    "TheEnteredAccountBalanceExceededTheBudgetBalance": "رصيد الحساب تجاوز مبلغ الموازنة",
+    "TheBalanceExceededTheAmountAllowedByTheBudget": "رصيد الحساب تجاوز الرصيد المسموح به بالموازنة",
+    "TheEnteredCostCenterBalanceExceededTheBudgetBalance": "رصيد مركز الكلفة تجاوز قيمة موازنة مراكز الكلف",
+    "TheCostCenterBalanceExceededTheAmountAllowedByTheBudget": "رصيد مركز الكلفة تجاوز الرصيد المسموح به بموازنة مراكز الكلف",
+    "msgYouMustEnterCostCenter": "يجب ادخال مركز الكلفة للحساب ",
+    "PleaseInsertCostCenterPolicy": "الرجاء ادخال سياسة مركز الكلفة",
+    "ThisAccountNoHasBeenSavedBeforeInBudgets": "تم عمل موازنة تقديرية لهذا الحساب مسبقأ",
+    "ThisCostCenterHasBeenSavedBeforeInBudgets": "تم عمل موازنة تقديرية لمركز الكلفة مسبقاً",
+    "ShowSuspendedAccounts": "اظهار الحسابات الموقوفة ",
+    "PaidAmount": "القيمة المسددة",
+    "RemainingAmount": "المتبقي",
+    "msgCantAddAmountMoreThanMainTotlaBill": "المبلغ المدخل تعدى قيمة الفاتورة ",
+    "msgPaidVouchesValueMoreThanMainValue": "المبلغ المدخل تعدى قيمة السند ",
+    "PayBills": "تسديد الفواتير ",
+    "RemainingFromPayment": "المتبقي من قيمة التسديد",
+    "TotalPaidAmount": "مجموع المسدد",
+    "MsgPleaseInsertCustomer": "الرجاء ادخال العميل",
+    "RecieptNo": "رقم القبض",
+    "RecieptDate": "تاريخ القبض",
+    "TotalPaid": "القيمة المسددة",
+    "Remaining": "المتبقي",
+    "PaidBills": "كشف الفواتير المسددة",
+    "FromBill": "من فاتورة",
+    "ToBill": "الى فاتورة",
+    "PaidBillsReport": "كشف الفواتير المسدده",
+    "GetPaidBillsForm": "كشف الفواتير المسدده",
+    "msTheCostCenterValueIsHigherThanTheBondValue": "قيمة مركز الكلفة اعلى من قيمة الحساب",
+    "msTheProjectValueIsHigherThanTheBondValue": "قيمةالمشاريع اعلى من قيمة الحساب",
+    "msgCantAddSameAccountForThisVoucherType": "تم تفعيل خيار عدم تكرار رقم الحساب لنوع السند المدخل ",
+    "msgTheAccRepeatedReminder": "تنبيه : هذا الحساب مكرر",
+    "msgCantAddSameItemForThisVoucherType": "تم تفعيل خيار عدم تكرار رمز المادة لنوع السند المدخل",
+    "Currencyratelist": "أسعار العملات",
+    "msgTheItemRepeatedReminder": "تنبيه : رمز المادة مكرر",
+    "EquationNo": "رقم المعادلة",
+    "EquationDate": "تاريخ المعادلة",
+    "ProductedItem": "المادة المنتجة",
+    "Manfequationslist": "قائمة معادلات التصنيع",
+    "EquationDesc": "وصف المعادلة",
+    "manfuEquationsForm": "اضافة/تعديل معادلة التصنيع",
+    "msgProducedItemIsAlreadyHaveEquation": "المادة المنتجة لديها معادلة مسبقاً",
+    "MainUserLookupsPermission": "صلاحيات تعريفات النظام الرئيسية",
+    "SupplierAccount": "حساب المورد",
+    "CustomerAccount": "حساب العميل",
+    "BringAllAccounts": "احضار جميع الحسابات ",
+    "AddSubCostCenter": "تفريع الكلفة",
+    "Costcenterbranchform": "تفريع مركز كلفة",
+    "thevaluecontractnoisexist": "رقم العقد المدخل مكرر.",
+    "MinimumQtyOrder": "الحد الادنى للطلب",
+    "Suppliers": "الموردين",
+    "ItemType": "نوع المادة",
+    "msgMustSelectTaxForSupplier": "المورد خاضع للضريبه يجب اختيار ضريبه ",
+    "msgMustSelectTaxForDealer": "العميل خاضع للضريبه يجب اختيار ضريبه ",
+    "Warning:Thesupplierhasexceededthepermittedfinanciallimit": "تحذير :المورد تعدى السقف المتاح",
+    "Thesupplierhasexceededthepermittedfinanciallimit": "المورد تعدى السقف المتاح",
+    "Warning:SupplierExceededThePermittedChequeLimit": "تحذير :المورد تعدى سقف الشيكات",
+    "SupplierExceededThePermittedChequeLimit": "المورد تعدى سقف الشيكات",
+    "Warning:TheCustomerhasexceededthepermittedfinanciallimit": "تحذير :العميل تعدى السقف المتاح",
+    "TheCustomerhasexceededthepermittedfinanciallimit": "العميل تعدى السقف المتاح",
+    "Warning:CustomerExceededThePermittedChequeLimit": "تحذير :العميل تعدى سقف الشيكات",
+    "MangerId": "رقم المدير",
+    "MangerName": "اسم المدير",
+    "Market": "السوق",
+    "MarketMangerList": "قائمة مدراء الأسواق",
+    "SendUserAndPassByEmail": "أرسال معلومات الدخول بالبريد الألكتروني",
+    "NEWManger": "اضافة مدير جديد",
+    "EditManger": "تعديل المدير",
+    "ThisEmailHasBeenUsedBeforePleaseTryAnother": "هذا الأيميل مستخدم مسبقأ الرجاء ادخال بريد الكتروني اخر ",
+    "CustomerExceededThePermittedChequeLimit": "العميل تعدى سقف الشيكات",
+    "batchNumberAvalaible": "رقم الباتش مدخل سابقا",
+    "Totalquantities":"مجموع الكميات",
+    "TotalValues":"مجموع القيم",
+    "NewSalesRequest":"طلب مبيعات جديد",
+    "MarketManager":"مدير السوق",
+    "AddMaterial":"اضافه مادة ",
+    "discount":"الخصم"
+    ,"PromotionalMaterialsPlans":"خطط المواد الدعائية"
+    ,"PromotionalMaterialsInventory":"مخزون المواد الدعائية"
+    ,"NewPromotionalMaterialsRequest":"طلب مواد دعائية جديد"
+    ,"Promotion":"قائمة طلبات المواد الدعائية"
+    ,"PromotionalItem":"المادة الدعائية"
+    ,"RequiredAccordingToThePlan":"المطلوب حسب الخطة"
+    ,"AvailableQuantity":"الكمية المتوفرة"
+    ,"RemainingAccordingToPlan":"المتبقي حسب الخطة"
+    ,"RemainingInTheStore":"المتبقي في المستودع"
+    ,"Promotionitemsform":"إضافة/تعديل طلب المواد الدعائية",
+    "Totalvalue":"القيمة الكلية",
+    "TotalFree":"مجموع المجاني",
+    "TotalBouns":"مجموع البونص",
+    "TotalQuantitiesForTheWholeYear":"مجموع الكميات لكل السنة",        
+    "PromotionPlanslist":"قائمة خطط المواد الدعائية"
+    ,"CreateNewPromotionslItemsPlan":"انشاء خطة مواد دعائية جديدة"
+    ,"PlanNo":"رقم الخطة"
+    ,"PlanDate":"تاريخ الخطة"
+    ,"TotalPlanValue":"القيمة الكلية للخطة"
+    ,"SalesForecast":"توقعات المبيعات"
+    ,"PlanValuePercentageToForecast":"نسبة قيمة الخطة مقارنة بالتوقعات"
+    ,"ExpectedValue":"القيمة المتوقعة"
+    ,"ExpectedCost":"التكلفة المتوقعة"
+    ,"PromotionPlansform":"انشاء /تعديل خطة مواد دعائية جديدة"
+    ,"Enteravalidyear(e.g.,2021)":"الرجاء ادخال السنة بطريقة صحيحة مثال (2024)"
+    ,"Yearisrequired":"السنة مطلوبة",
+    "AveragePricePerPiece":"معدل سعر القطعة",
+    "PromotionalMaterialStock":"تقرير مخزون المواد الدعائية",
+    "NameOfThePromotionalMaterial":"اسم المادة الدعائيه",
+    "AvailableQuantities":"الكميات المتوفرة"
+    ,"ExpectedQty":"الكمية المتوقعة"
+    ,"QuantityRealizationRatio":"نسبة التحقيق للكمية"
+    ,"ExpectedFree":"المجاني المتوقع"
+    ,"ActualFree":"المجاني المحقق"
+    ,"ExpectedSamples":"عينات متوقع"
+    ,"FreeSamples":"عينات مجاني"
+    ,"GetSalesForcastForm":"تقرير المبيعات و التوقعات"
+    ,"NewSalesInvoice":"فاتورة بيع جديدة"
+    ,"Marsalesinvoicelist":"قائمة فواتير بيع التسويق"
+    ,"ProjectPolicy":"سياسة المشاريع",
+    "PleaseInsertprojectPolicy":"الرجاء ادخال سياسة المشاريع",
+    "DefultDebitAccount":"الحساب المدين الافتراضي",
+    "DefultCreditAccount":"الحساب الدائن الافتراضي",
+    "DefultBranch":"الفرع الافتراضي",
+    "DefultCurrency":"العملة الافتراضية",
+    "DefultStore":"المستودع الافتراضي",
+    "DefultChequesGLAccount":"حساب الشيكات الافتراضي",
+    "DefultBank":"البنك الافتراضي",
+    "DefultChequeStatus":"حالة الشيك الافتراضية",
+    "DefultExchangeMethod":"طريقة الصرف/القبض الافتراضية",
+    "PleaseInsertfromChequeStatus":"الرجاء ادخال إظهار الشيكات التي حالتها",
+    "PleaseInserttoChequeStatus":"الرجاء ادخال تحويل الشيكات الى الحالة"
+    ,"ChequeOwnerName" : "اسم صاحب الشيك",
+    "EndorsedFrom" : "مجير من"
+    ,"EMAILPORT":"Email Port"
+    ,"SMTPHOST":"smtp Host"    
+    ,"EmailInfo":"معلومات الأيميل"
+    ,"UcantAddThisCurrencyCauseTheExchangeRateNotEqul1":"لا يمكنك اضافة عملة بمعامل تحويل لا يساوي 1",
+    "msgYouMustEnterprojectPolicy":"الرجاء ادخال سياسة المشاريع للحساب "
+    ,"ThisStoreKeeperAlreadyUsedByAnotherStore":"مسؤول المستودع مستخدم بمستودع اخر ",
+    "BuildingNumber":" رقم العمارة",
+    "TheNeighborhood":"الحي",
+    "UseTaxSystem":"استخدام نظام الضريبة الحكومي (الفوترة)",
+    "PlaseSelectCountry":"الرجاء اختيار دولة"
+    ,"ReOrderingQty":"كمية اعادة الطلب"
+    ,"AvgDailyUse":"متوسط الأستخدام اليومي"
+    ,"OrderingQty":"كمية الطلب"
+    ,"ReorderingsList":"اعادة طلب المواد"
+    ,"UnitCost":"كلفة الوحدة"
+    ,"ExpectedAmount":"قيمة التوقع"
+    ,"SoldAmount":"قيمة المباع"
+    ,"SoldCost":"كلفة المباع"
+    ,"FreeCost":"كلفة المجاني المتوقع"
+    ,"SoldFreeCost":"كلفة المجاني المباع"
+    ,"QtyInvestigationRate":"نسبة تحقيق الكميات"
+    ,"AmountInvestigationRate":"نسبة تحقيق المبالغ"
+    ,"Totalsalesallcountries" : "المبيعات الكلية لكل الدول"
+    ,"BasharDashboar" : "داشبورد دكتور بشار"
+    ,"ZiabDashboar" : "داشبورد دكتور ذياب"
+    ,"NewSalesOrdersList":"قائمة طلبات البيع الجديدة"
+    ,"SalesOrdersSendToProduction":"طلبات البيع المرسلة للأنتاج"
+    ,"SalesRateDependsOnMarket":"نسبة البيع حسب الأسواق"
+    ,"MostSalesItems":"المنتجات الأكثر مبيعات"
+    ,"DeabDashbored":"داشبورد د.ذياب"
+    ,"AmountRealizationRatio":"نسبةالتحقيق للقيمة"
+    ,"AddPromItem" : "اضافة مادة دعائية"
+    ,"SalesForecastRpt" : "المبيعات الكلية لكل الدول مقارنة بالتوقعات"
+    ,"ProfitCostRpt" : "التكلفة والأرباح"
+    ,"AllRpt" : "المبيعات والتوقعات والتكلفة والارباح"
+    ,"MaterialItem":"المادة الأولية"
+    ,"GetMaterialForecast":"تقرير توقعات المواد الأولية"
+    ,"MonthTotal" : "قيمة الشهر"
+    ,"ItemsSales" :"مبيعات المواد"
+    ,"DashboredAccountBalance":"ارصدة الحسابات"
+    ,"BeginningBalance" : "رصيد بداية المدة"
+    ,"EditPrint" : "تعديل طباعة السندات"
+    ,"ActualQtyConsumed":"الكمية الفعلية المستهلكة"
+    ,"ProdVoucherList":"قائمة سندات الأنتاج"
+    ,"ProdVoucherForm":"إضافة/تعديل سند انتاج"
+    ,"Meals":"الوجبات"
+    ,"amountOfDecrease":"كمية النقصان/التالفة"
+    ,"TotalCostForAllQuanitiy":"مجموع الكلفة لكامل الكمية"
+    ,"amountOfIncrease":"كمية الزيادة"
+    ,"OneUnitForProductedItem":"الوحدة الواحدة للمادة الجاهزة"
+    ,"PleaseInsertBouns":"الرجاء ادخال البونص"
+    ,"MainDashForm":"الداشبورد الرئيسي"
+    ,"ReportDesigner" : "مصمم التقارير"
+    ,"TotalAllQty" : "مجموع كل الكميات"
+    ,"ForcastBonus":"البونص المتوقع"
+    ,"ActualBonus":"البونص المحقق"
+    ,"SalesCycle":"دورة عمل المبيعات"
+    ,"PurchaseCycle":"دورة عمل المشتريات"
+    ,"DeliveryStatus":"حالة التسليم",
+    "ShippingList":"قائمة الشحن",
+    "ShipNo":"رقم الشحن",
+    "ShipDate":"تاريخ الشحن",
+    "ShippingForm":"اضافة شحن"
+    ,"FinancailVoucher":"القيد المالي"
+    ,"shipQty":"الكمية المشحونه ",
+    "IntermediatePurchaseAccount":"حساب المشتريات الوسيط"
+    ,"ReturnReason" : "سبب الارجاع"
+    ,"NetSales": "صافي المبيعات"
+    ,"CostGoodsSoldTotal": "تكلفة البضاعة المباعة"
+    ,"GrossProfit" : "مجمل الربح/الخسارة",
+    "UsersMustBeSelected":"يجب اختيار مستخدمين "
+    ,"StoreManagerHistory":"تاريخ مسؤول المستودع"
+    ,"ItemsADdInfo":"معلومات المادة الأضافية"
+    ,"Info":"المعلومة"
+    ,"PleaseEnterItemInfo":"الرجاء ادخال المعلومة الأضافية للمادة"
+    ,"PleaseEnterItemInfoDesc":"الرجاء ادخال وصف المعلومة الأضافية للمادة"    
+    ,"Notifications" : "الاشعارات"
+    ,"NotificationsList" : "قائمة الاشعارات"
+    ,"Donor":"المتبرع "
+    ,"AssemblyItem":"المادة المجمعة"
+    ,"TotalCost":"مجموع الكلفة"
+    ,"AssemblyitemsForm":"اضافة تجميع للمادة"
+    ,"AssemblyitemsList":"قائمة المواد المجمعة"
+    ,"PleaseInsertAtLeastOneRow":"الرجاء ادخال سطر على الأقل"
+    ,"DisAssemblyitemsForm":"اضافة تفكيك مادة"
+    ,"DisAssemblyitemsList":"قائمة المواد المفككة"
+    ,"DisAssemblyItem":"المادة المفككة"
+    ,"ResetReports" : "سيتم حذف جميع الطباعة وانشائها من جديد، سيتم فقد اي تعديلات عليها"
+    ,"ImportFromExcel" : "استيراد من اكسل"
+    ,"ResetReportBtn" :"إعادة تعيين التقارير"
+    ,"OpeningBalanceAmount":"الرصيد الأفتتاحي"
+    ,"PleaseEnterDebitAccount":"الرجاء ادخال الحساب المدين"
+    ,"IntpurchasereqList":"قائمة طلبات الشراء الداخلية"
+    ,"ntpurchasereqForm":"إضافة/تعديل طلب شراء داخلي"
+    ,"ReasonOrder":"سبب الطلب"
+    ,"SuggestedSupplier":"المورد المقترح"
+    ,"EstimatedPrice":"السعر التقديري"
+    ,"PrintCostCenter":"طباعه مراكز الكلفه مع القيود"
+    ,"ShowAgeing":"اظهار اعمار الذمم"
+    ,"StoreInfo":"معلومات مستودع :"
+    ,"MotivationName":"اسم الدافع"
+    ,"msgEntercardNo":"الرجاء ادخال رقم البطالقه الائتمانيه"
+    ,"AgreementsList":"قائمة الاتفاقيات",
+    "AgreementName":"عنوان الاتفاقية"
+    ,"AgreementNo":"رقم الاتفاقية "
+    ,"AgreementType":"نوع الاتفاقية"
+    ,"AgreementSignatureDate":"تاريخ توقيع الاتفاقية"
+    ,"AgreementsValue":"قيمة المشروع التقديرية بالدينار",
+    "AgreementsForm":"شاشة ادخال اتفاقية "
+    ,"AgreementSummary":"ملخص الاتفاقيه"
+    ,"DurationAgreement":"مده الاتفاقيه"
+    ,"FirstParty":"الطرف الاول "
+    ,"SecondParty":"الطرف الثاني "
+    ,"ThirdParty":"الطرف الثالث "
+    ,"FourthParty":"الطرف الرابع "
+    ,"AgreementValueInDollars":"قيمة المشروع التقديرية بالدولار"
+    ,"DonorCountry":"بلد المتبرع"
+    ,"msgMustEnterDelarAmount":"الرجاء ادخال قيمه الاتفاقيه"
+    ,"ExpensesAccount":"حساب المصروف"
+    ,"CreditCardsCollectionAccount":"حساب تحصيل البطاقات الأئتمانية"
+    ,"PayerName":"اسم الدافع"
+    ,"Procurement":"تحصيل"
+    ,"TheresDefferentBetweenAmounts":" يوجد فرق بين قيمة البنك و المصاريف مع قيمة البطاقة"
+    ,"TheresDefferentBetweenAmountAndTable":"يوجد فرق بين حساب البطاقة و المبالغ المدخلة بالجدول"
+    ,"PleaseChooseOneCreditCardAtleast":"الرجاء اختيار بطاقة واحدة على الأقل "
+    ,"Cardscollectionform":"اضافة/تعديل تحصيل بطاقات"    
+    ,"Cardscollectionlist":"قائمة البطاقات المحصلة"
+    ,"PleaseInsertAmount":"الرجاء ادخال القيمة "
+    ,"PleaseInsertBankAccount":"الرجاء ادخال حساب البنك"
+    ,"PleaseInsertCreditCardAccount":"الرجاء ادخال حساب البطاقة الائتمانية"
+    ,"CopyRow":"نسخ السطر (F4)"
+    ,"ThisCostCenterHasBeenInsertedBefore":"رقم مركز الكلفة مدخل مسبقأ"
+    ,"ThisAccountHasBeenInsertedBefore":"رقم  الحساب مدخل مسبقأ"
+    ,"ShowAllItems":"اظهار جميع المواد"
+    ,"IsCashier":"امين صندوق"
+    ,"CardAccount":"حساب البطاقة الائتمانية"
+    ,"msgTheChequeNumberAlreadyExistsInThisBank":"رقم الشيك موجود مسبقاً في هذا البنك"
+    ,"AuthoritiesList":"المنظمات والجمعيات"
+    ,"AuthoritieNameAr":" اسم الجهة عربي"
+    ,"AuthoritieNameEn":" اسم الجهة انجليزي"
+    ,"Authoritieclassification":"تصنيف الجهة "
+    ,"AuthoritieCategory":"فئه الجهة "
+    ,"NameOfAuthorizedPerson":"اسم الشخص المفوض"
+    ,"AuthorityNumber":"رقم الجهة"
+    ,"AuthorityNameAr":"اسم الجهه - عربي"
+    ,"AuthorityNameEn":"اسم الجهة - انجليزي"
+    ,"AuthorityClassification":"تصنيف الجهة"
+    ,"DescribeTheAuthority":"صفة الجهة"
+    ,"StatusOfAuthority":"حالة الجهة"
+    ,"CategoryOfAuthority":"فئة الجهة"
+    ,"Governorate":"المحافظة"
+    ,"BrigadierGeneral":"اللواء"
+    ,"judiciary":"القضاء"
+    ,"AuthoritiesForm":"ادخال/تعديل منظمة او جمعية"
+    ,"RegistrationDate":"تاريخ التسجيل"
+    ,"MapLocation":"موقع الخريطة"
+    ,"Nametheheadoftheentity":"اسم رئيس الجهة"
+    ,"CaseBookNumber":"رقم كتاب الحالة"
+    ,"CaseBookDate":"تاريخ كتابة الحالة"
+    ,"Facebook":"Facebook"
+    ,"Twitter":"Twitter"
+    ,"AdministrativeCapacity":"الصفة الادارية"
+    ,"Shphonenumber":"رقم هاتف الشخص المفوض"
+    ,"RatingCode":"رمز التقييم"
+    ,"RatingDateFrom":" تاريخ التقييم من"
+    ,"RatingDateTo":" تاريخ التقييم الى"
+    ,"ReasonForDate":"سبب التقييم"
+    ,"Ratings":"التقييمات"
+    ,"msgEnterratingCode":"الرجاء ادخال رمز التقييم "
+    ,"msgEnterratingReason":"الرجاء ادخال سبب التقييم"
+    ,"msgEnterratingDateFrom":"الرجاء اختيار تاريخ التقييم من "
+    ,"msgEnterratingDateTo":"الرجاء اختيار تاريخ التقييم الى "
+    ,"calceledBookNo":"رقم الكتاب الملغي"
+    ,"calceledDate":"تاريخ الكتاب الملغي"
+    ,"msgEntercalceledBookNo":"الرجاء ادخال رقم الكتاب الملغي"
+    ,"msgEntercalceledDate":"الرجاء ادخال تاريخ الكتاب الملغي"
+    ,"PleaseEnterEmail":"الرجاء ادخال الايميل"
+    ,"msgInvalidemailformat":"  صيغة الايميل غير صحيحة"
+    ,"VolunteerName":"اسم المتطوع"
+    ,"VolunteerSide":"جهة المتطوع"
+    ,"TotalVoulnteerHours":"عدد ساعات التطوع الكلي"
+    ,"Volnteerlist":"قائمة المتطوعين"
+    ,"VFirstName":"الاسم الأول"
+    ,"VSecondName":"الاسم الثاني"
+    ,"VThirdName":"الاسم الثالث"
+    ,"VLastName":"اسم العائلة"
+    ,"EmergencyNo":"رقم الطوارئ"
+    ,"WorkPlace":"مكان العمل"
+    ,"YearsExperience":"عدد سنوات الخبرة"
+    ,"TotalVolunteerHours":"عدد ساعات التطوع"
+    ,"ResidentialAddress":"عنوان السكن"
+    ,"EducationalQualification":"التحصيل العلمي"
+    ,"Skills":"المهارات"
+    ,"AvailableDays":"الأيام المتاحة للتطوع"
+    ,"IdentityProof":"نوع اثبات الشخصية"
+    ,"Volnteerform":"ادخال/تعديل المتطوعين"
+    ,"ActivityFromDate":"تاريخ و وقت التطوع من"
+    ,"ActivityToDate":"تاريخ و وقت التطوع الى"
+    ,"ActivityLocation":"مكان النشاط"
+    ,"RequestedVolunteer":"عدد المتطوعين المطلوبين"
+    ,"Activityform":"ادخال/تعديل النشاط التطوعي"
+    ,"Activitylist":"قائمة النشاطات التطوعية"
+    ,"ActivityName":"اسم النشاط التطوعي"
+    ,"ActualVolunteer":"عدد المتطوعين الفعليين"
+    ,"Evaluation":"التقييم"
+    ,"Certificate":"شهادة و إمتياز"
+    ,"CertificateNotes":"ملاحظات الإمتياز"
+    ,"VolunteersIncludedInTheActivity":"المتطوعين المشاركين بالنشاط"
+    ,"MechanismNo":"رقم الآلية"
+    ,"MechanismType":"نوع الآلية"
+    ,"ExpensesOn":"مصروفة على"
+    ,"MaintenanceResbonsible":"مسؤول الصيانة"
+    ,"MovementChife":"رئيس قسم الحركة",
+    "VehicleDefinition":" تعريف المركبات"
+    ,"CarName":"السيارة"
+    ,"CarType":"نوع السيارة"
+    ,"CarModel":"موديل السيارة"
+    ,"Yearofmanufacture":"سنة التصنيع"
+    ,"DriverName":"اسم السائق"
+    ,"PlateNumber":"رقم اللوحة"
+    ,"LicenseExpirationDate":"تاريخ انتهاء الترخيص"
+    ,"VehicleDefinitionForm":"ادخال/تعديل السيارة"
+    ,"TypeModel":"النوع/الطراز"
+    ,"EngineType":"رقم المحرك"
+    ,"TransmissionType":"نوع ناقل الحركة"
+    ,"FuelType":"نوع الوقود"
+    ,"DistanceTraveled":"المسافه المقطوعه"
+    ,"SeatingCapacity":"سعه المقاعد "
+    ,"FuelTankCapacity":"سعه خزان الوقود/لتر"
+    ,"BasePrice":"السعر الاساسي "
+    ,"LoadCapacity":"سعة الحمولة"
+    ,"GeneralNotes":"ملاحظات عامة"
+    ,"AdministrativeDirectorNotes":"ملاحظات المدير الاداري"
+    ,"Inspectandcleanthemechanismfromtheinsideandoutside":"تفقد و نظافة الآلية من الداخل والخارج"
+    ,"EngienCheck":"تفقد المحرك"
+    ,"OileCheck":"تفقد الزيت"
+    ,"MaintenanceworkDuringtheweek":"أعمال الصيانة خلال الأسبوع"
+    ,"Checkuplist":"قائمة التفقد الأسبوعي"
+    ,"Checkupform":"ادخال/تعديل التفقد الأسبوعي"
+    ,"PleaseEnterAtleastOneCheckOrRemoveTheRows":"الرجاء ادخال خانة تفقد واحدة على الأقل أو قم بحذف اسطر الجدول السطر"
+    ,"MechanismName":"اسم الآلية"
+    ,"StationName":"اسم المحطة"
+    ,"VehiclefuelList":"قائمة استهلاك الوقود والمسافات المقطوعة"
+    ,"VehiclefuelForm":"ادخال/تعديل وقود المركبات"
+    ,"PleaseMakeSurePlateNoAndFuelTypeUenteredInTheExcelAlreadyExistsInTheSystem":"الرجاء التأكد من ان رقم اللوحة و نوع الوقود المدخلين في الاكسل موجودين مسبقاً في النظام"
+    ,"DailyMachineryMovement":"حركة الاليات اليومي"
+    ,"GoingTime":"ساعة الذهاب"
+    ,"ReturnTime":"ساعة العودة"
+    ,"MechanismNumber":"رقم الالية"
+    ,"Facilities":"المرافق"
+    ,"DailyMachineryMovementForm":"سجل حركة الاليات اليومي"
+    ,"msgPleaseChoseeDriverName":"الرجاء اختيار اسم السائق"
+    ,"msgEnterGoingAndRetuernTime":"الرجاء ادخال ساعه الذهاب وساعه العوده"
+    ,"PleaseMakeSureDriverNoAndMechanismNumberUenteredInTheExcelAlreadyExistsInTheSystem":"يرجى التاكد من ان اسم السائق ورقم الاليه المدخل في ملف Excel موجود بالفعل في النظام"
+    ,"PleaseInsertQty":"الرجاء ادخال الكمية "
+    ,"Customernumberingbyyear":"ترقيم العملاء حسب السنة"
+    ,"ItemOrderLimitQty":"المادة وصلت حد الطلب : "
+    ,"RepairsOilChangeAndFuelRefillList":" اصلاحات المركبات"
+    ,"Shop":"المحل"
+    ,"WithTheDriver":"برفقة السائق"
+    ,"MeterNumber":"رقم العداد"
+    ,"Maintenance":"الصيانة"
+    ,"MaintenanceType":"نوع الصيانة"
+    ,"AddRepairsOil":"اضافه اصلاحات المركبات "
+    ,"modifiyRepairsOil":"تعديل اصلاحات المركبات "
+    ,"msgmaintenanceType":" الرجاء اختبار نوع الصيانة"   
+    ,"ProjectDate":"تاريخ المشروع"
+    ,"ProjShortName":"اسم مختصر للمشروع"
+    ,"ProjectBookNo":"رقم كتاب الإشعار بالمشروع "
+    ,"GeograpicLocation":"النطاق الجغرافي للمشروع"
+    ,"ImplementationType":"نوع التنفيذ"
+    ,"FinancialMethod":" طريقة التمويل"
+    ,"TotalProjectAmount":"قيمة المشروع الكلية"
+    ,"ProjectDefinitionList":"قائمة المشاريع"
+    ,"DonationForm":"شكل التبرع"
+    ,"ProjectSpending":"اوجه صرف المشروع"
+    ,"TargetedNationalitiesOfBeneficiaries":" الجنسيات المستهدفة للمستفيدين"
+    ,"InsideJordan":"داخل الاردن"
+    ,"OutsideJordan":"خارج الاردن"
+    ,"ProjectFinancialMethod":"طريقة تمويل المشروع"
+    ,"MainAssociationsOrganizations":"الجمعيات و المنظمات (الرئيسية)"
+    ,"BranchedAssociationsOrganizations":"الجمعيات و المنظمات الوسيطة"
+    ,"ProjectImplementationType":"نوع تنفيذ المشروع"
+    ,"InsidePlan":"داخل التخطيط"
+    ,"OutsidePlan":"خارج التخطيط"
+    ,"LiaisonOfficer":"ضابط ارتباط المشروع"
+    ,"BookNo":"رقم الكتاب"
+    ,"BookDate":"تاريخ الكتاب"
+    ,"MaterialsSorce":"مصدر المواد"
+    ,"AssociationsRequiredForTargeting":"الجمعيات المطلوبة للأستهداف"
+    ,"Agreement":"الأتفاقية"
+    ,"ProjectStartDate":"التاريخ المفترض لبدء المشروع"
+    ,"ProjectExpectedCompletionDate":"التاريخ المفترض لانتهاء المشروع"
+    ,"ActualProjectStartDate":"التاريخ الفعلي للبدء في المشروع"
+    ,"ActualProjectCompletionDate":"التاريخ الفعلي لانتهاء المشروع"
+    ,"ProjectStatus":"الوضع الحالي للمشروع"
+    ,"ProjectEvaluation":"تقييم المشروع"
+    ,"RequiredMediaCoverage":"التغطية الأعلامية المطلوبة"
+    ,"MediaCoverageTiming":"توقيت التغطية الأعلامية"
+    ,"TotalProjectValue":" قيمة المشروع الكلية بالدينار"
+    ,"NumberOfCoupons":"عدد الكوبونات"
+    ,"CouponValue":"قيمة الكوبون"
+    ,"CouponRedemptionLocation":"مكان الصرف "
+    ,"Sample":"عيني"
+    ,"CashAmountDinar":" القيمة بالدينار"
+    ,"CashAmountDollar":"القيمة بالدولار"
+    ,"CreditCardAmount":"بطاقات صراف"
+    ,"SustainableDevelopment":"تمكين و تنمية مستدامة"
+    ,"OtherMaterials":"مواد اخرى"
+    ,"Type":"النوع"
+    ,"Count":"العدد"
+    ,"MoneyAmount":"القيمة المالية"
+    ,"TotalDollar":"المجموع بالدولار"
+    ,"ExpenseType":"نوع المصروف"
+    ,"MoneyRate":"الوحدة النقدية"
+    ,"Actual":"فعلي"
+    ,"FamilyCount":"عدد الأسر"
+    ,"MembersCount":"عدد الأفراد"
+    ,"TotalPercentageOfBeneficiaries":"النسبة الكلية من المنتفع %"
+    ,"TypeOfHeadOfHousehold":"نوع رب الأسرة"
+    ,"SpecialHealthNeeds":"الأحتياج الصحي الخاص "
+    ,"IsThereAnyAgreements":"هل يوجد اتفاقية"
+    ,"DollarAmount":"القيمة بالدولار"
+    ,"MoneyAmountDollar":"القيمة المالية بالدولار"
+    ,"TotalProjectValueDollar":"قيمة المشروع الكلية بالعملة المقابلة"
+    ,"OtherConditions":"شروط اخرى :"
+    ,"HoldingIssuesReason":"اسباب التعليق"
+    ,"ProjectDefinitionForm":"اضافة/تعديل مشروع"
+    ,"PleaseInsertRequiredDataForDonationTable":"يرجى إدخال البيانات المطلوبة لجدول شكل التبرع"
+    ,"PleaseInsertRequiredDataForProjectExpensesTable":"يرجى إدخال البيانات المطلوبة لجدول اوجه صرف المشروع"
+    ,"PleaseInsertRequiredDataForTargetedNationalitiesTable":"يرجى إدخال البيانات المطلوبة لجدول الجنسيات المستهدفة"
+    ,"PleaseInsertRequiredDataForSampleTable":"يرجى إدخال البيانات المطلوبة لجدول شكل التبرع عيني"
+    ,"PleaseChooseProjectGeographicScope":"يرجى تحديد النطاق الجغرافي للمشروع"
+    ,"PleaseInsertProjectValue":"يرجى تحديد قيمة المشروع"
+    ,"Deliverytimeiswithindays":"مدة التسليم خلال 45 يوم"
+    ,"msgEnterChequesNo":"يرجى ادخال رقم الشيك"
+    ,"msgChosedueDate":"يرجى اختيار تاريخ الاستحقاق"
+    ,"PleaseChooseSampleAmount":"الرجاء تحديد قيم شكل التبرع عيني"
+    ,"PleaseInsertOtherMaterialsValue":"الرجاء تحديد القيمة المالية للمواد الأخرى "
+    ,"MovementType":"نوع الحركة"
+    ,"ChassisNo":"رقم الشاصي"
+    ,"RegistrationNo":"رقم التسجيل"    
+    ,"msgQtyMoreThanAvailableQty":"الكمية المدخلة أكبر من الكمية المتوفرة"
+    ,"TotalDinar":"المجموع بالدينار"
+    ,"DonateTo":"نوع التبرع النقدي"
+    ,"TypeOfDonation":"نوع التبرع"
+    ,"ProgramType":"نوع برنامج التبرع العيني"
+    ,"MoneyAmountDinar":"القيمة المالية بالدينار"
+    ,"HouseHoldAdjective":"صفة رب الأسرة"
+    ,"PleaseInsertRequiredDataForProjectCashTypesTable":"يرجى إدخال البيانات المطلوبة لجدول شكل التبرع النقدي للمشروع"
+    ,"VehicleLicensingMovementList":"حركة ترخيص السيارة"
+    ,"VehicleLicensingMovementForm":"اضافه حركة ترخيص للسياره"
+    ,"modifiyVehicleLicensingMovement":"تعديل حركة ترخيص للسيارة"
+    ,"ProjectPlanNo":"رقم خطة التوزيع و الأنتفاع"
+    ,"Project":"المشروع"    
+    ,"DistributionPlanType":"نوع خطة التوزيع"
+    ,"DistributionSiteDirection":"جهة موقع التوزيع"
+    ,"DistributionDate":"تاريخ التوزيع"
+    ,"DistributionTime":"وقت التوزيع"
+    ,"RepresentedName":"اسم المندوب"
+    ,"DownloadSite":"موقع استلام المواد"
+    ,"MeansOfTransportation":"مسؤولية نقل المواد"
+    ,"InternalDistributionPlace":"مكان التوزيع الداخلي"
+    ,"DonorPresence":"حضور المتبرع"
+    ,"Wanted":"مطلوب"
+    ,"NotWanted":"غير مطلوب"
+    ,"ProjectPlansList":"قائمة خطط التوزيع والإنتفاع"
+    ,"ProjectPlansForm":"إضافة / تعديل خطة توزيع و انتفاع"
+    ,"IfYouUnSelectIsCashOPtionWeWillClearDataTableWantToContinue?": "اذا قمت بإلغاء تحديد خيار نقدي سنقوم بمسح بيانات الجدول، هل تريد المتابعة؟"
+    ,"IfYouUnSelectIsSampleOPtionWeWillClearDataTableWantToContinue?": "اذا قمت بإلغاء تحديد خيار عيني سنقوم بمسح بيانات الجدول، هل تريد المتابعة؟"
+    ,"ReceivedValue":"القيمة المستلمة"
+    ,"Delivered":"تم التسليم"
+    ,"CanotreceivedValue":"القيمة المستلمه اكبر من الكميه"
+    ,"ActualSalesVsSalesOrders":"المبيعات الفعلية مقابل أوامر المبيعات"
+    ,"SalesOrderQuantity":"كمية طلب المبيعات"
+    ,"SalesOrderValue":"قيمة طلب المبيعات"
+    ,"ActualSoldQuantity":"الكمية المباعه الفعلية "
+    ,"ActualSoldValue":"القيمة المباعه الفعلية "
+    ,"PercentageOfSoldVsPurchaseOrders":"نسبة المبيعات مقابل اوامر الشراء"
+    ,"ShippedPromotionalMaterialsVsOrders":"المواد الترويجية المرسلة مقابل الطلبات"
+    ,"promotionalMaterials":"المواد الترويجية"
+    ,"promotionalMaterialsPlan":"خطط المواد الترويجية "
+    ,"promotionalMaterialsOrder":"طلب المواد الترويجية"
+    ,"ShippedPromotionalMaterials":"المواد الترويجية المرسلة"
+    ,"PleaseChooseTheCurrency":"الرجاء تحديد العملة"
+    ,"TheTableContentsWillBeEmptiedDoYouWantToContinue?":"سوف يتم تفريغ محتويات الجدول هل تريد المتابعة ؟"
+    ,"Relationships":"العلاقات"
+    ,"AssociationName":"اسم الجمعية"
+    ,"WeekDay":"اليوم"
+    ,"PlanDescreption":"وصف الخطة"
+    ,"PleaseInsertPlanDescreption":"الرجاء ادخال وصف الخطة"
+    ,"DistributionLocation":"مكان التوزيع"
+    ,"PhotosTakenAndTheirNumber":"الصور الملتقطة و عددها "
+    ,"HaveThePhotosBeenSentToThePublicRelationsDepartment":"هل تم ارسال الصور الى إدارة الأتصال و الأعلام ؟"
+    ,"HasTheAssemblyLocationBeenSent":"هل تم ارسال  موقع الجميعة "
+    ,"StateTheReason":"ذكر السبب"
+    ,"TheAssociationDistributionSite":"موقع الجمعية / التوزيع مناسب لاستقبال الألية التي تحمل المساعدات(لا يتسبب في ازدحام مروري)"
+    ,"TheAssociationHasFacilities":"يتوفر لدى الجمعية مرافق وقاعات لاستقبال المستفيدين"
+    ,"TheExtentOfTheAssociationsStaffsCooperation":"مدى تعاون كادر الجمعية مع المندوب اثناء التوزيع و هل يوجد لديها متطوعين"
+    ,"HowDoesTheAssociationWork":"طريقة عمل الجمعية هل تعمل بطريقة منظمة تتناسب مع الية التوزيع من حيث توفر كشوفات للمستفيدين،تنظيم المستفيدين ، خطة لتنظيم التوزيع "
+    ,"DelegateRecommendations":"التوصيات الخاصة بالمندوب "
+    ,"AssestCategory":"فئة الاصل"
+    ,"SerialNumber":"الرقم المتسلسل",
+    "LanMacAddress":"Lan Mac Address"
+    ,"WiFiMacAddress":"WiFi Mac Address"
+    ,"DeviceSource":"مصدر الجهاز"
+    ,"HasWarranty":"خاضع للكفالة"
+    ,"WarrantyEndDate":"تاريخ انتهاء الكفالة"
+    ,"OBQty":"كمية رصيد ابتدائي"
+    ,"PleaseEnterDepreciationPercentage":"الرجاء ادخال نسبة الاهلاك"
+    ,"PleaseEnterPreviousDeprBalance":"الرجاء ادخال رصيد الاهلاك السابق"
+    ,"PleaseEnterassetAccId":"الرجاء اختيار حساب الاصل "
+    ,"PleaseEnterdepreriationAccId":"الرجاء اختيار حساب الاستهلاك"
+    ,"PleaseEnteraccumulatedDeprAccId":"الرجاء اختيار حساب مجمع الاهلاك"
+    ,"PleaseEnterexpensesAccId":"الرجاء اختيار حساب الصيانه"
+    ,"PleaseEnterprofitLossAccId":"الرجاء اختيار حساب الارباح والخسائر الراسمالية"
+    ,"ActualNumber":"العدد الفعلي"
+    ,"ProjectPlansRepList":"قائمة تقرير مندوب التوزيع"
+    ,"ProjectPlansRepForm":"ادخال / تعديل  تقرير مندوب التوزيع "
+    ,"ProjectPlan":"خطة المشروع"
+    ,"AuthorityDonor":"الجهة المتبرعة"
+    ,"BounsPercentage":"نسبة البونص"
+    ,"FreePercentage":"نسبة المجانية"
+    ,"BeneficiariesList":"المنتفعين"
+    ,"BeneficiarieForm":"اضافه منتفع"
+    ,"BeneficiarieName":"اسم المنتفع"
+    ,"SecurityIDNumber":"رقم الهويه الامنيه "
+    ,"CommissionNumber":"رقم المفوضية"
+    ,"NumberOfBreadwinners":"عدد المعيلين"
+    ,"breadwinner":"معيل"
+    ,"IsGeBreadwinner":"هل هو معيل ؟"
+    ,"msgPleaseEnterdependentsNo":"الرجاء ادخال عدد المعيلين"
+    ,"NationalORDocNumber":"الرقم الوطني / رقم الوثيقة"
+    ,"TheDevelopmentDirectorateToWhichTheRegionBelongs":"مديرية التنمية التي تتبع لها الجهة"
+    ,"ReceipteDate":"تاريخ الورود"
+    ,"IncomingFrom":"وارد من"
+    ,"ClearanceType":"نوع التخليص"
+    ,"TransportType":"وسيلة الحمولة"
+    ,"ThePartyFromWhichDonationsAreReceived":"الجهة المتبرعة"
+    ,"NameOfTheAssociationOrPersonToWhomTheDonationsAreReceived":"اسم الجمعية او الشخص الوارد له التبرعات"
+    ,"Contains":"المحتويات"
+    ,"ClearanceCompany":"شركة التخليص"
+    ,"CustomsCenter":"المركز الجمركي"
+    ,"PolicyNo":"رقم البوليصة"
+    ,"CustomsDeclarationNo":"رقم البيان الجمركي"
+    ,"CustomsDeclarationDate":"تاريخ البيان الجمركي"
+    ,"Payments":"التسديد"
+    ,"RecommendationNo":"رقم التوصية"
+    ,"ProjectCustomsList":"قائمة التخليص الجمركي"
+    ,"ProjectCustomsForm":"اضافة/تعديل تخليص جمركي"
+    ,"PleaseInsertRequiredFieldsInTable":"الرجاء ادخال البيانات المطلوبة بالجدول "
+    ,"DocumentDate":"تاريخ الوثيقة"
+    ,"SenderAndReceiverCode":"رمز المرسل و المستقبل"
+    ,"IncomingNo":"رقم الوارد"
+    ,"IncomingDate":"تاريخ الوارد"
+    ,"IncomingAuthority":"جهة الوارد"
+    ,"OutgoingNo":"رقم الصادر"
+    ,"OutgoingDate":"تاريخ الصادر"
+    ,"OutgoingAuthority":"جهة الصادر"
+    ,"DocumentClassification":"تصنيف الوثيقة"
+    ,"OtherInOutNo":"رقم صادر أو وارد أخرى"
+    ,"DocumentNoFromTheSendingParty":"رقم الوثيقة من الجهة المرسلة"
+    ,"DocumentDateFromTheSendingParty":"تاريخ الوثيقة من الجهة المرسلة"
+    ,"PaymentsNo":"رقم التسديد"
+    ,"ProjectArchiveList":"قائمة الديوان"
+    ,"ProjectArchiveForm":"اضافة/تعديل الديوان"
+    ,"ThisVoucherIsAlreadyExistBefore":"الرقم مستخدم مسبقاً لهذا السند"
+    ,"OrphanList":"قائمة الايتام"
+    ,"OrphanForm":"الايتام"
+    ,"DocumentName":"اسم الوثيقة "
+    ,"SponsorCode":"كود المكفول"
+    ,"OrphanNo":"رقم اليتيم"
+    ,"OrphanName":"اسم اليتيم"
+    ,"MonthlyValue":"قيمة الكفالة الشهرية"
+    ,"WarrantyPeriod":"مدة الكفالة بالاشهر"
+    ,"DonatingAssoName":"اسم الجمعية المتبرعة"
+    ,"Sponsor":"الجهه الكافلة(وسيط)"
+    ,"Relationship":"صلة القرابه بين الكافل و المكفول"
+    ,"SponsorName":"اسم الكفيل"
+    ,"OrphanNationality":"جنسية اليتيم"
+    ,"OrphanDocumentType":"نوع وثيقة اليتيم"
+    ,"OrphanDocumentNumber":"رقم وثيقة اليتيم"
+    ,"OrphanSecurityIDNumber":"رقم الهوية الامنية لليتيم"
+    ,"OrphanCommissionNumber":"رقم المفوضية لليتيم"
+    ,"OrphanRegistrationNo":"رقم التسجيل لليتيم"
+    ,"SponsorNationality":"جنسية الكفيل"
+    ,"SponsorDocumentType":"نوع وثيقة الكفيل"
+    ,"SponsorDocumentNumber":"رقم وثيقة الكفيل"
+    ,"SponsorSecurityIDNumber":"رقم الهوية الامنية للكفيل"
+    ,"SponsorCommissionNumber":"رقم المفوضية للكفيل"
+    ,"SponsorRegistrationNo":"رقم التسجيل للكفيل"
+    ,"OrphanNationalNumber":"الرقم الوطني لليتيم"
+    ,"SponsorNationalNumber":"الرقم الوطني للكفيل"
+    ,"UseDisburseEntity":"استخدام جهات الصرف"
+    ,"TopFiveAuthoritiesConnectedToTheAgereement":"أعلى خمس منظمات لها اتفاقيات"
+    ,"InternalProjectsCount":"عدد المشاريع الداخلية"
+    ,"ExternalProjectsCount":"عدد المشاريع الخارجية"
+    ,"outgoingCountDiwan":"عدد الصادرات من الديوان"
+    ,"incomingCountDiwan":"عدد الوارد للديوان"
+    ,"msgCanotSaveBecuseMatrealIsExpiryDate":"لا يمكن الاخراج لعدم وجود صلاحيه باخراج المواد المنتهيه صلاحيتها "
+    ,"Managements":"الأدارات"
+    ,"CompanyImage":"صورة الشركة"
+    ,"isMilitary":"سيارة عسكرية"
+    ,"militaryPlateNo":"رقم اللوحة العسكرية"
+    ,"EngineCapacity":"سعة المحرك"
+    ,"CarWorkPlace":"مكان عمل السيارة"
+    ,"CarOwner":"لأي جهة تعود"
+    ,"CarRecipient":"مستلم السيارة"
+    ,"ConsumedQuantity":"الكمية المستهلكة"
+    ,"PricePerLiter":"سعر اللتر"
+    ,"RAMSize":"حجم الذاكرة العشوائية"
+    ,"HDDType":"نوع القرص الصلب"
+    ,"DomainMember":"هل هو عضو في الدومين"
+    ,"OSActivationKey":"مفتاح تفعيل نظام التشغيل"
+    ,"OfficeActivationKey":"مفتاح تفعيل أوفيس"
+    ,"SupplierCompany":"شركة المورد"
+    ,"InternetSecurity":"أمن الانترنت"
+    ,"SimplifiedBill":"فاتورة مبسطة"
+    ,"msgEntervoucherNo":"الرجاء ادخال الرقم المتسلسل"
+    ,"AmountOfFuelConsumed":"كميه الوقود المستهلكه"
+    ,"Tracking":"وحدة تتبع"
+    ,"PaymentType":"نوع الدفعة"
+    ,"MedicalNo":"رقم السند الطبي",
+    "TheFromdateofthemechanismmustbegreaterthantheTodate":"يجب ان يكون من تاريخ الخاص ب الاليه اكبر من الى تاريخ"
+    ,"TheFromDateOfTheratingMustBeGreaterThanTheToDate":"يجب ان يكون من تاريخ الخاص ب التقييم اكبر من الى تاريخ"
+    ,"TheActivityFromDateMmustBeGreaterThanTheToDate":"يجب ان يكون تاريخ وقت التطوع من اكبر من تاريخ وقت التطوع الى "
+    ,"Beneficiary":"الجهة المستفيدة"
+    ,"ApprovalReceiptNo":"رقم الموافقة الاستلام"
+    ,"ExternalWarehouse":"المستودع الخارجي"
+    ,"PalletCount":"عدد الطبالي"
+    ,"MaterialDetails":"تفاصيل المادة"
+    ,"DeclarationNo":"رقم البيان"
+    ,"LeadNo":"رقم الرصاص"
+    ,"CustomsDeclaration":"البيان الجمركي"
+    ,"DoYouWannaSave":"هل تريد الحفظ؟"
+    ,"PleaseInsertRequierdDataForVoucherDetailsTable":"الرجاء ادخال البيانات المطلوبة لجدول تفاصيل السند"
+    ,"PleaseInsertRequierdDataFromCustomsDeclarationTable":"الرجاء ادخال البيانات المطلوبة لجدول البيان الجمركي"
+    ,"PrintEntryVoucher":"طباعة سند الأستلام"
+    ,"PrintGuaranteeLetter":"طباعة تعهد خطي"
+    ,"SupplyType":"نوع التوريد"
+    ,"ReturnFrom":"مرتجع من"
+    ,"ExitVoucherNo":"رقم سند الأخراج"
+    ,"OutBookNo":"رقم كتاب الصرف"
+    ,"CaravanNo":"رقم القافلة"
+    ,"ApprovalNoOut":"رقم موافقة الصرف"
+    ,"EntryVoucherNo":"رقم سند الأدخال"
+    ,"msgMustSelectMainAssociationsOrganizations":"الرجاء اختيار الجمعيات والمنظمات الرئيسيه"
+    ,"msgMustSelectBranchedAssociationsOrganizations":"الرجاء اختيار الجمعيات والمنظمات الفرعيه"
+    ,"NeedMedia":"يوجد تغطية إعلامية"
+    ,"NeedCar":"طلب سيارة حركة"
+    ,"DocumentName1":"اسم الوثيقة 1"
+    ,"DocumentName2":"اسم الوثيقة 2"
+    ,"SocialMediaArchivingList":"أرشفة المواد الاعلامية"
+    ,"SocialMediaArchivingForm":"أرشفة المواد الاعلامية"
+    ,"EventNumber":"رقم الفعالية"
+    ,"ThePlace":"المكان"
+    ,"EventClass":"تصنيف الفعالية"
+    ,"EventType":"نوع الفعالية"
+    ,"UpdateParticipants":"الاشخاص المشاركين"
+    ,"LocationOfTheFinalSelectedMaterialOnTheApprovedFile":"موقع المادة المختارة النهائية على الملف المعتمد "
+    ,"Locationofrawmaterialonthearchivingunit":"موقع المادة الخام على وحدة الارشفة "
+    ,"NameOftheMediaStation":"اسم المحطة الإعلامية "
+    ,"UploadFolder":"تم رفع المجلد"
+    ,"ErrorForUploadFolder":"خطا في  رفع المجلد"
+    ,"ChooseFile":"اختر ملف"
+    ,"ChooseFolder":"اختر مجلد"
+    ,"ApprovalBookNo":"رقم كتاب الموافقة"
+    ,"PrintGiftControl":"طباعة ضبط الأهداء"
+    ,"ItemExpiary":"صلاحية المادة(صالحة)"
+    ,"PurchaseOrderN":"رقم امر الشراء"
+    ,"CommitteeBookNo":"رقم كتاب اللجنة"
+    ,"msgEnterMedicalNo" : "اختر رقم السند الطبي"
+    ,"AccountsGroupsList":"زمر الحسابات"
+    ,"GroupsNumber":"زمر الحسابات"
+    ,"GroupsNameArabic":"اسم الزمرة - عربي"
+    ,"GroupsNameEnglish":"اسم الزمر - انجليزي"
+    ,"AccountsGroupsForm":"اضافة زمر الحسابات"
+    ,"Accountstatment":"كشف حساب"
+    ,"AccountsGroupsReport":"كشف زمر الحسابات"
+    ,"group":"الزمرة"
+    ,"BalanceBeforeThatTime":"رصيد قبل الفترة"
+    ,"BalanceDuringThePeriod":"الرصيد خلال الفترة"
+    ,"PleaseEnterUnitToAdd": "الرجاء اختيار الوحدة قبل الإضافة"
+    ,"CantDeleteThisVoucherRealtedToAnother":"لا يمكنك حذف السند لأرتباطه بسندات اخرى "
+    ,"ConfirmationNo":"رقم الصادر قديما"
+    ,"TargetingCriteria":"معايير الاستهداف"
+    ,"RelatedToDocuments":"مرتبط بوثائق"
+    ,"RequiredMediaMaterials":"المواد الاعلامية المطلوبة"
+    ,"TotalAllocatedValueInDinars":"القيمة الكلية المخصصة بالدينار"
+    ,"EmpowermentProjectType":"نوع مشروع التمكين"
+    ,"TypeOfBenefit":"نوع الانتفاع"
+    ,"MethodOfBenefit":"طريقة الانتفاع"
+    ,"PleaseInsertRequiredDataForEmpowermentTable":"الرجاء ادخال البيانات المطلوبة في جدول التمكين والأستدامة"
+    ,"PleaseInsertOneRowInTablePowerment":"الرجاء ادخال سطر واحد على الأقل في جدول التمكين و الأستدامة"
+    ,"DefinitionOfFather":"تعريف الأب"
+    ,"WastePerc":"نسبة الهدر"
+    ,"WorkCenters":"المراحل الانتاجية"
+    ,"StageName":"اسم المرحلة"
+    ,"WorkCenter":"مركز العمل"
+    ,"StandardTime":"الزمن القياسي (دقيقة)"
+    ,"CostPerMinute":"تكلفة للدقيقة"
+    ,"StageCost":"تكلفة المرحلة"
+    ,"OverheadCosts":"التكاليف الإضافية"
+    ,"CostType":"نوع التكلفة"
+    ,"ValuePercentage":"القيمة  / النسبة"
+    ,"time":"الزمن (دقيقه)"
+    ,"FinalAmount":"المبلغ النهائي"
+    ,"Costofrawmaterials":"تكلفة المواد الخام"
+    ,"Costofproductionstages":"تكلفة المراحل الإنتاجية"
+    ,"Additionalcosts":"التكاليف الإضافية"
+    ,"Finalunitcost":"التكلفة النهائية للوحدة"
+    ,"msgEnterAllDataManufEquations":"تأكد من ادخال جميع المعلومات المطلوبة في جدول معادلات التصنيع"
+    ,"msgEnterAllDataWorkCenters":"تأكد من ادخال جميع المعلومات المطلوبة في جدول المراحل الانتاجية"
+    ,"msgEnterAllDataOverheadCosts":"تأكد من ادخال جميع المعلومات المطلوبة في جدول التكاليف الاضافية"
+    ,"msgMustSelectSupplier":"الرجاء اختيار المورد"
+    ,"msgMustSelectCustomer":"الرجاء اختيار العميل"
+    ,"msgEnterDebitAccount":"الرجاء ادخال الحساب المدين"
+    ,"PrintChequeList":"قائمة طباعة  الشيكات"
+    ,"ChequeDate":"تاريخ الشيك"
+    ,"CheqStamp":"الختم "
+    ,"NewPrintCheque":"طباعة شيك جديد"
+    ,"MODIFYPrintCheque":"تعديل طباعه شيك"
+    ,"AuthName":"اسم المنظمة/الجمعية"
+    ,"LocalOrganizations":"المنظمات المحلية"
+    ,"InternationalOrganizations":"المنظمات الدولية"
+    ,"UNOrganizations":"المنظمات الأممية"
+    ,"MilitaryVehicles":"المركبات العسكرية"
+    ,"CivilianVehicles":"المركبات المدنية"
+    ,"Vehicles":"المركبات"
+    ,"OrganizationsAndAssociations":"المنظمات و الجمعيات"
+    ,"NonStockItem":"مادة غير مخزنية"
+    ,"CustomerType":"نوع العميل"
+    ,"SupplierType":"نوع المورد"
+    ,"SupplierNO":"رقم المورد"
+    ,"InternalPurchaseReqList":"قائمة طلبات الشراء الداخلية"
+    ,"ReceiptExpenses":"مصاريف الأستلام"
+    ,"HasExpDate":"مرتبط بتاريخ صلاحية"
+    ,"ItemRelatedWithGroup":"الاصناف المرتبطة بالمجموعة"
+    ,"AndThatAbout":"وذالك عن"
+    ,"msgDefineAcc":"يجب تعريف حساب المخزون للمخازن"
+    ,"ServicePurchaseRequestList":"قائمة طلبات شراء خدمة"
+    ,"Requestore":"طالب الطلب"
+    ,"TransferToService":"تحويل الى فاتورة خدمات"
+    ,"ServicePurchaseRequestForm":"طلبات شراء خدمة"
+    ,"UnitService":"وحدة الخدمة"
+    ,"GetServiceRequest":"احضار من طلب خدمة"
+    ,"fils" : "الفلسات"
+    ,"AuthorityName":"اسم الجهه"
+    ,"AdditionalExpenseDifferencesAccount":"حساب فروقات مصاريف اضافية"
+    ,"TransactionCurrency":"عملة الحركة"
+    ,"MainCurrency":"العملة الرئيسية"
+    ,"msgEnterAllDataCash":"الرجاء ادخال البيانات المطلوبة في جدول النقدية"
+    ,"msgPleaseInsertAtLeastOneRowInCashTable":"الرجاء ادخال سطر واحد على الأقل في جدول النقدية"
+    ,"ExportExcel":"تصدير الى اكسل"
+    ,"ImportExcel":"استيراد من اكسل"
+    ,"DownloadExcel":"تحميل نموذج اكسل"
+    ,"ListOfNewStudents":"قائمة الطلاب الجدد"
+    ,"StudentId":"رمز الطالب"
+    ,"StudentName":"اسم الطالب"
+    ,"Major":"التخصص"
+    ,"Fees":"الرسوم"
+    ,"OldFees":"الرسوم القديمة"
+    ,"NewFees":"الرسوم الجديدة"
+    ,"ImportStudent":"استيراد طلاب"
+    ,"ReceivableAccId":"الحساب الرئيسي للذمم المدينة"
+    ,"PayableAccId":"الحساب الرئيسي للذمم الدائنة"
+    ,"AddPaymentTypes" : "تحديث من برنامج Nexion"
+    ,"TotalExpenses":"مجموع المصاريف"
+    ,"TotalItemsValue":"مجموع قيمة المواد"
+    ,"LandedCostList":"قائمة تكلفة المواد"
+    ,"LandedCostForm":"اضافة/تعديل تكلفة مواد"
+    ,"Items":"المواد"
+    ,"ReceiptVouchersList":"سندات الأستلام"
+    ,"PurchaseInvoicesList":"فواتير الشراء"
+    ,"PurchasedQty":"الكمية المشتراة"
+    ,"ExpenseRatio":"نسبة المصاريف"
+    ,"ExpenseAmount":"قيمة المصاريف بالدينار "
+    ,"NewCost":"الكلفة الجديدة"
+    ,"GetData":"احضار البيانات"
+    ,"UseLandedCost":"استخدام شاشة تكلفة المواد"
+    ,"DistributionAndBenefitPlanNo":"رقم خطة التوزيع والانتفاع"
+    ,"SignatureDate":"تاريخ التوقيع"
+    ,"km20liters":"كم / 20 ليتر"
+    ,"RepDepCommMedia":"مندوب دائرة الاتصال والإعلام "
+    ,"ProjectLogList":"تقرير سجلات المشاريع"
+    ,"DeferredRevenueAccId":"حساب الايرادات المؤجلة"
+    ,"Semester":"الفصل الدراسي"
+    ,"PlannedStartDate":"تاريخ البدء المخطط"
+    ,"PlannedEndDate":"ناريخ الأنتهاء المخطط"
+    ,"CreateAnAutomaticReleaseVoucherForRawMaterials":"عمل سند اخراج تلقائي لمواد الخام"
+    ,"RawMaterialCosts":"تكلفة المواد الخام "
+    ,"ProductionProcessCosts":"تكلفة المراحل الأنتاجية"
+    ,"AdditionalCosts":"التكاليف الأضافية"
+    ,"FinalUnitCost":"التكلفة النهائية للوحدة"
+    ,"ActualProducedQuantity":"الكمية المنتجة الفعلية"
+    ,"TotalCostForTheEntireQty":"مجموع التكلفة لكامل الكمية"
+    ,"CostPerUnit":"كلفة الوحدة الواحدة"
+    ,"ProductionResults":"نتائج الأنتاج"
+    ,"msgEnterAllDataMeterailasRawTable":"الرجاء ادخال جميع المعلومات المطلوبة في جدول المواد الأولية"
+    ,"msgAreYouSureYouWantToApproveProductionOrder":"هل انت متأكد من اعتماد امر الأنتاج؟"
+    ,"InputVoucherRemainingQty=":"الكمية المتبقية من سند الأدخال ="
+    ,"QuantityIsMoreThanMainQtyForChoosenInputVoucher":"الكمية المخرجة  اكبر من المتبقي من سند الأدخال "
+    ,"ProductionOrders":"طلبات الأنتاج"
+    ,"Prodoutputvoucherlist":"قائمة سندات اخراج مواد اولية"
+    ,"Prodoutputvoucherform":"اضافة/تعديل سند اخراج مواد اولية"   
+    ,"ProdReceiptvoucherlist":"قائمة سندات استلام مواد منتجة"
+    ,"ProdReceiptvoucherform":"اضافة / تعديل استلام مادة منتجة"
+    ,"productionStatus":"حالة الأنتاج"
+    ,"Broker":"الوسيط"
+    ,"BeneficiariesNames":"اسماء المنتفعين"
+    ,"GetLandedCost":"احضار من تكلفه المواد"
+    ,"TransportationNumber":"رقم وسيلة النقل"
+    ,"AuthorityIntermediary":"الجهة الوسيطة"
+    ,"SupportType":"نوع الدعم"
+    ,"SupportValueInDinarsDollars":"قيمة الدعم بالدينار / دولار"
+    ,"WalletOrATMCardNumber":"رقم المحفظة او بطاقة الصراف"
+    ,"serviceProvider":"مزود الخدمة"
+    ,"SponsorNo":"رقم المكفول"
+    ,"GuardianNationality":"جنسية الوصي"
+    ,"GrPhoneNo":"رقم هاتف الوصي"
+    ,"NumberofMales":"عدد الذكور "
+    ,"NumberofFeMales":"عدد الاناث "
+    ,"NumberofMalesLessThan18":"عدد الذكور اقل من 18"
+    ,"NumberofFeMalesLessThan18":"عدد الاناث اقل من 18"
+    ,"HousingType":"طبيعة السكن"
+    ,"IsSpecialNeed":"هل يوجد في الأسرة إحتياج خاص ؟"
+    ,"specialNeed":" ما هو الإحتياج ؟"
+    ,"incomeSource":"مصدر دخل الأسرة "
+    ,"monthlyIncomeAmt":"قيمة الدخل الشهري"
+    ,"IsOtherIncomeSource":"مصادر دخل أخرى"
+    ,"OtherIncomeSource":"ما هو المصدر ؟"
+    ,"msgPleaseEnterspecialNeed":"الرجاء ادخال الاحتياج"
+    ,"msgPleaseEnterotherIncomeSource":"الرجاء ادخال المصدر"
+    ,"Typeofsponsorship":"نوع الكفاله"
+    ,"ProducedQuantity":"الكمية المنتجة"
+    ,"Variation":"الزيادة و النقص"
+    ,"Producedmaterialsrpt":"كشف المواد المنتجة"
+    ,"Consumedrawmaterials":"كشف المواد الخام المستهلكة"
+    ,"TransferToReceiptVoucher":"تحويل الى سند استلام"
+    ,"NexionDataUpdateFailed":"حدث خطأ في تحديث بيانات Nexion"
+    ,"DeliveryMethod":"طريقة إيصال المساعدات "
+    ,"CustomerAndSupplierList":" العميل / المورد"
+    ,"TotalDiscount": "مجموع الخصم"
+    ,"PleaseInsertAtLeastTowRowsToCompleteTheSave":"الرجاء ادخال سطرين على الأقل لمتابعة التخزين"
+    ,"CashDonate" : "مساعدات نقدية"
+    ,"SampleDonate" : "مساعدات عينية"
+    ,"TypeOfAssistance":"نوع المساعدة"
+    ,"UCantDeleteTheItemGroupIsConnectedWithMaterials":"لا يمكنك حذف المجموعة لأرتباطها بالمواد "
+    ,"OutputMaterialsRawVoucher":"سند اخراج مواد اولية"
+    ,"ReceiptMaterialsProducedVoucher":"سند استلام مواد منتجة"
+    ,"Work-in-ProcessCalculation":"حساب انتاج تحت التشغيل"
+    ,"PleaseInsertWork-in-ProcessCalculation":"الرجاء تحديد حساب انتاج تحت التشغيل"
+    ,"PleaseInsertEntityNameAr":"الرجاء ادخال اسم الجهة بالعربي"
+    ,"PleaseInsertEntityNameEn":"الرجاء ادخال اسم الجهة بالانجليزي"
+    ,"PleaseInsertAuthorityAttribute":"الرجاء ادخال صفة الجهة"
+    ,"PleaseInsertCountry":"الرجاء ادخال الدولة"
+    ,"PleaseInsertNationalNo":"الرجاء ادخال الرقم الوطني"
+    ,"PleaseInsertEntityManagerName":"الرجاء ادخال اسم مدير الجهة"
+    ,"PleaseInsertCaseBookNumber":"الرجاء ادخال رقم كتاب الحالة"
+    ,"PleaseInsertPhoneNumber":"الرجاء ادخال رقم الهاتف"
+    ,"PleaseInsertFaxNumber":"الرجاء ادخال رقم الفاكس"
+    ,"PleaseInsertNameOfAuthorizedPerson":"الرجاء ادخال اسم الشخص المفوض"
+    ,"PleaseInsertAuthorizedPersonPhone":"الرجاء ادخال رقم هاتف الشخص المفوض"
+    ,"PleaseInsertAuthorizedPersonPosition":"الرجاء ادخال منصب الشخص المفوض"
+    ,"PleaseInsertMobile":"الرجاء ادخال رقم الهاتف المحمول"
+    ,"DetailsOfTheSupportProvided":"تفاصيل الدعم المقدم "
+    ,"BeneficiaryClassification":"صنف المستفيد"
+    ,"TransferringAmountList":"سند تحويل مبلغ"
+    ,"FromTheStudent":"من الطالب"
+    ,"ToTheStudent":"الى الطالب"
+    ,"TransferringAmountForm":"سند تحويل مبلغ"
+    ,"msgThesamecustomercannotbeselected":"لا يمكن اختيار نفس العميل"
+    ,"subledger":"الدفتر المساعد"
+    ,"Manufacturedquantitycannotbegreaterthanthemainorderquantity":"الكمية المنتجة لا يمكن أن تكون أكبر من كمية الطلب الرئيسية"
+    ,"OpenPurchaseRequest":"فتح طلب شراء"
+    ,"CloseProductionOrder":"إغلاق أمر الإنتاج"
+    ,"AreYouSureYouWantToCloseProductionOrder":"هل أنت متأكد من إغلاق أمر الإنتاج؟"
+    ,"UpdateSuccessful":"تم التحديث بنجاح"
+    ,"UpdateFaild":"فشل التحديث"
+    ,"CostOfRawMaterials":"تكلفة المواد الخام"
+    ,"CostsOfproductionStages":"تكاليف مراحل الإنتاج"
+    ,"OtherCosts":"تكاليف اخرى"
+    ,"DetectionOfProductionCosts":"كشف تكاليف الانتاج"
+    ,"PleaseEnterApprovalNo":"الرجاء ادخال رقم الموافقة الاستلام"
+    ,"PleaseEnterCommitteeBookNo":"الرجاء ادخال رقم كتاب اللجنة"
+    ,"PleaseEnterOutBookNo":"الرجاء ادخال رقم كتاب الصرف"
+    ,"ReceiptNote":"ملاحظات الاستلام"
+    ,"PriceInDinar":"السعر بالدينار"
+    ,"TotalInDinar":"المجموع بالدينار"
+    ,"ProductionLine":"خط الإنتاج"
+    ,"UpdateEmplyees":"تحديث الموظفين"
+    ,"OpenAgreement":"فتح الاتفاقية"
+    ,"ResidualValue":"القيمة المتبقية بالدينار"
+    ,"ExpenseAmountDollars":"القيمة المصاريف بالعملة المقابلة"
+    ,"ResidualValueDollars":"القيمة المتبقية بالعملة المقابلة"
+    ,"CostCenterTree":"قائمة مراكز الكلف"
+    ,"CantSameItemNo":"هذا الرقم مدخل سابقا"
+    ,"OpenFolder":"فتح مجلد"
+    ,"PleaseSpecifyTheAgreement":" يرجى تحديد الاتفاقية"
+    ,"ActualQuantity":"الكمية الفعلية"
+    ,"ShowMaterials":"عرض المواد"
+    ,"ItemsSettelemntAccount":"حساب تسوية الجرد (ارباح / خسائر الجرد)"
+    ,"ItemssettelmentList":"قائمة سندات تسوية الجرد"
+    ,"ItemssettelmentForm":"اضافة / تعديل سند تسوية الجرد"
+    ,"PleaseSelectStore":"الرجاء ادخال المستودع"
+    ,"PleaseSelectToDate":"الرجاء تحديد الى تاريخ"
+    ,"PleaseSelectItemsSettelemntAccount":"الرجاء اختيار حساب تسوية الجرد"
+    ,"studentsadjustmentlist":"قائمة السحب والاضافة"
+    ,"EventName":"أسم الفعالية"
+    ,"DateTimeEvent":"تاريخ و وقت الفعالية"
+    ,"EventRequester":"طالب الفعالية"
+    ,"Mediacoveragelist":"قائمة طلبات التغطية الأعلامية"
+    ,"CoverTypeNeeded":"نوع التغطية المطلوبة"
+    ,"Mediacoverageform":"طلب تغطية اعلامية"
+    ,"PleaseSelectProjectToAdd":"الرجاء تحديد المشروع لأضافة سطر"
+    ,"ItemsOffersList":" قائمة عروض المواد"
+    ,"OfferNumber":"رقم العرض"
+    ,"OfferName":"اسم العرض"
+    ,"Priority":"الأولوية"
+    ,"ItemsOffersForm":"تعريف عروض  المواد"
+    ,"OfferNameArabic":"اسم العرض - عربي"
+    ,"OfferNameُEnglish":"اسم العرض - انجليزي"
+    ,"isInvoiceOffer":"خصم على الفاتورة"
+    ,"minInvoiceAmount":"الحد الادنى لقيمة الفاتورة لتطبيق العرض"
+    ,"invOfferType":"نوع الخصم على الفاتورة"
+    ,"invOfferValue":"قيمة الخصم على الفاتورة"
+    ,"DisplayType":"نوع العرض"
+    ,"DiscountValuePrice":"قيمة الخصم / السعر"
+    ,"MinQty":"الحد الأدنى  "
+    ,"maximum":"الحد الاقصى"
+    ,"FreeItem":"المادة المجانية"
+    ,"FreeUnit":"وحدة المادة المجانية"
+    ,"FreeQty":"عدد القطع المجانية"
+    ,"msNoCantChooseSameItemForSameUnit":" لا يمكن اختيار نفس المادة مع نفس الوحدة أكثر من مرة في الجدول"
+    ,"Onlythematerialorthecategoryshouldbechosennotboth":"يجب اختيار المادة أو الصنف فقط، وليس الاثنين"
+    ,"msgEnterFreeItemAndFreeUnit":"يجب ادخال المادة المجانية و وحدتها و عددها"
+    ,"msgEnterMinAmountAndOfferTypeAndOfferValue":"يجب ادخال الحد الادنى للفاتورة و نوع الخصم وقيمة الخصم"
+    ,"PleaseEnterOfferValue":"يجب ادخال  قيمة الخصم / السعر "
+    ,"msgEnterUnitOfItem":"يجب اختيار وحدة المادة" 
+    ,"RevenueAccount":"حساب الايرادات"
+    ,"msgTaxError" : "يوجد خطأ في الترحيل للضريبة"
+    ,"CurrencyEquivalent":"العملة المقابلة"
+    ,"HashMiyaLinks":"روابط مواقع تخزين الصور والمقابلات"
+    ,"MsgPleaseChooseProductionLine":"الرجاء تحديد خط الأنتاج"
+    ,"SerialStatus":"حالة السيريال"
+    ,"ItemsSerialsReport" : " تقرير السيريالات للمواد "
+    ,"Public":"عامة"
+    ,"AgreementStatus":"حالة الاتفاقية"
+    ,"ReminderExpirydateisbefore/oneday" : " التذكير بانتهاء الصلاحية قبل/يوم"
+    , "SendReminderTo" : "ارسال التذكير الى"  
+    ,"Liaisonofficer":"ظابط ارتباط "
+    ,"Briefdescriptionoftheevent":"وصف مختصر للفعالية"
+    ,"Additionalnotes":"ملاحظات اضافية "
+    ,"GeneralPublications":"مطبوعات عامة"
+    ,"DistributionSiteAddress":"عنوان موقع التوزيع الفعلي"
+    ,"MainAddress":"العنوان الرئيسي"
+    ,"Calendarform":"تقويم التغطية الأعلامية"
+    , "ShowReportInCurrency" : "اظهار التقرير بالعملة"
+    , "Totalincurrency" :" الاجمالي بالعملة"
+    , "TotalMainCurrency" :" الاجمالي العمله الرئيسيه "
+    , "Profitratio" :" نسبة الربح"
+    ,"msgDontEnterLattersMobile":"لا يمكن استخدام الاحرف في خانه الموبايل  "
+    ,"Next":"لتالي"
+    ,"Previous":"السابق"
+    ,"BasicInformation":"المعلومات الاساسية"
+    ,"ClassificationAndStatus":"التصنيف والحالة"
+    ,"Addressandgeographicallocation":"العنوان والموقع الجغرافي"
+    ,"Mapcoordinates":"احداثيات الخريطة"
+    ,"Contactinformation":"بيانات الاتصال"
+    ,"Authorizedperson":"الشخص المفوض"
+     ,"PrintSetReceipt":"طباعة ضبط الاستلام"
+    ,"ExcludeSalesInvoice":"استثناء فواتير البيع"
+    ,"BalancesByStore":"ارصده حسب المستودع"
+    ,"StoreName":"اسم المستودع"
+    ,"EntryDate":" تاريخ الادخال"
+    ,"EditDate":" تاريخ التعديل "
+    ,"TheValueCannotBeEnteredAsDegative":"لا يمكن ادخال القيمة بالسالب"
+    ,"Outcome":" محصلة "
+    ,"NotOutcome":" غير محصلة "
+    , "CreditCardsStatusReport" : " كشف متابعة البطاقة  الأئتمانية    "
+    , "CardStatus" : " حالة البطاقة   "
+    , "localcurrency" : " القيمة بالعملة المحلية  "
+    ,"CollectionType":"نوع التحصيل"
+    ,"RepresentativeNo":"رقم المندوب"
+    ,"CollectionValue":"قيمة التحصيل"
+    ,"ReceiptNumber":"رقم سند  القبض"
+    ,"ReceiptValue":"قيمة السند"
+    ,"RepresentativeCollections":"كشف تحصيلات المندوب" 
+    ,"MonthlyTarget":"الهدف الشهري"
+    ,"OnCustomerAccount":"العمولة على حساب العميل"
+    ,"msgSelectCreditAccount":"الرجاء ادخال الحساب الدائن"
+    ,"msgCreditExceedAmount":"مجموع الدفعات يجب ان يساوي مبلغ الحوالة"
+    ,"ItemPriceCategory":"فئات اسعار المواد"
+    ,"itemCategoryPrice":"سعر الفئة"
+    ,"ShowItemCategory":"اظهار فئة السعر"
+    ,"ItempricesReport":"كشف المواد و اسعارها"
+    ,"MustEnterCreditAccount":"يجب اختيار حساب الدائن"
+    ,"BranchesAndAffiliatedMandolins":"  الفروع والمندوبون التابعون "
+    ,"PleaseInsertBranch":"الرجاء ادخال الفرع"
+    ,"Hide":"إخفاء"
+    ,"AreYouSureYouWantToHideThisRow":"هل أنت متأكد من إخفاء هذا السطر؟"
+    ,"StudentNo":"رقم الطالب"
+    ,"EntryDocument":"  سند الادخال "
+    ,"NumberOfContainers":"عدد الحاويات"
+    ,"NumberOfCars":"عدد السيارات"
+    ,"Shippingmethod" : "وسيلة الشحن "
+    ,"Policy/InvoiceNo": "رقم البوليصة / الفاتورة "
+    ,"Valueindinarsaccordingtothecustomsdeclaration" : "القيمة بالدينار حسب البيان الجمركي"
+    ,"PaymentNote":" ملاحظات التسديد " 
+    ,"Paymentstatus" : " حالة التسديد "
+    ,"Paid" : " مسددة "
+    ,"Unpaid" : " غير مسددة  "
+    ,"CliqType":"نوع الأسم المستعار"
+    ,"CliqName":"الأسم المستعار/رقم الموبايل"
+    ,"ProviderName":"البنك/مزود الخدمة"
+    ,"PleaseSelectCliqPaymenMethod":"الرجاء اختيار طريقة الدفع كليك "
+    ,"Cliq":"كليك"
+    ,"PleaseEnterCliqDetails":"الرجاء ادخال تفاصيل كليك"
+    ,"MsgPleaseEnterRequierdDataInCliqTable":"الرجاء ادخال البيانات المطلوبة في جدول كليك"
+    ,"OrdernumberonsystemUN2720" :" رقم الطلب على نظام UN2720 "
+    ,"TotalProject":"قيمة المشروع "
+    ,"CustomInv":"فواتير المعاملة الجمركية"
+    ,"Shipmentlocation":"موقع تسليم الشحنه"
+    ,"DirectManager":"المدير المباشر"
+    ,"EntitlementEntry":"قيد مستحقات"
+    ,"Incoming/OutgoingNo":"رقم الوارد / الصادر"
+    ,"EntryVoucherH":"سند ادخال"
+    ,"CommitteeBookDate":"تاريخ كتاب اللجنة"
+    ,"AgreementDate":"تاريخ اضافه الاتفاقية"
+    ,"BankTransferReceiptTemplate":"طباعه نموذج  سند حوالة بنكية"
+    ,"Availablebalance": " الرصيد المتوفر "
+    ,"PleaseSelecttypeToAdd" : " الرجاء تحديد نوع السند "
+    ,"CarsDetails" : " تفاصيل السيارات "
+    ,"TractorNo" : " رقم القاطرة والمقطورة "
+    ,"ReasonsPayment" :"  اسباب عدم التسديد   "
+    ,"PleaseEnterTheBeneficiary" : " الرجاء ادخال الجهة المستفيدة "
+    ,"SaveDate":"تاريخ الحفظ"
+    ,"EdtionDate":"تاريخ التعديل"
+    ,"Subtotal":"المجموع قبل الخصم والضريبة"
+    ,"AuthorityProject":"مشروع هيئة"
+    ,"publicDonation":"تبرع عام"
+    ,"LeadsCustomersList":"قائمة العملاء المحتملين"
+    ,"LeadsCustomersForm":"اضافة/تعديل عميل محتمل"
+    ,"LeadId":"رقم العميل المحتمل"
+    ,"CompanyName":"اسم الشركة"
+    ,"MainContactName":"اسم جهة الاتصال الرئيسيه"
+    ,"MainContactPhone":"رقم الهاتف"
+    ,"MainContactEmail":"الايميل"
+    ,"EmployeeAssignedTo":"الموظف المحول له"
+    ,"SourceId":"المصدر"
+    ,"TotalPallets":"مجموع الطبالي"
+    ,"Employeer":"الموظف"
+    ,"DocDateFrom":"تاريخ الوثيقة من "
+    ,"DocDateTo":"تاريخ الوثيقة الى "
+    ,"Source":"المصدر"
+    , "SupplyApprovalNumber" : " رقم موافقة التوريد "
+    , "DestructionApprovalNumber" : " رقم موافقة الاتلاف "
+    , "GiftApprovalNumber" : " رقم موافقة الشطب/الاهداء "
+    , "RecyclingApprovalNumber" : " رقم موافقة التدوير "
+    , "ListOfInteractiveActivities" : "  قائمة الانشطة التفاعلية  "
+    , "InteractiveActivities" : "   الانشطة التفاعلية  "
+    , "ActivityNO":" رقم النشاط "
+    ,"PotentialClient":" العميل المحتمل"
+    , "TypeActivity":"نوع النشاط"
+    ,"Subject" : "الموضوع"
+    ,"AreYouSureYouWantToCloseThisActivityForTheClient":"هل انت متاكد من اغلاق هذة النشاط للعميل!"
+    , "Lost": " الرفض "
+    ,"LostReason":" سبب الرفض "
+    ,"AreYouSureYouWillCancelThisActivityForTheClient": "هل انت متأكد من اغلاق نشاط هذا العميل "
+    ,"ConvertedTo":"محولة الى"
+    ,"OpenActivity":"فتح نشاط "
+    ,"ConvertToCustomer":"تحويل الى عميل"
+    ,"AccountsAging":"كشف إعمار الذمم"
+    , "MaintOrderNo":"رقم امر الصيانة",
+    "MaintOrderDate":"تاريخ امر الصيانة",
+    "RequestMaintOrder":"رقم طلب الصيانة",
+    "MaintenType":"نوع امر الصيانة"  
+    ,"Opportunities":"قائمة فرص البيع"
+    ,"OpportunityNo":"رقم الفرصه "
+    ,"PotentialClients":"العميل / العميل المحتمل"
+    ,"Stage":"المرحله"
+    ,"Probability":"الاحتمالية"
+    ,"ExpectedCloseDate":"تاريخ الاغلاق المتوقع"
+    ,"OpportunitiesForm":"ادخال / تعديل فرص البيع"
+    ,"ProbabilityPerc":"نسبة احتمالية البيع"
+    ,"ConvertToSalesOrder":"تحويل الى طلب بيع"
+    ,"MaintenanceRequestsList":"قائمة طلبات الصيانة "
+    ,"MaintenanceRequestsForm":"اضافة / تعديل طلب صيانة"
+    ,"Technician":"الفني"
+    ,"DeliveryDates":"تاريخ التسليم"
+    ,"InformingTheClientOfTheVisitDate":"ابلاغ العميل بموعد زيارة"
+    ,"CustomerDelivered":"تم تسليم العميل"
+    ,"Sponsors":"مكفول"
+    ,"Damage":"العطل"
+    ,"DamageDecr":"وصف العطل"
+    ,"OutputDate":"تاريخ الاخراج"
+    ,"Lastmaintenanceordernumber":"رقم اخر طلب صيانه"
+    ,"HisHistory":"تاريخة"
+    ,"NumberofMaintenance":"عدد مرات الصيانة"
+    ,"OpenWorkOrder":"فتح امر عمل"
+    ,"RequestTypes":"نوع الطلب (داخلي/خارجي)"
+    ,"SerialNotFound":"رقم السيريال غير موجود"
+    ,"PlaceOfOrder":"مكان الطلب"
+    ,"LostReasons":"سبب الخسارة"
+    ,"NumberClients":" عدد العملاء "
+    ,"ListOfPriceOffers":"قائمة عروض الاسعار"
+    ,"PriceOffer" : "عرض السعر"
+    ,"OfferDurationDays":"مدة العرض /يوم"
+    ,"DeliveryTimeDays":" مدة التسليم/اليوم "
+    ,"TotalAmountBeforeTax":" إجمالي المبلغ قبل الضريبة "
+    ,"DiscountAmount":" قيمة الخصم "
+    ,"ValueAddedTaxAmount":" قيمة ضريبة القيمة المضافة "
+    ,"NetTotalAmount":" صافي المبلغ الإجمالي "
+    ,"TechnicalReport":"تقرير التقني"
+    ,"UsedItems":"المواد المستخدمة"
+    ,"NeededItems":"المواد المطلوبة"
+    ,"Internal":"داخلي"
+    ,"External":"خارجي"
+    ,"MaintenanceOrder":"طلب الصيانة"
+    ,"TechniciansNo":"عدد الفنيين"
+    ,"WorkHours":"عدد الساعات"
+    ,"WorkCost":"كلفة الصيانة"
+    ,"PleaseSelectRequestOrder":"الرجاء اختيار طلب صيانة"
+    ,"PleaseSelectStatus":"الرجاء تحديد حالة الأمر"
+    ,"PleaseSelectPriority":"الرجاء تحديد الأولوية "
+    ,"PleaseInsertAtleastOneRowinsideTechReportTable":"الرجاء ادخال سطر على الأقل في جدول تقرير التقني "
+    ,"PleaseInsertDescriptionForTechReportTable":"الرجاء ادخال الوصف بجدول تقرير التقني"
+    ,"PleaseInsertAllDataUsed":"الرجاء ادخال الحقول المطلوبة بجدول المواد المستخدمة"
+    ,"PleaseInsertAllDataneeded":"الرجاء ادخال الحقول المطلوبة بجدول المواد المطلوبة"
+    ,"Maintorderform":"اضافة/تعديل امر صيانة"
+    ,"Maintorderlist":"قائمة أوامر الصيانة"
+    ,"MainReqItems":"مواد الصيانة"
+    ,"FollowUpList":"قائمه المتابعات"
+    ,"FollowUpType":"نوع المتابعه"
+    ,"Dateandtimeofimplementation":"تاريخ و وقت التنفيذ"
+    ,"ClientOpportunityNumber":"العميل / رقم الفرصه"
+    ,"Convertedto":"محول الى"
+    ,"AddFollowUpForm":"اضافه متابعه"
+    ,"modifiyFollowUpForm":"تعديل متابعه"
+    ,"OpportunitiesList":"فرص البيع"
+    ,"ConvertToPriceOffer":"تحويل الى عرض سعر"
+    ,"TotalUsedItems":"مجموع المواد المستخدمة"
+    ,"TotalTeqReport":"مجموع كلفة الصيانة"
+    ,"SendtoServiceInvoice":"تحويل لفاتورة خدمات"
+    ,"Latitude":"خطوط الطول"
+    ,"Longitude":"خطوط العرض"
+    ,"SalesTaxTotal" : "مجموع ضريبة المبيعات"
+    ,"PurTaxTotal" : "مجموع ضريبة المشتريات"
+    ,"NetTax" : "صافي الضريبة"
+    ,"VoucherNote" : "ملاحظات القيد"
+    ,"CRMdashbored":"لوحة تحكم CRM"
+    ,"LeadsBySource":"المعملاء المحتملون حسب المصدر"
+    ,"SalesPerEmployee":"المبيعات حسب الموظفين"
+    ,"TotalLeads":"العملاء المحتملون"
+    ,"ConvertedLeads":"المحولون لعملاء"
+    ,"ConversionRate":"معدل التحويل"
+    ,"FollowUpPerformance":"اداء المتابعات"
+    ,"TotalFollowUps":"إجمالي المتابعات"
+    ,"Completed":"المكتملة"
+    ,"Overdue":"المتأخرة"
+    ,"CompletionRate":"معدل النجاح"
+    ,"LostReasonss":"اسباب الخسارة"
+    ,"Transferred":"تم التحويل"
+    ,"ConversionRate%":"نسبة التحويل %"
+    ,"Total:":"المجموع :"
+    ,"LostCount":"عدد الخسائر"
+    ,"NumberOfCases":"عدد الحالات"
+    ,"PerformanceTrackingPerBranch":"تتبع الأداء لكل فرع"
+    ,"LeadsCount":"عدد العملاء المحتملون"
+    ,"OpportunitiesCount":"عدد فرص البيع"
+    ,"WonDeals":"الصفقات الرابحة"
+    ,"Latefollowups":"المتابعات المتأخرة"
+    ,"PrintAll" : "طباعة كل عملاء المندوب"
+    ,"ConvertToSaleInvoice":" تحويل الى فاتورة بيع"
+    ,"VirtualFatherDebitAccount":"الحساب المدين الاب الافتراضي"
+    ,"VirtualFatherCeditAccount":"الحساب الدائن الاب الافتراضي"
+    ,"TheNumberOfDigitsInTheNumber":"عدد خانات الرقم"
+    ,"SerialbyYear":"تسلسل حسب السنة"
+    ,"MaintenanceExpenseAcc":"حساب مصروف الصيانة(حساب المدين) "
+    ,"PleaseSelectMaintenanceExpenseAccount(DebitAccount)":"الرجاء تحديد حساب مصروف الصيانة (الحساب المدين)"
+    ,"PleaseAddAtleastOneRowInUsedItemsTable":"الرجاء ادخال سطر واحد على الأقل في جدول المواد المستخدمة"
+    ,"LeadsCustomersReport":"تقرير العملاء المحتملين"
+    ,"studentsnewinvoices" : "قائمة الفواتير الجديدة للطلاب"
+    ,"MaintenanceRequests":"طلبات الصيانة"
+    ,"Warranty":"الكفالة"
+    ,"MaintenanceOrderReport":"تقرير أوامر الصيانة"
+    ,"LinkingAccountsMethod":"الية ربط الحسابات"
+    ,"SuppInvNo" : "رقم فاتورة المورد"
+    ,"MaintenanceRequestReport":"كشف طلبات الصيانة"
+    ,"cliqAccId":"حساب الكليك"
+    ,"CliqDefualtAccId":"الحساب الافتراضي للكليك"
+    ,"CreditCardDefualtAccId":"الحساب الافتراضي للبطاقات الائتمانية"
+    ,"MaintenanceFaultReport" : " تقرير كشف الاعطال"
+    ,"GroupByBranch" : " تجميعي حسب الفرع "
+    ,"IncomeSourceNo":"رقم مصدر الدخل"
+    ,"ClientId":"رقم المستخدم للفوترة"
+    ,"SecretKey":"المفتاح السري للفوترة"
+} 

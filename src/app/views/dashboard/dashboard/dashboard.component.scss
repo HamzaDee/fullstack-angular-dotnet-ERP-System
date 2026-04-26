@@ -1,0 +1,84 @@
+* {
+    color: #333333;
+}
+
+.button {
+    background-color: #26a69a;
+    color: #fff;
+    width: 100px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .4375rem .875rem;
+    font-size: .8125rem;
+    line-height: 1.5385;
+    border-radius: .1875rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+tr th {
+    background-color: none; 
+}
+
+.border-top-blue-600 {
+    border-top: 1px solid #039be5;
+    padding: 1rem;
+}
+
+mat-card {
+    border-top: 1px solid #e53935;
+}
+
+mat-accordion {
+    margin-top: 1rem;
+}
+
+.Saved {
+    color: cornflowerblue,
+}
+
+.Canceled {
+    color: red,
+}
+
+.Posted {
+    color: orange,
+}
+
+.BegInwardCheques {
+    color: deeppink,
+}
+
+.RecieptVoucher {
+    color: orange,
+}
+
+.BegOutWardCheques {
+    color: orange,
+}
+
+.PaymentVoucher {
+    color: teal,
+}
+
+.Rejected {
+    color: teal,
+}
+
+
+
+.chart-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+

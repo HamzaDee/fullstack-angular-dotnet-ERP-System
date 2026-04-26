@@ -1,0 +1,97 @@
+
+<div class="container">   
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+           [globalFilterFields]="['id','equationDate','itemName','unitName','qty']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="caption">
+            
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mr-5 ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>                    
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-3">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="AddPurRequestForm(0)"></p-button>
+                </div>                 
+            
+                
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th class="head_tb" pSortableColumn="voucherName">{{"VoucherType"|translate}} <p-sortIcon field="voucherName"></p-sortIcon></th> -->
+                <th class="head_tb" pSortableColumn="voucherNo">{{"EquationNo"|translate}} <p-sortIcon field="voucherNo"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="voucherDate">{{"EquationDate"|translate}} <p-sortIcon field="voucherDate"></p-sortIcon>
+                <th class="head_tb" pSortableColumn="dealerName">{{"ProductedItem"|translate}} <p-sortIcon field="dealerName"></p-sortIcon></th>                       
+                <th class="head_tb" pSortableColumn="branchName">{{"Unit"|translate}} <p-sortIcon field="branchName"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="currencyName">{{"Quantity"|translate}} <p-sortIcon field="currencyName"></p-sortIcon></th>
+                <th><i class="text-center-m w-0" style="font-size: 1.2rem"></i></th>
+            </tr>            
+        </ng-template>
+
+       
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-manfuEquations>
+            <tr>
+                <td style="text-align: justify;">{{manfuEquations.id}}</td>
+                <td style="text-align: justify;">{{manfuEquations.equationDate|date:'yyyy/MM/dd'}}</td>
+                <td style="text-align: justify;">{{manfuEquations.itemName}}</td>
+                <td style="text-align: justify;">{{manfuEquations.unitName}}</td>
+                <td style="text-align: justify;">{{manfuEquations.qty}}</td>                
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenDetailsForm(manfuEquations.id)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="OpenPurRequestForm(manfuEquations.id,false)" >
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}}  </button>
+                        <button mat-menu-item (click)="DeleteVoucher(manfuEquations.id)" > 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
+                        <button mat-menu-item (click)="CopymanfuEquations(manfuEquations.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>
+                        <button mat-menu-item (click)="AttachmentEntryvoucher(manfuEquations.id)"> 
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>
+                        <button mat-menu-item (click)="PrintManfuequations(manfuEquations.id)"> 
+                            <i class="material-icons" style="color:black">print</i> &nbsp;{{"Print"|translate}} </button>                        
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

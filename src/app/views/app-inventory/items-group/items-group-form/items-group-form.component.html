@@ -1,0 +1,184 @@
+<form [formGroup]="ItemsGroupsForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"MainCollection"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="mainGroupNamesList"
+                            formControlName="mainGroupId" (onChange)="onMainCollectionSelection($event)"
+                            [disabled]="disableAll" [disabled]="hasPermesion()">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CollectionNumber"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="number" formControlName="id" class="input border w-full mt-1 " disabled="true"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CollectionArabicName"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="groupNameA" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CollectionEnglishName"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="groupNameE" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"category"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="categorysList" [disabled]="disableAll"
+                            formControlName="categoryId" (onChange)="onCategorySelection($event)">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-4 cursor-pointer mt-1" *ngIf="UseTax">
+                        <label class="control-label font-weight-bold">{{"Tax"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" formControlName="taxId" [options]="taxsList">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Discount"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="discounsList"
+                            formControlName="discountId">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"StoreAccountNumber"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="storeAccsList"
+                            formControlName="storeAccNo">
+                        </p-dropdown>
+                    </div>
+                    <!-- [ngClass]="{'invalid-field': inventoryType!==periodic && inventoryAccType === 179 &&  ItemsGroupsForm.get('storeAccNo').value <= 0}" -->
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CostGoodsSoldAccountNumber"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="costGoodsSoldAccsList"
+                            formControlName="costGoodsSoldAccNo">
+                        </p-dropdown>
+                    </div>
+                    <!-- [ngClass]="{'invalid-field':  inventoryType!==periodic && inventoryAccType === 179 &&  ItemsGroupsForm.get('costGoodsSoldAccNo').value <= 0}" -->
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"PurchaseAccountNumber"|translate}}<span
+                                *ngIf="checkInventoryIdPre()" class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="purchaseAccsList"
+                            [attr.disabled]="disableAll ? 'disabled' : null" formControlName="purchaseAccNo">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"SalesAccountNumber"|translate}}<span
+                                *ngIf="checkInventoryIdPre()" class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [disabled]="disableAll"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="salesAccsList"
+                            formControlName="salesAccNo">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"IsMain"|translate}}</label>
+                        <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isMain"
+                            [attr.disabled]="disableAll || disableIsMain ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"> <label
+                            class="control-label font-weight-bold">{{"Active"|translate}}</label>
+                        <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isActive"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"> <label
+                            class="control-label font-weight-bold">{{"HasExpDate"|translate}}</label>
+                        <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="hasExpDate"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label for="storeId" class="control-label font-weight-bold">{{"Store"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="storeId"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ItemRelatedWithGroup"|translate}}</label>
+                        <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                            styleClass="input border w-full mt-1" optionValue="id" formControlName="itemClassesIds"
+                            [options]="itemClassesList" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false"                         
+                            [disabled]="disableAll">
+                        </p-multiSelect>
+                    </div>
+                </div>
+
+
+                  <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                  </div>
+
+
+                <div class=" col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" [disabled]="ItemsGroupsForm.invalid || disableSave"
+                        [hidden]="this.opType == 'Show'"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(false)"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

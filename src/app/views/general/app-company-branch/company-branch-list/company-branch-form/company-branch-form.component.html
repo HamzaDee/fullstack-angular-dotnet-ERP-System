@@ -1,0 +1,93 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+       
+            <form [formGroup]="CompanyBranchAddForm" (ngSubmit)="OnSaveForms()">
+
+                <input type="number" formControlName="id" hidden class="input border w-full mt-1 ">
+                
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ArabicName"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="text" formControlName="branchNameA" class="input border w-full mt-1 "
+                        [ngClass]="{ 'border-red-500': this.CompanyBranchAddForm.get('branchNameA').invalid }">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"EnglishName"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="text" formControlName="branchNameE" class="input border w-full mt-1 "
+                        [ngClass]="{ 'border-red-500': this.CompanyBranchAddForm.get('branchNameE').invalid }">
+                    </div>
+                
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ADDRESSA"|translate}}</label>
+                        <input type="text" formControlName="addressA" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ADDRESSE"|translate}}</label>
+                        <input type="text" formControlName="addressE" class="input border w-full mt-1 ">
+                    </div>
+              
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"phoneNumber"|translate}} 1</label>
+                        <input type="text" formControlName="tel1" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"phoneNumber"|translate}} 2</label>
+                        <input type="text" formControlName="tel2" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"faxNumber"|translate}}</label>
+                        <input type="text" formControlName="fax" class="input border w-full mt-1 ">
+                    </div>
+              
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"notes"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 ">
+                    </div>
+              
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"MapLng"|translate}}</label>
+                        <input type="text" formControlName="mapLng" [(ngModel)]="selectedlongitude"
+                            class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Maplat"|translate}}</label>
+                        <input type="text" formControlName="mapLat" [(ngModel)]="selectedlatitude"
+                            class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <mat-card class="p-0">
+                            <mat-card-title class="m-0">
+                                <div class="card-title-text">Basic</div>
+                                <mat-divider></mat-divider>
+                            </mat-card-title>
+                            <mat-card-content class="p-0">
+                                <!-- <agm-map #Gmap (mapClick)="handleMapClick(Gmap)" [ngStyle]="{height: '400px'}" [zoom]="zoom"
+                                    [scrollwheel]="false" [disableDefaultUI]="false" [latitude]="mapCenter.lat"
+                                    [longitude]="mapCenter.lng"></agm-map> -->
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                          [disabled]="CompanyBranchAddForm.invalid"  type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' [routerLink]="['/CompanyBranch/CompanyBranchList']"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" type="button" icon="pi pi-undo"></p-button>
+                    </div>
+
+                </div>
+               
+            </form>
+        
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

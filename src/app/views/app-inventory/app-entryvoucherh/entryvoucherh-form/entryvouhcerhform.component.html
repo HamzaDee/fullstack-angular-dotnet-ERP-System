@@ -1,0 +1,588 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="EntryyVoucherAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="projectId" class="control-label font-weight-bold">{{"ProjectName"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="projectsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="projectId" filterBy="text"
+                        appendTo="body" autoWidth="false"
+                        [ngClass]="{ 'invalid-field': EntryyVoucherAddForm.get('projectId')?.value <= 0}"
+                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"
+                        [virtualScrollItemSize]="40" [disabled]="disableAll"
+                        (onChange)="GetAuth(EntryyVoucherAddForm.get('projectId')?.value)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="authorityId"
+                        class="control-label font-weight-bold">{{"AuthorityDonor"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="authoritiesDonorList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="authorityId" filterBy="text" appendTo="body" autoWidth="false"
+                        [disabled]="disableAll" [virtualScroll]="true" [lazy]="true"
+                        (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40"
+                        (onChange)="GetCountryName(EntryyVoucherAddForm.get('authorityId')?.value)" [readonly]="true">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="v" class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+                    <input type="text" [(ngModel)]="countryName" class="input border w-full mt-1 " [readOnly]="true"
+                        [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="voucherTypeId" class="control-label font-weight-bold">{{"VoucherType"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        (onChange)="getVoucherNo($event)"
+                        [ngClass]="{ 'invalid-field': EntryyVoucherAddForm.get('voucherTypeId')?.value <= 0}"
+                        [disabled]="disableAll ">
+                    </p-dropdown>
+                    <!-- || disapleVoucherType -->
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="voucherNo" class="control-label font-weight-bold">{{"VoucherNo"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(EntryyVoucherAddForm.get('voucherNo')?.value)}"
+                        [attr.disabled]="allowEditVoucherSerial||disableAll ? 'disabled' : null" [readOnly]="true">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="voucherDate" class="control-label font-weight-bold">{{"VoucherDate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)"
+                        class="input border w-full mt-1 " [ngClass]="{ 'invalid-field': !validDate}"
+                        [attr.disabled]="allowEditDate||disableAll ? 'disabled' : null">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="deliveredTo" class="control-label font-weight-bold">{{"Beneficiary"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="authoritiesDonorList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="deliveredTo"
+                        filterBy="text" appendTo="body" autoWidth="false" 
+                        [disabled]="disableAll" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>    -->
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="beneficiaryClass"
+                        class="control-label font-weight-bold">{{"BeneficiaryClassification"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="beneficiaryClassificationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="beneficiaryClass" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="storeId" class="control-label font-weight-bold">{{"Store"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="storeId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [ngClass]="{ 'invalid-field': EntryyVoucherAddForm.get('storeId')?.value <= 0}"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="invoiceNo" class="control-label font-weight-bold">{{"InvoiceNumber"|translate}}</label>
+                    <input type="text" formControlName="invoiceNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="invoiceDate" class="control-label font-weight-bold">{{"InvoiceDate"|translate}}</label>
+                    <input type="date" formControlName="invoiceDate" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+            <!--255  10-->
+            <div *ngIf="EntryyVoucherAddForm.get('voucherTypeId')?.value === 10">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="donateType" class="control-label font-weight-bold">{{"TypeOfDonation"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="donationTypesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="donateType"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            [disabled]="disableAll">
+                        </p-dropdown>
+                    </div> -->
+
+
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="outStoreId"
+                            class="control-label font-weight-bold">{{"ExternalWarehouse"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="externalWareHouseList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            formControlName="outStoreId" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="referenceNo"
+                            class="control-label font-weight-bold">{{"ApprovalReceiptNo"|translate}} <span
+                                class="required-asterisk">*</span> </label>
+                        <input type="text" formControlName="referenceNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': isEmpty(EntryyVoucherAddForm.get('referenceNo').value)}">
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-3">
+                        <label for="bookNo" class="control-label font-weight-bold">{{"CommitteeBookNo"|translate}} <span
+                                class="required-asterisk">*</span> </label>
+                        <input type="text" formControlName="bookNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': isEmpty(EntryyVoucherAddForm.get('bookNo').value)}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-3">
+                        <label for="bookNo" class="control-label font-weight-bold">{{"CommitteeBookDate"|translate}}</label>
+                        <input type="date" formControlName="bookDate" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+            </div>
+            <!-- 256 17-->
+            <div *ngIf="EntryyVoucherAddForm.get('voucherTypeId')?.value === 17">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <!--                     <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="purchaseOrderId" class="control-label font-weight-bold">{{"PurchaseOrderN"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="purchaseOrdersList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="purchaseOrderId"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"                            
+                            [disabled]="disableAll" (onChange)="onChangePurchaseOrder(EntryyVoucherAddForm.get('purchaseOrderId').value)">
+                        </p-dropdown> (onChange)="onChangePurchaseOrder(EntryyVoucherAddForm.get('purchaseOrderNo').value)"
+                    </div>  -->
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="purchaseOrderNo"
+                            class="control-label font-weight-bold">{{"PurchaseOrderN"|translate}}</label>
+                        <input type="text" formControlName="purchaseOrderNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="supplyType"
+                            class="control-label font-weight-bold">{{"SupplyType"|translate}}</label>
+                        <input type="text" formControlName="supplyType" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <!--                     <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="supplyType" class="control-label font-weight-bold">{{"SuppliersName"|translate}}</label>
+                        <input type="text" [ngModel]="SuppliersName" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null" [ngModelOptions]="{standalone: true}"[readonly]="true">
+                    </div> -->
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="supplyType"
+                            class="control-label font-weight-bold">{{"SuppliersName"|translate}}</label>
+                        <input type="text" formControlName="dealerName" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+                    </div>
+
+                </div>
+            </div>
+            <!--257  18-->
+            <div *ngIf="EntryyVoucherAddForm.get('voucherTypeId')?.value === 18">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="bonusType" class="control-label font-weight-bold">{{"category"|translate}}</label>
+                        <input type="text" formControlName="bonusType" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="referenceNo" class="control-label font-weight-bold">{{"ApprovalNo"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="referenceNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': isEmpty(EntryyVoucherAddForm.get('referenceNo').value)}">
+                    </div>
+                </div>
+            </div>
+            <!--258  19-->
+            <div *ngIf="EntryyVoucherAddForm.get('voucherTypeId')?.value === 19">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="caravanNo" class="control-label font-weight-bold">{{"ReturnFrom"|translate}}</label>
+                        <input type="text" formControlName="caravanNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="purchaseOrderId"
+                            class="control-label font-weight-bold">{{"ExitVoucherNo"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="outputVouchersList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            formControlName="purchaseOrderId" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [disabled]="disableAll"
+                            (onChange)="GetItems(EntryyVoucherAddForm.get('purchaseOrderId').value)">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-3">
+                        <label for="bookNo" class="control-label font-weight-bold">{{"OutBookNo"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="bookNo" class="input border w-full mt-1 "
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                            [ngClass]="{ 'invalid-field': isEmpty(EntryyVoucherAddForm.get('bookNo').value)}">
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                    <label for="note" class="control-label font-weight-bold">{{"ReceiptNote"|translate}} </label>
+                    <textarea formControlName="note" class="input border w-full mt-1"
+                        [attr.disabled]="disableAll ? true : null" rows="6">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VoucherDetails"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"CustomsDeclaration"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+
+                    </div>
+                </div>
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="invDtlList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true"
+                                [scrollable]="true" scrollDirection="horizontal"
+                                [tableStyle]="{'min-width':'2000px'}">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"
+                                                [disabled]="disableAll"></p-button>
+
+                                            <p-button label='{{"DownloadExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-42 mr-2 mb-5 items-center justify-center text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel" (click)="exportHeadersToExcel()">
+                                            </p-button>
+
+                                            <input type="file" #fileInput (change)="ImportFromExcel($event)"
+                                                accept=".xlsx, .xls" style="display: none;" />
+                                            <p-button label='{{"ImportFromExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-82 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel" (click)="onImportClick(fileInput)">
+                                            </p-button>
+
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled">{{"id"|translate}}</th>
+                                        <th class="head_tb" *ngIf="isdisabled">{{"hdid"|translate}}</th>
+                                        <th class="head_tb" style="width: 200px">{{"ItemNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px">{{"Unit"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px">{{"Quantity"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px"> {{"PriceInDinar"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px">{{"PalletCount"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px">{{"Weight"|translate}}/{{"Kg"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px"> {{"TotalInDinar"|translate}}</th>
+                                        <th class="head_tb" style="width: 120px">{{"ExpiryDate"|translate}}</th>
+                                        <th class="head_tb" style="width: 200px">{{"notes"|translate}}</th>
+                                        <th class="head_tb" style="width: 100px">{{"MaterialDetails"|translate}}</th>
+                                        <th class="text-center-m w-0" style="width: 50px"><i class="pi pi-cog"
+                                                style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-invdt let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="invdt.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="invdt.hDId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="itemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false" [(ngModel)]="invdt.itemId"
+                                                [ngClass]="{ 'invalid-field': invdt.itemId <= 0}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="onChangeItem($event,invdt,i)" [disabled]="disableAll"
+                                                [virtualScroll]="true" [lazy]="true"
+                                                (onLazyLoad)="ItemloadLazyOptions($event)" [virtualScrollItemSize]="40">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.unitsList[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false" [(ngModel)]="invdt.unitId"
+                                                [ngClass]="{ 'invalid-field': invdt.unitId <= 0}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="onChangeUnit(invdt,i,true)" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="invdt.qty"
+                                                [ngClass]="{ 'invalid-field': invdt.qty <= 0}"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                (onChange)="OnQtyChange($event,invdt,i)" [disabled]="disableAll"
+                                                (blur)="OnPriceBlur( invdt)">
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="invdt.price"
+                                                class="input border w-full mt-1 "
+                                                [ngClass]="{ 'invalid-field': invdt.price <= 0}"
+                                                [ngModelOptions]="{standalone: true}" (onChange)="OnPriceChange( invdt)"
+                                                (blur)="OnPriceBlur( invdt)" [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="invdt.pallets"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="invdt.weight"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="invdt.total"
+                                                class="input border w-full mt-1 "
+                                                [ngClass]="{ 'invalid-field': invdt.total <= 0}"
+                                                [ngModelOptions]="{standalone: true}" readonly [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                                    <input type="date" [(ngModel)]="invdt.expiryDate"
+                                                        class="input border w-full mt-1 "
+                                                        [ngClass]="{ 'invalid-field': isRequierdEx(invdt,i) }"
+                                                        [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="invdt.notes"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td>
+                                        <td><p-button label='{{"MaterialDetails"|translate}}'
+                                                styleClass="p-ripple p-element button mt-1 w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                (onClick)="OpenItemDetails(invdt,i)"
+                                                [disabled]="disableAll || isPackage || invdt.isPackage || invdt.itemId <= 0">
+                                            </p-button>
+                                        </td>
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                    class="material-icons" style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td colspan="4"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="invCustomsModels" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineCustom()"
+                                                [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" *ngIf="isdisabled">{{"id"|translate}}</th>
+                                        <th class="head_tb" *ngIf="isdisabled">{{"hdid"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"DeclarationNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"LeadNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"DriverName"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"Mobile"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"CarName"|translate}}</th>
+                                        <th class="head_tb" style="width: 6%">{{"PalletCount"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"notes"|translate}}</th>
+                                        <th class="text-center-m w-0" style="width: 3%"><i class="pi pi-cog"
+                                                style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-custom let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="custom.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="custom.hDId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <!--              <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="customsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false" [(ngModel)]="custom.customId"
+                                                [ngClass]="{ 'invalid-field': custom.customId <= 0}"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td> -->
+                                        <td><input type="text" [(ngModel)]="custom.customId"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [ngClass]="{ 'invalid-field': custom.customId <= 0}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="custom.leadNo"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [ngClass]="{ 'invalid-field': custom.leadNo <= 0}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="custom.driverName"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="custom.mobileNo"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="custom.carNo"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="custom.pallets"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="custom.notes"
+                                                class="input border w-full mt-1 "
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}">
+                                        </td>
+
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowCustom(i)" [disabled]="disableAll">
+                                                <i class="material-icons" style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <!-- <ng-template pTemplate="footer">
+                                    <tr>   
+                                        <td colspan="3"></td>                
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td colspan="4"></td>
+                                    </tr>                                    
+                                </ng-template> -->
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f03">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid || !this.validDate || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+
+                <p-button label='{{"Approval"|translate}}' icon="pi pi-check" class="ml-4"
+                    (click)="ApproveVoucher(EntryyVoucherAddForm.get('id').value)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid" type="button" *ngIf="disapleVoucherType"></p-button>
+
+                <!-- <p-button label='{{"PrintEntryVoucher"|translate}}' icon="pi pi-print" class="ml-4" *ngIf="EntryyVoucherAddForm.get('voucherTypeId').value === 10"                                     
+                    styleClass="p-ripple p-element button w-42 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid" type="button"></p-button> -->
+                <!--255  10--> <!-- 256 17-->
+                <p-button label='{{"PrintGuaranteeLetter"|translate}}' icon="pi pi-print" class="ml-4"
+                    (click)="PrintGuaranteeLetter(this.EntryyVoucherAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-42 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid"
+                    type="button"></p-button><!-- *ngIf="EntryyVoucherAddForm.get('voucherTypeId').value === 10|| EntryyVoucherAddForm.get('voucherTypeId').value === 17"  -->
+
+                <p-button label='{{"PrintSetReceipt"|translate}}' icon="pi pi-print" class="ml-4"
+                    (click)="PrintSetReceipt(this.EntryyVoucherAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-42 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid" type="button"></p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4"
+                    (click)="PrintEntryVoucherH(this.EntryyVoucherAddForm.value.id,this.EntryyVoucherAddForm.value.voucherTypeId)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid" type="button"></p-button>
+
+                <p-button label='{{"Delete"|translate}}' (onClick)="DeleteVoucher(this.EntryyVoucherAddForm.value.id) "
+                    color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryyVoucherAddForm.invalid" type="button" [hidden]="showsave"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/EntryVoucherH/EntryvouhcerhList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>

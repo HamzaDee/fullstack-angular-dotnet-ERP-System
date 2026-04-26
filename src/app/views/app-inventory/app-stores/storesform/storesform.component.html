@@ -1,0 +1,130 @@
+
+<form [formGroup]="StoreForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"StoreArabicName"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="storeNameA" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': !StoreForm.get('storeNameA').value}">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"StoreEnglishName"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="storeNameE" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': !StoreForm.get('storeNameE').value}">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"StoreAdminName"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [options]="StoreKeepers"
+                            formControlName="storeKeeperId" 
+                            [ngClass]="{ 'invalid-field': StoreForm.get('storeKeeperId').value <= 0}">
+                        </p-dropdown>
+                    </div>
+                    <!-- (onChange)="onStoreKeeperSelection($event)" -->
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Address"|translate}}</label>
+                        <input type="text" formControlName="address" class="input border w-full mt-1 ">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"telephone"|translate}}</label>
+                        <input type="text" formControlName="telephone" class="input border w-full mt-1 ">
+                        <span class="text-red-500 text-sm mt-1" *ngIf="isInvalidPhoneNumber()">
+                            {{"Onlynumeric"|translate}} 
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Mobile"|translate}}</label>
+                        <input type="text" formControlName="mobile" class="input border w-full mt-1 ">
+                        <span class="text-red-500 text-sm mt-1" *ngIf="isInvalidMobileNumber()">
+                            {{"Onlynumeric"|translate}} 
+                        </span>
+                    </div>
+
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1"[hidden]="inventoryType==123">
+                            <label class="control-label font-weight-bold">{{"storeAccNo"|translate}}
+                                <span *ngIf="inventoryType!==periodic && inventoryAccType === 178" class="required-asterisk">*</span>
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                formControlName="storeAccNo" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false"
+                                [ngClass]="{'invalid-field': 
+                                inventoryType!==periodic && inventoryAccType === 178 &&  StoreForm.get('storeAccNo').value <= 0}">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" [hidden]="inventoryType==123">
+                            <label class="control-label font-weight-bold">{{"costGoodsSoldAccNo"|translate}}
+                                <span *ngIf="inventoryType!==periodic && inventoryAccType === 178" class="required-asterisk">*</span>
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                                formControlName="costGoodsSoldAccNo" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false"
+                                [ngClass]="{'invalid-field': 
+                                inventoryType!==periodic && inventoryAccType === 178 &&  StoreForm.get('costGoodsSoldAccNo').value<=0 }">
+                            </p-dropdown>
+                        </div>
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <input id="minusSale" formControlName="allowMinusTrans" type="checkbox"class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none w-full" for="minusSale">{{"CanSaleNegativeQuantities"|translate}}</label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <input id="active" formControlName="active" type="checkbox" class="input border mr-2 mr-3 ml-3" style="margin-right: 50px;" />
+                        <label class="cursor-pointer select-none w-full" for="active">{{"Active"|translate}}</label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <input id="hasPerm" type="checkbox" formControlName="hasPermission" class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none w-full" for="check_{{data.number}}">{{"SpicalValidate"|translate}}</label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1"style="margin-top: 3px; margin-right: 10px">
+                            <label class="cursor-pointer select-none w-full"for="check_{{data.number}}">{{"USERS"|translate}}</label>
+                            <p-multiSelect #multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'                                 
+                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" 
+                                styleClass="input border w-full mt-1 " optionValue="id" formControlName="usersId"
+                                [options]="usersList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                [virtualScroll]="false" [disabled]="hasPermesion()">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class=" col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                        align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            type="submit" [disabled]="StoreForm.invalid || disableSave"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            (click)="dialogRef.close(false)"></p-button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>

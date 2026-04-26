@@ -1,0 +1,206 @@
+<div class="content">
+  <div class="card">
+
+    <div class="card-body ">
+      <div class="row" style="margin-top: 1%">
+        <div class="col-md-1">
+          <label class="control-label font-weight-bold">{{"user"|translate}} </label>
+
+        </div>
+        <div class="col-md-3">
+
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}} ' (onChange)="ChangeUserId()"
+            [options]="userList" [style]="{'minWidth':'100%', 'width': '100%'}" [(ngModel)]="userId" optionLabel="text"
+            optionValue="id" [filter]="true" filterBy="text">
+
+            <ng-template pTemplate="userId">
+              <div class="country-item country-item-value" *ngIf="userId">
+                <div [(ngModel)]="userId.id">{{userId.text}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+              <div class="country-item">
+                <div>{{country.text}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 1%">
+
+
+        <div class="col-md-1">
+          <label class="control-label font-weight-bold">{{"MainModule"|translate}} </label>
+
+        </div>
+
+        <div class="col-md-3">
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}} ' (onChange)="ChangeMainModule()"
+            [options]="mainSystemList" [panelStyle]="{'minWidth':'100%', 'width': '100%' }"
+            [style]="{'minWidth':'100%', 'width': '100%' ,'maxWidth' : '100%'}" [(ngModel)]="mainSystemId"
+            optionLabel="text" optionValue="id" [filter]="true" filterBy="text">
+
+            <ng-template pTemplate="userId">
+              <div class="country-item country-item-value" *ngIf="mainSystemId">
+                <div [(ngModel)]="mainSystemId.id">{{mainSystemId.text}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+              <div class="country-item">
+                <div>{{country.text}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+
+        </div>
+      </div>
+
+      <!--The content below is only a placeholder and can be replaced.-->
+      <div class="row " style="margin-top: 1%">
+        <div class="col-md-1">
+          <label class="control-label font-weight-bold">{{"Screen"|translate}} </label>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}} ' (onChange)="ChangeScreenId()"
+            [options]="screenList" [style]="{'minWidth':'100%', 'width': '100%'}" [(ngModel)]="screenId"
+            optionLabel="text" optionValue="id" [filter]="true" filterBy="text">
+
+            <ng-template pTemplate="userId">
+              <div class="country-item country-item-value" *ngIf="screenId">
+                <div [(ngModel)]="screenId.id">{{screenId.text}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+              <div class="country-item">
+                <div>{{country.text}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+  </div>
+
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+
+    </div>
+
+    <div class="p-toolbar-group-right">
+      <p-button label='{{"Save"|translate}}' styleClass="p-button-sm " icon="pi pi-save" (click)="SaveUserPermission()"
+        [disabled]="userId=='-1'"></p-button> |
+      <p-button label='{{"SelectAll"|translate}}' styleClass="p-button-success p-button-sm" icon="pi pi-check"
+        (click)="SelectAllPermissions()"></p-button> |
+      <p-button label='{{"DeSelectAll"|translate}}' styleClass="p-button-danger p-button-sm" icon="pi pi-undo"
+        (click)="DeselectAllPermssions()"></p-button>
+    </div>
+  </p-toolbar>
+  <hr>
+
+
+  <div class="row table_wrapper">
+    <div class="col-md-12 ">
+      <p-table #dt [value]="data" [paginator]="false" [globalFilterFields]="['screenNo','screenName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate=" {{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+
+
+
+
+
+          <div class="flex align-items-center justify-content-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input class="pInputText" pInputText type="text"
+                (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder='{{"search"|translate}} ' />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+
+
+            <th>{{"ScreenNo"|translate}}</th>
+            <th>{{"ScreenName"|translate}} </th>
+            <th>{{"OpenAction"|translate}} <input type="checkbox" name="openAllCheck" [checked]="isCheckedOpen"
+                (click)="checkAllOpenAction()"></th>
+            <th>{{"AddAction"|translate}} <input type="checkbox" name="addAllCheck" [checked]="isCheckedAdd"
+                (click)="checkAllAddAction()"></th>
+            <th>{{"EditAction"|translate}} <input type="checkbox" name="EditAllCheck" [checked]="isCheckedEdit"
+                (click)="checkAllEditAction()"></th>
+            <th>{{"DeleteAction"|translate}} <input type="checkbox" name="DeleteAllCheck" [checked]="isCheckedDelete"
+                (click)="checkAllDeleteAction()"> </th>
+            <th>{{"PrintAction"|translate}} <input type="checkbox" name="printAllCheck" [checked]="isCheckedPrint"
+                (click)="checkAllPrintAction()"></th>
+
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody  " let-group>
+          <tr>
+
+            <td>{{group.screenNo}}</td>
+            <td>
+              <h5>{{group.screenName}}</h5>
+            </td>
+            <td>
+              <h5><input type="checkbox" name="open" [checked]="group.open" (change)="group.open = !group.open"></h5>
+            </td>
+
+            <td>
+              <h5><input type="checkbox" name="add" [checked]="group.add" (change)="group.add=!group.add"></h5>
+            </td>
+            <td>
+              <h5><input type="checkbox" name="edit" [checked]="group.edit" (change)="group.edit = !group.edit"></h5>
+            </td>
+            <td>
+              <h5><input type="checkbox" name="delete" [checked]="group.delete" (change)="group.delete = !group.delete">
+              </h5>
+            </td>
+            <td>
+              <h5><input type="checkbox" name="print" [checked]="group.print" (change)="group.print = !group.print">
+              </h5>
+            </td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="odd">
+            <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+          </tr>
+
+        </ng-template>
+      </p-table>
+
+
+
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<div class="loading-indicator" [hidden]="!showLoader">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

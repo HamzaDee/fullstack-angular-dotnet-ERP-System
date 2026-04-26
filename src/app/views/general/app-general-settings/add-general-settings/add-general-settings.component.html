@@ -1,0 +1,91 @@
+<div class="content">
+    <div class="card" class="card-blue">
+
+        <div class="intro-y box px-5 pt-5 mt-5">
+            <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                <a data-toggle="tab" data-target="#f01" href="javascript:;"
+                    class="py-4 sm:mr-8 active">{{"AccountingSystemForm"|translate}}</a>
+                <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                    class="py-4 sm:mr-8">{{"StoresForm"|translate}}</a>
+                <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                    class="py-4 sm:mr-8">{{"EmailInfo"|translate}}</a>
+            </div>
+        </div>
+
+        <div class="intro-y tab-content">
+            <div class="tab-content__pane active" id="f01">
+                <div class="intro-y box px-5 pt-5">
+                    <app-accounting-system-form
+                        (fromAccountig)="FormGroupFromAccountig($event)"></app-accounting-system-form>
+                </div>
+            </div>
+            <div class="tab-content__pane" id="f02">
+                <div class="intro-y box px-5 pt-5">
+                    <app-stores-form (fromStores)="FormGroupFromStores($event)"></app-stores-form>
+                </div>
+            </div>
+            <div class="tab-content__pane" id="f03">
+                <div class="intro-y box px-5 pt-5">
+                    <div class="intro-y box p-5 mt-12 sm:mt-5">
+                        <div class="grid grid-cols-12 gap-5 mt-5 pop-scrol">                            
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"Email"|translate}}</label>
+                                <input [(ngModel)]="systemEmail1" type="text" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">
+                            </div>
+                            <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"Password"|translate}}</label>
+                                <input [(ngModel)]="emailPasswod1" type="text" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">
+                            </div> -->
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-8">
+                                <label class="control-label font-weight-bold">{{"Password"|translate}}</label>
+                                <p-password class="input border w-full mt-1"
+                                    [(ngModel)]="emailPasswod1" [toggleMask]="true">
+                                </p-password>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"EMAILPORT"|translate}}</label>
+                                <input [(ngModel)]="emailPort1" type="number" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"SMTPHOST"|translate}}</label>
+                                <input [(ngModel)]="smtpHost1" type="text" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="intro-y tab-content">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" align="end">
+                    <p-button (click)="SaveForms()" label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" [disabled]="!areFormsValid"></p-button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <p-tabView styleClass="tabview-custom">
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <i class="pi pi-info"></i>
+                    <span class="tabspan">{{"AccountingSystemForm"|translate}}</span>
+                </ng-template>
+                <app-accounting-system-form
+                    (fromAccountig)="FormGroupFromAccountig($event)"></app-accounting-system-form>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <i class="pi pi-upload"></i>
+                    <span class="tabspan">{{"StoresForm"|translate}}</span>
+                </ng-template>
+                <app-stores-form (fromStores)="FormGroupFromStores($event)"></app-stores-form>
+            </p-tabPanel>
+            <div mat-dialog-actions align="end">
+                <p-button (click)="SaveForms()" label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-button-sm" type="submit"></p-button>
+            </div>
+        </p-tabView> -->
+    </div>
+</div>

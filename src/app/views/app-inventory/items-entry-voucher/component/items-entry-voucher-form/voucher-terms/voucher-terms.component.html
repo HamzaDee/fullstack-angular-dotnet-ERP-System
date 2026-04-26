@@ -1,0 +1,129 @@
+<p-table #dt [value]="invVouchersDtFormArray.controls" styleClass="p-datatable-gridlines" dataKey="id"
+        [scrollable]="true" [responsive]="true" [resizableColumns]="true" >
+    <ng-template pTemplate="caption">
+        <div class="row mb-8">
+            <div class="col-md-6">
+                <i class="material-icons cursor-pointer" [ngStyle]="{'color': isViewMode ? '#898989' : 'green'}"
+                    style="color:green" (click)="addNewRow()">add_box</i>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="flex: 0 0 15rem !important">{{"itemName"|translate}}</th>
+            <th style="flex: 0 0 8rem">{{"unit"|translate}}</th>
+            <th style="flex: 0 0 9rem" *ngIf="itemEntryVoucerSettings.useStoreInGrid">{{"store"|translate}}</th>
+            <th style="flex: 0 0 5rem">{{"Quantity"|translate}}</th>
+            <th style="flex: 0 0 6rem">{{"cost"|translate}}</th>
+            <th style="flex: 0 0 7rem">{{"total"|translate}}</th>
+            <th style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useCostCenter">{{"costCenter"|translate}}</th>
+            <th style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useProductDate">{{"productDate"|translate}}</th>
+            <th style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useExpiryDate">{{"EXPIRYDATE"|translate}}</th>
+            <th style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useBatch">{{"batchNumber"|translate}}</th>
+            <th style="flex: 0 0 7rem" *ngIf="itemEntryVoucerSettings.useSerial">{{"SerialNo"|translate}}</th>
+            <th style="flex: 0 0 3rem">
+                <i class="pi pi-cog" style="font-size: 1.2rem"></i>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" class="p-datatable-tbody" let-invVoucherDtForm>
+        <tr [formGroup]="invVoucherDtForm">
+            <td style="flex: 0 0 15rem">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [options]="itemsList" 
+                    styleClass="input border w-full mt-1" optionLabel="text"
+                    optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="true"  [virtualScroll]="false"
+                    [formControl]="invVoucherDtForm.get('itemId')"
+                    [ngClass]="{'invalid-field':invVoucherDtForm.get('itemId').value<=0}"
+                    (onChange)="onChangeItem($event.value,invVoucherDtForm)">
+                </p-dropdown>
+            </td>
+            <td style="flex: 0 0 8rem">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [options]="invVoucherDtForm.get('unitsList').value" 
+                    styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="true" [virtualScroll]="false" [formControl]="invVoucherDtForm.get('unitId')" [ngClass]="{'invalid-field': 
+                    invVoucherDtForm.get('unitId').value<=0}"
+                    (onChange)="onChangeUnit($event.value,invVoucherDtForm)">
+                </p-dropdown>
+            </td>
+            <td style="flex: 0 0 9rem" *ngIf="itemEntryVoucerSettings.useStoreInGrid">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                 optionLabel="text" optionValue="id" [filter]="true"
+                 styleClass="input border w-full mt-1"
+                    filterBy="text" appendTo="body" autoWidth="true" [virtualScroll]="false"
+                    [formControl]="invVoucherDtForm.get('storeId')" [ngClass]="{'invalid-field': 
+                    invVoucherDtForm.get('storeId').value<=0 }">
+                </p-dropdown>
+            </td>
+            <td style="flex: 0 0 5rem">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field': invVoucherDtForm.get('qty').hasError('required') }"
+                    [formControl]="invVoucherDtForm.get('qty')" (keyup)="calculateTotal(invVoucherDtForm)"
+                    class="input border w-full mt-1 ">
+            </td>
+            <td style="flex: 0 0 6rem">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field': invVoucherDtForm.get('price').hasError('required') }"
+                    (keyup)="calculateTotal(invVoucherDtForm)" [formControl]="invVoucherDtForm.get('price')"
+                    class="input border w-full mt-1 ">
+            </td>
+            <td style="flex: 0 0 7rem">
+                <input type="text" readonly [formControl]="invVoucherDtForm.get('total')"
+                class="input border w-full mt-1 " />
+            </td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useCostCenter">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costCentersList"
+                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="true" [virtualScroll]="false"
+                    [formControl]="invVoucherDtForm.get('costCenterId')" [ngClass]="{'invalid-field': 
+                    invVoucherDtForm.get('costCenterId').value<=0 && invVoucherDtForm.get('costCenterId').touched}">
+                </p-dropdown>
+            </td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useProductDate">
+                <input type="date"
+                    [ngClass]="{ 'invalid-field': invVoucherDtForm.get('productDate').invalid }"
+                    [formControl]="invVoucherDtForm.get('productDate')" class="input border w-full mt-1 ">
+            </td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useExpiryDate">
+                <input type="date"
+                    [ngClass]="{ 'invalid-field':  invVoucherDtForm.get('expiryDate').invalid }"
+                    [formControl]="invVoucherDtForm.get('expiryDate')" class="input border w-full mt-1 ">
+            </td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useBatch">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field':  invVoucherDtForm.get('batchNo').invalid }"
+                    [formControl]="invVoucherDtForm.get('batchNo')" class="input border w-full mt-1 ">
+            </td>
+            <td style="flex: 0 0 7rem; display: flex; justify-content: center; align-items: center;" *ngIf="itemEntryVoucerSettings.useSerial">
+                <p-button label='{{"AddAction"|translate}}' (click)="openItemSequencesPopup(invVoucherDtForm)"
+                    styleClass="table-button p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component w-full"
+                    type="button"></p-button>
+            </td>
+            <td style="flex: 0 0 3rem">
+                <i class="material-icons cursor-pointer" [ngStyle]="{'color': isViewMode ? '#898989' : 'green'}"
+                    (click)="addNewRow()">add_box</i>
+                <i class="material-icons cursor-pointer" (click)="deleteRow(getUnitFormGroupIndex(invVoucherDtForm))"
+                    [ngStyle]="{'color': isViewMode ? '#898989' : 'red'}">delete</i>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <tr class="p-datatable-footer">
+            <td style="flex: 0 0 15rem"></td>
+            <td style="flex: 0 0 8rem"></td>
+            <td style="flex: 0 0 9rem" *ngIf="itemEntryVoucerSettings.useStoreInGrid"></td>
+            <td style="flex: 0 0 5rem"></td>
+            <td style="flex: 0 0 6rem">{{"total"|translate}}</td>
+            <td style="flex: 0 0 7rem">{{ calculateAllTotal()|number: '1.3-3' }}</td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useCostCenter"></td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useProductDate"></td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useExpiryDate"></td>
+            <td style="flex: 0 0 8rem" *ngIf="itemEntryVoucerSettings.useBatch"></td>
+            <td style="flex: 0 0 7rem" *ngIf="itemEntryVoucerSettings.useSerial"></td>
+            <td style="flex: 0 0 3rem"></td>
+        </tr>
+    </ng-template>
+</p-table>

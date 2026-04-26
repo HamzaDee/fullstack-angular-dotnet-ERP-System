@@ -1,0 +1,50 @@
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center mt-5">
+            <h1>{{"ItemsEntryVoucherTemplat"}}</h1>
+        </div>
+        <div id="printContainer" class="intro-y box px-5 py-5  mt-2">
+            <h2>ITEMS ENTRY VOUCHER</h2>
+            <hr>
+
+            <p>Voucher Number: {{ voucherNumber }}</p>
+            <p>Date: {{ date }}</p>
+            <p>Entered By: {{ enteredBy }}</p>
+
+            <hr>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items">
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <p>Total Items: {{ getTotalItems() }}</p>
+            <p>Total Quantity: {{ getTotalQuantity() }}</p>
+        </div>
+
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                (click)="print()" type="button"></p-button>
+            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                (click)="dialogRef.close(false)"></p-button>
+        </div>
+    </div>
+</div>

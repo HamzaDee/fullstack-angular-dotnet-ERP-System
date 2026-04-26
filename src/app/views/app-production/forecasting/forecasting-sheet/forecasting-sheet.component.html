@@ -1,0 +1,293 @@
+<div id="print-section" class="print-section">
+    <div style="border-bottom:1px solid black;">
+        <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"ForecastingSheet"|translate}} </h1>
+    </div>
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1"
+        style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+        <div class="grid grid-cols-12">
+            <div class="col-span-2">{{"TransDate"|translate}} :</div>
+            <div class="pt-hlf pb-hlf col-span-4">{{data.transDate| date: 'dd/MM/yyyy'}}</div>
+            <div class="col-span-2">{{"YEAR"|translate}} :</div>
+            <div class="pt-hlf pb-hlf col-span-2"> {{data.fYear}}</div>
+        </div>
+        <div class="grid grid-cols-12">
+            <div class="col-span-2">{{"COUNTRY"|translate}} :</div>
+            <div class="pt-hlf pb-hlf col-span-4"> {{data.countryName}}</div>
+            <div class="col-span-2">{{"Agent"|translate}} :</div>
+            <div class="pt-hlf pb-hlf col-span-4"> {{data.agentName}}</div>
+            <div class="col-span-2"> {{"Notes"|translate}} :</div>
+            <div class="pt-hlf pb-hlf col-span-4">{{data.note}} </div>
+        </div>
+    </div>
+    <div class="table-container">
+        <table *ngFor="let product of Product" class="table tabledir">
+            <thead>
+                <tr>
+                    <th class="tablealign" colspan='7' style="background-color: azure;">{{"itemName"|translate}} : {{
+                        product.itemName }}</th>
+                </tr>
+                <tr>
+                    <th class="tablealign">{{"Month"|translate}}</th>
+                    <th class="tablealign">{{"Price"|translate}}</th>
+                    <th class="tablealign">{{"Qty"|translate}}</th>
+                    <th class="tablealign">{{"Free"|translate}}</th>
+                    <th class="tablealign">{{"Bonus"|translate}}</th>
+                    <th class="tablealign" style="background-color: gray;">{{"Total"|translate}}</th>
+                    <th class="tablealign" style="background-color: gray;">{{"MonthTotal"|translate}}</th>
+                </tr>
+
+                <!--  <tr>
+            <th style="color: black; border: solid black"></th>
+            <th style="color: black; border:solid black"></th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month1"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month2"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month3"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month4"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month5"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month6"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month7"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month8"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month9"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month10"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month11"|translate}}</th>
+            <th style="color: black; border: solid black" colspan="4">{{"Month12"|translate}}</th>
+        </tr> -->
+                <!-- 
+        <tr>
+            <th style="color: black; border: solid black">{{"itemName"|translate}}</th>
+            <th style="color: black; border: solid black">{{"TotalsAmount"|translate}}</th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Qty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Total"|translate}} </th>
+        </tr> -->
+            </thead>
+            <tbody>
+                <tr *ngIf="(product.qty1 + product.free1 + product.bonus1) > 0">
+                    <td class="tablealign">{{"Month1"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty1 }}</td>
+                    <td class="tablealign">{{ product.free1 }}</td>
+                    <td class="tablealign">{{ product.bonus1 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total1 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty1}}</td>
+                </tr>
+                <tr *ngIf="(product.qty2 + product.free2 + product.bonus2) > 0">
+                    <td class="tablealign">{{"Month2"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty2 }}</td>
+                    <td class="tablealign">{{ product.free2 }}</td>
+                    <td class="tablealign">{{ product.bonus2 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total2 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty2}}</td>
+                </tr>
+                <tr *ngIf="(product.qty3 + product.free3 + product.bonus3) > 0">
+                    <td class="tablealign">{{"Month3"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty3 }}</td>
+                    <td class="tablealign">{{ product.free3 }}</td>
+                    <td class="tablealign">{{ product.bonus3 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total3 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty3}}</td>
+                </tr>
+                <tr *ngIf="(product.qty4 + product.free4 + product.bonus4) > 0">
+                    <td class="tablealign">{{"Month4"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty4 }}</td>
+                    <td class="tablealign">{{ product.free4 }}</td>
+                    <td class="tablealign">{{ product.bonus4 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total4 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty4}}</td>
+                </tr>
+                <tr *ngIf="(product.qty5 + product.free5 + product.bonus5) > 0">
+                    <td class="tablealign">{{"Month5"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty5 }}</td>
+                    <td class="tablealign">{{ product.free5 }}</td>
+                    <td class="tablealign">{{ product.bonus5 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total5 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty5}}</td>
+                </tr>
+                <tr *ngIf="(product.qty6 + product.free6 + product.bonus6) > 0">
+                    <td class="tablealign">{{"Month6"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty6 }}</td>
+                    <td class="tablealign">{{ product.free6 }}</td>
+                    <td class="tablealign">{{ product.bonus6 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total6 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty6}}</td>
+                </tr>
+                <tr *ngIf="(product.qty7 + product.free7 + product.bonus7) > 0">
+                    <td class="tablealign">{{"Month7"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty7 }}</td>
+                    <td class="tablealign">{{ product.free7 }}</td>
+                    <td class="tablealign">{{ product.bonus7 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total7 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty7}}</td>
+                </tr>
+                <tr *ngIf="(product.qty8 + product.free8 + product.bonus8) > 0">
+                    <td class="tablealign">{{"Month8"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty8 }}</td>
+                    <td class="tablealign">{{ product.free8 }}</td>
+                    <td class="tablealign">{{ product.bonus8 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total8 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty8}}</td>
+                </tr>
+                <tr *ngIf="(product.qty9 + product.free9 + product.bonus9) > 0">
+                    <td class="tablealign">{{"Month9"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty9 }}</td>
+                    <td class="tablealign">{{ product.free9 }}</td>
+                    <td class="tablealign">{{ product.bonus9 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total9 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty9}}</td>
+                </tr>
+                <tr *ngIf="(product.qty10 + product.free10 + product.bonus10) > 0">
+                    <td class="tablealign">{{"Month10"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty10 }}</td>
+                    <td class="tablealign">{{ product.free10 }}</td>
+                    <td class="tablealign">{{ product.bonus10 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total10 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty10}}</td>
+                </tr>
+                <tr *ngIf="(product.qty11 + product.free11 + product.bonus11) > 0">
+                    <td class="tablealign">{{"Month11"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty11 }}</td>
+                    <td class="tablealign">{{ product.free11 }}</td>
+                    <td class="tablealign">{{ product.bonus11 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total11 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty11}}</td>
+                </tr>
+                <tr *ngIf="(product.qty12 + product.free12 + product.bonus12) > 0">
+                    <td class="tablealign">{{"Month12"|translate}}</td>
+                    <td class="tablealign">{{ product.price }}</td>
+                    <td class="tablealign">{{ product.qty12 }}</td>
+                    <td class="tablealign">{{ product.free12 }}</td>
+                    <td class="tablealign">{{ product.bonus12 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total12 }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.price * product.qty12}}</td>
+                </tr>
+
+                <!--  <tr *ngFor="let product of Product" style="color: black;">
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.itemName }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty1 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free1 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus1 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total1 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty2 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free2 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus2 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total2 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty3 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free3 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus3 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total3 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty4 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free4 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus4 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.total4 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.qty5 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free5 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus5 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total5 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty6 }}</b></td> 
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free6 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus6 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total6 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty7 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free7 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus7 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total7 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty8 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free8 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus8 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.total8 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.qty9}}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free9 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus9 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total9 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.qty10 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free10 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus10 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.total10 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.qty11 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free11 }}</b></td>
+            <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonus11 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.total11 }}</b></td> 
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.qty12 }}</b></td>
+            <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.free12 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.bonus12 }}</b></td>
+            <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.total12 }}</b></td>
+
+        </tr> -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="tablealign" colspan='5' style="background-color: gray;">{{"TotalsAmount"|translate}}
+                    </td>
+                    <td class="tablealign" style="background-color: gray;">{{ product.total }}</td>
+                    <td class="tablealign" style="background-color: gray;">{{
+                        (product.qty1+product.qty2+product.qty3+product.qty4+product.qty5+product.qty6+product.qty7+product.qty8+product.qty9+product.qty10+product.qty11+product.qty12)
+                        * product.price }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <br>
+    </div>
+</div>
+<div style="text-align: end;">
+    <button (click)="callprint()" [hidden]="isHidden" hidden="callprint"
+        class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+        align="end">
+        {{ "Print" | translate }}
+    </button>
+</div>

@@ -1,0 +1,233 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="EntryVoucherAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>            
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+            <input type="text" formControlName="voucherHDId" class="form-control " hidden>
+            
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherType"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId"
+                        filterBy="text"  autoWidth="false" [virtualScroll]="false"
+                        (onChange)="getVoucherNo($event)" [disabled]="disableAll || disableVouchertype"
+                        [ngClass]="{ 'invalid-field': EntryVoucherAddForm.get('voucherTypeId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 " 
+                        [ngClass]="{ 'invalid-field': isEmpty(EntryVoucherAddForm.get('voucherNo').value)}"
+                        (blur)="voucherNoBlur(EntryVoucherAddForm.value.voucherNo, EntryVoucherAddForm.value.voucherTypeId)"
+                        [attr.disabled]="allowEditVoucherSerial || disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': !validDate}" [attr.disabled]="allowEditDate ? 'disabled' : null">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="allowEditBranch">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">            
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BankAcc"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="bankAccountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="bankAccountId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="OnAccountChange($event,1)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Value"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="number" formControlName="bankAmt" class="input border w-full mt-1 " 
+                        [ngClass]="{ 'invalid-field': isEmpty(EntryVoucherAddForm.get('bankAmt').value)}"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CostCenter"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costcenterList1"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="bankCostCenter" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" >
+                    </p-dropdown>
+                </div>                              
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ConverionFactor"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="currRate" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                    [readOnly]="disableCurrRate">
+                </div>                                
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ExpensesAccount"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="expesnsesAccountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="expAccountId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="OnAccountChange($event,2)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Value"|translate}}</label>
+                    <input type="number" formControlName="expAmt" class="input border w-full mt-1 "                         
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CostCenter"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costcenterList2"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="expCostCenter" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>  
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CreditCardsCollectionAccount"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="cardAccountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="creditCardAccId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="OnAccountChange($event,3)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Value"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="number" formControlName="creditCardAmt" class="input border w-full mt-1 " 
+                        [ngClass]="{ 'invalid-field': isEmpty(EntryVoucherAddForm.get('creditCardAmt').value)}"
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CostCenter"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costcenterList3"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"  [disabled]="disableAll"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="cardCostCenter" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" >
+                    </p-dropdown>
+                </div>  
+            </div>
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VoucherDetails"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f03" href="javascript:;" *ngIf="voucherId > 0"
+                            class="py-4 sm:mr-8">{{"FinancailVoucher"|translate}}</a>
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="creditCardsModelList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 20%">{{"CreditCardNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"PaymentDate"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"TheAmount"|translate}}</th>
+                                        <th class="head_tb" style="width: 20%">{{"PayerName"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"CreditCardType"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"Procurement"|translate}}</th>                                        
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-creditcard let-i="rowIndex">
+                                    <tr>
+                                        <td [hidden]="true">{{creditcard.id}}</td>  
+                                        <td [hidden]="true">{{creditcard.voucherHDId}}</td> 
+                                        <td>{{creditcard.cardNo}}</td>      
+                                        <td>{{creditcard.paymentDate|date:'yyyy/MM/dd'}}</td> 
+                                        <td>{{formatCurrency(creditcard.amount) }}</td> 
+                                        <td>{{creditcard.payerName}}</td> 
+                                        <td>{{creditcard.cardType}}</td> 
+                                        <td><input type="checkbox"  [checked]="creditcard.isProcurement" class="pl-16" (click)="UpdatecheckBox($event,creditcard,i)" /></td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer" >
+                                    <tr>
+                                        <td></td>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td colspan="4"></td>
+                                    </tr>
+ 
+                                </ng-template> 
+                            </p-table>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane" id="f03" *ngIf="voucherId && voucherId > 0">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-financialvoucher [voucherId]="voucherId" [voucherType]="voucherType"></app-financialvoucher>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [hidden]="opType == 'Show'"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryVoucherAddForm.invalid || !this.validDate || this.disableSave" type="submit"></p-button>
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" [hidden]="opType == 'Show'" (click)="PrintCreditCardsCollection(this.EntryVoucherAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryVoucherAddForm.invalid" type="button"></p-button>
+                <!-- <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4" [hidden]="opType == 'Show'"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="EntryVoucherAddForm.invalid" type="button" (onClick)="DeleteVoucher(this.EntryVoucherAddForm.value.id)"></p-button> -->
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/CreditCardsCollection/Cardscollectionlist']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

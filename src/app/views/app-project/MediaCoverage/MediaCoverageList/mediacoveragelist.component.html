@@ -1,0 +1,95 @@
+<div class="container">   
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+        [globalFilterFields]="['eventNo','eventName','eventTypeName','eventRequesterName','authorityName','coverageNeededName','statusName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="caption">
+            
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>                    
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="AddMediaCoverage(0)"></p-button>
+                </div>                                             
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5 text-left">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px" alt="Excel Icon">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px" alt="PDF Icon">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="head_tb" pSortableColumn="eventNo">{{"EventNumber"|translate}} <p-sortIcon field="eventNo"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="eventName">{{"EventName"|translate}} <p-sortIcon field="eventName"></p-sortIcon></th>
+                <th class="head_tb">{{"DateTimeEvent"|translate}} </th>
+                <th class="head_tb" pSortableColumn="eventTypeName">{{"EventType"|translate}} <p-sortIcon field="eventTypeName"></p-sortIcon></th>                       
+                <th class="head_tb" pSortableColumn="eventRequesterName">{{"EventRequester"|translate}} <p-sortIcon field="eventRequesterName"></p-sortIcon></th>
+                <th class="head_tb" pSortableColumn="authorityName">{{"AuthorityDonor"|translate}} <p-sortIcon field="authorityName"></p-sortIcon></th>
+                <!-- <th class="head_tb" pSortableColumn="coverageNeededName">{{"CoverTypeNeeded"|translate}} <p-sortIcon field="coverageNeededName"></p-sortIcon></th> -->
+                <th class="head_tb" pSortableColumn="statusName">{{"OrderStatus"|translate}} <p-sortIcon field="statusName"></p-sortIcon></th>                
+                <th><i class="text-center-m w-0" style="font-size: 1.2rem"></i></th>
+            </tr>            
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-media >
+            <tr>
+                <td [hidden]="true">{{media.status}}</td>
+                <td style="text-align: justify;">{{media.eventNo}}</td>
+                <td style="text-align: justify;">{{media.eventName}}</td>
+                <td style="text-align: justify;">{{media.eventDateTime| date: 'yyyy-MM-dd hh:mm:ss a'}}</td>
+                <td style="text-align: justify;">{{media.eventTypeName}}</td>
+                <td style="text-align: justify;">{{media.eventRequesterName}}</td>
+                <td style="text-align: justify;">{{media.authorityName}}</td>
+                <!-- <td style="text-align: justify;">{{media.coverageNeededName}}</td> -->
+                <td style="text-align: justify;">{{media.statusName}}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenDetailsForm(media.eventNo)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="EditMediaCoverage(media.eventNo,false)" *ngIf="media.status != 69">
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}}  </button>
+                        <button mat-menu-item (click)="ApproveMediaCoverage(media.eventNo)" *ngIf="media.status != 69"> 
+                            <i class="material-icons" style="color:green">check</i> &nbsp;{{"Approval"|translate}}  </button> 
+                        <button mat-menu-item (click)="PrintMediaCoveraget(media.eventNo)"> 
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteMediaCoverage(media.eventNo)"> 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>                      
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td style="vertical-align: top;" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>       
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

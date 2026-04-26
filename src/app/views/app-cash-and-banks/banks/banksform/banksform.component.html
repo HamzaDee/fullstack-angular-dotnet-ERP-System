@@ -1,0 +1,155 @@
+<form [formGroup]="BankAddForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <mat-dialog-content class="mat-typography">
+        <div class="card">            
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div>
+                <input type="number" formControlName="id" class="input border w-full mt-1 " hidden="true">                  
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"NameAr"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="bankNameA" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"NameEn"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="bankNameE" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"BankAcc"|translate}}</label>
+                        <input type="text" formControlName="accBankNo" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"AccountType"|translate}}
+                            <span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountTypeList"
+                                [(ngModel)]="selectedType"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="bankTypeId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                            </p-dropdown> 
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ACCOUNT"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="accId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                            </p-dropdown> 
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"Iban"|translate}}</label>
+                        <input type="text" formControlName="ibanCode" class="input border w-full mt-1 "[attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"SwiftCode"|translate}}</label>
+                        <input type="text" formControlName="swiftCode" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"ResponsiblePerson"|translate}}</label>
+                        <input type="text" formControlName="contactPerson" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" >
+                        <label >{{"Email"|translate}}</label>
+                        <input type="email" formControlName="email" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null">
+                        <div *ngIf="BankAddForm.get('email').hasError('email') && BankAddForm.get('email').touched" >
+                            Invalid email format. 
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"PhoneNumber"|translate}}</label>
+                        <input type="text" formControlName="tel" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"Mobile"|translate}}</label>
+                        <input type="text" formControlName="mobile" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"Website"|translate}}</label>
+                        <input type="email" formControlName="website" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                        <!-- <div *ngIf="BankAddForm.get('website').hasError('invalidWebsiteUrl') && BankAddForm.get('website').touched">
+                            Invalid website URL format.
+                          </div> -->
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"Address"|translate}}</label>
+                        <input type="text" formControlName="address" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"PostdatedchecksAccNo"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountlist1"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="deferredCheqAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                            </p-dropdown> 
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Checkaccountnumberforcollectionfee"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountlist2"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="underCollectionCheqAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                            </p-dropdown> 
+                    </div>                    
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"CreditCardNo"|translate}}</label>
+                        <input type="text" formControlName="creditCardNo" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label >{{"CreditCardEndDate"|translate}}</label>
+                        <input type="date" formControlName="cardExpiryDate" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">     
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"CardType"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="cardTypeList"
+                                [(ngModel)]="selectedcardType"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="cardTypeId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                            </p-dropdown> 
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label >{{"Note"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 "[attr.disabled]="disableAll ? 'disabled' : null">  
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-8">
+                        <input type="checkbox" formControlName="active" class="input border mr-2 mr-3 ml-3" [attr.disabled]="disableAll ? 'disabled' : null"
+                                [(ngModel)]="isActive" [checked]="isActive == 1">
+                            <label class="cursor-pointer select-none w-full"
+                                for="isMonthlyBalance">{{"Active"|translate}}</label>
+                    </div>
+                </div>
+
+                                                               
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                          
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                            [hidden]="this.data.ishidden" [disabled]="BankAddForm.invalid" type="submit">
+                        </p-button>
+
+                            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component" (click)="dialogRef.close(false)"></p-button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>   
+    </div>
+    
+</form>

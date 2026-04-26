@@ -1,0 +1,39 @@
+::ng-deep .p-datatable-wrapper {
+    overflow-x: scroll;
+}
+
+::ng-deep .p-datatable-wrapper::-webkit-scrollbar {
+    height: 12px !important;
+}
+
+::ng-deep .p-datatable-wrapper::-webkit-scrollbar-thumb {
+    background-color: #888 !important;
+}
+
+::ng-deep .p-datatable-wrapper::-webkit-scrollbar-track {
+    background-color: #f1f1f1 !important;
+}
+
+::ng-deep .p-datatable-footer {
+    background-color: rgb(4, 124, 188);
+    color: #fff;
+    font-size: 0.9rem;
+
+    td {
+        text-align: center;
+    }
+}
+
+.table-row {
+    display: flex !important;
+}
+
+p-dropdown {
+    display: flex !important;
+    width: 100% !important;
+    min-width:0 !important; // auto , initial 
+}
+
+.w-full {
+    width: 100%;
+}

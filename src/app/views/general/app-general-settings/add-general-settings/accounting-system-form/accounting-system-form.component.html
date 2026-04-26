@@ -1,0 +1,238 @@
+<form [formGroup]="accountSystemForm">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label>{{"DefaultAndBaseCurrency"|translate}}<span class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" styleClass="input border w-full mt-1"
+                optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                [virtualScroll]="false" [options]="defaultCurrList" formControlName="defaultCurrId"
+                (onChange)="checkIfCanBeDefaultCurrency($event)"
+                [ngClass]="{ 'invalid-field': accountSystemForm.get('defaultCurrId').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+            <label>{{"TransactionsConfirmMethod"|translate}}<span class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text"
+                optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                [virtualScroll]="false" [options]="transConfirmMethodList" formControlName="transConfirmMethod"
+                [ngClass]="{ 'invalid-field': accountSystemForm.get('transConfirmMethod').value <= 0}">
+            </p-dropdown>
+        </div>
+
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1" *ngIf="isuseHis">
+            <label>{{"LinkingAccountsMethod"|translate}}</label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text"
+                optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                [virtualScroll]="false" [options]="linkingAccountsMethodsList" formControlName="accLinkType">
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+            <div class="col-md-4">
+                <input id="check_isuseCostCenter" [checked]="isuseCostCenter"
+                    (change)="isuseCostCenter=(isuseCostCenter==false)?true:false" type="checkbox"
+                    class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none"
+                    for="check_isuseCostCenter">{{"CostCenterUse"|translate}}</label>
+            </div>
+            <div class="col-md-4">
+                <input id="check_isallowMultiCurrency" [checked]="isallowMultiCurrency"
+                    (change)="isallowMultiCurrency=(isallowMultiCurrency==false)?true:false" type="checkbox"
+                    class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none"
+                    for="check_isallowMultiCurrency">{{"AllowMultipleCurrencies"|translate}}</label>
+            </div>
+            <div class="col-md-4">
+                <input id="check_AllowMultipleBranches" class="input border mr-2 mr-3 ml-3"
+                    [checked]="isallowMultiBranch" (change)="isallowMultiBranch=(isallowMultiBranch==false)?true:false"
+                    type="checkbox" />
+                <label class="cursor-pointer select-none"
+                    for="check_AllowMultipleBranches">{{"AllowMultipleBranches"|translate}}</label>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer"
+                style="display: flex; align-items: center; gap: 1rem;">
+
+                <div class="col-md-4" style="display: flex; align-items: center;">
+                    <input id="check_AllowTaxSystem" type="checkbox" class="input border mr-2 mr-3 ml-3"
+                        [checked]="isTaxSystem" (change)="isTaxSystem=(isTaxSystem==false)?true:false" />
+                    <label class="cursor-pointer select-none" for="check_AllowTaxSystem">{{"UseTaxSystem" |
+                        translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer" style="flex-grow: 1;"
+                    [hidden]="isTaxSystem == false">
+                    <label>{{"COUNTRY" | translate }}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full" optionValue="id" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="countryList"
+                        formControlName="taxCountryId">
+                    </p-dropdown>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <input id="print_CostCenter"type="checkbox" class="input border mr-2 mr-3 ml-3 mt-1"  
+                [checked]="useLandedCost" (change)="useLandedCost=(useLandedCost==false)?true:false" />
+                <label class="cursor-pointer select-none" for="useLandedCost">{{"UseLandedCost"|translate}}</label>
+            </div> 
+
+        </div>
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+            <div class="col-md-4">
+
+                <input id="check_EstimateBudgetUse" [checked]="isuseBudgets"
+                    (change)="isuseBudgets=(isuseBudgets==false)?true:false" type="checkbox"
+                    class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none"
+                    for="check_EstimateBudgetUse">{{"EstimateBudgetUse"|translate}}</label>
+            </div>
+            <div class="col-md-4">
+
+                <input id="check_AllowTaxUse" [checked]="isuseTax" (change)="isuseTax=(isuseTax==false)?true:false"
+                    type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none" for="check_AllowTaxUse">{{"AllowTaxUse"|translate}}</label>
+            </div>
+            <div class="col-md-4">
+                <input id="check_UseProjects" [checked]="isuseProjects"
+                    (change)="isuseProjects=(isuseProjects==false)?true:false" type="checkbox"
+                    class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none" for="check_UseProjects">{{"UseProjects"|translate}}</label>
+            </div>
+
+            <div class="col-md-4">
+                <input id="check_UseHis" [checked]="isuseHis" (change)="isuseHis=(isuseHis==false)?true:false"
+                    type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none" for="check_UseHis">{{"UseHIS"|translate}}</label>
+            </div>            
+             <div class="col-md-4">
+                <input id="print_CostCenter"type="checkbox" class="input border mr-2 mr-3 ml-3"  
+                [checked]="printCostCenter" (change)="printCostCenter=(printCostCenter==false)?true:false" />
+                <label class="cursor-pointer select-none" for="print_CostCenter">{{"PrintCostCenter"|translate}}</label>
+            </div> 
+            <!-- <br> -->
+            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="col-md-4" style="display: flex; align-items: center;">
+                    <input id="check_AllowTaxSystem" type="checkbox" class="input border mr-2 mr-3 ml-3"
+                        [checked]="useCustomerNumbering" (change)="useCustomerNumbering=(useCustomerNumbering==false)?true:false" [disabled]="disableNumbering"/>
+                    <label class="cursor-pointer select-none" for="check_AllowTaxSystem">{{"Customernumberingbyyear" |
+                        translate}}</label>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer" style="flex-grow: 1;"
+                        [hidden]="useCustomerNumbering == false">
+                        <label for="getCustMaxByYear">{{"Customernumberingbyyear" | translate }}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'10%', 'width': '10%'}" optionLabel="text"
+                            styleClass="input border w-full" optionValue="id" [filter]="true" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="customerNumberingList"
+                            formControlName="getCustMaxByYear" [disabled]="disableNumbering">
+                        </p-dropdown>
+                    </div>
+            </div>
+
+            
+                <!-- <label for="option1">{{"Customernumberingbyyear" | translate}}</label><br> -->
+                <!-- <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="option1"
+                    value="2"
+                    formControlName="getCustMaxByYear"
+                  />
+                  <label class="form-check-label" for="option1">
+                    2
+                  </label>
+                </div> -->
+                <!-- <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="option2"
+                    value="4"
+                    formControlName="getCustMaxByYear"
+                  />
+                  <label class="form-check-label" for="option2">
+                    4
+                  </label>
+                </div> -->
+              
+              
+            <!-- <div class="col-md-4">
+                <label>{{"Customernumberingbyyear"|translate}}</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadio" id="option1" value="option1" checked>
+                    <label class="form-check-label" for="option1">
+                        2
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadio" id="option2" value="option2">
+                    <label class="form-check-label" for="option2">
+                        4
+                    </label>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold ">{{"AlertForUnderCollectionchecksbefore"|translate}}</label>
+            <input formControlName="inChequeReminder" type="number" min="1" class="input border w-full mt-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+            <label>{{"AlertUsers"|translate}}</label>
+            <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text"
+                optionValue="id" [options]="usersList" [filter]="true" filterBy="text" appendTo="body"
+                formControlName="inChequeReminderUsers" autoWidth="false" [virtualScroll]="false">
+            </p-multiSelect>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold ">{{"AlertForPostDatedChecksBefore"|translate}}</label>
+            <input formControlName="outChequeReminder" type="number" min="1" class="input border w-full mt-1">
+        </div>
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+            <label>{{"AlertUsers"|translate}}</label>
+            <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text"
+                optionValue="id" [options]="usersList" [filter]="true" filterBy="text" appendTo="body"
+                formControlName="outChequeReminderUsers" autoWidth="false" [virtualScroll]="false">
+            </p-multiSelect>
+        </div>
+    </div>
+
+
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label>{{"SalesCycle"|translate}}<span class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" styleClass="input border w-full mt-1"
+                optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                [virtualScroll]="false" [options]="salesCycleList" formControlName="salesCycle"
+                [ngClass]="{ 'invalid-field': accountSystemForm.get('salesCycle').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label>{{"PurchaseCycle"|translate}}<span class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text"
+                optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                [virtualScroll]="false" [options]="purchaseCycleList" formControlName="purchaseCycle"
+                [ngClass]="{ 'invalid-field': accountSystemForm.get('purchaseCycle').value <= 0}">
+            </p-dropdown>
+        </div>
+    </div>
+
+    <br>
+</form>

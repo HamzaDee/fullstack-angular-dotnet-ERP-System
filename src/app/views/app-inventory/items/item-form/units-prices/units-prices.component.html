@@ -1,0 +1,71 @@
+<p-table #dt [value]="unitsFormArray.controls" styleClass="p-datatable-gridlines" dataKey="id">
+    <ng-template pTemplate="caption">
+        <div class="row mb-8">
+            <div class="col-md-6">
+                <i class="material-icons cursor-pointer" [ngStyle]="{'color': isViewMode ? '#898989' : 'green'}"
+                    style="color:green" (click)="addNewRow()">add_box</i>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{"unit"|translate}}
+            <th>{{"ConverionFactor"|translate}}
+            <th>{{"Price"|translate}}
+            <th>{{"barcode"|translate}}
+            <th>{{"minimumUint"|translate}}
+            <th>{{"DEFAULT"|translate}}
+            <th>{{"categoryPrice"|translate}}
+            <th><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" class="p-datatable-tbody" let-unitFormGroup let-i="rowIndex">
+        <tr [formGroup]="unitFormGroup">
+            <td style="width:20%">
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="unitsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                    [formControl]="unitFormGroup.get('unitId')" [ngClass]="{'invalid-field': 
+                    unitFormGroup.get('unitId').value<=0 && unitFormGroup.get('unitId').touched}">>
+                </p-dropdown>
+            </td>
+            <td style="width:15%">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field': unitFormGroup.get('convertRate').touched && unitFormGroup.get('convertRate').hasError('required') }"
+                    formControlName="convertRate" class="input border w-full mt-1" (change)="onChangeConvertRate(unitFormGroup)">
+            </td>
+            <td style="width:15%">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field': unitFormGroup.get('price').touched && unitFormGroup.get('price').invalid }"
+                    formControlName="price" class="input border w-full mt-1 ">
+            </td>
+            <td style="width:20%">
+                <input type="text"
+                    [ngClass]="{ 'invalid-field':  unitFormGroup.get('barcode').touched && unitFormGroup.get('barcode').invalid }"
+                    formControlName="barcode" class="input border w-full mt-1 ">
+            </td>
+            <td style="width:5%">
+                <input [formControl]="unitFormGroup.get('isSmall')" type="checkbox" class="input border mr-2 mr-3 ml-3"
+                    (change)="handleOnlyOneCheckedChange(unitFormGroup,'isSmall')" />
+            </td>
+            <td style="width:5%">
+                <input [formControl]="unitFormGroup.get('isDefault')" type="checkbox"
+                    (change)="handleOnlyOneCheckedChange(unitFormGroup,'isDefault')"
+                    class="input border mr-2 mr-3 ml-3" />
+            </td>
+            <td style="width:10%">
+                <p-button label='{{"OpenAction"|translate}}'
+                    (click)="openCategoryPricePopup(i,unitFormGroup.value.unitId)"
+                    styleClass="table-button p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button"></p-button>
+            </td>
+            <td style="width:5%">
+                <i class="material-icons cursor-pointer" [ngStyle]="{'color': isViewMode ? '#898989' : 'green'}"
+                    (click)="addNewRow()">add_box</i>
+                <i class="material-icons cursor-pointer" (click)="deleteRow(getUnitFormGroupIndex(unitFormGroup))"
+                    [ngStyle]="{'color': isViewMode ? '#898989' : 'red'}">delete</i>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,0 +1,131 @@
+<div class="container">
+    <p-table #dt [value]="tableData" [rows]="10" [paginator]="true" [globalFilterFields]="['yearNameA','yearNo']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                        <p-button label='{{"AddNew"|translate}}'
+                            styleClass="p-ripple p-element button w-full mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            icon="pi pi-plus" (click)="OpenFiscalYearFormPopUp(0,true)"></p-button>
+                    </div>
+                <div class="col-span-12 sm:col-span-7 xxl:col-span-7 cursor-pointer mt-1 "></div>
+                <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1 mb-5">
+                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder='{{"search"|translate}} ' />
+                </div>
+
+               
+
+                <div class="col-span-12 sm:col-span-7 xxl:col-span-7 cursor-pointer mt-5" align="end">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipPosition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" type="button" pButton
+                        pRipple icon="pi pi-file-excel" pTooltip="XLS" (click)="exportExcel()"
+                        tooltipPosition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" type="button" pButton
+                        pRipple icon="pi pi-file-excel" pTooltip="PDF" (click)="exportPdf()"
+                        tooltipPosition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+
+                </div>
+
+            </div>
+                <!-- <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-button label='{{"AddNew"|translate}}' (click)="OpenFiscalYearFormPopUp(0,true)"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component" 
+                        icon="pi pi-plus"></p-button>
+                    </div>
+                    <div class="col-md-6 flex ng-star-inserted" style="text-align:end;">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+                            pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" class="p-button-warning mr-2"
+                            pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                </div>
+                <div class="flex align-items-center justify-content-between">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder='{{"search"|translate}} ' />
+                    </span>
+                </div> -->
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">{{"number"|translate}} <p-sortIcon field="id"></p-sortIcon>
+                <th pSortableColumn="yearNameA">{{"FiscalYearName"|translate}} <p-sortIcon
+                        field="yearNameA"></p-sortIcon></th>
+                <th pSortableColumn="yearNo">{{"FiscalYear"|translate}} <p-sortIcon
+                        field="yearNo"></p-sortIcon></th>
+                <th pSortableColumn="startDate">{{"StartDate"|translate}} <p-sortIcon
+                    field="startDate"></p-sortIcon>
+                
+                <th pSortableColumn="endDate">{{"EndDate"|translate}} <p-sortIcon
+                        field="endDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="isActive">{{"Active"|translate}} <p-sortIcon field="isActive"></p-sortIcon></th>
+                <th pSortableColumn="isClosed">{{"Closed"|translate}} <p-sortIcon field="isClosed"></p-sortIcon></th>
+                <th><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-fiscalyear>
+            <tr>
+                <td [hidden]="true">{{fiscalyear.isClosable}}</td>
+                <td>{{fiscalyear.id}}</td>
+                <td>{{fiscalyear.yearNameA}}</td>
+                <td>{{fiscalyear.yearNo}}</td>
+                <td>{{fiscalyear.startDate|date:'yyyy/MM/dd'}}</td>
+                <td>{{fiscalyear.endDate|date:'yyyy/MM/dd'}}</td>
+                <td><input type="checkbox" disabled="true" [checked]="fiscalyear.isActive" class="pl-16" /></td>
+                <td><input type="checkbox" disabled="true" [checked]="fiscalyear.isClosed" class="pl-16" /></td>
+                <!-- <td><mat-checkbox  [checked]="fiscalyear.isActive" class="pl-16"></mat-checkbox></td>
+                <td><mat-checkbox [checked]="fiscalyear.isClosed" class="pl-16"></mat-checkbox></td> -->
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenFiscalYearFormPopUp(fiscalyear.id,false)" *ngIf="!fiscalyear.isClosed">
+                            <i class="material-icons" style="color:blue" >edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteFiscalYear(fiscalyear.id)" *ngIf="!fiscalyear.isClosed"> <i class="material-icons"style="color:red" >delete</i>
+                            &nbsp;{{"Delete"|translate}} </button>
+
+                            
+                    <span [title]="!fiscalyear.isClosable ? CloseYearTooltip : ''" id="titleb" >
+                        <button id="btn_close"  mat-menu-item (click)="CloseYear(fiscalyear)" *ngIf="!fiscalyear.isClosed" [disabled]="!fiscalyear.isClosable"  
+                       class="custom-cursor">
+                            <i class="material-icons" style="color:green">lock</i> &nbsp;{{"CloseYear"|translate}}                        
+                        </button>
+                    </span>
+
+                        <button mat-menu-item (click)="openYear(fiscalyear.id)" *ngIf="fiscalyear.isClosed">
+                            <i class="material-icons" style="color:green">lock_open</i> &nbsp;{{"OpenYear"|translate}} 
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,540 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="DealersAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden> 
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{dealerType|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="dealerTypesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="dealerTypeId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': DealersAddForm.get('dealerTypeId')?.value <= 0}"
+                        (onChange)="GetmaxDealerNo($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="dealerNo" class="control-label font-weight-bold">{{DealerNo|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="dealerNo" class="input border w-full mt-1 "  [readOnly]="true"
+                    [ngClass]="{ 'invalid-field': DealersAddForm.get('dealerNo')?.value <= 0}">
+                </div>
+            </div>          
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ArabicName"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="nameA" class="input border w-full mt-1 "  [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': DealersAddForm.get('nameA')?.value <= 0}">
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"EnglishName"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="nameE" class="input border w-full mt-1 "  [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': DealersAddForm.get('nameE')?.value <= 0}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                    <label
+                        class="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        style="padding: 9px 22.5px;">
+                        <input type="file" #image (change)="onUploadIamge($event.target.files)" />
+                        Upload
+                    </label>
+                    <br><br>
+                    <p-button (click)="ClearImagePath(image)" label='{{"Delete"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                        type="button" icon="pi pi-undo">
+                    </p-button>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                    <div class="mb-4 d-flex justify-content-center">
+                        <img [src]="imagePath" alt="example placeholder" class="companyImage" />
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{Classification|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="classificationList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="classId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{Category|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="categoryList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="categoryId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"categoryPrice"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="priceCategoryList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="priceCategoryId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ACCOUNT"|translate}} <span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="accountId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [ngClass]="{ 'invalid-field': DealersAddForm.get('accountId')?.value <= 0}"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DeleviryTerms"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="deliverytermList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="deliveryTermId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PaymentTerms"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="paymenttermList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="paymentTermId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"PhoneNumber1"|translate}}</label>
+                    <input type="text" formControlName="tel1" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                  
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"PhoneNumber2"|translate}}</label>
+                    <input type="text" formControlName="tel2" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Website"|translate}}</label>
+                    <input type="text" formControlName="website" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null"
+                           placeholder="https://www.example.com">
+                    <div *ngIf="DealersAddForm.get('website')?.hasError('invalidWebsite') && DealersAddForm.get('website')?.touched">
+                      <p class="text-red-500">{{"InvalidwebsiteURL"|translate}}</p>
+                    </div>
+                  </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Email"|translate}}</label>
+                    <input type="text" formControlName="email" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null"
+                           placeholder="john.doe@example.com">
+                    <div *ngIf="DealersAddForm.get('email')?.hasError('email') && DealersAddForm.get('email')?.touched">
+                      <p class="text-red-500"> {{"Invalidemailformat"|translate}}</p>
+                    </div>
+                  </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"NationalityNumber"|translate}}</label>
+                    <input type="text" formControlName="nationalNo" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"FAX"|translate}}</label>
+                    <input type="text" formControlName="fax" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"AllowedLimits"|translate}}</label>
+                    <input type="number" formControlName="allowedLimit" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"AllowedCheques"|translate}}</label>
+                    <input type="number" formControlName="allowedCheques" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"InCasePassedLimits"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="limitspolicyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="limitPolicy"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"   [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"StartDateDealing"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="startDateDealing" (blur)="isValidVoucherDate($event)" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': !validDate}">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"TaxNo"|translate}}</label>
+                    <input type="text" formControlName="taxNo" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"mailbox"|translate}}</label>
+                    <input type="text" formControlName="poBox" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+              <div class="grid grid-cols-12 gap-5 pt-5">
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"IBAN"|translate}}</label>
+                    <input type="text" formControlName="iban" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"Swift"|translate}}</label>
+                    <input type="text" formControlName="swift" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"Bank"|translate}}</label>
+                    <input type="text" formControlName="bankName" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 ">
+                    <label class="control-label font-weight-bold">{{"BankAcc"|translate}}</label>
+                    <input type="text" formControlName="bankAccNo" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">                    
+                    <input id="isTaxable" [checked]="isTax==1" (change)="isTax=(isTax==0)?1:0" type="checkbox" [attr.disabled]="disableAll ? 'disabled' : null"
+                     class="input border mr-2 mr-3 ml-3" />
+                    <label class="cursor-pointer select-none"for="isTaxable">{{"Taxable"|translate}}</label>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <input id="isActive" [checked]="active==1" (change)="active=(active==0)?1:0" type="checkbox" [attr.disabled]="disableAll ? 'disabled' : null"
+                    class="input border mr-2 mr-3 ml-3" />
+                   <label class="cursor-pointer select-none"for="isActive">{{"Active"|translate}}</label>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <input id="isAgent" [checked]="agent==1" (change)="agent=(agent==0)?1:0" type="checkbox" [attr.disabled]="disableAll ? 'disabled' : null"
+                    class="input border mr-2 mr-3 ml-3" />
+                   <label class="cursor-pointer select-none"for="isAgent">{{"Agent"|translate}}</label>
+                </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                    <input id="isCash" [checked]="iscash==1" (change)="iscash=(iscash==0)?1:0" type="checkbox" [attr.disabled]="disableAll ? 'disabled' : null"
+                    class="input border mr-2 mr-3 ml-3" />
+                   <label class="cursor-pointer select-none"for="isCash">{{"Cash"|translate}}</label>
+                </div>  
+                
+                
+            </div>
+
+<!-- =================================================================================== Details Start here -->
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"ContactInformation"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"Addresses"|translate}}</a>
+
+                        <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"BranchesAndAffiliatedMandolins"|translate}}</a>
+
+                        <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"Attachments"|translate}}</a>
+                    </div>
+                </div>
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="dealerContactList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine(2)" [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <!-- <th style="display: none;"  pSortableColumn="id" ><p-sortIcon field="id"></p-sortIcon></th>
+                                        <th style="display: none;"  pSortableColumn="dealerId" ><p-sortIcon field="dealerId"></p-sortIcon></th>
+                                        <th style="display: none;"  pSortableColumn="addressName" ><p-sortIcon field="addressName"></p-sortIcon></th> -->
+                                        <th style="width: 10%" pSortableColumn="nameA">{{"ArabicName"|translate}} <p-sortIcon field="nameA"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="nameE">{{"EnglishName"|translate}} <p-sortIcon field="nameE"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="position">{{"Position"|translate}}<p-sortIcon field="position"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="email">{{"Email"|translate}}<p-sortIcon field="email"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="tel">{{"Mobile"|translate}}<p-sortIcon field="tel"></p-sortIcon></th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-contactsList let-i="rowIndex">
+                                    <tr>
+                                        <td>
+                                            <input type="text" [(ngModel)]="contactsList.nameA"class="input border w-full mt-1 "  [disabled]="disableAll"
+                                             [ngClass]="{ 'invalid-field': isEmpty(contactsList.nameA) }"[ngModelOptions]="{standalone: true}" >
+                                        </td>                                    
+                                        <td>
+                                            <input type="text" [(ngModel)]="contactsList.nameE"class="input border w-full mt-1 "  [disabled]="disableAll"
+                                             [ngClass]="{ 'invalid-field': isEmpty(contactsList.nameE) }"[ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="contactsList.position"class="input border w-full mt-1 "  [disabled]="disableAll"
+                                             [ngClass]="{ 'invalid-field': isEmpty(contactsList.position) }"[ngModelOptions]="{standalone: true}" >
+                                        </td>  
+                                        <td>
+                                            <input type="email" [(ngModel)]="contactsList.email" [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                            class="input border w-full mt-1 "  [ngClass]="{ 'invalid-field': !checkEmailValidity(contactsList.email) }">
+                                        </td>
+                                        <!-- [ngClass]="{ 'invalid-field': !iscustomEmailValidator(contactsList.email)}" -->
+                                        <td>
+                                            <input type="text" [(ngModel)]="contactsList.tel" [ngModelOptions]="{standalone: true}"class="input border w-full mt-1 " [disabled]="disableAll">
+                                        </td>      
+                                        <td style="width:2%">
+                                            <i class="material-icons cursor-pointer" (click)="deleteRow(i,2)"
+                                            style="color:red">delete</i> 
+                                        </td>                                                                                                                 
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer" >
+                                   
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane " id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="dealerAddressList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine(1)" [disabled]="disableAll"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <!-- <th style="display: none;"  pSortableColumn="id" ><p-sortIcon field="id"></p-sortIcon></th>
+                                        <th style="display: none;"  pSortableColumn="dealerId" ><p-sortIcon field="dealerId"></p-sortIcon></th>
+                                        <th style="display: none;"  pSortableColumn="addressName" ><p-sortIcon field="addressName"></p-sortIcon></th> -->
+                                        <th style="width: 10%" pSortableColumn="addressA">{{"ArabicAddress"|translate}} <p-sortIcon field="addressA"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="addressE">{{"EnglishAddress"|translate}} <p-sortIcon field="addressE"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="email">{{"Email"|translate}}<p-sortIcon field="email"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="tel">{{"HomePhone"|translate}}<p-sortIcon field="tel"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="countryId">{{"COUNTRY"|translate}}<p-sortIcon field="countryId"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="cityId">{{"CITY"|translate}}<p-sortIcon field="cityId"></p-sortIcon></th>
+                                        <th style="width: 10%" pSortableColumn="areaId">{{"AREA"|translate}}<p-sortIcon field="areaId"></p-sortIcon></th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-addressList let-i="rowIndex">
+                                    <tr>
+                                        <td>
+                                            <input type="text" [(ngModel)]="addressList.addressA"class="input border w-full mt-1 "  [disabled]="disableAll"
+                                             [ngClass]="{ 'invalid-field': isOneEmpty(addressList,1) }"[ngModelOptions]="{standalone: true}" >
+                                        </td>                                    
+                                        <td>
+                                            <input type="text" [(ngModel)]="addressList.addressE"class="input border w-full mt-1 " [disabled]="disableAll"
+                                             [ngClass]="{ 'invalid-field': isOneEmpty(addressList,1) }"[ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td>
+                                            <input type="email" [(ngModel)]="addressList.email" [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 "[disabled]="disableAll"
+                                            [ngClass]="{ 'invalid-field': !checkEmailValidity(addressList.email) }">
+                                        </td>  
+                                        <td>
+                                            <input type="text" [(ngModel)]="addressList.tel" [ngModelOptions]="{standalone: true}"class="input border w-full mt-1 "[disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="countryList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="addressList.countryId"     [disabled]="disableAll"                                            
+                                                (ngModelChange)="onCountryChange($event,i)"
+                                                [ngModelOptions]="{standalone: true}">
+                                            </p-dropdown>
+                                        </td>    
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.cityList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false" 
+                                                [(ngModel)]="addressList.cityId"[disabled]="disableAll"
+                                                (ngModelChange)="onCityChange($event,i)"
+                                                [ngModelOptions]="{standalone: true}">
+                                            </p-dropdown>
+                                            <!-- [options]="cityList" [style]="{'minWidth':'100%', 'width': '100%'}" -->
+                                        </td>    
+                                        <td>
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.areaList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"[disabled]="disableAll"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false" 
+                                                [(ngModel)]="addressList.areaId"                                                
+                                                [ngModelOptions]="{standalone: true}">
+                                            </p-dropdown>
+                                            <!-- [options]="areaList" [style]="{'minWidth':'100%', 'width': '100%'}" -->
+                                        </td>                               
+                                        <td>                
+                                        <i class="material-icons cursor-pointer" (click)="deleteRow(i,1)"
+                                        style="color:red">delete</i>                                               
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer" >                                    
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div> 
+                <div class="tab-content__pane" id="f03">
+                    <div class="intro-y box px-5 pt-5">
+                        <p-table #dt [value]="dealersBranchesList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="grid grid-cols-12 gap-5">
+                                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                        <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine3()"></p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 10%" pSortableColumn="BranchName">{{"Branch"|translate}} <p-sortIcon field="BranchName"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="BranchTel">{{"PhoneNumber"|translate}} <p-sortIcon field="BranchTel"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="RepresentativeId">{{"RepresentedName"|translate}}<p-sortIcon field="RepresentativeId"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="LocX">{{"Latitude"|translate}}<p-sortIcon field="LocX"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="LocY">{{"Longitude"|translate}}<p-sortIcon field="LocY"></p-sortIcon></th>
+                                    <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-branchDealesList let-i="rowIndex">
+                                <tr>
+                                    <td>
+                                        <input type="text" [(ngModel)]="branchDealesList.branchName" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [ngClass]="{ 'invalid-field': isEmpty(branchDealesList.branchName)}"
+                                        class="input border w-full mt-1" [disabled]="disableAll"
+                                        >
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]="branchDealesList.branchTel" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        class="input border w-full mt-1" [disabled]="disableAll">
+                                    </td>
+                                    <td>
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="employeesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="branchDealesList.representativeId"     [disabled]="disableAll"                                            
+                                            [ngModelOptions]="{standalone: true}">
+                                        </p-dropdown>
+                                    </td>
+                                    
+                                    <!-- <td>
+                                        <p-dropdown [options]="representativeList" [(ngModel)]="branch.representativeId" [disabled]="disableAll"></p-dropdown>
+                                    </td> -->
+                                    <td>
+                                        <input type="text" [(ngModel)]="branchDealesList.locX" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        class="input border w-full mt-1" [disabled]="disableAll">
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]="branchDealesList.locY" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        class="input border w-full mt-1" [disabled]="disableAll">
+                                    </td>
+                                    <td>
+                                        <i class="material-icons cursor-pointer" (click)="deleteRow(i,3)" style="color:red">delete</i>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="6">{{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+
+
+                    <div class="tab-content__pane " id="f04">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>                    
+                </div>                           
+            </div> 
+            
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DealersAddForm.invalid || !this.validDate || DealersAddForm.get('email')?.invalid || DealersAddForm.get('website')?.invalid || !areAllEmailsValid(dealerContactList) || !areAllEmailsValid(dealerAddressList)"
+                    type="submit" [hidden]="isHidden">
+                </p-button>
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DealersAddForm.invalid" type="button"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DealersAddForm.invalid" type="button" [hidden]="isHidden"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"                
+                    [routerLink]="isSupplier() ? ['/Dealers/GetDealersList'] : ['/Dealers/GetCustomersList']">
+                    
+                    
+                    <!-- [routerLink]="['/Dealers/DealersList']" -->
+                </p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

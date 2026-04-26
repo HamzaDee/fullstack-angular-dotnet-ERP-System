@@ -1,0 +1,121 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="QAAddForm" (ngSubmit)="OnSaveForms(false)">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"TransNumber"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="qaNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(QAAddForm.get('qaNo').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"manfOrderNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown
+                        emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="manOrdersList" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false"
+                        (onChange)="GetManufOrder($event)"
+                        formControlName="manfOrderId"
+                        [ngClass]="{ 'invalid-field': QAAddForm.get('manfOrderId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"TransDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="transDate" class="input border w-full mt-1 ">
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="qaDetailsList" dataKey="id" [loading]="loading"
+                        styleClass="p-datatable-gridlines" [rowHover]="true" [scrollable]="true"
+                        [resizableColumns]="true">
+                        <!-- <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"AddLine"|translate}}'
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="AddNewLine()"></p-button>
+                                </div>
+                            </div>
+                        </ng-template> -->
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 10%" pSortableColumn="itemNo">{{"ItemNo"|translate}}
+                                    <p-sortIcon field="itemNo"></p-sortIcon>
+                                </th>
+                                <th style="width: 20%" pSortableColumn="itemNo">{{"Product"|translate}}
+                                    <p-sortIcon field="itemNo"></p-sortIcon>
+                                </th>
+                                <th style="width: 7%">{{"Qty"|translate}}</th>
+                                <th style="width: 13%">{{"RunNumber"|translate}}</th>
+                                <th style="width: 20%">{{"Notes"|translate}}</th>
+                                <th style="width: 15%">{{"ProdDate"|translate}}</th>                               
+                                <th style="width: 15%">{{"ExpiryDate"|translate}}</th>
+                                <!-- <th style="width: 5%" hidden><i class="pi pi-cog" style="font-size: 1.2rem"></i></th> -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemList let-i="rowIndex">
+                            <tr [ngClass]="{ 'notavlqty': itemList.notAvlQty }">
+                                <td style="width: 10%">{{itemList.itemNo}}</td>
+                                <td style="width: 20%">{{itemList.itemName}}</td>
+                                <td style="width: 7%">{{itemList.qty}}</td>
+                                <td style="width: 13%"><input type="text" [(ngModel)]="itemList.batchNo"
+                                    class="input border w-full mt-1 " 
+                                    [ngClass]="{ 'invalid-field': itemList.batchNo <= 0 }"
+                                    [ngModelOptions]="{standalone: true}" 
+                                    (change)="CheckBatchNo($event)">
+                                </td>
+                                <td style="width: 20%"><input type="text" [(ngModel)]="itemList.notes"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                </td>
+                                <td style="width: 15%"><input type="date" [(ngModel)]="itemList.prodDate"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                </td>
+                                <td style="width: 15%"><input type="date" [(ngModel)]="itemList.expiryDate"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                </td>                               
+                                <!-- <td style="width: 5%" hidden>
+                                    <button (click)="deleteRow(i)" [disabled]="itemList.salesOrderId>0"> 
+                                        <i class="material-icons" style="color:red">delete</i>
+                                    </button>
+                                </td> -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="QAAddForm.invalid || disableSave" type="submit" *ngIf="!showOnly"></p-button>
+                <p-button label='{{"Approval"|translate}}' icon="pi pi-check" class="ml-4"
+                    (click)="ApproveOrder(QAAddForm.get('trans_no').value)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="QAAddForm.invalid" type="button" *ngIf="approval"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="QAAddForm.invalid" type="button" *ngIf="false"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/QAProduction/GetQAList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

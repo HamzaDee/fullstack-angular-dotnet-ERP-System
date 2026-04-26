@@ -1,0 +1,115 @@
+<form [formGroup]="employeeFormInitialForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+
+
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="nameA">{{"ArabicName"|translate}} <span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="nameA">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="nameE">{{"EnglishName"|translate}} <span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="nameE">
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="tel1">{{"MobileNumber"|translate}} 1</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="tel1">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="tel2">{{"MobileNumber"|translate}} 2</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="tel2">
+                    </div>
+
+                </div>
+
+
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="managerId" class="control-label font-weight-bold">{{"DirectManager"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="employeesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="managerId" filterBy="text"
+                            appendTo="body" autoWidth="false"
+                            [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label for="email">{{"Email"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="email">
+                    </div>
+
+                  
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-6">
+                        <input id="check_Active" [checked]="active==1" (change)="active=(active==0)?1:0" type="checkbox"
+                            class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none" for="check_Active">{{"Active"|translate}}</label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-6">
+                        <input  id="isRepresentative" formControlName="isRepresentative" type="checkbox"
+                            class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none" for="check_Active">{{"Employee"|translate}}</label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 mt-5" *ngIf="employeeFormInitialForm.get('isRepresentative')?.value">
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="monthlyTarget">{{"MonthlyTarget"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" formControlName="monthlyTarget">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                        <label for="cityIds" class="control-label font-weight-bold">{{"CITY"|translate}}</label>
+                        <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" 
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            filterBy="text"  appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" formControlName="cityIds" [options]="GovernorateList"
+                            (onChange)="FilterCITY(employeeFormInitialForm.get('cityIds').value)">
+                        </p-multiSelect>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                        <label for="areaIds" class="control-label font-weight-bold">{{"AREA"|translate}}</label>
+                        <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" 
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            filterBy="text"  appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" formControlName="areaIds" [options]="this.filteredArea">
+                        </p-multiSelect>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="grid grid-cols-12 gap-5 mt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        [disabled]="employeeFormInitialForm.invalid" type="submit"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(false)"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

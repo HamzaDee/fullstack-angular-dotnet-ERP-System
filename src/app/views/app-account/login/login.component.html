@@ -1,0 +1,152 @@
+<div [perfectScrollbar]="{}" class="h-full-screen" fxLayout="row wrap" fxLayoutAlign="center center">
+  <div style="box-shadow: none;" class="signup4-container mat-elevation-z4 main-card" fxLayout="row wrap" fxLayout.xs="column"
+    fxLayoutAlign="start stretch" fxFlex="80" fxFlex.xs="94" fxFlex.sm="80"
+    [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
+
+
+    <div class="container sm:px-10" style="height: 100%;">
+      <form [formGroup]="signinForm" (ngSubmit)="signin()">
+        <div class="block xl:grid grid-cols-2 gap-4" style="height: 100%;">
+          <!-- BEGIN: Login Info -->
+          <div class="hidden xl:flex flex-col min-h-screen">
+
+            <!-- <a href="" class="-intro-x flex items-center pt-12 mt-10">
+              <img alt="" class="w-logo" src="../../../../assets/dist/images/logo.svg">
+
+            </a>
+            <div class="my-auto">
+               <img alt="" class="-intro-x w-1/2 -mt-14" src="../../../../assets/dist/images/illustration.svg"> 
+              <div class="-intro-x text-gray font-medium text-2xl leading-tight mt-10">
+                GALAXY Enterprise Resource Planning
+              </div>
+              <div class="-intro-x mt-1 text-lg text-gray">Your Strategic Partner To Success</div>
+            </div> -->
+          </div>
+          <!-- END: Login Info -->
+          <!-- BEGIN: Login Form -->
+          <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+            <div
+              class="radio_align my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+
+              <div class="intro-x mt-2 text-gray-500 xl:hidden text-center center_mob">
+                <img alt="" class="w-logo" src="../../../../assets/dist/images/logo.svg"><br>
+                GALAXY Enterprise Resource Planning
+              </div>
+
+              <h2 class="intro-x font-bold text-xl xl:text-xl xl:text-left radio_align">
+                {{"Login"|translate}}
+              </h2>
+
+
+              <div class="intro-x mt-8 ">
+
+
+                <input class="intro-x login__input input input--lg border border-gray-300 block radio_align"
+                  (change)="GetCompaniesDropDownList()" [readonly]="NotSelectedCompany()" formControlName="username"
+                  type="text" name="username" placeholder='{{"Username"|translate}}' />
+                <input formControlName="password"
+                  class="intro-x login__input input input--lg border border-gray-300 block mt-4 radio_align"
+                  (change)="GetCompaniesDropDownList()" [readonly]="NotSelectedCompany()" type="password"
+                  name="password" placeholder="********" />
+                <br>
+                <label>{{"CompanyList"|translate}}<span class="required-asterisk">*</span></label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="companiesList"
+                  [style]="{'minWidth':'100%', 'width': '100%', 'height':'41px', 'display':'flex'}"
+                  styleClass="el-align intro-x login__input input input--lg border border-gray-300 block mt-1"
+                  optionLabel="text" optionValue="id" [filter]="true" formControlName="companyID" filterBy="text"
+                  (click)="GetCompaniesDropDownList()" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                  [(ngModel)]="selectedCompany">
+                </p-dropdown>
+
+                <div *ngIf="showErrorMessage">
+                  <span style="color:red">{{"LoginValidation"|translate}}</span>
+                </div>
+
+              </div>
+              <div class="intro-x flex text-gray-700 text-xs sm:text-sm mt-4">
+                <div class="el-align flex items-center mr-auto">
+                  <input name="rememberMe" formControlName="rememberMe" type="checkbox"
+                    class="input border mr-2 mr-3 ml-3" />
+                  <label class="cursor-pointer select-none" for="remember-me">{{"rememberMe"|translate}}</label>
+                  <!-- <mat-checkbox name="rememberMe" formControlName="rememberMe" class="pb-16 radio_align">{{"rememberMe"|translate}}
+                  </mat-checkbox> -->
+                </div>
+              </div>
+              <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+
+                <button mat-flat-button color="primary" [disabled]="signinForm.invalid"
+                  class="button w-full xl:w-32 text-white bg-theme-1 xl:mr-3" style="background-color: #4c85c4; color: #ffffff; height: 40px; border-radius: 10px;">{{"Login"|translate}}</button>
+
+              </div>
+              <div class="intro-x mt-10 xl:mt-15 text-gray-700 text-center xl:text-left">
+
+                <a class="text-theme-1" href="https://gi-group.com/" target="_blank">2023 © Copyright Galaxy
+                  International Group</a>
+                <!--<br> <a class="text-theme-1 ar_text" href="login-login-ar.html">العربية</a>-->
+              </div>
+            </div>
+          </div>
+          <!-- END: Login Form -->
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- <div class="text-center"> <a id="success_login" href="javascript:;" data-toggle="modal"
+    data-target="#basic-modal-preview" ></a> </div>
+<div class="modal" id="basic-modal-preview">
+  <div class="modal__content p-10">
+   
+    <div class="center_chr"><img src="../../../../assets/dist/images/loading.gif"> </div>
+  </div>
+</div>
+ -->
+
+<!-- <div [perfectScrollbar]="{}" class="h-full-screen signup4-wrap " fxLayout="row wrap" fxLayoutAlign="center center">
+  <div class="signup4-container mat-elevation-z4 main-card" fxLayout="row wrap" fxLayout.xs="column"
+    fxLayoutAlign="start stretch" fxFlex="60" fxFlex.xs="94" fxFlex.sm="80"
+    [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
+    <!~~ Left Side content ~~>
+    <div fxLayout="column" fxLayoutAlign="center center" class="signup4-header mat-bg-default" fxFlex="40">
+      <div class="" fxLayout="row wrap" fxLayoutAlign="center center">
+        <img width="200px" src="assets/images/illustrations/LogoHis.PNG" alt="">
+      </div>
+    </div>
+    <!~~ Right side content ~~>
+    <div fxFlex="60">
+      <form [formGroup]="signinForm" class="signup4-form mat-bg-card" (ngSubmit)="signin()">
+        <mat-form-field class="full-width outline" appearance="outline">
+          <mat-label>{{"Username"|translate}}</mat-label>
+          <input (change)="GetCompaniesDropDownList()" [readonly]="NotSelectedCompany()" matInput
+            formControlName="username" type="text" name="username" placeholder='{{"Username"|translate}}' />
+        </mat-form-field>
+        <mat-form-field class="full-width outline" appearance="outline">
+          <mat-label>{{"Password"|translate}}</mat-label>
+          <input (change)="GetCompaniesDropDownList()" [readonly]="NotSelectedCompany()" matInput
+            formControlName="password" type="password" name="password" placeholder="********" />
+        </mat-form-field>
+        <div class="full-width outline">
+          <label>{{"CompanyList"|translate}}<span class="required-asterisk">*</span></label>
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="companiesList"
+            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id" [filter]="true"
+            formControlName="companyID" filterBy="text" (click)="GetCompaniesDropDownList()" appendTo="body"
+            autoWidth="false" [virtualScroll]="false" [(ngModel)]="selectedCompany">
+          </p-dropdown>
+        </div>
+        <div *ngIf="showErrorMessage">
+          <span style="color:red">{{"LoginValidation"|translate}}</span>
+        </div>
+        <mat-checkbox name="rememberMe" formControlName="rememberMe" class="pb-16">{{"rememberMe"|translate}}
+        </mat-checkbox>
+        <div fxLayout="row wrap" style="margin-left: 80%;">
+          <button mat-flat-button color="primary" [disabled]="signinForm.invalid"
+            style="background-color: #222a45;color: white;">{{"Login"|translate}}</button>
+          <!~~ <button mat-flat-button color="primary" [disabled]="signinForm.invalid"  style="background-color: cadetblue;">{{"Login"|translate}}</button> ~~>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->

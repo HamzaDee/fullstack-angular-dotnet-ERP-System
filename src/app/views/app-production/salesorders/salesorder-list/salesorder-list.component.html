@@ -1,0 +1,93 @@
+<app-sales-order-search (searchResultEvent)="handleSearchResult($event)"></app-sales-order-search>
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+    [globalFilterFields]="['sales_No','sdate','customerName','countryName','marketManagerName','deliveryDate','statusName','percentage']"
+    paginatorDropdownAppendTo="body"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Show {first} To  {last} Of {totalRecords}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mr-1">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-2" >
+                    <p-button label='{{"NewSalesRequest"|translate}}' icon="pi pi-plus" class="mr-1"
+                    styleClass="p-ripple p-element button w-34 mr-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="bottom" (click)="AddNew(0)"></p-button>
+                </div>
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 10%" pSortableColumn="sales_No">{{"OrderNumber"|translate}} <p-sortIcon field="sales_No"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="sdate">{{"OrderDate"|translate}} <p-sortIcon field="sdate"></p-sortIcon> </th>
+                <th style="width: 20%" pSortableColumn="customerName">{{"Agent"|translate}} <p-sortIcon field="customerName"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="countryName">{{"COUNTRY"|translate}} <p-sortIcon field="customerName"></p-sortIcon></th>
+                <th style="width: 20%" pSortableColumn="marketManagerName">{{"MarketManager"|translate}} <p-sortIcon field="customerName"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="deliveryDate">{{"DeliveryDate"|translate}} <p-sortIcon field="deliveryDate"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="statusName">{{"OrderStatus"|translate}} <p-sortIcon field="statusName"></p-sortIcon></th>
+                <th style="width: 5%" pSortableColumn="percentage">{{"CompletionPerc"|translate}} <p-sortIcon field="percentage"></p-sortIcon></th>
+                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-salesOrders>
+            <tr>      
+                <td [hidden]="true">{{salesOrders.status}}</td>          
+                <td>{{salesOrders.sales_No}}</td>
+                <td>{{salesOrders.sdate|date:'yyyy/MM/dd'}}</td>
+                <td>{{salesOrders.customerName}}</td>
+                <td>{{salesOrders.countryName}}</td>
+                <td>{{salesOrders.marketManagerName}}</td>
+                <td>{{salesOrders.deliveryDate|date:'yyyy/MM/dd'}}</td>
+                <td>{{salesOrders.statusName}}</td>
+                <td>{{salesOrders.percentage}}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="ShowSalesOrder(salesOrders.trans_no)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="EditSalesOrder(salesOrders.trans_no, salesOrders.status)" >
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteSalesOrder(salesOrders.trans_no )" *ngIf="salesOrders.status != 3 && salesOrders.status != 2"> 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
+                        <button mat-menu-item (click)="Print(salesOrders.trans_no)"> 
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>
+                        <button mat-menu-item (click)="CopySalesOrder(salesOrders.trans_no)"> 
+                            <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>
+                        <button mat-menu-item (click)="ApproveSalesOrder(salesOrders.trans_no , salesOrders.status)" *ngIf="salesOrders.status != 3"> 
+                            <i class="material-icons" style="color:green">check</i> &nbsp;{{"Approval"|translate}}  </button>
+                         <button mat-menu-item (click)="AttachmentEntryvoucher(salesOrders.trans_no)"> 
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>                        
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

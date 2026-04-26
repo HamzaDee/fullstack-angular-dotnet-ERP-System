@@ -1,0 +1,192 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="MainSystemDefinitionsForm" (ngSubmit)="OnSaveForms()">
+
+            <input hidden  >
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"MAINTABLE"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="mainTableList"
+                         [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="tableNo"
+                        (onChange)="GetAllMainSystemsDefinitionListBy($event.value)" [(ngModel)]="selectedMainTable">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="parentTableNo" class=" font-weight-bold">{{"DefinitionOfFather"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="userlookupList"
+                         [style]="{'minWidth':'100%', 'width': '100%'}" 
+                         [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        filterBy="text" appendTo="body" autoWidth="false" formControlName="parentTableNo">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ArabicName"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text"  class="input border w-full mt-1 " formControlName="descrA">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"EnglishName"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text"  class="input border w-full mt-1 " formControlName="descrE">
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"note"|translate}}</label>
+                    <input type="text"  class="input border w-full mt-1 " formControlName="note">
+                </div>
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3"  formControlName="status" [checked]="status==1" (change)="status=(status==0)?1:0"/>
+                    <label class="cursor-pointer select-none w-full">{{"Active"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-6">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit"
+                        [disabled]="MainSystemDefinitionsForm.invalid"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-4 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                    <p-button label='{{"AddPaymentTypes"|translate}}' icon="pi pi-save" class="ml-4" type="button" (click)="UpdatePayments()"
+                        [hidden]="this.CompanyName != 'Noor'"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-4 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                </div>
+
+            </div>
+        </form>
+
+        <br>
+        <div class="container intro-y box px-5 pb-5 mb-5">
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+                    <p-table #dt [value]="data" [rows]="10" [paginator]="true"
+                        [globalFilterFields]="['number','mainTable','name','note','status','parentTable']"
+                        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                        [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="caption">
+
+                            <div class="grid grid-cols-12 gap-5 ">
+
+                              <!--   <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 ">
+
+                                    <p-button label='{{"AddNew"|translate}}'
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus"
+                                        (click)="OpenMainSystemsDefinitionFormPopUp(0,0,true)"></p-button>
+                                </div> -->
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder=' {{"search"|translate}} ' />
+                                    </span>
+                                </div>
+
+
+                    <!--             <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                    <label>{{"MAINTABLE"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [options]="mainTableList" [filter]="true" filterBy="text" appendTo="body"
+                                        autoWidth="false" [virtualScroll]="false"
+                                        (onChange)="GetAllMainSystemsDefinitionListBy($event.value)"
+                                        [(ngModel)]="selectedMainTable">
+                                    </p-dropdown>
+                                </div> -->
+
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                    <i class="pi pi-star-fill" 
+                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                        (click)="updateFavourite(this.screenId)"
+                                        title= "{{'AddToFavourite' | translate}}"
+                                        tooltipposition="bottom">
+                                    </i>
+    
+                                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                    </button>
+                                    
+                                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="head_tb" pSortableColumn="number">{{"number"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="mainTable">{{"MAINTABLE"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="mainTable">{{"DefinitionOfFather"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="name">{{"Name"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="note">{{"notes"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="status">{{"Active"|translate}}</th>
+                                <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-system>
+                            <tr>
+                                <td style="text-align: justify;">{{system.number}}</td>
+                                <td style="text-align: justify;">{{system.mainTable}}</td>
+                                <td style="text-align: justify;">{{system.parentTable}}</td>                                
+                                <td style="text-align: justify;">{{system.name}} </td>
+                                <td style="text-align: justify;">{{system.note}}</td>
+
+                                <td style="text-align: justify;">
+                                    <input id="check_{{system.number}}" [checked]="system.status==1" disabled
+                                        type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none" for="check_{{system.number}}"></label>
+                                    <!-- <mat-checkbox [checked]="system.status==1" disabled class="pl-16"></mat-checkbox> -->
+                                </td>
+                                <td style="width:5%">
+                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                        <mat-icon class="">more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #userMenu="matMenu">
+                                        <button mat-menu-item
+                                            (click)="OpenMainSystemsDefinitionFormPopUp(system.id,system.tableNo,false)">
+                                            <i class="material-icons" style="color:blue">edit</i>
+                                            &nbsp;{{"Edit"|translate}}
+                                        </button>
+                                        <button mat-menu-item (click)="DeleteMainSystemDefinition(system.id)"> <i
+                                                class="material-icons" style="color:red">delete</i>
+                                            &nbsp;{{"Delete"|translate}} </button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

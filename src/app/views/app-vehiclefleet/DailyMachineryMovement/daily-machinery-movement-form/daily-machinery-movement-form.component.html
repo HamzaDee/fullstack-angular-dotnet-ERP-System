@@ -1,0 +1,201 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+
+        <form [formGroup]="DailyMachineryMovementForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                <input type="number" formControlName="id" hidden >
+                <input type="number" formControlName="companyId" hidden >
+
+  
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"TransNumber"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="transNo" readonly [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': DailyMachineryMovementForm.get('transNo').value <= 0}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Day"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        [options]="DayList" [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                        [virtualScroll]="false" formControlName="dayId"
+                        [ngClass]="{ 'invalid-field': DailyMachineryMovementForm.get('dayId').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Date"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="date" class="input border w-full mt-1 " formControlName="transDate" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <div class="intro-y tab-content">
+
+                        <div class="intro-y box tab-content">
+                            <div class="tab-content__pane active" id="f01">
+                                <div class="intro-y box px-5 pt-5 pb-5">
+                                       <p-table #dt [value]="vehiclesMovementDTsList" dataKey="id" [loading]="loading" [scrollable]="true"
+                                        [paginator]="false" [style]="{width:'100%'}" [responsive]="true"
+                                        [resizableColumns]="true" styleClass="p-datatable-gridlines"
+                                        [rowHover]="true" scrollDirection="horizontal">
+
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+
+                                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-1">
+
+                                                    <p-button label='{{"AddLine"|translate}}'
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll">
+                                                    </p-button>
+                                                </div>
+
+                                                
+                                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-1 ">
+                                                    <input type="file" #fileInput (change)="ImportFromExcel($event)" accept=".xlsx, .xls" style="display: none;" />
+                                                    <p-button label='{{"ImportFromExcel"|translate}}'   
+                                                        styleClass="p-ripple p-element button w-82 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" 
+                                                        (click)="onImportClick(fileInput)">
+                                                    </p-button>
+                                                </div>
+
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 7%" >{{"MovementType"|translate}}</th>
+                                                <th style="width: 7%" >{{"ProjectName"|translate}}</th>
+                                                <th style="width: 7%" >{{"DriverName"|translate}}</th>
+                                                <th style="width: 5%" >{{"GoingTime"|translate}}</th>
+                                                <th style="width: 5%" >{{"ReturnTime"|translate}}</th>
+                                                <th style="width: 5%" >{{"From"|translate}}</th>
+                                                <th style="width: 5%" >{{"To"|translate}}</th>
+                                                <th style="width: 7%" >{{"MechanismNumber"|translate}}</th>
+                                                <th style="width: 5%" >{{"Facilities"|translate}}</th>
+                                                <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                            <tr>
+                                                <td style="width: 7%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                                        [options]="movementTypeList"  [(ngModel)]="row.movementTypeId" 
+                                                        [ngClass]="{ 'invalid-field':row.movementTypeId <= 0}" [style]="{'minWidth':'100%', 'width': '100%'}"                                                        
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 7%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                                        [options]="projectsList"  [(ngModel)]="row.projectId"  [style]="{'minWidth':'100%', 'width': '100%'}"                                                        
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 7%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                                        [options]="DriverNameList"  [(ngModel)]="row.driverId" 
+                                                        [ngClass]="{ 'invalid-field':row.driverId <= 0}" [style]="{'minWidth':'100%', 'width': '100%'}"                                                        
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+                                      
+                                                <td style="width: 5%">
+                                                    <input type="number" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.goingTime" [ngClass]="{ 'invalid-field':row.goingTime <= 0}" [disabled]="disableAll">
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <input type="number" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.returnTime" [ngClass]="{ 'invalid-field':row.returnTime <= 0}" [disabled]="disableAll">
+                                                </td>
+
+                                               <td style="width: 5%">
+                                                    <input type="text" class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.fromLocation" [disabled]="disableAll" [ngClass]="{ 'invalid-field':!row.fromLocation}"> 
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <input type="text" class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.toLocation" [disabled]="disableAll" [ngClass]="{ 'invalid-field':!row.toLocation}"> 
+                                                </td>
+
+                                                <td style="width: 7%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="data3" [filter]="true" filterBy="text"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                                        [options]="MechanismList"  [(ngModel)]="row.plateNo" 
+                                                        [ngClass]="{ 'invalid-field':row.plateNo <= 0}" [style]="{'minWidth':'100%', 'width': '100%'}"                                                        
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                 <td style="width: 5%" >
+                                                    <input type="text" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.companion" [disabled]="disableAll" > 
+                                                </td> 
+                                             
+                                                <td style="width: 2%">
+                                                    <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                            class="material-icons" style="color:red">delete</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="8">
+                                                    {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                            </div>
+        
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit" [hidden]="showsave"
+                    [disabled]="DailyMachineryMovementForm.invalid || this.disableSave "
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4" [hidden]="showsave" [disabled]="DailyMachineryMovementForm.invalid"
+                 styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component" (click)="DeleteDailyMachineryMovement(this.DailyMachineryMovementForm.value.transNo)"
+                 type="button">
+             </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    [routerLink]="['/DailyMachineryMovement/DailyMachineryMovement']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component">
+                </p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

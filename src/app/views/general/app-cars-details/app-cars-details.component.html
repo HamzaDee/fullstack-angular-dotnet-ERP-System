@@ -1,0 +1,175 @@
+<form [formGroup]="itemCarDetailsForm" (ngSubmit)="onConfirm()">
+
+  <div class="content">
+    <div class="card">
+
+    
+      <div class="card-header text-center mt-5">
+        <h1>{{ data.title }}</h1>
+      </div>
+
+      <div class="intro-y box p-5 mt-5">
+
+        
+        <div class="grid grid-cols-12 gap-5 pt-5">
+          <div class="col-span-12 sm:col-span-6 xxl:col-span-6">
+            <label class="control-label font-weight-bold">
+              {{"materialName"|translate}}
+            </label>
+            <input
+              type="text"
+              [value]="data.itemName"
+              class="input border w-full mt-1"
+              disabled>
+          </div>
+        </div>
+
+        
+        <div class="grid grid-cols-12 gap-5 pt-5">
+          <div class="col-span-4 sm:col-span-2 xxl:col-span-2">
+            <p-button
+              label='{{"Delete"|translate}}'
+              type="button"
+              styleClass="p-ripple p-element button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+              (onClick)="cleardata()"
+              [disabled]="disableAll">
+            </p-button>
+          </div>
+        </div>
+
+        <!-- جدول السيارات -->
+        <p-table
+          [value]="itemCarDetailsList"
+          dataKey="id"
+          styleClass="p-datatable-gridlines"
+          [rowHover]="true">
+
+          <!-- Add line -->
+          <ng-template pTemplate="caption">
+            <p-button
+              label='{{"AddLine"|translate}}'
+              icon="pi pi-plus"
+              type="button"
+              styleClass="p-ripple p-element button w-32 mb-3 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+              (onClick)="AddNewLine()"
+              [disabled]="disableAll">
+            </p-button>
+          </ng-template>
+
+          <!-- Header -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{"DriverName"|translate}}</th>
+              <th>{{"PhoneNumber"|translate}}</th>
+              <th>{{"Quantity"|translate}}</th>
+              <th>{{"PalletCount"|translate}}</th>
+              <th>{{"TractorNo"|translate}}</th>
+              <th>{{"notes"|translate}}</th>
+              <th style="width:3%">
+                <i class="pi pi-cog" style="font-size:1.2rem"></i>
+              </th>
+            </tr>
+          </ng-template>
+
+          <!-- Body -->
+          <ng-template pTemplate="body" let-row let-i="rowIndex">
+            <tr>
+
+              <td>
+                <input type="text"
+                  [(ngModel)]="row.driverName"
+                  [ngModelOptions]="{standalone:true}"
+                  class="input border w-full"
+                  [ngClass]="{'invalid-field': !row.driverName}"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <input type="text"
+                  [(ngModel)]="row.phoneNo"
+                  [ngModelOptions]="{standalone:true}"
+                  class="input border w-full"
+                  [ngClass]="{'invalid-field': !row.phoneNo}"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <input type="number"
+                  [(ngModel)]="row.qty"
+                  [ngModelOptions]="{standalone:true, updateOn:'blur'}"
+                  class="input border w-full"
+                  [ngClass]="{'invalid-field': row.qty <= 0}"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <input type="number"
+                  [(ngModel)]="row.pallets"
+                  [ngModelOptions]="{standalone:true, updateOn:'blur'}"
+                  class="input border w-full"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <input type="text"
+                  [(ngModel)]="row.tractorNo"
+                  [ngModelOptions]="{standalone:true}"
+                  class="input border w-full"
+                  [ngClass]="{'invalid-field': !row.tractorNo}"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <input type="text"
+                  [(ngModel)]="row.donorName"
+                  [ngModelOptions]="{standalone:true, updateOn:'blur'}"
+                  class="input border w-full"
+                  [disabled]="disableAll">
+              </td>
+
+              <td>
+                <button type="button"
+                  (click)="deleteRow(i)"
+                  [disabled]="disableAll">
+                  <i class="material-icons" style="color:red">delete</i>
+                </button>
+              </td>
+
+            </tr>
+          </ng-template>
+
+          <!-- Empty -->
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">
+                {{"noEntriesFoundLabel"|translate}}
+              </td>
+            </tr>
+          </ng-template>
+ 
+        </p-table>
+
+
+        <div class="grid grid-cols-12 mt-5" mat-dialog-actions align="end">
+          <p-button
+            label='{{"Save"|translate}}'
+            icon="pi pi-save"
+            class="ml-4"
+            type="submit"
+            styleClass="p-ripple p-element button w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+          </p-button>
+
+          <p-button
+            label='{{"Cancel"|translate}}'
+            icon="pi pi-undo"
+            type="button"
+            styleClass="p-ripple p-element button w-32 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+            (onClick)="onCancel()">
+          </p-button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</form>

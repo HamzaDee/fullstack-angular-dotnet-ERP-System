@@ -1,0 +1,30 @@
+<br>
+<div class="calendar-container">
+  <!-- Month Header -->
+  <div class="calendar-header">
+    <button class="nav-btn" (click)="prevMonth()">&lt;</button>
+    <span>{{ month }}/{{ year }}</span>
+    <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+  </div>
+
+  <!-- Weekday Names -->
+  <div class="calendar-grid calendar-weekdays">
+    <div class="weekday" *ngFor="let wd of weekDays">
+      {{ wd }}
+    </div>
+  </div>
+
+  <!-- Calendar Days -->
+  <div class="calendar-grid calendar-days">
+    <div class="day-cell" *ngFor="let d of days">
+      <div *ngIf="d.day">
+        <div class="day-number">{{ d.day }}</div>
+
+        <div class="event" *ngFor="let e of d.events" (click)="openEvent(e)" style="cursor: pointer;">
+          {{ e.eventName }}
+        </div>
+      </div>
+      <div *ngIf="!d.day">&nbsp;</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+
+.total {
+    background-color: lightgrey !important;
+}
+
+/* Custom scrollbar for dropdown only */
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar {
+    width: 10px !important; /* Set scrollbar width */
+    height: 20px !important; /* Adjust horizontal scrollbar height if needed */
+}
+
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar-thumb {
+    background-color: #888 !important; /* Customize the scrollbar thumb color */
+    border-radius: 10px !important; 
+}
+
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar-track {
+    background-color: #f1f1f1 !important; /* Customize the scrollbar track color */
+}
+
+.green-background {
+    background-color: #a8e6a3 !important; /* Light Green */
+}
+
+.brown-background {
+    background-color: #d2b48c !important; /* Tan/Brown */
+}   
+
+.p-datatable-scrollable .p-datatable-frozen-column {
+    position: sticky;
+    background: var(--p-datatable-header-cell-background);
+  } 

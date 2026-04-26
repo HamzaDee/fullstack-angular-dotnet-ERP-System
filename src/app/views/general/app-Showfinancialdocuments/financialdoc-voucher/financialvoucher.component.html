@@ -1,0 +1,52 @@
+<div class="content">
+    <div class="card">
+        <div class="card-body mb-8">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <p-table #dt [value]="voucherDetailsList" dataKey="id" styleClass="p-datatable-gridlines"
+                    [rowHover]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 20%">{{"AccountNo"|translate}}</th>
+                            <th style="width: 10%">{{"Debit"|translate}}</th>
+                            <th style="width: 10%">{{"Credit"|translate}}</th>
+                            <th style="width: 20%">{{"Notes"|translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-accountList let-i="rowIndex">
+                        <tr>
+                            <td>{{accountList.accountName}}</td>
+                            <td>{{accountList.debit.toFixed(this.decimalPlaces)}}</td>
+                            <td>{{accountList.credit.toFixed(this.decimalPlaces)}}</td>
+                            <td>{{accountList.note}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td>{{"total"|translate}}</td>
+                            <td>{{sumDebitForamtted }}</td>
+                            <td>{{sumCreditForamtted}}</td>
+                            <td colspan="4"></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+                    
+

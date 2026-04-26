@@ -1,0 +1,171 @@
+<!-- AdvancedSearch -->
+<div class="intro-y box">
+    <div class="accordion__pane border border-gray-200 p-4 mt-3">
+        <mat-accordion class="accordion__pane__toggle font-medium block">
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span
+                                class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                        </h5>
+                        <mat-divider></mat-divider>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br>
+                <hr>
+                <div class="card-header text-center"></div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+
+                    <label for="VoucherType" class="control-label font-weight-bold">{{"documentType"|translate}}</label>
+
+                    <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                        <label for="radioIncoming" class="control-label font-weight-bold ml-3">{{ "Incoming" | translate }}:</label>
+                        <input type="radio" [value]="1" [checked]="searchCriteria.voucherType == 1" id="radioIncoming"
+                            [(ngModel)]="searchCriteria.voucherType" class="input border w-full mt-1" />
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                        <label for="radioOutgoing" class="control-label font-weight-bold ml-3">{{ "Outgoing" | translate }}:</label>
+                        <input type="radio" [value]="0" [checked]="searchCriteria.voucherType == 0" id="radioOutgoing"
+                            [(ngModel)]="searchCriteria.voucherType"  class="input border w-full mt-1" />
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="voucherNo" class="control-label font-weight-bold">{{"documentNumber"|translate}}</label>
+                        <input type="text" [(ngModel)]="searchCriteria.docNo" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="voucherNo" class="control-label font-weight-bold">{{"Incoming/OutgoingNo"|translate}}</label>
+                        <input type="text" [(ngModel)]="searchCriteria.voucherNo" class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="docClassification" class="control-label font-weight-bold">{{"DocumentClassification"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="documentClassificationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        [(ngModel)]="searchCriteria.docClassification" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"AuthorityName"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="authoritiesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            [(ngModel)]="searchCriteria.authorityId" optionLabel="text" optionValue="id" [filter]="true" appendTo="body" autoWidth="false"
+                            [virtualScroll]="true" [lazy]="true" (onLazyLoad)="AuthloadLazyOptions($event)"  [virtualScrollItemSize]="40"
+                            filterBy="text" >
+                        </p-dropdown>
+                    </div>
+       
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DocumentName1"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" [(ngModel)]="searchCriteria.docName">
+                    </div>
+
+                   <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DocumentName2"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" [(ngModel)]="searchCriteria.docName2">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Managements"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" [options]="departmentList"
+                            [(ngModel)]="searchCriteria.departmentId" styleClass="input border w-full mt-1" appendTo="body" autoWidth="false"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Employeer"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" [options]="employeesList"
+                            [(ngModel)]="searchCriteria.empId" styleClass="input border w-full mt-1" appendTo="body" autoWidth="false"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DocDateFrom"|translate}}</label>
+                        <input type="date" [(ngModel)]= "searchCriteria.fromDate" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DocDateTo"|translate}}</label>
+                        <input type="date" [(ngModel)]= "searchCriteria.toDate" [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                    </div>
+
+               <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="otherNo" class="control-label font-weight-bold">{{"OtherInOutNo"|translate}}</label>
+                    <input type="text"  [(ngModel)]="searchCriteria.otherNo" [ngModelOptions]="{standalone: true}" 
+                    class="input border w-full mt-1 ">
+                        
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="senderDocNo"
+                        class="control-label font-weight-bold">{{"DocumentNoFromTheSendingParty"|translate}}</label>
+                        <input type="text"  [(ngModel)]="searchCriteria.senderDocNo" [ngModelOptions]="{standalone: true}" 
+                    class="input border w-full mt-1 ">
+                 
+                       
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="fileArchivingNumber" class="control-label font-weight-bold">{{"ConfirmationNo"|translate}}</label>
+                    <input type="text"  [(ngModel)]="searchCriteria.fileArchivingNumber" [ngModelOptions]="{standalone: true}" 
+                    class="input border w-full mt-1 ">
+                
+                </div>
+                  <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="importanceId"
+                        class="control-label font-weight-bold">{{"priorityLevel"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" [options]="importanceDegreeList"
+                            [(ngModel)]="searchCriteria.importanceId" styleClass="input border w-full mt-1" appendTo="body" autoWidth="false"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [virtualScroll]="false">
+                    </p-dropdown>
+                </div> 
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="serialNo" class="control-label font-weight-bold">{{"PaymentsNo"|translate}}</label>
+                    <input type="text"  [(ngModel)]="searchCriteria.serialNo" [ngModelOptions]="{standalone: true}" 
+                    class="input border w-full mt-1 ">
+                    
+                        
+                </div>
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 pt-5">
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+
+                        <p-button label='{{"ShowRecord"|translate}}' icon="pi pi-search" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component ml-4"
+                            type="submit" (onClick)="getData()">
+                        </p-button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+
+                        <p-button label='{{"CancelSearch"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component ml-4"
+                            (click)="EmptySearch()">
+                        </p-button>
+                    </div>
+                </div>
+                <br>
+                <div class="loading-indicator" [hidden]="!showLoader">
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

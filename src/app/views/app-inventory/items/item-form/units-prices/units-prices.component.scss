@@ -1,0 +1,9 @@
+td i {
+    display: inline;
+}
+
+::ng-deep td p-button button {
+    font-size: 10px !important;
+    width: 50px !important;
+    height: 30px !important;
+}

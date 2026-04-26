@@ -1,0 +1,100 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="QAAddForm" (ngSubmit)="OnSaveForms(false)">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="qaDetailsList" dataKey="id" [loading]="loading"
+                        styleClass="p-datatable-gridlines" [rowHover]="true" [scrollable]="true"
+                        [globalFilterFields]="['itemNo','itemName','allQty','batchNo','notes','prodDate','expiryDate']" [resizableColumns]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1 mb-5">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder=' {{"search"|translate}} ' />
+                                    </span>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-5" align="end">
+                                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                        pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                        (click)="exportExcel(dt)" tooltipposition="bottom"
+                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                    </button>
+                                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)"
+                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="flex: 0 0 10%" pSortableColumn="itemNo">{{"ProductNo"|translate}}
+                                    <p-sortIcon field="itemNo"></p-sortIcon>
+                                </th>
+                                <th style="flex: 0 0 15%" pSortableColumn="itemNo">{{"Product"|translate}}
+                                    <p-sortIcon field="itemNo"></p-sortIcon>
+                                </th>
+                                <th style="flex: 0 0 7%">{{"Qty"|translate}}</th>
+                                <th style="flex: 0 0 10%">{{"RunNumber"|translate}}</th>
+                                <th style="flex: 0 0 16%">{{"Notes"|translate}}</th>
+                                <th style="flex: 0 0 7%">{{"ProdDate"|translate}}</th>
+                                <th style="flex: 0 0 7%;text-align: center;">{{"ExpiryDate"|translate}}</th>
+                                <th style="flex: 0 0 6%;text-align: center;">{{"Received"|translate}}</th>
+                                <th style="flex: 0 0 12%">{{"CountryQty"|translate}}</th>
+                                <th style="flex: 0 0 10%">{{"Hold"|translate}}</th>
+                            </tr>
+                        </ng-template>
+
+                       
+
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemList let-i="rowIndex">
+                            <tr>
+                                <td hidden>{{itemList.manfCountries}}</td>
+                                <td style="flex: 0 0 10%">{{itemList.itemNo}}</td>
+                                <td style="flex: 0 0 15%">{{itemList.itemName}}</td>
+                                <td style="flex: 0 0 7%">{{itemList.allQty}}</td>
+                                <td style="flex: 0 0 10%">{{itemList.batchNo}}</td>
+                                <td style="flex: 0 0 16%">{{itemList.notes}}</td>
+                                <td style="flex: 0 0 7%">{{itemList.prodDate}}</td>
+                                <td style="flex: 0 0 7%">{{itemList.expiryDate}}</td>
+                                <td style="flex: 0 0 6%;justify-content: center !important;">
+                                    <input type="checkbox" [(ngModel)]="itemList.received"
+                                        class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <td style="flex: 0 0 12%"><p-button label='{{"SELECT"|translate}}' 
+                                    styleClass="p-ripple p-element button mt-1 w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    [disabled] = "itemList.received == false"
+                                    (onClick)="OpenCountriesForm(itemList, i)" ></p-button>
+                                </td>
+                                <td style="flex: 0 0 10%"><input type="number" [(ngModel)]="itemList.holdQty"
+                                    class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}">
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

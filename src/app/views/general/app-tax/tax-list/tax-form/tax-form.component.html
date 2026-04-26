@@ -1,0 +1,54 @@
+<form [formGroup]="taxForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label >{{"ArabicName"|translate}}<span class="required-asterisk">*</span></label>
+                            <input type="text" formControlName="taxNameA" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label >{{"EnglishName"|translate}}<span class="required-asterisk">*</span></label>
+                            <input type="text" formControlName="taxNameE" class="input border w-full mt-1 ">
+                        </div>
+                   
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label >{{"AccountName"|translate}}<span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [options]="AccountsList" [filter]="true" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [(ngModel)]="selectedAccount"
+                                formControlName="accountId">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label >{{"TaxType"|translate}}<span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [options]="TaxTypesList" [filter]="true" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [(ngModel)]="selectedTaxType"
+                                formControlName="taxType">
+                            </p-dropdown>
+                        </div>
+                    
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label >{{"TaxPercentage"|translate}}<span class="required-asterisk">*</span></label>
+                            <input type="number" formControlName="taxPercentage" class="input border w-full mt-1 ">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                          [disabled]="taxForm.invalid"  type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" (click)="dialogRef.close(false)"></p-button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</form>

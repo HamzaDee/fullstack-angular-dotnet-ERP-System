@@ -1,0 +1,148 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+            <p-button label='{{"AddNew"|translate}}'
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                icon="pi pi-plus" (click)="NavigateUserForm(0)"></p-button>
+        </div>
+
+        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            <input [(ngModel)]="searchQuery" class="pInputText input border w-full mt-1" pInputText type="text"  placeholder='{{"search"|translate}} ' />
+        </div>
+        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1"></div>
+    </div>
+
+        
+                <!--skeleton show only if data is loading -->
+                <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="showLoader">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" *ngFor="let item of [].constructor(9)">
+                        <mat-card class="card">
+                            <!--card header-->
+                            <mat-card-content>
+                                <div class="row">
+                                    <!-- Circle Image-->
+                                    <div class="col-md-3">
+                                        <p-skeleton height="3rem" width="3rem" shape="circle">
+                                        </p-skeleton>
+                                    </div>
+                                    <!--Title-->
+                                    <div class="col-md-7">
+                                        <p-skeleton height="1.4rem" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                    <!--Menu button-->
+                                    <div class="col-md-2">
+                                        <p-skeleton height="2rem" width="100%" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <!--card body-->
+                            <mat-card-content>
+                                <div class="row mt-1">
+                                    <div class="col-md-2">
+                                        <p-skeleton height="2rem" width="85%" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p-skeleton height="1.4rem" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-2">
+                                        <p-skeleton height="2rem" width="85%" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p-skeleton height="1.4rem" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-2">
+                                        <p-skeleton height="2rem" width="85%" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p-skeleton height="1.4rem" shape="Rectangle">
+                                        </p-skeleton>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+        <div class="card-blue">
+            <div class="container mt-3">
+             
+               
+                <!-- users card show when data have  loaded-->
+                <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="!showLoader">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" *ngFor="let item of filteredData">
+                        <mat-card class="card">
+                            <!--card header-->
+                            <mat-card-content>
+                                <div class="row">
+                                    <!-- Circle Image-->
+                                    <div class="col-3">
+                                        <img src="assets/images/avatars/001-man.svg" class="card-img" alt="...">
+                                    </div>
+                                    <!--Title-->
+                                    <div class="col-7">
+                                        <h1>{{ item.fullName}}</h1>
+                                    </div>
+                                    <!--Menu button-->
+                                    <div class="col-2">
+                                        <div mat-dialog-actions>
+                                            <button mat-icon-button [matMenuTriggerFor]="userMenu"
+                                                aria-label="Example icon-button with a menu">
+                                                <mat-icon>view_headline</mat-icon>
+                                            </button>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button (click)="NavigateUserForm(item.id)" mat-menu-item>
+                                                    <i class="material-icons" style="color:blue">edit</i>
+                                                    &nbsp;{{"Edit"|translate}} </button>
+                                                <button (click)="DeleteUser(item.id)" mat-menu-item> <i
+                                                        class="material-icons" style="color:red">delete</i>
+                                                    &nbsp;{{"Delete"|translate}} </button>
+                                                <button (click)="NavigateUserPermissionsForm(item.id)" mat-menu-item>
+                                                    <i class="material-icons" style="color:green">lock</i>
+                                                    &nbsp;{{"GIVEUSERPERMISSION"|translate}} </button>
+                                                <button (click)="NavigateLinkingUsersToCompaniesBranchesForm(item.id,item.fullName)"
+                                                    mat-menu-item>
+                                                    <i class="material-icons" style="color:blue">share</i>
+                                                    &nbsp;{{"LINKINGUSERSCOMPANIESBRANCH"|translate}} </button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <!--card body-->
+                            <mat-card-content>
+                                <div class="card-text">
+                                    <mat-icon style="color:rgb(219, 79, 98);">person</mat-icon>
+                                    <p>{{item.groupName}}</p>
+                                </div>
+                                <div class="card-text">
+                                    <mat-icon style="color:rgb(79, 191, 219);">email</mat-icon>
+                                    <p>{{item.email}}</p>
+                                </div>
+                                <div class="card-text">
+                                    <mat-icon style="color:rgb(102, 219, 79);">phone</mat-icon>
+                                    <p>{{item.tel}}</p>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            <br><br>
+            </div>
+        </div>
+
+    
+
+</div>

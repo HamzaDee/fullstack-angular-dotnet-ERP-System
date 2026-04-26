@@ -1,0 +1,4 @@
+.disabled-tab {
+    pointer-events: none; /* Prevent interactions */
+    opacity: 0.5; /* Visually indicate the tab is disabled */
+}

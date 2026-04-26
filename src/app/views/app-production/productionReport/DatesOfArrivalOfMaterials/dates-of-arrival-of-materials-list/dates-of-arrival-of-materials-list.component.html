@@ -1,0 +1,24 @@
+<div class="intro-y box tab-content">
+    <div class="col-md-12" id="htmlData">
+
+        <div class="grid grid-cols-12 gap-5 mt-5">
+    
+            <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+
+                <div class="text-center">
+                    <h5> {{"DatesOfArrivalOfMaterials"|translate}}</h5>
+                </div>
+
+                <div class="card mb-0 col-md-12">
+                    <div class="card-body">
+                        <div style="width: 100%;"></div>
+                        <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+            
+    </div>
+</div>

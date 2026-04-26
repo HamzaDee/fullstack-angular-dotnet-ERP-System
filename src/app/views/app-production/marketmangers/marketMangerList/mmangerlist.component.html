@@ -1,0 +1,91 @@
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+    [globalFilterFields]="['id','nameA','countriessList','agentssList','mobile','email']" paginatorDropdownAppendTo="body"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="['10','25','50']">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">                
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 mr-1">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-2 ">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="OpenFormPopUp(0,'Add',true)"></p-button>
+                </div> 
+                <div class="col-span-12 sm:col-span-7 xxl:col-span-7 cursor-pointer mt-5" align="end">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">{{"MangerId"|translate}} <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="transDate">{{"MangerName"|translate}} <p-sortIcon field="transDate"></p-sortIcon>
+                <th pSortableColumn="countryName">{{"Market"|translate}} <p-sortIcon field="countryName"></p-sortIcon></th>
+                <th pSortableColumn="fYear">{{"Agent"|translate}} <p-sortIcon field="fYear"></p-sortIcon></th> 
+                <th pSortableColumn="fYear">{{"Mobile"|translate}} <p-sortIcon field="fYear"></p-sortIcon></th>
+                <th pSortableColumn="fYear">{{"Email"|translate}} <p-sortIcon field="fYear"></p-sortIcon></th>               
+                <th><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+  
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-mmanger>
+            <tr>
+                <td>{{mmanger.id}}</td>
+                <td>{{mmanger.nameA}}</td>
+                <td>{{mmanger.countriessList}}</td>
+                <td>{{mmanger.agentssList}}</td>
+                <td>{{mmanger.mobile}}</td>
+                <td>{{mmanger.email}}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenFormPopUp(mmanger.id,'Show' ,false)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="OpenFormPopUp(mmanger.id,'Edit',false)" >
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteVoucher(mmanger.id)" > 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>                       
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

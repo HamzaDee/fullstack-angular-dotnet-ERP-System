@@ -1,0 +1,76 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"FixedAssetOperationSheet"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+<!--     <div class="col-span-1"> {{"TransType"|translate}} : </div>
+    <div class="pt-hlf pb-hlf col-span-11" > {{data.voucherTypeEnum}}</div>  -->
+
+<div class="col-span-1"> {{"VoucherType"|translate}} : </div>
+ <div class="pt-hlf pb-hlf col-span-11" > {{data.transTypeName}}</div> 
+
+<div class="col-span-2"> {{"VoucherNo"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" > {{data.voucherNo}}</div> 
+
+<div class="pt-hlf pb-hlf col-span-2">{{"VoucherDate"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10"  >{{data.voucherDate| date: 'dd/MM/yyyy'}}</div>  
+
+<div class="pt-hlf pb-hlf col-span-2">{{"Branch"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10"  > {{data.branchName}}</div> 
+
+<div class="col-span-1"> {{"Currency"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-5" > {{data.currencyName}}</div> 
+
+<div class="col-span-3"> {{"ConverionFactor"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-3" >{{data.currRate}} </div> 
+
+<div class="col-span-2"> {{"Supplier"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" > {{data.dealerName}}</div> 
+
+<div class="col-span-2"> {{"Notes"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" > {{data.note}}</div> 
+
+</div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="width:25%;color: black; border: solid black"> {{"theOrigin"|translate}}</th>
+    <th style="width:10%;color: black; border:solid black">   {{"AssestValue"|translate}} </th>
+    <th style="width:10%;color: black; border: solid black">  {{"OldModifications"|translate}}</th>
+    <th style="width:10%;color: black; border: solid black">   {{"BookValue"|translate}} </th>
+    <th style="width:25%;color: black; border: solid black"> {{"MovementStatement"|translate}}</th>
+    <th style="width:10%;color: black; border:solid black">   {{"Ammount"|translate}} </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let product of faTransDTModelList" style="color: black;">
+     <td style="width:25%;font-size:0.8rem;"><b>{{ product.assestName }}</b></td>
+    <td style="width:10%;font-size:0.8rem;"><b>{{ product.assetAmount }}</b></td>
+    <td style="width:10%;font-size:0.8rem;"> <b>{{ PrevUpdate }}</b></td>
+    <td style="width:10%;font-size:0.8rem;"><b>{{ BookValue }}</b></td>
+    <td style="width:25%;font-size:0.8rem;"><b>{{ product.note }}</b></td>
+    <td style="width:10%;font-size:0.8rem;"><b>{{ product.total }}</b></td>
+</tr>
+</tbody>
+
+<tfoot>
+  <th style="width:25%;color: black; border: solid black"> {{"total"|translate}}</th>  
+    <th style="width:10%;color: black; border: solid black"></th> 
+    <th style="width:10%;color: black; border: solid black"></th> 
+    <th style="width:10%;color: black; border: solid black"></th> 
+    <th style="width:25%;color: black; border: solid black"></th> 
+     <td style="width:10%;font-size:0.8rem;"> <b>{{tfTotal}}</b></td>  
+</tfoot>
+</table>
+
+
+
+
+

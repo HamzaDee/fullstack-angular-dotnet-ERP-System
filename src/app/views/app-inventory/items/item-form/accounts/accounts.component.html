@@ -1,0 +1,68 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="accountForm">
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"storeAccNo"|translate}}
+                            <span *ngIf="inventoryType==periodic" class="required-asterisk">*</span>
+                        </label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true"
+                            [formControl]="accountForm.get('storeAccNo')" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false"
+                            [ngClass]="{'invalid-field': 
+                                inventoryType!==periodic && inventoryAccType === 179 &&  accountForm.get('storeAccNo').value <= 0}">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"costGoodsSoldAccNo"|translate}}
+                            <span *ngIf="inventoryType==periodic" class="required-asterisk">*</span>
+                        </label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="costGoodsSoldList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                            [formControl]="accountForm.get('costGoodsSoldAccNo')" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false"
+                            [ngClass]="{'invalid-field': 
+                            inventoryType!==periodic && inventoryAccType === 179 &&  accountForm.get('costGoodsSoldAccNo').value<=0 }">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"purchaseAccNo"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="purchasesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true"
+                            [formControl]="accountForm.get('purchaseAccNo')" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" >
+                        </p-dropdown>
+                        <!-- <span *ngIf="inventoryType==continuous" class="required-asterisk">*</span> 
+                        [ngClass]="{'invalid-field':  inventoryType==continuous &&  accountForm.get('purchaseAccNo').value<=0 && accountForm.get('purchaseAccNo').touched}"
+                        <span class=" required-asterisk mt-1"
+                            *ngIf="inventoryType==continuous && accountForm.get('purchaseAccNo').value<=0 && accountForm.get('purchaseAccNo').touched">
+                            {{"required"|translate}}
+                        </span> -->
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"salesAccNo"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="salesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true"
+                            [formControl]="accountForm.get('salesAccNo')" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false">
+                        </p-dropdown>
+                        <!-- <span *ngIf="inventoryType==continuous" class="required-asterisk">*</span>
+                        [ngClass]="{'invalid-field': inventoryType==continuous &&  accountForm.get('salesAccNo').value<=0 && accountForm.get('salesAccNo').touched}"
+                        <span class=" required-asterisk mt-1"
+                            *ngIf=" inventoryType==continuous&&accountForm.get('salesAccNo').value<=0 && accountForm.get('salesAccNo').touched">
+                            {{"required"|translate}}
+                        </span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

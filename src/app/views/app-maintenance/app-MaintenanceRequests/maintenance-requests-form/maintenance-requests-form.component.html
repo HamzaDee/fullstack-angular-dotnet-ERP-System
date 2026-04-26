@@ -1,0 +1,386 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="MaintenanceForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-2 pt-5 items-end">
+                <!-- Order Type -->
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label class="control-label font-bold mb-2 block">
+                        {{"PlaceOfOrder"|translate}}
+                    </label>
+                    <div class="flex gap-4">
+                        <div class="radio-align flex items-center gap-1">
+                            <input type="radio" name="inRequest" [value]="1" (change)="onRadioChange(1)"
+                                formControlName="inRequest" [attr.disabled]="disableAll ? 'disabled' : null">
+                            <label class="control-label">
+                                {{"Internal"|translate}}
+                            </label>
+                        </div>
+                        <div class="radio-align flex items-center gap-1">
+                            <input type="radio" name="inRequest" [value]="0" (change)="onRadioChange(0)"
+                                formControlName="inRequest" [attr.disabled]="disableAll ? 'disabled' : null">
+                            <label class="control-label">
+                                {{"External"|translate}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="requestType" class="control-label font-weight-bold">{{"OrderType"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="requestType" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="RequestTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="requestType" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': MaintenanceForm.get('requestType')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+                <!-- Order Number -->
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label for="requestNo" class="control-label font-weight-bold">
+                        {{"OrderNumber"|translate}} <span class="required-asterisk">*</span>
+                    </label>
+                    <input id="requestNo" type="number" formControlName="requestNo" class="input border w-full mt-1"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        (blur)="RequesNoBlur(MaintenanceForm.value.requestNo, MaintenanceForm.value.inRequest)">
+                </div>
+                <!-- Order Date -->
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label for="requestDate" class="control-label font-weight-bold">
+                        {{"OrderDate"|translate}} <span class="required-asterisk">*</span>
+                    </label>
+                    <input id="requestDate" type="date" formControlName="requestDate" class="input border w-full mt-1"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <!-- Delivery Date -->
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label for="deliveryDate" class="control-label font-weight-bold">
+                        {{"DeliveryDates"|translate}}
+                    </label>
+                    <input id="deliveryDate" type="date" formControlName="deliveryDate" class="input border w-full mt-1"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="priorityId" class="control-label font-weight-bold">{{"PRIORATYDGREE"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="priorityId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="PriorityList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="priorityId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': MaintenanceForm.get('priorityId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="branchId" class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                    <p-dropdown id="branchId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="BranchList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="branchId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="areaId" class="control-label font-weight-bold">{{"Area"|translate}}</label>
+                    <p-dropdown id="areaId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="AreaList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="areaId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="technicianId" class="control-label font-weight-bold">{{"Technician"|translate}}</label>
+                    <p-dropdown id="technicianId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="TechnicianList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="technicianId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="customerId" class="control-label font-weight-bold">{{"SalesorderSheet"|translate}}</label>
+                    <p-dropdown id="customerId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="SalesRequestList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="salesRequestId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll" (onChange)="onSalesRequestChange($event)">
+                    </p-dropdown>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="customerId" class="control-label font-weight-bold">{{"Client"|translate}}</label>
+                    <p-dropdown id="customerId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="SuppliersList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="customerId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll" (onChange)="onCustomerChange($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="tel1" class="control-label font-weight-bold">{{"PhoneNumber1"|translate}}</label>
+                    <input id="tel1" type="text" formControlName="tel1" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="tel2" class="control-label font-weight-bold">{{"PhoneNumber2"|translate}}</label>
+                    <input id="tel2" type="text" formControlName="tel2" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="address" class="control-label font-weight-bold">{{"Address"|translate}}</label>
+                    <input id="address" type="text" formControlName="address" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <input type="checkbox" id="informVisitDate" class="input border mr-2 mr-3 ml-3"
+                        formControlName="informVisitDate">
+                    <label class="cursor-pointer select-none w-full" for="informVisitDate">
+                        {{"InformingTheClientOfTheVisitDate"|translate}}
+                    </label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="visitDate" class="control-label font-weight-bold">{{"VisitDate"|translate}}</label>
+                    <input id="visitDate" type="date" formControlName="visitDate" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" id="delivered" class="input border mr-2 mr-3 ml-3"
+                        formControlName="delivered">
+                    <label class="cursor-pointer select-none w-full"
+                        for="delivered">{{"CustomerDelivered"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                    <label for="note" class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                    <input id="note" type="text" formControlName="note" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VoucherDetails"|translate}}
+                        </a>
+                    </div>
+
+                </div>
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <div class="col-md-12" id="htmlData">
+                                <p-table #dt [value]="MaintRequestDTsList" [scrollable]="true" [paginator]="false"
+                                    [rowHover]="true" dataKey="id" [tableStyle]="{'table-layout': 'fixed'}"
+                                    [responsive]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="grid grid-cols-12 gap-5 ">
+                                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                <p-button label='{{"AddLine"|translate}}'
+                                                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                    icon="pi pi-plus" (click)="AddNewLine()"
+                                                    [disabled]="disableAll"></p-button>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngIf="isdisabled"></th>
+                                            <th *ngIf="isdisabled"></th>
+                                            <th style="width: 120px;">{{"Serials"|translate}}</th>
+                                            <th style="width: 250px;">{{"materialName"|translate}}</th>
+                                            <th style="width: 100px;">{{"model"|translate}}</th>
+                                            <th style="width: 100px;">{{"InvoiceNumber"|translate}}</th>
+                                            <th style="width: 130px;">{{"BillDate"|translate}}</th>
+                                            <th style="width: 130px;">{{"OutputDate"|translate}}</th>
+                                            <th style="width: 100px;">{{"Sponsors"|translate}}</th>
+                                            <th style="width: 100px;">{{"Lastmaintenanceordernumber"|translate}}</th>
+                                            <th style="width: 130px;">{{"Date"|translate}}</th>
+                                            <th style="width: 100px;">{{"NumberofMaintenance"|translate}}</th>
+                                            <th style="width: 200px;">{{"Damage"|translate}}</th>
+                                            <th style="width: 250px;">{{"DamageDecr"|translate}}</th>
+                                            <th style="width: 50px;" class="text-center-m w-0"><i class="pi pi-cog"
+                                                    style="font-size: 1.2rem"></i></th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-Maintenance
+                                        let-i="rowIndex">
+                                        <tr>
+                                            <td style="text-align: justify;" *ngIf="isdisabled">
+                                                <input type="number" [(ngModel)]="Maintenance.id"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1">
+                                            </td>
+
+                                            <td *ngIf="isdisabled">
+                                                <input type="number" [(ngModel)]="Maintenance.requestHDId"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1">
+                                            </td>
+
+                                            <td>
+                                                <input type="text" [(ngModel)]="Maintenance.serialNo"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1"
+                                                    (change)="onSerialChange(Maintenance)">
+                                            </td>
+
+                                            <td style="width: 100px;"><p-dropdown
+                                                    emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                    [options]="ItemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                    appendTo="body" autoWidth="false" [(ngModel)]="Maintenance.itemId"
+                                                    styleClass="input border w-full mt-1"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    [ngClass]="{ 'invalid-field': Maintenance.itemId <= 0}"
+                                                    [disabled]="disableAll || Maintenance.disableFields"
+                                                    [virtualScroll]="true" [lazy]="true"
+                                                    (onChange)="onItemChange(Maintenance)"
+                                                    (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                                                </p-dropdown>
+                                            </td>
+
+                                            <td>
+                                                <input type="text" [ngModelOptions]="{standalone: true}" readonly
+                                                    [(ngModel)]="Maintenance.model" class="input border w-full mt-1"
+                                                    [disabled]="disableAll || Maintenance.disableFields">
+                                            </td>
+
+                                            <td>
+                                                <input type="number" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="Maintenance.invoiceNo"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+                                            <td>
+                                                <input type="date" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="Maintenance.invoicedate"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+                                            <td>
+                                                <input type="date" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="Maintenance.invoicedate"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="Maintenance.underWarranty"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1" disabled>
+                                            </td>
+
+                                            <td>
+                                                <input type="number" [(ngModel)]="Maintenance.lastRequestNo"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+                                            <td>
+                                                <input type="date" [(ngModel)]="Maintenance.lastRequestDate"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+
+                                            <td>
+                                                <input type="number" [(ngModel)]="Maintenance.maintenanceCount"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1" readonly>
+                                            </td>
+
+                                            <td style="width: 100px;"><p-dropdown
+                                                    emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                    [options]="DamageList"
+                                                    [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                    optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                    autoWidth="false" [(ngModel)]="Maintenance.damageId"
+                                                    styleClass="input border w-full mt-1"
+                                                    [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                    [virtualScroll]="false"
+                                                    [ngClass]="{ 'invalid-field': Maintenance.damageId <= 0}">
+                                                </p-dropdown>
+                                            </td>
+
+                                            <td>
+                                                <input type="text" [(ngModel)]="Maintenance.damageDecr"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="input border w-full mt-1">
+                                            </td>
+
+                                            <td style="width: 3%">
+                                                <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                        class="material-icons" style="color:red">delete</i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+
+
+                                </p-table>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MaintenanceForm.invalid  || disableSave" type="submit" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" [hidden]="this.opType == 'Add'"
+                    (click)="PrintMaintenanceRequest(this.MaintenanceForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MaintenanceForm.invalid" type="button">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    (click)="DeleteMaintenanceRequest(this.MaintenanceForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="MaintenanceForm.invalid" type="button" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/MaintenanceRequests/MaintenanceRequestsList']">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

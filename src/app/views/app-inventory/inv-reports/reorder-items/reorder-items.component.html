@@ -1,0 +1,179 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="limitItemsAddForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"item"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="typesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName ="typeId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"GroupItem"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsGroupList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false"formControlName ="itemGroupId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Store"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false"formControlName ="storeId">
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <input type="checkbox" class="input border w-full mt-1" hidden="true">
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"ShowRecord"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="limitItemsAddForm.invalid"></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon=""></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"openPurchaseOrderWithSelectedItems"|translate}}'
+                styleClass="p-ripple p-element button w-50 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="OpenPO()"></p-button>
+            </div>
+        </div>
+        <!--   -->
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                    [globalFilterFields]="['itemNo','itemName','groupName','categoryName','qty','saleQty','orderQty']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [(selection)]="selectedRawMaterialList" [rowHover]="true" dataKey="itemNo"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div
+                                class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText
+                                        type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title="{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg"
+                                        width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                        width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th >
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>                            
+                            <th class="head_tb" pSortableColumn="itemNo">
+                                {{"materialNumber"|translate}}
+                            </th>    
+                            <th class="head_tb" pSortableColumn="itemName">
+                                {{"materialName"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="groupName">
+                                {{"Group"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="categoryName">
+                                {{"item"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="qty">
+                                {{"Quantity"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="minQty">
+                                {{"MinimumQuantity"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="maxQty">
+                                {{"MaximumQuantity"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="saleQty">
+                                {{"QuantityRequired"|translate}}
+                            </th>
+                            <th class="head_tb" pSortableColumn="orderQty">{{"RequestLimit"|translate}}
+                            </th>
+                            <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                            </th>
+                        </tr>
+                    </ng-template>                    
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item let-i="rowIndex">
+                        <tr>
+                                <td style="width: 50px;">
+                                    <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                                </td>
+                                <td style="text-align: justify;" *ngIf="showItemId">{{item.itemId}}</td>
+                                <td style="text-align: justify;">{{item.itemNo}}</td>
+                                <td style="text-align: justify;">{{item.itemName}}</td>
+                                <td style="text-align: justify;">{{item.groupName}}</td>
+                                <td style="text-align: justify;">{{item.categoryName}}</td>
+                                <td style="text-align: justify;">{{item.qty}}</td>
+                                <td style="text-align: justify;">{{item.minQty}}</td>
+                                <td style="text-align: justify;">{{item.maxQty}}</td>
+                                <td style="text-align: justify;">{{item.saleQty}}</td>
+                                <td style="text-align: justify;">{{item.orderQty}}</td>
+                                <td>                                                   
+                                    <i class="material-icons cursor-pointer" (click)="OpenItemTransactionsForm(item.itemId)" style="color:blue" title="{{ 'ItemTransactions' | translate }}">                                                        
+                                        visibility
+                                    </i>
+                                 </td>                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                  <!--   <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="5">{{"total"|translate}}</td>
+                            <td>{{ tot1Formatted }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{tot2Formatted}}</td>
+                            <td colspan="12"></td>
+                        </tr>
+                    </ng-template> -->
+
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

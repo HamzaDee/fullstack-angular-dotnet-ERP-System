@@ -1,0 +1,110 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+            <p-table #dt [value]="FixedAssetsTypeList" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['id','typeNameA','mainTypeName','paymentMethod','depreciationPercentage','isMain']"
+            styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+            [showCurrentPageReport]="true">
+
+            <ng-template pTemplate="caption">
+
+                <div class="grid grid-cols-12 gap-5 ">
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder=' {{"search"|translate}} ' />
+                        </span>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4 ">
+                        <p-button label='{{"AddNew"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="pi pi-plus" (click)="OpenFixedassetsTypeFormPopUp(0,{},true)"></p-button>
+                    </div> 
+
+
+                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                       
+                        <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                        </button>
+                        
+                        <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                        </button>
+                    </div>
+                </div>
+
+
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="head_tb" pSortableColumn="number">{{"number"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="typeNameA">{{"Name"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="mainTypeName">{{"MainType"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="paymentMethod">{{"CalculationMethod"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="depreciationPercentage">{{"DepreciationRatio"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="fixed">{{"Branched"|translate}}</th>
+                    <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" class=".p-datatable-tbody " let-fixed>
+                <tr>
+                    <td style="text-align: justify;">{{fixed.id}}</td>
+                    <td style="text-align: justify;">{{fixed.typeNameA}}</td>
+                    <td style="text-align: justify;">{{fixed.mainTypeName}} </td>
+                    <td style="text-align: justify;">{{fixed.paymentMethod}}</td>
+                    <td style="text-align: justify;">{{fixed.depreciationPercentage}}</td>
+
+                    <td style="text-align: justify;">
+                        <input id="check_{{fixed.isMain}}" [checked]="fixed.isMain==true" disabled type="checkbox"
+                            class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none"
+                            for="check_{{fixed.isMain}}"></label>
+                    </td>
+
+                    <td style="width:5%">
+                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                            <mat-icon class="">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #userMenu="matMenu">
+                            <button mat-menu-item
+                                (click)="OpenFixedassetsTypeFormPopUp(fixed.id, fixed, false)">
+                                <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                            </button>
+                            <button mat-menu-item (click)="DeleteFixedassetsTypeForm(fixed.id, fixed)"> <i
+                                    class="material-icons" style="color:red">delete</i>
+                                &nbsp;{{"Delete"|translate}} </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </ng-template>
+
+
+            <ng-template pTemplate="emptymessage">
+                <tr class="odd">
+                    <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+
+
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

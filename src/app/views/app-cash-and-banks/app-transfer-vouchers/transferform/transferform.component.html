@@ -1,0 +1,162 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="TransferVoucherAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+<!-- =================================================================================================-->
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherType"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        (onChange)="getVoucherNo($event)" [(ngModel)]="selectedVoucherType"
+                        [ngClass]="{ 'invalid-field': TransferVoucherAddForm.get('voucherTypeId').value <= 0}"
+                        [disabled]="disableAll || disableVouchertype">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(TransferVoucherAddForm.get('voucherNo').value)}"
+                        (blur)="voucherNoBlur(TransferVoucherAddForm.value.voucherNo, TransferVoucherAddForm.value.voucherTypeId)"
+                        [attr.disabled]="allowEditVoucherSerial||disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)"
+                        class="input border w-full mt-1 " [ngClass]="{ 'invalid-field': !validDate}"
+                        [attr.disabled]="allowEditDate||disableAll ? 'disabled' : null">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="allowEditBranch||disableAll">
+                    </p-dropdown>
+                </div>                
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                        [ngClass]="{ 'invalid-field': TransferVoucherAddForm.get('currencyId').value <= 0}"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)"
+                        [disabled]="disableAll">                        
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ConverionFactor"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="currRate" class="input border w-full mt-1 " 
+                    [ngClass]="{ 'invalid-field': isEmpty(TransferVoucherAddForm.get('currRate').value)}"
+                    [attr.disabled]="disableAll ? 'disabled' : null" [readOnly]="disableCurrRate">
+                </div>
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Ammount"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="amount" class="input border w-full mt-1 "  (blur)="claculateAmount(Amount)" [(ngModel)]="Amount"
+                    [ngClass]="{ 'invalid-field': isEmpty(TransferVoucherAddForm.get('amount').value)}"
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>               
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DebitAccount"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        [ngClass]="{ 'invalid-field': TransferVoucherAddForm.get('debitAccountId').value <= 0}"
+                        optionLabel="text" optionValue="id" [(ngModel)]="selectedacc1" [filter]="true" formControlName="debitAccountId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CreditAccount"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList2"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        [ngClass]="{ 'invalid-field': TransferVoucherAddForm.get('creditAccountId').value <= 0}"
+                        optionLabel="text" optionValue="id" [(ngModel)]="selectedacc2" [filter]="true" formControlName="creditAccountId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ReferenceNo"|translate}}</label>
+                    <input type="text" formControlName="referenceNo" class="input border w-full mt-1 "
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ReferenceDate"|translate}}</label>
+                    <input type="date" formControlName="referenceDate" class="input border w-full mt-1 "
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>                
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 "
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+<!-- ==================================================================================================================details -->
+            <div class="intro-y box px-5 pt-5 mt-5">
+                <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                    <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                    class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                </div>
+            </div>
+            <div class="tab-content__pane" id="f04">
+                <div class="intro-y box px-5 pt-5">
+                    <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" id="tempSave" class="input border mr-2 mr-3 ml-3" hidden="true">                    
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="TransferVoucherAddForm.invalid || !this.validDate || this.disableSave" type="submit" *ngIf="!showsave"></p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintTransferVoucher(this.TransferVoucherAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="TransferVoucherAddForm.invalid" type="button"></p-button>
+
+                <p-button label='{{"Delete"|translate}}' (click)="DeleteVoucher(this.TransferVoucherAddForm.value.id)"  color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="TransferVoucherAddForm.invalid"  type="button" *ngIf="!showsave"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/TransferVoucher/TransferVoucherList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>

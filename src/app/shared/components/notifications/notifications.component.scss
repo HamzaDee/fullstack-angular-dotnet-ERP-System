@@ -1,0 +1,24 @@
+bullet[_ngcontent-ng-c3166632782]::after {
+   
+    background-color:unset !important;
+    
+  }
+  .p-dialog {
+  z-index: 1000 !important;
+}
+
+@keyframes ringBell {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(10deg); }
+  20% { transform: rotate(-10deg); }
+  30% { transform: rotate(6deg); }
+  40% { transform: rotate(-6deg); }
+  50% { transform: rotate(3deg); }
+  60% { transform: rotate(-3deg); }
+  70%, 100% { transform: rotate(0); }
+}
+
+.bell-shake {
+  animation: ringBell 0.7s ease-in-out;
+  transform-origin: top center;
+}

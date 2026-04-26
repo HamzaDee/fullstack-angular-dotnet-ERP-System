@@ -1,0 +1,165 @@
+<!--MENU 2025-->
+<style>
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .side-menu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: white;
+  }
+
+  .side-menu__title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .side-menu__title img {
+    margin-right: 10px;
+  }
+
+  .lvl01menu {
+    background-color: #003366;
+  }
+
+  .lvl02menu {
+    background-color: #001f33;
+  }
+
+
+  .side-menu__title i {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+
+
+  .submenu {
+    display: none;
+    padding-left: 0;
+  }
+
+
+  input.lvl01-input:checked+label+.lvl01menu {
+    display: block;
+  }
+
+  input.lvl02-input:checked+label+.lvl02menu {
+    display: block;
+  }
+
+
+  input:checked+label .side-menu__title i {
+    transform: rotate(180deg);
+  }
+
+  .menu-container {
+    height: 70vh;
+    overflow-y: auto;
+  }
+</style>
+
+<div class="menu-container">
+  <div class="flex">
+
+    <input type="checkbox" class="lvl01-input" id="lvl01_dash" style="display:none" />
+    <label for="lvl01_dash" class="side-menu lvl01" routerLink="dashboard">
+      <div class="side-menu__title">
+        <img src="../../../../assets/dist/images/icons//menu/dashboard.svg" width="25px" />
+        {{'DASHBOARD' | translate}}
+
+      </div>
+    </label>
+
+
+  </div>
+  <!-- Favourite -->
+  <div class="inherit">
+    <input type="checkbox" class="lvl01-input" id="lvl01_fav" style="display:none" />
+    <label for="lvl01_fav" class="side-menu lvl01">
+      <div class="side-menu__title">
+        <img src="../../../../assets/dist/images/icons//menu/favourite.svg" width="25px" />
+        {{'Favourite' | translate}} <i>▼</i>
+      </div>
+    </label>
+    <ul class="lvl01menu submenu lvl2" appDropdown>
+      <li *ngFor="let fav of menuItems[0]?.favoriteMenu">
+        <a class="side-menu lvl022" matRipple style="height: 40px;"
+          [routerLink]="['/', fav.controllerName, fav.actionName]" style="cursor: pointer;">
+          <div class="side-menu__title">
+            {{ fav.screenName | translate }}
+          </div>
+        </a>
+      </li>
+    </ul>
+    <!-- <ul class="lvl01menu submenu lvl2" appDropdown>
+          <li *ngFor="let item of menuItems">
+            <ng-container *ngFor="let itemLvL2 of item.subScreen">
+              <a *ngIf="itemLvL2.isFavorite" class="side-menu lvl022" matRipple style="height: 40px;">
+                <div class="side-menu__title">
+                  <a class="side-menu lvl02"
+                    routerLink="{{itemLvL2.controllerName ? '/' + itemLvL2.controllerName : ''}}/{{itemLvL2.actionName}}"
+                    style="cursor: pointer;">
+                    {{ itemLvL2.screenName | translate }}
+                  </a>
+                </div>
+              </a>
+            </ng-container>
+          </li>
+        </ul> -->
+  </div>
+  <!-- main menu -->
+  <ul>
+    <li *ngFor="let item of menuItems; let i = index">
+      <input type="checkbox" class="lvl01-input" id="lvl01_{{i}}" style="display:none" />
+      <label for="lvl01_{{i}}" class="side-menu lvl01">
+        <div class="side-menu__title">
+          <img src="../../../../assets/dist/images/icons/menu/{{item.screenCode}}.svg" width="25px" />
+          {{item.screenName | translate}}
+          <i *ngIf="item.subScreen?.length > 0">▼</i>
+        </div>
+      </label>
+      <ul class="lvl01menu submenu">
+        <li *ngFor="let itemLvL2 of item.subScreen; let j = index">
+          <ng-container *ngIf="itemLvL2.subScreen?.length > 0; else noChildren">
+            <input type="checkbox" class="lvl02-input" id="lvl02_{{i}}_{{j}}" style="display:none" />
+            <label for="lvl02_{{i}}_{{j}}" class="side-menu lvl02">
+              <div class="side-menu__title">
+                {{itemLvL2.screenName | translate}}
+                <i>▼</i>
+              </div>
+            </label>
+            <ul class="lvl02menu submenu">
+              <li *ngFor="let itemLvL3 of itemLvL2.subScreen">
+                <a routerLink="{{itemLvL3.controllerName ? '/' + itemLvL3.controllerName : ''}}/{{itemLvL3.actionName}}"
+                  class="side-menu lvl03">
+                  <div class="side-menu__title">
+                    {{itemLvL3.screenName | translate}}
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #noChildren>
+            <a class="side-menu lvl02"
+              routerLink="{{itemLvL2.controllerName ? '/' + itemLvL2.controllerName : ''}}/{{itemLvL2.actionName}}"
+              [ngClass]="{'disabled-menu': itemLvL2.isEnabled === false}">
+              <div class="side-menu__title">
+                {{itemLvL2.screenName | translate}}
+              </div>
+            </a>
+          </ng-template>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+
+<!--END MENU 2025-->

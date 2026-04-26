@@ -1,0 +1,16 @@
+
+input {
+    flex: 1 !important;
+
+    border: 2px solid #383838 !important;
+    border-radius: 8px !important;
+    outline: none !important;
+    transition: all 0.3s ease !important;
+    background-color: #fff !important;
+}
+
+
+input:focus {
+    border-color: #007BFF !important;
+    box-shadow: 0 0 5px rgba(0,123,255,0.2) !important;
+}

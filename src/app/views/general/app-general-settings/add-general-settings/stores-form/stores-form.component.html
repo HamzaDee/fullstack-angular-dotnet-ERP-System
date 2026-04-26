@@ -1,0 +1,196 @@
+<form [formGroup]="storeForm">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"InventoryMethod"|translate}}<span
+                    class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="inventoryTypeList"
+                formControlName="inventoryType" [disabled]="disableInventoryType"
+                [ngClass]="{ 'invalid-field': storeForm.get('inventoryType').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"DefaultStore"|translate}}</label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="defaultStoreList"
+                formControlName="defaultStoreId">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"CostingMethod"|translate}}<span
+                    class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="costingMethodList"
+                formControlName="costingMethod" [disabled]="disableCostingMethod"
+                [ngClass]="{ 'invalid-field': storeForm.get('costingMethod').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"EntryVoucherType"|translate}}<span
+                    class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                [options]="entryVoucherTypeList" formControlName="entryVoucherType"
+                [ngClass]="{ 'invalid-field': storeForm.get('entryVoucherType').value <= 0}">
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"InventoryAccType"|translate}}<span
+                    class="required-asterisk">*</span></label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                [options]="inventoryAccTypeList" formControlName="inventoryAccType" [disabled]="disableinventoryAccType"
+                [ngClass]="{ 'invalid-field': storeForm.get('inventoryAccType').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span- xxl:col-span-3 cursor-pointer mt-1" *ngIf="storeForm.get('inventoryAccType').value===180">
+            <label class="control-label font-weight-bold">{{"storeAccNo"|translate}}
+                <span *ngIf="storeForm.get('inventoryAccType').value===180" class="required-asterisk">*</span>
+            </label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                optionLabel="text" optionValue="id" [filter]="true"
+                formControlName="inventoryAccNo" filterBy="text" appendTo="body"
+                autoWidth="false" [virtualScroll]="false"
+                [ngClass]="{ 'invalid-field': storeForm.get('inventoryAccType').value === 180 && storeForm.get('inventoryAccNo').value <= 0}">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="storeForm.get('inventoryAccType').value===180">
+            <label class="control-label font-weight-bold">{{"costGoodsSoldAccNo"|translate}}
+                <span *ngIf="storeForm.get('inventoryAccType').value===180" class="required-asterisk">*</span>
+            </label>
+            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                formControlName="costGoodsAccNo" filterBy="text" appendTo="body"
+                autoWidth="false" [virtualScroll]="false"
+                [ngClass]="{ 'invalid-field': storeForm.get('inventoryAccType').value === 180 && storeForm.get('costGoodsAccNo').value <= 0}">
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            <div class="col-md-3">
+                <input id="check_UseStoreInGrid" [checked]="isUseStoreInGrid"
+                (change)="isUseStoreInGrid=(isUseStoreInGrid==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseStoreInGrid">{{"UseStoreInGrid"|translate}}</label>
+            </div>
+            <div class="col-md-3">
+                <input id="check_UseExpiryDate" [checked]="isUseExpiryDate" (change)="isUseExpiryDate=(isUseExpiryDate==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseExpiryDate">{{"UseExpiryDate"|translate}}</label>
+            </div>
+            <div class="col-md-3">
+                <input id="check_AutomaticExpirydate"[checked]="isAutomaticExpirydate"
+                (change)="isAutomaticExpirydate=(isAutomaticExpirydate==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_AutomaticExpirydate">{{"AutomaticExpirydate"|translate}}</label>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            <div class="col-md-3">
+                <input id="check_UseBatch" [checked]="isUseBatch" (change)="isUseBatch=(isUseBatch==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseBatch">{{"UseBatch"|translate}}</label>
+            </div>
+            <div class="col-md-3">
+                <input id="check_UseSerial" [checked]="isUseSerial" (change)="isUseSerial=(isUseSerial==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseSerial">{{"UseSerial"|translate}}</label>
+            </div>
+            <div class="col-md-3">
+                <input id="check_UseProductDate" [checked]="isUseProductDate"
+                (change)="isUseProductDate=(isUseProductDate==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseProductDate">{{"UseProductDate"|translate}}</label>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            <div class="col-md-3">
+                <input id="check_UseAccountInGrid" [checked]="isUseAccountInGrid"
+                (change)="isUseAccountInGrid=(isUseAccountInGrid==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_UseAccountInGrid">{{"UseAccountInGrid"|translate}}</label>
+            </div>
+            <div class="col-md-3">
+                <input id="check_CanSaleExpiredItems" [checked]="isCanSaleExpiredItems"
+                (change)="isCanSaleExpiredItems=(isCanSaleExpiredItems==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_CanSaleExpiredItems">{{"CanSaleExpiredItems"|translate}}</label>
+            </div>
+            <!-- hamza -->
+            <div class="col-md-3">
+                <input id="isUseDisburseEntity" [checked]="isUseDisburseEntity"
+                    (change)="isUseDisburseEntity=(isUseDisburseEntity==false)?true:false" type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                <label class="cursor-pointer select-none" for="isUseDisburseEntity">{{"UseDisburseEntity"|translate}}</label>
+            </div>
+            <!-- end -->
+        </div>
+    </div>
+<br>
+<hr>
+<br>
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-6">
+
+                <input id="check_ReminderForItemsThatReachTheOrderLimit"[checked]="isOrderLimitReminder"
+                (change)="isOrderLimitReminder=(isOrderLimitReminder==false)?true:false" type="checkbox"
+                class="input border mr-2 mr-3 ml-3" />
+            <label class="cursor-pointer select-none"
+                for="check_ReminderForItemsThatReachTheOrderLimit">{{"ReminderForItemsThatReachTheOrderLimit"|translate}}</label>
+            </div>
+            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold">{{"AlertUsers"|translate}}</label>
+                <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                    styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="usersList"
+                    formControlName="orderLimitReminderUsers">
+                </p-multiSelect>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>  
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold ">{{"AlertExpierDateOfItemsBefore"|translate}}</label>
+                <input formControlName="expDateReminder" type="number" min="1" class="input border w-full mt-1">
+            </div>
+            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold">{{"AlertUsers"|translate}}</label>
+                <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" 
+                    styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true"
+                    autoWidth="false" [virtualScroll]="false" [options]="usersList"
+                    formControlName="expDateReminderUsers">
+                </p-multiSelect>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold ">{{"CostDecimalPlaces"|translate}}</label>
+                <input formControlName="costDecimalPlaces" type="number" pattern="^\d+(\.\d{0,3})?$" min="3" class="input border w-full mt-1" 
+                [ngClass]="{ 'invalid-field': storeForm.get('costDecimalPlaces').value < 3}">
+            </div>
+        </div>
+        <br>
+</form>

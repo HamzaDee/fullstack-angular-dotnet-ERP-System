@@ -1,0 +1,97 @@
+
+<form [formGroup]="itemForm">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold mr-2">{{"materialNumber"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.itemNo}}</label>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold mr-2">{{"materialName"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.itemName}}</label>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ProdQty"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.totQty| number:'1.3-3'}}</label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="avlQtyByCountryList" dataKey="id" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" responsiveLayout="scroll" [(selection)]="selectedList" 
+                            [rows]="5" [paginator]="true" [showCurrentPageReport]="true">
+                            <ng-template pTemplate="caption">                                
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th style="width: 40%; text-align: center;" pSortableColumn="country">{{"COUNTRY"|translate}}
+                                        <p-sortIcon field="country"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 10%; text-align: center;" pSortableColumn="batchNo">{{"batchNumber"|translate}}
+                                        <p-sortIcon field="batchNo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 20%; text-align: center;" pSortableColumn="avlQty">{{"AvailableQty"|translate}} <p-sortIcon
+                                            field="avlQty"></p-sortIcon></th>
+                                    <th style="width: 15%; text-align: center;" pSortableColumn="reqQty">{{"RequiredQty"|translate}} <p-sortIcon
+                                            field="reqQty"></p-sortIcon></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemsList
+                                let-i="rowIndex">
+                                <tr >
+                                    <td>
+                                        <p-tableCheckbox [value]="itemsList"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{itemsList.countryName}}</td>
+                                    <td>{{itemsList.batchNo}}</td>
+                                    <td hidden>{{itemsList.fromCountryId}}</td>
+                                    <td hidden>{{itemsList.toCountryId}}</td>
+                                    <td>{{itemsList.avlQty| number:'1.0-6'}}</td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="itemsList.reqQty" (change)="checkQty(itemsList)"
+                                          class="input border w-full mt-1" [ngModelOptions]="{standalone: true}"
+                                          [ngClass]="{ 'invalid-field': itemsList.reqQty <= 0 }">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="4"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td>{{"total"|translate}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{calculateSum()}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">                    
+                    <p-button label='{{"Save"|translate}}' color="warn" icon="pi pi-check-circle" class="ml-4"
+                        styleClass="p-ripple p-element button w-40 ml-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        (click)="Save()">
+                    </p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(selectedList)">
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

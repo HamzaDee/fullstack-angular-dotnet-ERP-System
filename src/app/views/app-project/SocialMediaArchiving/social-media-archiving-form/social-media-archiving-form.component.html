@@ -1,0 +1,266 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="SocialMediaArchivingForm" (ngSubmit)="OnSaveForms()">
+            <input type="number" formControlName="id" class="form-control " hidden>
+            <input type="number" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId" class="control-label font-weight-bold">{{"ProjectNo"|translate}} <span
+                            class="required-asterisk">*</span> </label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="projectId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="ProjectList" optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': SocialMediaArchivingForm.get('projectId').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="eventNo" class="control-label font-weight-bold">{{"EventNumber"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="eventNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="eventDate" class="control-label font-weight-bold">{{"DATETIME"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="eventDate" type="date" formControlName="eventDate" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                    <label for="description" class="control-label font-weight-bold">{{"Details"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="description" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId" class="control-label font-weight-bold">{{"ThePlace"|translate}}</label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="placeId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="PlaceList" optionLabel="text" optionValue="id"
+                        [filter]="true" filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId" class="control-label font-weight-bold">{{"EventClass"|translate}}</label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="eventClass" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="EventClassList" optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId" class="control-label font-weight-bold">{{"EventType"|translate}}</label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="eventType" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="EventTypeList" optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div> -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId" class="control-label font-weight-bold">{{"documentType"|translate}}</label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="documentType" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="DocumentTypeList" optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="CountryList"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="countryId"
+                                        (onChange)="onCountryChange($event.value)">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"Governorate"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="filteredGovernorates"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="governorateId"
+                                        (onChange)="onGovernorateChange($event.value)">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <label
+                                        class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" [options]="filteredDistricts"
+                                        [disabled]="disableAll ? 'disabled' : null" autoWidth="false"
+                                        [virtualScroll]="false" formControlName="districtId">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                                    <label for="place" class="control-label font-weight-bold">{{"ThePlace"|translate}}</label>
+                                    <input type="text" formControlName="place" class="input border w-full mt-1 "
+                                        [attr.disabled]="disableAll ? 'disabled' : null">
+                                </div>
+
+                <!-- <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer ">
+                    <label for="participants"
+                        class="control-label font-weight-bold">{{"UpdateParticipants"|translate}}</label>
+                    <input type="text" formControlName="participants" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div> -->
+
+                <!--     <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer">
+                    <label for="rawMaterialLocation" class="control-label font-weight-bold mb-2 block">{{"Locationofrawmaterialonthearchivingunit" | translate }}</label>
+                    <div class="flex items-center gap-2">
+                        <label for="folderUploadRaw"
+                            class="flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded cursor-pointer hover:bg-blue-700 transition whitespace-nowrap">
+                            {{ "ChooseFile" | translate }}</label>
+                        <input type="file" id="folderUploadRaw" (change)="onFileSelected($event)" webkitdirectory directory class="hidden" />
+                        <input type="text" formControlName="rawMaterialLocation" class="input border w-full text-sm py-1 px-2" [attr.disabled]="disableAll ? 'disabled' : null" />
+                    </div>
+                </div> -->
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer">
+                    <label for="rawMaterialLocation" class="control-label font-weight-bold mb-2 block">
+                        {{ "Locationofrawmaterialonthearchivingunit" | translate }}
+                    </label>
+
+                    <div class="flex items-center gap-2">
+
+                        <!-- زر  مجلد -->
+                        <label for="folderUploadRaw"
+                            class="flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded cursor-pointer hover:bg-blue-700 transition whitespace-nowrap">
+                            {{ "ChooseFolder" | translate }}
+                        </label>
+                        <input
+                            type="file"
+                            id="folderUploadRaw"
+                            webkitdirectory
+                            directory
+                            (change)="onFolderSelected($event)"
+                            class="hidden"
+                            />
+
+                        <!-- زر  ملف -->
+            <!--             <label for="fileUploadRaw"
+                            class="flex items-center justify-center px-3 py-1.5 bg-green-600 text-white text-sm rounded cursor-pointer hover:bg-green-700 transition whitespace-nowrap">
+                            {{ "ChooseFile" | translate }}
+                        </label>
+                        <input type="file" id="fileUploadRaw" (change)="onFileSelected($event, 'file')"
+                            class="hidden" /> -->
+
+                        <!-- حقل العرض -->
+                        <input type="text" formControlName="rawMaterialLocation"
+                            class="input border w-full text-sm py-1 px-2"
+                            [attr.disabled]="disableAll ? 'disabled' : null" readonly   />
+
+                    </div>
+                </div>
+
+
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer">
+                        <label for="rawMaterialLocation" class="control-label font-weight-bold mb-2 block">
+                        {{ "LocationOfTheFinalSelectedMaterialOnTheApprovedFile" | translate }}
+                        </label>
+
+                    <div class="flex items-center gap-2">
+                      <div class="flex flex-col gap-2">
+
+                            <label for="folderUploadRaw"
+                            class="flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded cursor-pointer hover:bg-blue-700 transition whitespace-nowrap">
+                            {{ "ChooseFolder" | translate }}</label>
+                            <label for="OpenFolder"
+                            class="flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded cursor-pointer hover:bg-blue-700 transition whitespace-nowrap">
+                            {{ "OpenFolder" | translate }}</label>
+                       </div>
+
+
+                    <input type="text" formControlName="rawMaterialLocation"
+                    class="input border w-full text-sm py-1 px-2"
+                    [attr.disabled]="disableAll ? 'disabled' : null" readonly  />
+
+                    </div>
+
+
+                    <input type="file" id="folderUploadRaw" (change)="onFileSelected($event, 'folder')"
+                    webkitdirectory directory class="hidden" />
+
+                    <input type="file" id="AddPatientFile" (change)="onFileSelected($event, 'file')"
+                    class="hidden" />
+                    </div>
+
+
+
+                <!-- 
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer">
+                    <label for="finalMaterialLocation" class="control-label font-weight-bold mb-2 block">{{
+                        "LocationOfTheFinalSelectedMaterialOnTheApprovedFile" | translate }} </label>
+                    <div class="flex items-center gap-2">
+                        <label for="folderUploadFinal"
+                            class="flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded cursor-pointer hover:bg-blue-700 transition whitespace-nowrap">
+                            {{ "ChooseFile" | translate }}
+                        </label>
+                        <input type="file" id="folderUploadFinal" (change)="onFileSelecteds($event)" webkitdirectory
+                            directory class="hidden" />
+                        <input type="text" formControlName="finalMaterialLocation"
+                            class="input border w-full text-sm py-1 px-2"
+                            [attr.disabled]="disableAll ? 'disabled' : null" />
+                    </div>
+                </div> -->
+
+<!-- 
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="currencyId"
+                        class="control-label font-weight-bold">{{"NameOftheMediaStation"|translate}}</label>
+                    <p-dropdown id="currencyId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        formControlName="mediaStation" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" [options]="NameOftheMediaStationList" optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div> -->
+
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="SocialMediaArchivingForm.invalid  || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/SocialMediaArchiving/SocialMediaArchivingList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,205 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="AccountsGroupsForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+
+
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+                <label class="control-label font-weight-bold">{{"group"|translate}}<span
+                        class="required-asterisk">*</span></label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="GroupList"
+                    [(ngModel)]="selectedGroup" formControlName="groupNo" [style]="{'minWidth':'100%', 'width': '100%'}"
+                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+                <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="BranchList"
+                    formControlName="branchId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                <label class="control-label font-weight-bold">{{"FromDate"|translate}}</label>
+                <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                <input type="date" class="input border w-full mt-1" formControlName="toDate">
+            </div>
+
+
+            <div class="flex gap-5 mr-2">
+
+                <p-button label='{{"ShowRecord"|translate}}'
+                    styleClass="p-ripple p-element button w-32 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="AccountsGroupsForm.invalid">
+                </p-button>
+
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="PrintReport()">
+                </p-button>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+                <div class="table-container">
+                    <p-table #dt [value]="Data" class="p-datatable-customers"
+                        [globalFilterFields]="['accNo','accountName','openingDebit','openingCredit','periodDebit','periodCredit']">
+                        <ng-template pTemplate="caption">
+                             <div class="grid grid-cols-12 gap-5 ">
+                                                <div
+                                                    class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                                    <span class="p-input-icon-left">
+                                                        <i class="pi pi-search"></i>
+                                                        <input class="pInputText input border w-full mt-1" pInputText
+                                                            type="text"
+                                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                            placeholder=' {{"search"|translate}} ' />
+                                                    </span>
+                                                </div>
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                                    align="end">
+                                                    <i class="pi pi-star-fill"
+                                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                        (click)="updateFavourite(this.screenId)"
+                                                        title="{{'AddToFavourite' | translate}}"
+                                                        tooltipposition="bottom">
+                                                    </i>
+
+                                                    <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="XLS" (click)="exportExcel3()" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/excel.svg"
+                                                            width="20px">
+                                                    </button>
+                                                    <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="PDF" (click)="exportPdf3()" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                                            width="20px">
+                                                    </button>
+                                                </div>
+                                            </div>
+                            <!-- <div class="w-full flex justify-between items-center mt-3 mb-3 px-3">
+
+                                <div class="flex items-center gap-2">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder='{{ "search" | translate }}' />
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+
+                                    <i class="pi pi-star-fill"
+                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                        (click)="updateFavourite(this.screenId)"
+                                        title="{{ 'AddToFavourite' | translate }}" tooltipposition="bottom">
+                                    </i>
+
+                                    <button title="{{'ExportToExcel' | translate}}" type="button" pbutton pripple
+                                        icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                        tooltipposition="bottom" class="button px-2 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                    </button>
+
+                                    <button title="{{'ExportToPdf' | translate}}" type="button" pbutton pripple
+                                        icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                        tooltipposition="bottom" class="button px-2 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                    </button>
+
+                                </div>
+
+                            </div> -->
+                        </ng-template>
+
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th colspan="2">{{"Statement"|translate}}</th>
+                                <th colspan="2">{{"BalanceBeforeThatTime"|translate}}</th>
+                                <th colspan="2">{{"BalanceDuringThePeriod"|translate}}</th>
+                                <th colspan="2">{{"Balance"|translate}}</th>
+                                 <th style="width: 5%"></th>
+                            </tr>
+                            <tr>
+                                <th>{{"AccountNumber"|translate}}</th>
+                                <th>{{"AccountName"|translate}}</th>
+                                <th>{{"Debit"|translate}}</th>
+                                <th>{{"Credit"|translate}}</th>
+                                <th>{{"Debit"|translate}}</th>
+                                <th>{{"Credit"|translate}}</th>
+                                <th>{{"Debit"|translate}}</th>
+                                <th>{{"Credit"|translate}}</th>
+                                <th style="width: 7%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-item>
+                            <tr>
+                                <td>{{ item.accNo }}</td>
+                                <td>{{ item.accountName }}</td>
+                                <td>{{(item.openingDebit - item.openingCredit) > 0? ((item.openingDebit -
+                                    item.openingCredit) | number: '1.3-3'): '0.000' }}</td>
+                                <td>{{(item.openingDebit - item.openingCredit) < 0 ? ((item.openingCredit
+                                        -item.openingDebit) | number: '1.3-3' ) : '0.000' }} </td>
+                                <td>{{(item.periodDebit - item.periodCredit) > 0? ((item.periodDebit -
+                                    item.periodCredit) | number: '1.3-3') : '0.000'}} </td>
+                                <td>{{(item.periodDebit - item.periodCredit) < 0 ? ((item.periodCredit -
+                                        item.periodDebit)| number: '1.3-3' ) : '0.000' }} </td>
+                                <td>{{ ((item.openingDebit - item.openingCredit) + (item.periodDebit -
+                                    item.periodCredit))> 0? (((item.openingDebit - item.openingCredit) +
+                                    (item.periodDebit -item.periodCredit)) | number: '1.3-3'): '0.000'}} </td>
+                                <td>{{((item.openingDebit - item.openingCredit) + (item.periodDebit -
+                                    item.periodCredit))< 0 ? ((((item.openingDebit - item.openingCredit) +
+                                        (item.periodDebit -item.periodCredit)) * -1) | number: '1.3-3' ) : '0.000' }}</td>
+                                 <td>
+                                        <i class="material-icons cursor-pointer"
+                                        (click)="OpenAccountStatementForm(item.accountId)" style="color:blue"
+                                        title="{{ 'Accountstatment' | translate }}"> visibility</i>
+                                </td> 
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="footer">
+                            <tr>
+                                <td style="flex: 0 0 90rem"></td>
+                                <td style="flex: 0 0 30rem">{{ "total" | translate }}</td>
+                                <td class="total_b">{{totalOpeningDebit}}</td>
+                                <td class="total_b">{{totalOpeningCredit}}</td>
+                                <td class="total_b">{{totalPeriodDebit}}</td>
+                                <td class="total_b">{{totalPeriodCredit}}</td>
+                                <td class="total_b">{{finalBalanceDebit}}</td>
+                                <td class="total_b">{{finalBalanceCredit}}</td>
+                                <td style="flex: 0 0 90rem"></td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,837 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="ProjectPlansForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label for="planNo" class="control-label font-weight-bold">{{"ProjectPlanNo"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="planNo" type="number" formControlName="planNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('planNo')?.value)}" [readOnly]="true">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="projectId" class="control-label font-weight-bold">{{"Project"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown id="projectId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="projectsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="projectId" filterBy="text" appendTo="body" autoWidth="false"
+                        [disabled]="disableAll" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="projectloadLazyOptions($event)" [virtualScrollItemSize]="40"
+                        [ngClass]="{ 'invalid-field': ProjectPlansForm.get('projectId')?.value <= 0}"
+                        (onChange)="GetProjectData($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label for="distDate" class="control-label font-weight-bold">{{"DistributionDate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="distDate" type="date" formControlName="distDate" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="distTime"
+                        class="control-label font-weight-bold">{{"DistributionTime"|translate}}</label>
+                    <input id="distTime" type="datetime-local" formControlName="distTime"
+                        class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null">
+
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="distPlanTypeIds" class="control-label font-weight-bold">{{"MethodOfBenefit"|translate}}
+                        <span class="required-asterisk">*</span> </label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="distPlanTypeIds"
+                        [options]="distPlanTypesList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        (onChange)="SelectAlldistPlan($event)" [virtualScroll]="false" [readonly]="disableAll"
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('distPlanTypeIds')?.value)}">
+                    </p-multiSelect>
+                </div>
+                <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="planDesc" class="control-label font-weight-bold">{{"PlanDescreption"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="planDesc" type="text" formControlName="planDesc" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('planDesc').value)}">
+                </div> -->
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-7 xxl:col-span-7 cursor-pointer mt-1">
+                    <label for="distAuthoritiesIds" class="control-label font-weight-bold">{{"Beneficiary"|translate}}<span class="required-asterisk">*</span> </label>
+                    <!-- <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="distAuthoritiesIds"
+                        [options]="distSiteDirectionList" [filter]="true" filterBy="text" appendTo="body"
+                        [panelStyle]="{ 'width': '100%' }" [readonly]="disableAll"
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('distAuthoritiesIds').value)}"
+                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"
+                        [virtualScrollItemSize]="40" (onChange)="SelectAlldistAuthorities($event)">
+                    </p-multiSelect> -->
+                     <p-dropdown id="distAuthoritiesIds" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="distSiteDirectionList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="distAuthoritiesIds" filterBy="text"
+                        appendTo="body" autoWidth="false" [disabled]="disableAll"  
+                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40"
+                        [ngClass]="{ 'invalid-field': ProjectPlansForm.get('distAuthoritiesIds')?.value <= 0}" >
+                        <!-- (onChange)="SelectAlldistAuthorities($event)" -->
+                    </p-dropdown>
+
+                </div>
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-6">
+                    <label for="distSiteIds"class="control-label font-weight-bold ">{{"InternalDistributionPlace"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="governorateId" class="control-label font-weight-bold">{{"Governorate"|translate}}</label>
+                    <p-dropdown id="governorateId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="governorateList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="governorateId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        (onChange)="FilterBrigadierGeneral(this.ProjectPlansForm.value.governorateId)">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="districtId" class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                    <p-dropdown id="districtId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="filteredGovernorate" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="districtId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [readonly]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="address" class="control-label font-weight-bold">{{"DistributionSiteAddress"|translate}}</label>
+                    <input id="address" type="text" formControlName="address" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="mainAddress" class="control-label font-weight-bold">{{"MainAddress"|translate}}</label>
+                    <input id="mainAddress" type="text" formControlName="mainAddress" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>        
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="representativeId" class="control-label font-weight-bold">{{"Man"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="representativeId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="employeeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="representativeId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': ProjectPlansForm.get('representativeId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold block mb-2">
+                        {{"DonorPresence"|translate}}<span class="required-asterisk">*</span>
+                    </label>
+
+                    <div class=" items-center ">
+                        <input
+                            id="isDonorExist"
+                            type="checkbox"
+                            class="input border"
+                            [checked]="isDonorExist == 1"
+                            (change)="onisDonorExistChange($event)"
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                        />
+                        <label for="isDonorExist" class="cursor-pointer select-none ml-2">
+                            {{"Wanted" | translate}}
+                        </label>
+                        </div>
+
+                        <div class=" items-center">
+                        <input
+                            id="isDonorNotExist"
+                            type="checkbox"
+                            class="input border"
+                            [checked]="isDonorNotExist == 1"
+                            (change)="onisDonorNotExistChange($event)"
+                            [attr.disabled]="disableAll ? 'disabled' : null"
+                        />
+                        <label for="isDonorNotExist" class="cursor-pointer select-none ml-2">
+                            {{"NotWanted" | translate}}
+                        </label>
+                        </div>
+
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="receiveLocationIds" class="control-label font-weight-bold">{{"DownloadSite"|translate}}
+                        <span class="required-asterisk">*</span> </label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="receiveLocationIds"
+                        [options]="downloadSiteList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        (onChange)="SelectAllreceiveLocation($event)" [virtualScroll]="false" [readonly]="disableAll"
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('receiveLocationIds')?.value)}">
+                    </p-multiSelect>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1" *ngIf="ShowOfficer">
+                    <label for="OfficerName" class="control-label font-weight-bold">{{"LiaisonOfficer"|translate}}</label>
+                    <input id="OfficerName" type="text" [(ngModel)]="OfficerName" [ngModelOptions]="{standalone: true}"  
+                    class="input border w-full mt-1 " [readOnly]="true"  >
+                </div>     
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="transportation"
+                        class="control-label font-weight-bold">{{"MeansOfTransportation"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="transportation"
+                        [options]="transportationList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [readonly]="disableAll" (onChange)="SelectAlltransportation($event)">
+                    </p-multiSelect>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input id="isDonorExist" type="checkbox" class="input border mr-3 ml-3 mt-5"
+                        formControlName="needMedia" [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none" for="isDonorExist"> {{"NeedMedia" | translate}} </label>
+                </div>
+
+                <!-- <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input id="isDonorExist" type="checkbox" class="input border mr-3 ml-3 mt-5"
+                        formControlName="needCar" [attr.disabled]="disableAll ? 'disabled' : null" />
+                    <label class="cursor-pointer select-none" for="isDonorExist"> {{"NeedCar" | translate}} </label>
+                </div> -->
+            </div>
+
+            <!-- Details -->
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"DonationForm"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"TargetedNationalitiesOfBeneficiaries"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"BeneficiariesNames"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <!-- <div class="grid grid-cols-12 gap-5 pt-5">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <input id="isSustDevelop" [checked]="isSustDevelop==1"
+                                        (change)="isSustDevelop=(isSustDevelop==0)?1:0" type="checkbox"
+                                        class="input border mr-3 ml-3 mt-5"
+                                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                                    <label class="cursor-pointer select-none"
+                                        for="isSustDevelop">{{"SustainableDevelopment"|translate}}</label>
+                                </div>
+                            </div> -->
+                            <div class="grid grid-cols-12 gap-5 pt-5">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <input id="isCash" [checked]="isCash == 1" (change)="onisCashChange()"
+                                        type="checkbox" class="input border mr-3 ml-3 mt-5"
+                                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                                    <label class="cursor-pointer select-none" for="isCash"> {{"CashDonate" | translate}}
+                                    </label>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Cash Table Start -->
+                            <p-table #dt [value]="planCashTypesList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineCashTypes()"
+                                                [disabled]="disableAll || isCash ==0 "></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <!-- <th class="head_tb" style="width: 12%">{{"DonateTo"|translate}}</th>
+                                        <th class="head_tb" style="width: 12%">{{"TypeOfDonation"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"CashAmountDinar"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"CashAmountDollar"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th> -->
+
+                                        <th class="head_tb" style="width: 12%">{{"DonateTo"|translate}}</th>
+                                        <th class="head_tb" style="width: 12%">{{"TypeOfDonation"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">
+                                            {{"TotalAllocatedValueInDinars"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"CashAmountDollar"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-cashTypes
+                                    let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="cashTypes.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="cashTypes.projectId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="donateToList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="cashTypes.cashTypeId" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="FilterCashDonateType(cashTypes.cashTypeId,i)"
+                                                [ngClass]="{ 'invalid-field': cashTypes.cashTypeId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="filteredCashDonateTypes[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="cashTypes.cashShapeId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': cashTypes.cashShapeId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="cashTypes.amount"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" (input)="CalcCashTypesTotal(cashTypes)">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="cashTypes.dollarAmount" [readOnly]="true"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowCashTypes(cashTypes,i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="9">
+                                            {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td colspan="1"></td>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{CashDinarTotal}}</td>
+                                        <td>{{CashDollarTotal}}</td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <!-- Cash Table End -->
+                            <div class="grid grid-cols-12 gap-5 pt-5">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <input id="isSample" [checked]="isSample == 1" (change)="onisSampleChange()"
+                                        type="checkbox" class="input border mr-3 ml-3 mt-5"
+                                        [attr.disabled]="disableAll ? 'disabled' : null" />
+                                    <label class="cursor-pointer select-none"
+                                        for="isSample">{{"SampleDonate"|translate}}</label>
+                                </div>
+                            </div>
+                            <br>
+
+                            <p-table #dt [value]="planDonationTypesList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineDonation()"
+                                                [disabled]="disableAll || isSample ==0 "></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 12%">{{"ProgramType"|translate}}</th>
+                                        <th class="head_tb" style="width: 12%">{{"TypeOfDonation"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"TypeOfAssistance"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"Quantity"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"MoneyAmountDinar"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"MoneyAmountDollar"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-pplandtl let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="pplandtl.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="pplandtl.projectId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+
+                                        <!-- <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="programTypesList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.programTypeId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': pplandtl.programTypeId <= 0}"
+                                                (onChange)="FilterDonationtypes(pplandtl.programTypeId,i)"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="filtereddonationTypeList[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.donationId" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': pplandtl.donationId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td> -->
+
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="programTypesList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.programTypeId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="FilterDonationtypes(pplandtl.programTypeId,i)"
+                                                [ngClass]="{ 'invalid-field': pplandtl.programTypeId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="filtereddonationTypeList[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.donationId" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': pplandtl.donationId <= 0}"
+                                                [disabled]="disableAll"
+                                                (onChange)="FilterDonationId(pplandtl.donationId,i)">
+                                            </p-dropdown>
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="filtereddonationIdList[i]"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.donationId2" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.couponsNo"
+                                                [ngClass]="{ 'invalid-field': pplandtl.couponsNo <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" (input)="CalcTotal(pplandtl)">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.couponsAmount"
+                                                [ngClass]="{ 'invalid-field': pplandtl.couponsAmount <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll"
+                                                (input)="CalcDollar(pplandtl,pplandtl.couponsAmount,i)">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.dollarTotal"
+                                                [ngClass]="{ 'invalid-field': pplandtl.dollarTotal <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll"
+                                                (input)="CalcDinar(pplandtl,pplandtl.dollarTotal,i)">
+                                        </td>
+
+
+                                        <!-- 
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.couponsAmount"
+                                                [ngClass]="{ 'invalid-field': pplandtl.couponsAmount <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" (input)="CalcTotal(pplandtl)">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.couponsAmount"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                (ngModelChange)="CalcDollar(pplandtl,pplandtl.couponsAmount,i)">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="pplandtl.dollarTotal"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                (ngModelChange)="CalcDinar(pplandtl,pplandtl.dollarTotal,i)">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="exchangePlaceList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="pplandtl.couponLoc" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td> -->
+                                        <!-- <td>
+                                            <input type="Text"
+                                                [(ngModel)]="activity.couponLoc" [disabled]="disableAll"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" >
+                                        </td>                                                                                -->
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowDonation(i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="9">
+                                            {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td>{{calculateSumDollar()}}</td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="grid grid-cols-12 gap-5 pt-5">
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                                    <input id="isOtherMaterials" [checked]="isOtherMaterials == 1"
+                                        (change)="onOtherMaterialsChange()" type="checkbox"
+                                        class="input border mr-3 ml-3 mt-5"
+                                        [attr.disabled]="disableAll || isSample==0 ? 'disabled' : null" />
+                                    <label class="cursor-pointer select-none" for="isOtherMaterials">{{"OtherMaterials"
+                                        | translate}}</label>
+                                </div>
+                                <div class="col-span-12 sm:col-span-7 xxl:col-span-7 cursor-pointer mt-1"
+                                    *ngIf="isOtherMaterials==1">
+                                    <label for="materialType"
+                                        class="control-label font-weight-bold">{{"Type"|translate}}</label>
+                                    <input id="materialType" type="text" formControlName="materialType"
+                                        class="input border w-full mt-1 " [readonly]="disableAll">
+                                </div>
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1"
+                                    *ngIf="isOtherMaterials==1">
+                                    <label for="materialQty"
+                                        class="control-label font-weight-bold">{{"Count"|translate}}</label>
+                                    <input id="materialQty" type="number" formControlName="materialQty"
+                                        class="input border w-full mt-1 " [readonly]="disableAll">
+                                </div>
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1"
+                                    *ngIf="isOtherMaterials==1">
+                                    <label for="materialUnit"
+                                        class="control-label font-weight-bold">{{"unit"|translate}}</label>
+                                    <input id="materialUnit" type="text" formControlName="materialUnit"
+                                        class="input border w-full mt-1 " [readonly]="disableAll">
+                                </div>
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1"
+                                    *ngIf="isOtherMaterials==1">
+                                    <label for="materialValue"
+                                        class="control-label font-weight-bold">{{"MoneyAmountDinar"|translate}}</label>
+                                    <input id="materialValue" type="number" formControlName="materialValue"
+                                        class="input border w-full mt-1 " [readonly]="disableAll"
+                                        (input)="MaterialAmountDollar(this.ProjectPlansForm.value.materialValue)">
+                                </div>
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1"
+                                    *ngIf="isOtherMaterials==1">
+                                    <label for="materialAmtDollar"
+                                        class="control-label font-weight-bold">{{"DollarAmount"|translate}}</label>
+                                    <input id="materialAmtDollar" type="number" [value]="materialAmtDollar"
+                                        class="input border w-full mt-1 " [readOnly]="true">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="plansTargetNationalitiesList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <!-- <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLineNationality()" [disabled]="disableAll"></p-button> -->
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 12%">{{"Nationality"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"FamilyCount"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"MembersCount"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">
+                                            {{"TotalPercentageOfBeneficiaries"|translate}}</th>
+                                        <!-- <th class="head_tb" style="width: 5% ">{{"TypeOfHeadOfHousehold"|translate}} </th>
+                                        <th class="head_tb" style="width: 10%"  >{{"SpecialHealthNeeds"|translate}}</th> -->
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-activity let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="activity.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="activity.projectId"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="nationalitiesList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="activity.nationalityId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': activity.nationalityId <= 0}"
+                                                [disabled]="disableAll||ProjectPlansForm.get('projectId').value > 0">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="activity.familyNo"
+                                                (input)="onFamilyChange(activity.familyNo,activity,i)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="activity.personNo"
+                                                (input)="onPersonChange(activity.personNo,activity,i)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="activity.beneficiaryPercent"
+                                                [readOnly]="true" [ngModelOptions]="{standalone: true}"
+                                                class="input border w-full mt-1" [disabled]="disableAll">
+                                        </td>
+                                        <!-- <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="householdTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="activity.personTypeId" 
+                                            styleClass="input border w-full mt-1"
+                                            [ngClass]="{ 'invalid-field': activity.personTypeId <= 0}"
+                                            [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                        </p-dropdown>
+                                        </td>    
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="medicalNeedsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                            appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                            [(ngModel)]="activity.healthConditionsId" 
+                                            styleClass="input border w-full mt-1"
+                                            [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                        </p-dropdown>
+                                        </td>     -->
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowNationality(i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="9">
+                                            {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-content__pane" id="f03">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="beneficiariesNamesList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">                                            
+                                            <p-button 
+                                                label='{{"DownloadExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-42 mr-2 mb-5 items-center justify-center text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel"
+                                                (click)="exportHeadersToExcel()">
+                                            </p-button>
+
+                                            <input type="file" #fileInput (change)="ImportFromExcel($event)" accept=".xlsx, .xls" style="display: none;" />
+                                            <p-button label='{{"ImportFromExcel"|translate}}'   
+                                                styleClass="p-ripple p-element button w-82 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel" (click)="onImportClick(fileInput)">
+                                            </p-button>
+                                            
+                                            <p-button label='{{"Delete"|translate}}'   
+                                                styleClass="p-ripple p-element button w-82 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                [style]="{'background-color': '#D32F2F', 'border-color': '#217346'}"
+                                                icon="pi pi-trash" (onClick)="ClearDataTable()">
+                                            </p-button>                                           
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 12%">{{"Name"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"NationalORDocNumber"|translate}}</th>
+                                        <th class="head_tb" style="width: 8%">{{"Nationality"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"Gender"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"PhoneNumber"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"ExitVoucherNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 10%">{{"Quantity"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-Beneficiaries
+                                    let-i="rowIndex">
+                                    <tr>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="Beneficiaries.benName"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="Beneficiaries.documentNo"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="nationalitiesList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="Beneficiaries.nationalityId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': Beneficiaries.nationalityId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="GenderList"
+                                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="Beneficiaries.genderId"
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': Beneficiaries.genderId <= 0}"
+                                                [disabled]="disableAll">
+                                            </p-dropdown>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="Beneficiaries.phoneNo1"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="text" [(ngModel)]="Beneficiaries.outputNo"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+
+                                        <td>
+                                            <input type="number" [(ngModel)]="Beneficiaries.qty"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        
+
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRowBeneficiariesNames(i)"
+                                                [disabled]="disableAll"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="5">
+                                            {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f04">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End -->
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ProjectPlansForm.invalid  || disableSave" type="submit" [hidden]="showsave"></p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ProjectPlansForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteVoucher(this.ProjectPlansForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/ProjectsPlans/ProjectPlansList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

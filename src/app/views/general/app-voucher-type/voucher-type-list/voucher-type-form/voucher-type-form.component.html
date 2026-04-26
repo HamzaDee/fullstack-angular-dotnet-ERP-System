@@ -1,0 +1,428 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="voucherTypesForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <!--INFORMATIONS-->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <legend style="width : 100%">
+                        <h3>{{"INFORMATIONS"|translate}}</h3>
+                        <div class="grid grid-cols-12 gap-5">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label>{{"VoucherCategory"|translate}}<span class="required-asterisk">*</span></label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="categoryList" styleClass="input border w-full mt-1"
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    [ngClass]="{ 'invalid-field': voucherTypesForm.get('categoryId').value <= 0}"
+                                    formControlName="categoryId" [virtualScroll]="false" 
+                                    (onChange)="getVoucherCategory($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label for="voucherNameA" class="control-label font-weight-bold ">{{"ArabicName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input type="text" min="1" formControlName="voucherNameA"
+                                    [ngClass]="{ 'invalid-field': isEmpty(voucherTypesForm.get('voucherNameA').value)}"
+                                    class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label for="voucherNameE" class="control-label font-weight-bold ">{{"EnglishName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input type="text" min="1" formControlName="voucherNameE"
+                                    [ngClass]="{ 'invalid-field': isEmpty(voucherTypesForm.get('voucherNameE').value)}"
+                                    class="input border w-full mt-1">
+                            </div>
+
+                        </div>
+                    </legend>
+                </div>
+                <!--OPTIONS-->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <legend style="width : 100%">
+                        <h3>{{"OPTIONS"|translate}}</h3>
+                        <div class="grid grid-cols-12 gap-5">
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="mainDebitAccId">{{"VirtualFatherDebitAccount"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="ParentAccountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="mainDebitAccId"  [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="mainCreditAccId">{{"VirtualFatherCeditAccount"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="ParentAccountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false" 
+                                    formControlName="mainCreditAccId"  [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="voucherNumberLength" class="control-label font-weight-bold ">{{"TheNumberOfDigitsInTheNumber"|translate}}</label>
+                                <input type="number" class="input border w-full mt-1" formControlName="voucherNumberLength">
+                            </div>
+
+                          
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="serialType">{{"Serialtype"|translate}}<span class="required-asterisk">*</span></label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="serialTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="serialType" [virtualScroll]="false"
+                                    [ngClass]="{ 'invalid-field': voucherTypesForm.get('serialType').value <= 0}">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="branchId">{{"DefultBranch"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="companyBranchList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="branchId" [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="currencyId">{{"DefultCurrency"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="currencyList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="currencyId"  [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="storeId">{{"DefultStore"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="storesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="storeId"  [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="allowAccRepeat">{{"Iftheaccountitemisrepeatedmorethanonce"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="allowAccRepeatList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="allowAccRepeat" 
+                                    [ngClass]="{ 'invalid-field': voucherTypesForm.get('allowAccRepeat').value <= 0}"
+                                    [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" [hidden]="Hidden">
+                                <label for="fromChequeStatus">{{"Showchequeswithstatus"|translate}}</label>
+                                <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                    optionLabel="text" optionValue="id" [options]="chequesStatusList" [filter]="true"
+                                    filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="fromChequeStatus"
+                                    [virtualScroll]="false">
+                                </p-multiSelect>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" [hidden]="Hidden">
+                                <label for="toChequeStatus">{{"Transferchequestostatus"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="chequesStatusList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="toChequeStatus"
+                                    [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+
+                           
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="defaultBank">{{"DefultBank"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="bankList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="bankId"  [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="defaultChequeStatus">{{"DefultChequeStatus"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="statusList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="defChequeStatus" [virtualScroll]="false">
+                                </p-dropdown><!-- selectedchequesStatus -->
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <div class="row">
+                                    <input id="check_PreventChangingTheDefaultBranch" [checked]="isPreventChangeBranch"
+                                        (change)="isPreventChangeBranch=(isPreventChangeBranch==false)?true:false"
+                                        type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_PreventChangingTheDefaultBranch">{{"PreventChangingTheDefaultBranch"|translate}}</label>
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isPreventChangeBranch"
+                                    (change)="isPreventChangeBranch=(isPreventChangeBranch==false)?true:false">
+                                    <label>
+                                        {{"PreventChangingTheDefaultBranch"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                                <div class="row">
+                                    <input id="check_Preventautomaticdatechange" [checked]="isPreventChangeDate"
+                                        (change)="isPreventChangeDate=(isPreventChangeDate==false)?true:false"
+                                        type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_Preventautomaticdatechange">{{"Preventautomaticdatechange"|translate}}</label>
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isPreventChangeDate"
+                                    (change)="isPreventChangeDate=(isPreventChangeDate==false)?true:false">
+                                    <label>
+                                        {{"Preventautomaticdatechange"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                                <div class="row">
+                                    <input id="check_IsDefaultVoucherType" [checked]="isIsDefault"
+                                        (change)="isIsDefault=(isIsDefault==false)?true:false" type="checkbox"
+                                        class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_IsDefaultVoucherType">{{"IsDefaultVoucherType"|translate}}</label>
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isIsDefault"
+                                    (change)="isIsDefault=(isIsDefault==false)?true:false">
+                                    <label>
+                                        {{"IsDefaultVoucherType"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                                <div class="row">
+                                    <input id="check_SerialbyMonth" [checked]="isSerialByMonth"
+                                        (change)="isSerialByMonth=(isSerialByMonth==false)?true:false" type="checkbox"
+                                        class="input border mr-2 mr-3 ml-3"  (change)="onMonthChange()" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_SerialbyMonth">{{"SerialbyMonth"|translate}}</label>
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isSerialByMonth"
+                                    (change)="isSerialByMonth=(isSerialByMonth==false)?true:false">
+                                    <label>
+                                        {{"SerialbyMonth"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <div class="row">
+
+                                    <input id="check_Preventautomaticnumberingchange" [checked]="isPreventChangeSerial"
+                                        (change)="isPreventChangeSerial=(isPreventChangeSerial==false)?true:false"
+                                        type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_Preventautomaticnumberingchange">{{"Preventautomaticnumberingchange"|translate}}</label>
+
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isPreventChangeSerial"
+                                    (change)="isPreventChangeSerial=(isPreventChangeSerial==false)?true:false">
+                                    <label>
+                                        {{"Preventautomaticnumberingchange"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                                <div class="row">
+
+                                    <input id="check_PrintAfterSave" [checked]="isPrintAfterSave"
+                                        (change)="isPrintAfterSave=(isPrintAfterSave==false)?true:false" type="checkbox"
+                                        class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_PrintAfterSave">{{"PrintAfterSave"|translate}}</label>
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isPrintAfterSave"
+                                    (change)="isPrintAfterSave=(isPrintAfterSave==false)?true:false">
+                                    <label>
+                                        {{"PrintAfterSave"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+                                <div class="row">
+                                    <input id="check_PrintTemplate" [checked]="isPrintTemplate"
+                                        (change)="isPrintTemplate=(isPrintTemplate==false)?true:false" type="checkbox"
+                                        class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_PrintTemplate">{{"PrintTemplate"|translate}}</label>
+
+                                    <!-- <mat-checkbox class="pl-16" [checked]="isPrintTemplate"
+                                    (change)="isPrintTemplate=(isPrintTemplate==false)?true:false">
+                                    <label>
+                                        {{"PrintTemplate"|translate}}</label>
+                                </mat-checkbox> -->
+                                </div>
+
+                                   <div class="row">
+                                    <input id="check_serialByYear" [checked]="isSerialByYear"
+                                        (change)="isSerialByYear=(isSerialByYear==false)?true:false"
+                                        type="checkbox"  (change)="onYearChange()"
+                                        class="input border mr-2 mr-3 ml-3" />
+                                    <label class="cursor-pointer select-none"
+                                        for="check_serialByYear">{{"SerialbyYear"|translate}}</label>
+
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <div class="row">
+                                    <label for="defaultExchangeMethod">{{"DefultExchangeMethod"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [options]="paymentMethodList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" formControlName="paymentMethod"
+                                        autoWidth="false" [virtualScroll]="false">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <div class="row">
+                                    <label for="users">{{"Users"|translate}}</label>
+                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [options]="usersList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                        optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                        [filter]="true" filterBy="text" appendTo="body" formControlName="restricUserId"
+                                        autoWidth="false" [virtualScroll]="false">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="debitAccId">{{"DefultDebitAccount"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="debitAccId"
+                                    [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="creditAccId">{{"DefultCreditAccount"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="creditAccId"
+                                    [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">                               
+                                <label for="cardAccId">{{"CreditCardDefualtAccId"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" formControlName="cardAccId"
+                                        autoWidth="false"  [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="cliqAccId">{{"CliqDefualtAccId"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" formControlName="cliqAccId"
+                                    autoWidth="false"  [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+                             <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="defaultChequesGLAccount">{{"DefultChequesGLAccount"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    optionLabel="text" styleClass="input border w-full mt-1" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    formControlName="cheqAccId"  [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </legend>
+                </div>
+                <!--ArabicSignature-->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <legend style="width : 100%">
+                        <h3> {{"ArabicSignature"|translate}}</h3>
+                        <div class="grid grid-cols-12 gap-5">
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheFirstSignatures"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureAr1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheSecondSignatures"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureAr2">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"TheThirdSignature"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureAr3">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheFourthSignature"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureAr4">
+                            </div>
+                        </div>
+                    </legend>
+                </div>
+                <!--EnglishSignature-->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <legend style="width : 100%">
+                        <h3>{{"EnglishSignature"|translate}}</h3>
+                        <div class="grid grid-cols-12 gap-5">
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheFirstSignatures"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureEn1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheSecondSignatures"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureEn2">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold ">{{"TheThirdSignature"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureEn3">
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label
+                                    class="control-label font-weight-bold ">{{"TheFourthSignature"|translate}}</label>
+                                <input type="text" min="1" class="input border w-full mt-1"
+                                    formControlName="signatureEn4">
+                            </div>
+                        </div>
+                    </legend>
+                </div>
+                <!--Save Cancel Buttons-->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <div mat-dialog-actions align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            [disabled]="voucherTypesForm.invalid" type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' [routerLink]="['/VoucherType/VoucherTypesList']"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            type="button" icon="pi pi-undo"></p-button>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </form>
+
+    </div>
+</div>

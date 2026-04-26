@@ -1,0 +1,104 @@
+<div>
+
+
+    <p-table #dt [value]="authEvaluationDTsList" dataKey="id" [loading]="loading" [scrollable]="true"
+        [paginator]="false" [style]="{ width:'100%' }" [responsive]="true" [resizableColumns]="true"
+        styleClass="p-datatable-gridlines" [rowHover]="true" scrollDirection="horizontal">
+
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                    <p-button label='{{"AddLine"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-3 mt-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disabled"></p-button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 7%" pSortableColumn="ratingCode"> {{"RatingCode"|translate}}</th>
+                <th style="width: 7%" pSortableColumn="ratingDateFrom"> {{"RatingDateFrom"|translate}}</th>
+                <th style="width: 5%" pSortableColumn="ratingDateTo">{{"RatingDateTo"|translate}} </th>
+                <th style="width: 30%" pSortableColumn="ratingReason"> {{"ReasonForDate"|translate}}</th>
+                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex" [style]="{ width:'100%'}">
+            <tr>
+
+                <td style="width: 7%">
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' optionLabel="text"
+                        optionValue="id" [filter]="true" filterBy="text" [disabled]="disabled" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                        [options]="ratingCodeList" [(ngModel)]="row.ratingCode"
+                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                         class="p-dropdown"
+                        [ngClass]="{ 'invalid-field':row.ratingCode <= 0}">
+                    </p-dropdown>
+                    
+                </td>
+
+                <td style="width: 7%">
+                    <input type="date" class="input border w-full mt-1 " style="margin-top:10px;margin-bottom:10px;" [(ngModel)]="row.ratingDateFrom"
+                        [ngModelOptions]="{standalone: true}" [disabled]="disabled"
+                        [ngClass]="{ 'invalid-field':row.ratingDateFrom == ''}">
+                </td>
+
+                <td style="width: 5%">
+                    <input type="date" class="input border w-full mt-1 " style="margin-top:10px;margin-bottom:10px;" [(ngModel)]="row.ratingDateTo"
+                        [ngModelOptions]="{standalone: true}" [disabled]="disabled"
+                        [ngClass]="{ 'invalid-field':row.ratingDateTo == ''}">
+                </td>
+
+                <td style="width: 30%">
+                    <input type="text" class="input border w-full mt-1 " style="margin-top:10px;margin-bottom:10px;" [(ngModel)]="row.ratingReason"
+                        [ngModelOptions]="{standalone: true}" [disabled]="disabled"
+                        [ngClass]="{ 'invalid-field':row.ratingReason == ''}">
+                </td>
+
+                <td style="width: 5%">
+                    <button  type="button" (click)="deleteRow(i)" style="margin-top:10px;margin-bottom:10px;" [disabled]="disabled"> 
+                        <svg width="25px" height="25px" viewBox="0 0 1024 1024" fill="#dd0000" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#dd0000">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+<g id="SVGRepo_iconCarrier">
+
+<path d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z" fill=""/>
+
+<path d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z" fill=""/>
+
+</g>
+
+</svg>
+                    </button>
+&nbsp;&nbsp;
+                    <button mat-menu-item (click)="AttachmentAuthoritie(row.id, i)" style="margin-top:10px;margin-bottom:10px;" [disabled]="disabled">
+                        <!-- مرفقات السند -->
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 10.9696L11.9628 18.5497C10.9782 19.4783 9.64274 20 8.25028 20C6.85782 20 5.52239 19.4783 4.53777 18.5497C3.55315 17.6211 3 16.3616 3 15.0483C3 13.7351 3.55315 12.4756 4.53777 11.547M14.429 6.88674L7.00403 13.8812C6.67583 14.1907 6.49144 14.6106 6.49144 15.0483C6.49144 15.4861 6.67583 15.9059 7.00403 16.2154C7.33224 16.525 7.77738 16.6989 8.24154 16.6989C8.70569 16.6989 9.15083 16.525 9.47904 16.2154L13.502 12.4254M8.55638 7.75692L12.575 3.96687C13.2314 3.34779 14.1217 3 15.05 3C15.9783 3 16.8686 3.34779 17.525 3.96687C18.1814 4.58595 18.5502 5.4256 18.5502 6.30111C18.5502 7.17662 18.1814 8.01628 17.525 8.63535L16.5 9.601" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+                    </button>
+                    
+            </tr>
+          
+        </ng-template>
+
+
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd" style="margin-bottom: 10px;">
+                <td valign="top" colspan="5">
+                    <br>
+                    {{"noEntriesFoundLabel"|translate}}
+                    <br>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <br><br>
+</div>

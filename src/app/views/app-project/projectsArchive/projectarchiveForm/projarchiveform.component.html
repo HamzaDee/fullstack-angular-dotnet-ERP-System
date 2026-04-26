@@ -1,0 +1,211 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="ProjectPlansForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <!-- =================================================================================================-->
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <label for="VoucherType" class="control-label font-weight-bold">{{"documentType"|translate}}</label>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label for="radioIncoming" class="control-label font-weight-bold ml-3">{{ "Incoming" | translate
+                        }}:</label>
+                    <input type="radio" [value]="1" [checked]="selectedRadioValue == 1" id="radioIncoming"
+                        formControlName="voucherType" class="input border w-full mt-1" [(ngModel)]="selectedRadioValue"
+                        (change)="onRadioChange(1)" [attr.disabled]="disableAll || disableRadio ? 'disabled' : null" />
+                </div>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label for="radioOutgoing" class="control-label font-weight-bold ml-3">{{ "Outgoing" | translate
+                        }}:</label>
+                    <input type="radio" [value]="0" [checked]="selectedRadioValue == 0" id="radioOutgoing"
+                        formControlName="voucherType" class="input border w-full mt-1" [(ngModel)]="selectedRadioValue"
+                        (change)="onRadioChange(0)" [attr.disabled]="disableAll || disableRadio ? 'disabled' : null" />
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="voucherNo" class="control-label font-weight-bold">
+                      {{ serialNoLabelKey | translate }}<span class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('voucherNo')?.value)}"
+                        [attr.disabled]="disableAll || disableRadio ? 'disabled' : null"
+                        (blur)="CheckIfVoucherExist(this.ProjectPlansForm.value.voucherNo,selectedRadioValue,this.ProjectPlansForm.value.id)">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="voucherDate" class="control-label font-weight-bold">{{"DocumentDate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="date" formControlName="voucherDate" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="docClassification"
+                        class="control-label font-weight-bold">{{"DocumentClassification"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="documentClassificationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="docClassification" filterBy="text"
+                        [ngClass]="{ 'invalid-field': ProjectPlansForm.get('docClassification')?.value <= 0}"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                        (onChange)="GetDocName($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="docNo" class="control-label font-weight-bold">{{"documentNumber"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="docNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(ProjectPlansForm.get('docNo')?.value)}"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+            </div>
+           
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="docName" class="control-label font-weight-bold">{{"DocumentName1"|translate}}</label>
+                    <input type="text" formControlName="docName" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="authorityId"
+                        class="control-label font-weight-bold">{{this.VoucherAuthorityType|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="authorityId"
+                        [options]="authoritiesList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [readonly]="disableAll" [virtualScroll]="true" [lazy]="true" [panelStyle]="{'width': '100%'}"
+                        (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40"
+                        (onChange)="SelectAllAuthority($event)">
+                    </p-multiSelect>
+                </div>
+               
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="departmentId" class="control-label font-weight-bold">{{"Managements"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="departmentId"
+                        [options]="managmentList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false" [lazy]="true"
+                        [virtualScroll]="true" [panelStyle]="{'width': '100%'}" [disabled]="disableAll" [virtualScrollItemSize]="40"
+                        (onChange)="SelectAllDeparts($event)">
+                    </p-multiSelect>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="empId" class="control-label font-weight-bold">{{"Employeer"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="empId"
+                        [options]="employeesList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [readonly]="disableAll" [virtualScroll]="true" [lazy]="true" [panelStyle]="{'width': '100%'}"
+                        (onLazyLoad)="loadLazyOptionsEmp($event)" [virtualScrollItemSize]="40"
+                        (onChange)="SelectAllEmployees($event)">
+                    </p-multiSelect>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="serialNo" class="control-label font-weight-bold">{{"PaymentsNo"|translate}}</label>
+                    <input type="text" formControlName="serialNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <input type="checkbox" formControlName="hasPermission" class="input border mr-2 mr-3 ml-3"[(ngModel)]="showUsers">
+                    <label class="cursor-pointer select-none w-full" for="isActive">{{"SpecialPermession"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="showUsers">
+                    <label class="control-label font-weight-bold">{{"UsersWithAccess"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="userIds"
+                        [options]="userList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false">
+                    </p-multiSelect>
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                    <label for="notes" class="control-label font-weight-bold">{{"notes"|translate}}</label>
+                    <input type="text" formControlName="notes" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="docName2" class="control-label font-weight-bold">{{"DocumentName2"|translate}}</label>
+                    <input type="text" formControlName="docName2" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="otherNo" class="control-label font-weight-bold">{{"OtherInOutNo"|translate}}</label>
+                    <input type="text" formControlName="otherNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="senderDocNo"
+                        class="control-label font-weight-bold">{{"DocumentNoFromTheSendingParty"|translate}}</label>
+                    <input type="text" formControlName="senderDocNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="senderDocDate"
+                        class="control-label font-weight-bold">{{"DocumentDateFromTheSendingParty"|translate}}</label>
+                    <input type="date" formControlName="senderDocDate" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="fileArchivingNumber" class="control-label font-weight-bold">{{"ConfirmationNo"|translate}}</label>
+                    <input type="text" formControlName="fileArchivingNumber" class="input border w-full mt-1 "
+                     >
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="importanceId"
+                        class="control-label font-weight-bold">{{"priorityLevel"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="importanceDegreeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="importanceId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+            </div>             
+            <br>
+            <!-- =================================================================================================Details-->
+            <div class="card" class="card-blue">
+                <div class="intro-y tab-content">
+                    <div class="intro-y box px-5 pt-5">
+                        <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ProjectPlansForm.invalid  || disableSave" type="submit" [hidden]="showsave"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ProjectPlansForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteVoucher(this.ProjectPlansForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/ProjectArchive/ProjectArchiveList']"></p-button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

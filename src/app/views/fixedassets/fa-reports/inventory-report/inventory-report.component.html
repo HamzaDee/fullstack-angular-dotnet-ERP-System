@@ -1,0 +1,251 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="InventoryReportForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+
+
+            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"theOrigin"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' 
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="AssestList" [(ngModel)]="SelectedAssestList" formControlName="fixedAssetsId">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"ParentClass"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' 
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="FixedAssetTypeModelList" [(ngModel)]="SelectedFixedAssetType" formControlName="fixedAssetsTypesId">
+                </p-dropdown>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromPurchaseDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromPurchaseDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToPurchaseDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toPurchaseDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Employee"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="EmployeeList" [(ngModel)]="SelectedEmployee"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="employeeId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Location"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="LocationList" [(ngModel)]="SelectedLocation"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="locationId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="BranchList" [(ngModel)]="SelectedBranchList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="branchId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"ParentStatus"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="StatusList" [(ngModel)]="SelectedStatus"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="status"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"SubjectToConsumption"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="IsDepreciablList" [(ngModel)]="selectedIsDepreciabl"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="isDepreciable"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <input type="checkbox" class="input border w-full mt-1" formControlName="assetsWhoseValueHasBeenDepreciated">
+                <label class="control-label font-weight-bold ml-3" style="margin-right: 1rem;">{{"AssetsThatHaveBeenImpaired"|translate}}</label>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <input type="checkbox" class="input border w-full mt-1" formControlName="addedAssets">
+                <label class="control-label font-weight-bold ml-3" style="margin-right: 1rem;">{{"AddedAssets"|translate}}</label>  
+            </div>
+
+            <br>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 " > 
+
+                <p-button label='{{"ShowTransactions"|translate}}' class="ml-4"  
+                     styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                     (onClick)="GetReport()">
+                </p-button> 
+ 
+                &nbsp;
+ 
+                <p-button label='{{"NewSearch"|translate}}'  (onClick)="clearFormData()"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+                 </p-button>
+ 
+                &nbsp;
+ 
+                <p-button label='{{"Print"|translate}}' hidden
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component" >
+                </p-button>
+ 
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="intro-y box tab-content">
+            <div class="tab-content__pane active">
+                <div class="intro-y box px-5 pt-5">
+                    <div class="col-md-12" id="htmlData">
+
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true" 
+                 [globalFilterFields]="['fixedAssetNo','faName','faTypeName','faLocation','employeeName','depreciationPercentage','fixedAssetAmount','additions','decreases'
+                 ,'expenses','accumDepreciation','bookValue']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                <i class="pi pi-star-fill" 
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title= "{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="fixedAssetNo">{{"ParentNumber"|translate}}</th>
+                            <th  pSortableColumn="faName">{{"theOrigin"|translate}} </th>
+                            <th  pSortableColumn="faTypeName">{{"ParentClass"|translate}}</th>
+                            <th  pSortableColumn="faLocation"> {{"Location"|translate}} </th>
+                            <th  pSortableColumn="employeeName">{{"Employee"|translate}}</th>
+                            <th  pSortableColumn="depreciationPercentage">{{"PersentConsumption"|translate}}</th>
+                            <th  pSortableColumn="purchaseDate">{{"PurchaseDate"|translate}}</th>
+                            <th pSortableColumn="fixedAssetAmount">{{"ParentCost"|translate}}</th>
+                            <th  pSortableColumn="additions">{{"Additions"|translate}}</th>
+                            <th  pSortableColumn="decreases">{{"Deleteation"|translate}}</th>
+                            <th  pSortableColumn="expenses">{{"Expenses"|translate}}</th>
+                            <th pSortableColumn="accumDepreciation">{{"AccumulatedDepreciation"|translate}}</th>
+                            <th  pSortableColumn="bookValue">{{"NominalValue"|translate}}</th>
+                            <th style="width: 10%" class="text-center-m"><i class="pi pi-cog"style="font-size: 1.2rem"></i></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td>{{item.fixedAssetNo}}</td>
+                            <td>{{item.faName}}</td>
+                            <td>{{item.faTypeName}}</td>
+                            <td>{{item.faLocation}}</td>
+                            <td>{{item.employeeName}}</td>
+                            <td >{{item.depreciationPercentage.toFixed(3)}}</td>
+                            <td>{{item.purchaseDate| date: "dd/MM/yyyy"}}</td>
+                            <td>{{item.fixedAssetAmount}}</td>
+                            <td>{{item.additions}}</td>
+                            <td>{{item.decreases}}</td>
+                            <td>{{item.expenses}}</td>
+                            <td>{{item.accumDepreciation}}</td>
+                            <td>{{item.bookValue}}</td>
+
+                            <td style="width:5%">
+                                <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                    <mat-icon class="">more_vert</mat-icon>
+                                </button>
+
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="detailsTransactionOperation(item.fixedAssetId)">
+                                        <i class="material-icons" style="color:blue">details</i> &nbsp;{{"ShowDetails"|translate}} 
+                                    </button>
+
+                                    <button mat-menu-item  (click)="AssetTransactionReport(item.fixedAssetId)">
+                                        <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"AssetTransactionReport"|translate}} 
+                                    </button>          
+
+                                </mat-menu>
+                             
+                            </td>
+                        </tr>
+                    </ng-template>
+
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="14"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 90rem"></td>
+                            <td style="flex: 0 0 30rem">{{"total"|translate}}</td>
+                            <td class="total_b" style="text-align: right;">{{fixedAssetAmountTotal}}</td>                        
+                            <td class="total_b" >{{additionsTotal}}</td>                        
+                            <td class="total_b" >{{decreasesTotal}}</td>                        
+                            <td class="total_b" >{{expensesTotal}}</td>                        
+                            <td class="total_b" >{{accumDepreciationTotal}}</td> 
+                            <td class="total_b" >{{bookValueTotal}}</td>   
+                            <td style="flex: 0 0 90rem"></td>                     
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+              </div>
+           </div>
+         </div>
+       </div>
+    </form>
+</div>

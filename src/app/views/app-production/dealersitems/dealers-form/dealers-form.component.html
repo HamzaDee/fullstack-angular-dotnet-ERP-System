@@ -1,0 +1,128 @@
+<mat-dialog-content >
+    <form [formGroup]="DealerItemsForm" (ngSubmit)="OnSaveForms()">
+        <div class="content">
+            <div class="card">
+                <div class="card-header text-center mt-5">
+                    <h1>{{data.title}}</h1>
+                </div>
+                <input type="number" formControlName="id" hidden>
+                <!-- <div class="intro-y box p-5 mt-12 sm:mt-5"> -->
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-6 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold mr-2">{{"DealerNo"|translate}}: </label>
+                            <label class="control-label font-weight-bold">{{data.id}}</label>
+                            <input type="text" formControlName="no" class="form-control " hidden>
+                        </div>
+                        <div class="col-span-6 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold mr-2">{{"Supplier"|translate}}: </label>
+                            <label class="control-label font-weight-bold">{{data.dealerName}}</label>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                            <p-table #dt [value]="dealersItemsList" dataKey="id" [scrollable]="true" 
+                            scrollHeight="250px" [style]="{width:'100%'}" [responsive]="true" [resizableColumns]="true" 
+                            styleClass="p-datatable-gridlines" [rowHover]="true" >
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="flex: 0 0 25%" pSortableColumn="itemNo">{{"materialName"|translate}}<p-sortIcon field="itemNo"></p-sortIcon></th>
+                                        <th style="flex: 0 0 20%" pSortableColumn="unitNo">{{"unit"|translate}} <p-sortIcon field="unitNo"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%" pSortableColumn="prodCapacityQty">{{"Price"|translate}} <p-sortIcon field="prodCapacityQty"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%" pSortableColumn="hoursQty">{{"countryOrigin"|translate}} <p-sortIcon field="hoursQty"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%" pSortableColumn="hoursQty">{{"Currency"|translate}} <p-sortIcon field="hoursQty"></p-sortIcon></th>    
+                                        <th style="flex: 0 0 10%" pSortableColumn="prodCapacityQty">{{"DeliveryTime"|translate}} <p-sortIcon field="prodCapacityQty"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%; white-space: normal !important;" pSortableColumn="prodCapacityQty">{{"MinQtyOrder"|translate}} <p-sortIcon field="prodCapacityQty"></p-sortIcon></th>  
+                                        <th style="flex: 0 0 10%; white-space: normal !important;" pSortableColumn="prodCapacityQty">{{"PackageSize"|translate}} <p-sortIcon field="prodCapacityQty"></p-sortIcon></th>                              
+                                        <th style="flex: 0 0 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-ditemList let-i="rowIndex">
+                                    <tr>
+                                        <td style="flex: 0 0 25%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="itemsList" 
+                                            styleClass="input border w-full mt-1" optionLabel="text"  
+                                            optionValue="data1" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="true" (onChange)="GetItemUnits($event,i)"
+                                            [(ngModel)]="ditemList.itemNo" [ngClass]="{ 'invalid-field': ditemList.itemNo <= 0}"
+                                            [ngModelOptions]="{standalone: true}">
+                                        </p-dropdown></td>                                    
+                                        <td style="flex: 0 0 15%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="unitsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false" 
+                                            [(ngModel)]="ditemList.unitNo" [ngClass]="{ 'invalid-field': ditemList.unitNo <= 0}"
+                                            [ngModelOptions]="{standalone: true}">
+                                        </p-dropdown>
+                                        </td>
+                                        <td style="flex: 0 0 10%"><input type="number" [(ngModel)]="ditemList.price" [ngClass]="{ 'invalid-field': ditemList.price<=0 }"
+                                                class="input border w-full mt-1 " 
+                                                [ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td style="flex: 0 0 15%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="origCountryList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false" 
+                                            [(ngModel)]="ditemList.originCountry" [ngModelOptions]="{standalone: true}">
+                                            </p-dropdown>
+                                        </td>
+
+                                        <td style="flex: 0 0 15%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="currList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false" 
+                                            [(ngModel)]="ditemList.currencyId" [ngModelOptions]="{standalone: true}">
+                                            </p-dropdown>
+                                        </td>
+
+                                        <td style="flex: 0 0 10%"><input type="number" [(ngModel)]="ditemList.deliveryTime" 
+                                                class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td style="flex: 0 0 10%"><input type="number" [(ngModel)]="ditemList.minOrderQty" 
+                                            class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td style="flex: 0 0 10%"><input type="number" [(ngModel)]="ditemList.packageSize" 
+                                            class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}" >
+                                        </td>
+                                        <td style="flex: 0 0 5%">
+                                            <button mat-menu-item (click)="deleteRow(i)"> <i
+                                                    class="material-icons" style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+    
+                        <div class=" col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                            align="end">
+                            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                type="submit" [disabled]="dealersItemsList.length<=0 || disableSave"></p-button>
+                            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                                (click)="dialogRef.close(false)"></p-button>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        <!-- </div> -->
+    </form>
+    </mat-dialog-content>

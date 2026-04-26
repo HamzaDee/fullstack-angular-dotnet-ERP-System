@@ -1,0 +1,29 @@
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.companyImage {
+    width: 130px;
+    height: 130px;
+    /*border-radius: 30%;*/
+}
+
+.border-grey {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ede8e8;
+    border-radius: 0.3rem;
+}
+.disabled-tab {
+    pointer-events: none; /* Prevent interactions */
+    opacity: 0.5; /* Visually indicate the tab is disabled */
+}
+
+  

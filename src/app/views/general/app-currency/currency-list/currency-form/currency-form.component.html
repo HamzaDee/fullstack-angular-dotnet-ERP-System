@@ -1,0 +1,78 @@
+<form [formGroup]="currencyForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5 pop-scrol">
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"ArabicName"|translate}} <span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="currNameA" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"EnglishName"|translate}} <span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="currNameE" class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"shortEnglishName"|translate}}</label>
+                        <input type="text" formControlName="shortNameE" class="input border w-full mt-1 "  maxlength="3">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"shortArabicName"|translate}}</label>
+                        <input type="text" formControlName="shortNameA" class="input border w-full mt-1 " maxlength="3">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"CoinNameEnglish"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="coinNameE" class="input border w-full mt-1 "  maxlength="10">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"CoinNameArabic"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="coinNameA" class="input border w-full mt-1 "  maxlength="10">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"CurrencyMthannaName(Ar)"|translate}}</label>
+                        <input type="text" formControlName="muthannaName" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"CurrencyPluralName"|translate}}</label>
+                        <input type="text" formControlName="pluralName" class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"ExchangeRatio"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" formControlName="exchangeRate" class="input border w-full mt-1 ">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"Symbol"|translate}}</label>
+                        <input type="text" formControlName="symbol" class="input border w-full mt-1 ">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"DecimalPlaces"|translate}}</label>
+                        <input type="text" formControlName="decimalPlaces" class="input border w-full mt-1 ">
+                    </div>
+
+
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                        align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [disabled]="currencyForm.invalid"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            (click)="dialogRef.close(false)"></p-button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>

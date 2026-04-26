@@ -1,0 +1,77 @@
+<p-table #dt [value]="Data" [rows]="100" [paginator]="true" 
+    [globalFilterFields]="['countryName','itemName','batchNo']" 
+    rowGroupMode="subheader" groupRowsBy="itemName" 
+   styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+   currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+   [showCurrentPageReport]="true">
+
+   <ng-template pTemplate="caption">
+       <div class="grid grid-cols-12 gap-5 ">
+           <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+               <span class="p-input-icon-left">
+                   <i class="pi pi-search"></i>
+                   <input class="pInputText input border w-full mt-1" pInputText type="text"
+                       (input)="dt.filterGlobal($event.target.value, 'contains')"
+                       placeholder=' {{"search"|translate}} ' />
+               </span>
+           </div>
+           <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+               <i class="pi pi-star-fill" 
+                   [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                   (click)="updateFavourite(this.screenId)"
+                   title= "{{'AddToFavourite' | translate}}"
+                   tooltipposition="bottom">
+               </i>
+               <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+               pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+               tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+               <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+               </button>
+               <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                       pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                       tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                       <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+               </button>
+           </div>
+       </div>
+   </ng-template>
+
+   <ng-template pTemplate="header">
+       <tr>
+        <th>{{"ProductName"|translate}}</th>
+        <th style="width: 10%;">{{"RunNumber"|translate}}</th>
+        <th style="width: 10%;">{{"Quantity"|translate}}</th>
+        <th>{{"COUNTRY"|translate}}</th>      
+       </tr>
+   </ng-template>
+   <ng-template pTemplate="groupheader" let-item>
+        <tr pRowGroupHeader style="background-color: greenyellow;">
+            <td colspan="5">
+                <span class="p-text-bold p-ml-2">{{item.itemName}}</span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="groupfooter" let-item>
+        <tr class="p-rowgroup-footer" style="background-color: yellow;">
+            <td colspan="2">
+                <div style="text-align: center; width: 100%">{{"total"|translate}} :</div>
+            </td>
+            <td>{{calculateSum(item.itemName)| number: '1.0-0'}}</td>
+            <td></td>
+        </tr>
+    </ng-template>
+   <ng-template pTemplate="body" class=".p-datatable-tbody " let-item let-rowIndex="rowIndex">
+       <tr >
+        <td>{{item.itemName}}</td>
+        <td style="width: 10%;">{{item.batchNo}}</td>
+        <td style="text-align: right;width: 10%;" >{{item.countryQty| number: '1.0-0'}}</td>
+        <td>{{item.countryName}}</td>       
+       </tr>
+   </ng-template>
+   <ng-template pTemplate="emptymessage">
+       <tr class="odd">
+           <td valign="top" colspan="4"> {{"noEntriesFoundLabel"|translate}}</td>
+       </tr>
+   </ng-template>
+
+</p-table>

@@ -1,0 +1,203 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+  <form [formGroup]="CreditCardsStatusForm">
+    <div class="grid grid-cols-12 gap-3 pt-2">
+
+      
+      <div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+        <label class="control-label font-weight-bold">{{ "VoucherType" | translate }}</label>
+        <p-dropdown
+          emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+          [options]="VoucherTypeList"
+          formControlName="voucherTypeId"
+          [style]="{'minWidth':'100%', 'width': '100%'}"
+          styleClass="input border w-full mt-1"
+          optionLabel="text"
+          optionValue="id"
+          [filter]="true"
+          filterBy="text"
+          appendTo="body"
+          autoWidth="false"
+          [virtualScroll]="false">
+        </p-dropdown>
+      </div>
+
+     
+      <div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+        <label class="control-label font-weight-bold">{{ "Branch" | translate }}</label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'[options]="BranchList"
+          formControlName="branchId"[style]="{'minWidth':'100%', 'width': '100%'}"
+          styleClass="input border w-full mt-1"optionLabel="text"optionValue="id"[filter]="true"
+          filterBy="text"appendTo="body"autoWidth="false"[virtualScroll]="false">
+        </p-dropdown>
+      </div>
+
+      <div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+        <label class="control-label font-weight-bold">{{ "CreditCardNo" | translate }}</label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'[options]="CreditCardsList"
+          formControlName="cardNo"[style]="{'minWidth':'100%', 'width': '100%'}"
+          styleClass="input border w-full mt-1" optionLabel="text"
+          optionValue="id"[filter]="true"filterBy="text"appendTo="body"autoWidth="false"
+          [virtualScroll]="false">
+        </p-dropdown>
+      </div>
+
+      <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+        <label class="control-label font-weight-bold">{{ "FromDate" | translate }}</label>
+        <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+      </div>
+
+      <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+        <label class="control-label font-weight-bold">{{ "ToDate" | translate }}</label>
+        <input type="date" class="input border w-full mt-1" formControlName="toDate">
+      </div>
+<div class="col-span-12 sm:col-span-4 xxl:col-span-4">
+  <div class="flex gap-6 mt-2">
+
+    <label class="flex items-center gap-2 cursor-pointer">
+      <input type="radio" formControlName="isCollected" [value]="-1">
+      <span>{{ "All" | translate }}</span>
+    </label>
+
+    <label class="flex items-center gap-2 cursor-pointer">
+      <input type="radio" formControlName="isCollected" [value]="1">
+      <span>{{ "Outcome" | translate }}</span>
+    </label>
+
+    <label class="flex items-center gap-2 cursor-pointer">
+      <input type="radio" formControlName="isCollected" [value]="0">
+      <span>{{ "NotOutcome" | translate }}</span>
+    </label>
+
+  </div>
+</div>
+
+
+
+  
+      <div class="flex gap-5 mr-2 col-span-12">
+        <p-button
+          label='{{"ShowRecord"|translate}}'
+          styleClass="p-ripple p-element button w-32 items-center justify-center bg-theme-1 text-white p-button p-component"
+          icon=""
+          (click)="GetReport()">
+        </p-button>
+
+        <p-button
+          label='{{"NewSearch"|translate}}'
+          styleClass="p-ripple p-element button w-32 items-center justify-center bg-theme-1 text-white p-button p-component"
+          icon=""
+          (click)="clearFormData()">
+        </p-button>
+      </div>
+
+    </div>
+
+    <br>
+
+
+    <div class="grid grid-cols-12 gap-5 pt-5">
+      <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+        <div class="table-container">
+
+          <p-table
+            #dt
+            [value]="Data"
+            class="p-datatable-customers"
+            [globalFilterFields]="['voucherNo','voucherName','creditCardNo','creditCardType','creditCardStatus','amount','currencyId','curRate','amountJod']">
+
+          
+            <ng-template pTemplate="caption">
+              <div class="w-full flex justify-between items-center mt-3 mb-3 px-3">
+
+                <div class="flex items-center gap-2">
+                  <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input class="pInputText input border w-full mt-1"
+                      pInputText
+                      type="text"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')"
+                      placeholder='{{ "search" | translate }}' />
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-3">
+               <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+
+                  <button title="{{'ExportToExcel' | translate}}"
+                          type="button"
+                          pbutton
+                          pripple
+                          (click)="exportExcel()"
+                          tooltipposition="bottom"
+                          class="button px-2 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                  </button>
+
+                  <button title="{{'ExportToPdf' | translate}}"
+                          type="button"
+                          pbutton
+                          pripple
+                          (click)="exportPdf()"
+                          tooltipposition="bottom"
+                          class="button px-2 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                  </button>
+                </div>
+
+              </div>
+            </ng-template>
+
+         
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{"VoucherNo"|translate}}</th>
+                <th>{{"VoucherType"|translate}}</th>
+                <th>{{"VoucherDate"|translate}}</th>
+                <th>{{"CreditCardNo"|translate}}</th>
+                <th>{{"CreditCardType"|translate}}</th>
+                <th>{{"CardStatus"|translate}}</th>
+                <th>{{"Amount"|translate}}</th>
+                <th>{{"Currency"|translate}}</th>
+                <th>{{"CurrenyRate"|translate}}</th>
+                <th>{{"localcurrency"|translate}}</th>
+              </tr>
+            </ng-template>
+
+           
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{ item.voucherNo }}</td>
+                <td>{{ item.voucherName }}</td>
+                <td>{{ item.voucherDate | date:'yyyy-MM-dd' }}</td>
+                <td>{{ item.creditCardNo }}</td>
+                <td>{{ item.creditCardType }}</td>
+                <td>{{ item.creditCardStatus }}</td>
+                <td>{{ (item.amount || 0) | number:'1.3-3' }}</td>
+                <td>{{ item.currencyName  }}</td>
+                <td>{{ (item.currRate || 0) | number:'1.3-3' }}</td>
+                <td>{{ (item.amountJod || 0) | number:'1.3-3' }}</td>
+              </tr>
+
+            </ng-template>
+
+
+             <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="8"></td>
+                            <td>{{"total"|translate}}</td>
+                            <td>{{ totalFormatted }}</td>
+                        </tr>
+              </ng-template>
+        
+          </p-table>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,110 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"SalesRequestForm"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+<div class="col-span-2"> {{"VoucherType"|translate}} : </div>
+<div class="pt-hlf pb-hlf col-span-2" > {{data.transTypeName}}</div>
+
+<div class="col-span-2"> {{"VoucherNo"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2" > {{data.voucherNo}}</div>
+
+<div class="pt-hlf pb-hlf col-span-2">{{"VoucherDate"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  >{{data.voucherDate| date: 'dd/MM/yyyy'}}</div> 
+
+<div class="pt-hlf pb-hlf col-span-2">{{"Store"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.storeName}}</div>
+
+<div class="pt-hlf pb-hlf col-span-2">{{"Branch"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.branchName}}</div>
+
+<div class="col-span-2"> {{"Client"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.supplierName}}</div>
+
+<div class="col-span-2"> {{"RequestParty"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.requestPartyName}}</div>
+
+<div class="col-span-2"> {{"DeliveryTime"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.deliveryPeriod}}</div>
+
+<div class="col-span-2"> {{"SalesEmployee"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.employeeName}}</div>
+
+<div class="col-span-2"> {{"OrderType"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-2"  > {{data.typeRequestName}}</div>
+
+<div class="col-span-2"> {{"PDTerms"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-6"  > {{data.pdTermsName}}</div>
+
+<div class="col-span-1"> {{"Currency"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-3" > {{data.currencyName}}</div>
+
+<div class="col-span-2"> {{"ConverionFactor"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-6" >{{data.currRate}} </div>
+
+<div class="col-span-1"> {{"Notes"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" > {{data.note}}</div>
+
+</div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="color: black; border: solid black"> {{"materialName"|translate}}</th>
+    <th style="color: black; border:solid black">  {{"Unit"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Quantity"|translate}}</th>
+    <th style="color: black; border: solid black"> {{"Cost"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Total"|translate}}</th>
+    <th style="color: black; border: solid black"> {{"Discount"|translate}}</th>
+    <th style="color: black; border:solid black">  {{"Tax"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"TaxAmt"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"NetTotal"|translate}} </th> 
+    <th style="color: black; border:solid black">  {{"Store"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Bonus"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"BounsUnit"|translate}} </th> 
+</tr>
+</thead>
+
+<tbody>
+ <tr *ngFor="let product of SalesRequestDTList" style="color: black;">
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.itemsName }}</b></td>
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.unitName }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.qty }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ formatCurrency(product.price, data.currencyDecimals) }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ formatCurrency(product.total, data.currencyDecimals) }}</b></td>
+    <td style="width:27%;font-size:0.8rem;"><b>{{ formatCurrency(product.discount, data.currencyDecimals) }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.taxName }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ formatCurrency(product.taxAmount, data.currencyDecimals) }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ formatCurrency(product.AllTotal , data.currencyDecimals)}}</b></td> 
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.storeName }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ product.bonus }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ product.unitName }}</b></td> 
+</tr> 
+</tbody>
+
+<tfoot>
+      <th style="width:22%;color: black; border: solid black"> {{"total"|translate}}</th> 
+    <th style="width:22%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <td style="width:15%;font-size:0.8rem;"><b>{{ formatCurrency(sumTotal, data.currencyDecimals)}}</b></td>
+    <td style="width:27%;font-size:0.8rem;"><b>{{ formatCurrency(sumDiscount, data.currencyDecimals)}}</b></td> 
+    <th style="width:15%;"></th> 
+    <td style="width:18%;font-size:0.8rem;"><b>{{ formatCurrency(sumTax, data.currencyDecimals)}}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ formatCurrency(sumAllTotal, data.currencyDecimals)}}</b></td>  
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:18%;color: black; border: solid black"></th> 
+    <th style="width:18%;color: black; border: solid black"></th>  
+</tfoot>
+</table>
+
+
+
+
+

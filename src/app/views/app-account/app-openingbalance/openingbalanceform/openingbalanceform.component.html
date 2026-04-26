@@ -1,0 +1,277 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="OpeningBalanceAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherType"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId" [(ngModel)]="selectedVoucherType"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"  
+                        (onChange)="getVoucherNo($event)" [disabled]="disableAll || disableVouchertype"
+                        [ngClass]="{ 'invalid-field': OpeningBalanceAddForm.get('voucherTypeId').value <= 0}" >
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(OpeningBalanceAddForm.get('voucherNo').value)}" 
+                        (blur)="voucherNoBlur(OpeningBalanceAddForm.value.voucherNo, OpeningBalanceAddForm.value.voucherTypeId)"
+                      [attr.disabled]="allowEditVoucherSerial || disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)"
+                        class="input border w-full mt-1 " [ngClass]="{ 'invalid-field': !validDate}"
+                        [attr.disabled]="allowEditDate|| disableAll  ? 'disabled' : null">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="allowEditBranch|| disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ConverionFactor"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="currRate" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null"
+                        [readOnly]="disableCurrRate">
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+            </div>
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"VoucherDetails"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="accVouchersDTsList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 mr-8">
+                                            <p-button label='{{"AddLine"|translate}}' (click)="AddNewLine()"
+                                                [disabled]="disableAll"
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus"></p-button>
+                                            &nbsp;
+                                            <p-button  label='{{"BringAllAccounts"|translate}}' (click)="GetAccounts()"
+                                                class="p-ripple p-element button w-40 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component">
+                                               </p-button>
+                                            &nbsp;
+                                            <p-button label='{{"DelAll"|translate}}' (click)="DeleteAccountsBudgets()"
+                                                class="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component">
+                                                </p-button>
+
+                                            <p-button 
+                                                label='{{"DownloadExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-42 mr-2 mb-2 items-center justify-center text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel"
+                                                (click)="exportHeadersToExcel()">
+                                            </p-button>
+
+                                            <input type="file" #fileInput (change)="ImportFromExcel($event)" accept=".xlsx, .xls" style="display: none;" />
+                                                <p-button label='{{"ImportFromExcel"|translate}}'   
+                                                    styleClass="p-ripple p-element button w-82 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                    [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                    icon="pi pi-file-excel" (click)="onImportClick(fileInput)">
+                                                </p-button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 20%" pSortableColumn="accountId">{{"AccountNo"|translate}}
+                                        </th>
+                                        <th style="width: 10%" pSortableColumn="debit">{{"Debit"|translate}}</th>
+                                        <th style="width: 10%" pSortableColumn="credit">{{"Credit"|translate}}</th>
+                                        <th style="width: 20%" pSortableColumn="note">{{"Notes"|translate}}</th>
+                                        <th style="width: 10%" *ngIf="useCostCenter">{{"CostCenter"|translate}}</th>
+                                        <th style="width: 10%" *ngIf="UseProjects">{{"Projects"|translate}}</th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-accountList
+                                    let-i="rowIndex">
+                                    <tr>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="accountList.accountId"
+                                                [ngClass]="{ 'invalid-field': accountList.accountId <= 0}"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                (onChange)="OnAccountChange($event,accountList,i)"
+                                                (keydown)="handleF3Key($event, accountList,i)"  >
+                                            </p-dropdown></td>
+                                        <td><input type="number" [(ngModel)]="accountList.debit"
+                                                (ngModelChange)="onDebitChange(accountList)"
+                                                (blur)="formatAmt(accountList,0)" class="input border w-full mt-1 "
+                                                [ngClass]="{ 'invalid-field': isOneEmpty(accountList) }"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                (keydown)="handleF3Key($event, accountList,i)"  >
+                                        </td>
+                                        <td><input type="number" [(ngModel)]="accountList.credit"
+                                                [ngClass]="{ 'invalid-field': isOneEmpty(accountList) }"
+                                                (blur)="formatAmt(accountList,1)" class="input border w-full mt-1 "
+                                                (ngModelChange)="onCreditChange(accountList)"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                (keydown)="handleF3Key($event, accountList,i)"  >
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="accountList.note"
+                                                class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                                [disabled]="disableAll" (keydown)="handleF3Key($event, accountList,i)"  >
+                                        </td>
+                                        <td *ngIf="useCostCenter"><p-button label='{{"CostCenter"|translate}}'
+                                                styleClass="p-ripple p-element button mt-1 w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                (onClick)="OpenCostcenterTransForm(accountList, i)"
+                                                [disabled]="disableAll || accountList.accountId <= 0 || accountList.debit + accountList.credit == 0" ></p-button>
+                                        </td>
+
+                                        <td *ngIf="UseProjects"><p-button label='{{"Projects"|translate}}'
+                                                styleClass="p-ripple p-element button mt-1 w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                (onClick)="OpenProjectsTransForm(accountList, i)"
+                                                [disabled]="disableAll || accountList.accountId <= 0 || accountList.debit + accountList.credit == 0 || disableSave"></p-button>
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="" type="button">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button mat-menu-item (click)="onAddRowBefore(i)">
+                                                    <i class="material-icons" style="color:green">add</i>
+                                                    &nbsp;{{"AddRowBefore"|translate}}
+                                                </button>
+                                                <button mat-menu-item (click)="deleteRow(i)"> <i class="material-icons"
+                                                        style="color:red">delete</i>
+                                                    &nbsp;{{"Delete"|translate}} </button>
+                                                <button mat-menu-item (click)="CopyRow(accountList,i)"> <i
+                                                        class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i>
+                                                    &nbsp;{{"CopyRow"|translate}} </button>
+                                            </mat-menu>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum(1) }}</td>
+                                        <td>{{calculateSum(2) }}</td>
+                                        <td colspan="4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: black;">{{"Difference"|translate}}</td>
+                                        <td style="color: black;">{{calculateSum(0)}}</td>
+                                        <td></td>
+                                        <td colspan="4"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <label *ngIf="showBalance" class="control-label font-weight-bold"
+                    style="color: rgb(255, 0, 0); font-size: large;">
+                    {{this.NoteBalance}}
+                </label>
+                <label *ngIf="showAlert" class="control-label font-weight-bold"
+                    style="color: rgb(255, 0, 0); font-size: large;">
+                    {{NoteAlert|translate}}
+                </label>
+                <label *ngIf="showPrevent" class="control-label font-weight-bold"
+                    style="color: rgb(255, 0, 0); font-size: large;">
+                    {{NotePrevenet|translate}}
+                </label>
+
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" id="tempSave" class="input border mr-2 mr-3 ml-3">
+                    <label class="cursor-pointer select-none w-full" for="isActive">{{"TempSave"|translate}}</label>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="OpeningBalanceAddForm.invalid || !this.validDate ||this.disableSave" type="submit"
+                    [hidden]="this.opType == 'Show'"></p-button>
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintOpeningBalance(this.OpeningBalanceAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="OpeningBalanceAddForm.invalid" type="button"
+                    [hidden]="this.opType == 'Show'"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="OpeningBalanceAddForm.invalid" type="button" [hidden]="this.opType == 'Show'"
+                    (onClick)="DeleteVoucher(this.OpeningBalanceAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/OpeningBalance/OpeningBalanceList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

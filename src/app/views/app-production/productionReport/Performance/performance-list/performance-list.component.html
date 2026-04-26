@@ -1,0 +1,91 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+            <input type="radio" name="transTypeId" [value]="2" [(ngModel)]="type" class="input w-full border mt-1">
+            <label class="radio-align control-label mb-8 mr-2">{{"annual"|translate }}</label>
+        </div>
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <input type="radio" name="transTypeId" [value]="1" [(ngModel)]="type" class="input w-full border mt-1">
+            <label class="radio-align control-label mb-8 mr-2">{{"Monthly"|translate}}</label>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+            <label class="control-label font-weight-bold">{{"Year"|translate}}</label>
+            <input type="number" class="input border w-full mt-1" [(ngModel)]="year">
+        </div>
+    </div>
+    <br>
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+        <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetReport()"
+            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            type="submit" [disabled]="year == 0 || year == null">
+        </p-button>
+        <!-- <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component">
+        </p-button> -->
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="type==2">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer  mt-1">
+            <label class="control-label mb-4">{{"ActualquantityRequired"|translate}}</label>
+            <input type="number" class="input w-full border mt-1" [(ngModel)]="requiredTotal" readonly>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="type==2">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold">{{"Actualquantityproduced"|translate}}</label>
+            <input type="number" class="input border w-full mt-1" [(ngModel)]="manufactTotal" readonly>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="type==2">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer  mt-1">
+            <label class="control-label mb-4">{{"PerformanceList"|translate}}</label>
+            <input type="text" class="input w-full border mt-1" [(ngModel)]="performPer" readonly>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5 pt-5" *ngIf="type==1">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer  mt-1">
+            <p-table #dt [value]="dataMonth" styleClass="p-datatable-gridlines" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 16%">{{"Month"|translate}}</th>
+                        <th style="width: 7%">1</th>
+                        <th style="width: 7%">2</th>
+                        <th style="width: 7%">3</th>
+                        <th style="width: 7%">4</th>
+                        <th style="width: 7%">5</th>
+                        <th style="width: 7%">6</th>
+                        <th style="width: 7%">7</th>
+                        <th style="width: 7%">8</th>
+                        <th style="width: 7%">9</th>
+                        <th style="width: 7%">10</th>
+                        <th style="width: 7%">11</th>
+                        <th style="width: 7%">12</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.m1}}</td>
+                        <td>{{item.m2}}</td>
+                        <td>{{item.m3}}</td>
+                        <td>{{item.m4}}</td>
+                        <td>{{item.m5}}</td>
+                        <td>{{item.m6}}</td>
+                        <td>{{item.m7}}</td>
+                        <td>{{item.m8}}</td>
+                        <td>{{item.m9}}</td>
+                        <td>{{item.m10}}</td>
+                        <td>{{item.m11}}</td>
+                        <td>{{item.m12}}</td>
+                    </tr>                    
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

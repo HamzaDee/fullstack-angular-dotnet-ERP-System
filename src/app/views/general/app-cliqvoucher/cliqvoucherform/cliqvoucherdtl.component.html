@@ -1,0 +1,100 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+      <div class="card" class="card-blue">  
+            <div class="intro-y tab-content"> 
+                  <div class="intro-y box px-5 pt-5">
+                     <p-table #dt [value]="cliqList" dataKey="id"  styleClass="p-datatable-gridlines" [rowHover]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="addRow()" [disabled]="readonly"></p-button>
+                                        </div>
+                                    </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 15%">{{ "ACCOUNT" | translate }}</th>
+                                <th style="width: 15%">{{ "CliqType" | translate }}</th>
+                                <th style="width: 15%">{{ "CliqName" | translate }}</th>
+                                <th style="width: 15%">{{ "ProviderName" | translate }}</th>
+                                <th style="width: 15%">{{ "TheAmount" | translate }}</th>
+                                <th style="width: 15%">{{ "transNo" | translate }}</th>
+                                <th style="width: 3%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>                                                                                                                                
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-row let-i="rowIndex">
+                            <tr>
+                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="accountList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    [virtualScroll]="false" [(ngModel)]="row.accId"
+                                    [ngClass]="{ 'invalid-field': row.accId <= 0}"
+                                    [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40"
+                                    [ngModelOptions]="{standalone: true}" [disabled]="readonly || cliqAccId > 0 ">
+                                </p-dropdown></td>
+
+                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="cliqTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                    [virtualScroll]="false" [(ngModel)]="row.cliqType"
+                                    [ngClass]="{ 'invalid-field': row.cliqType <= 0}"
+                                    [ngModelOptions]="{standalone: true}" [disabled]="readonly">
+                                </p-dropdown></td>
+                                 <td><input type="text" [(ngModel)]="row.cliqName" class="input border w-full mt-1 "
+                                        [ngClass]="{ 'invalid-field': row.cliqName == null || row.cliqName ==undefined || row.cliqName == ''}"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="readonly">
+                                </td>
+                                <td><input type="text" [(ngModel)]="row.providerName" class="input border w-full mt-1 "
+                                        [ngModelOptions]="{standalone: true}" [disabled]="readonly">
+                                </td>
+                                                                                     
+                                <td><input type="number" [(ngModel)]="row.amount" class="input border w-full mt-1 "
+                                    [ngModelOptions]="{standalone: true}" [ngClass]="{ 'invalid-field': row.amount <= 0}"
+                                     (ngModelChange)="onAmountChange()" [disabled]="readonly">
+                                </td>
+                                
+                               
+                                <td><input type="text" [(ngModel)]="row.transNo" class="input border w-full mt-1 "
+                                    [ngModelOptions]="{standalone: true}" [disabled]="readonly">
+                                </td>
+                                
+                                <td style="width: 3%">
+                                    <button mat-menu-item (click)="deleteRow(i)" matTooltip="{{ 'Delete' | translate }}" 
+                                        matTooltipPosition="above" [disabled]="readonly"> <i
+                                        class="material-icons mt-2" style="color:red">delete</i>
+                                    </button>
+                                </td>
+                              
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>{{"total"|translate}}</td>
+                                <td>{{this.totalAmount}}</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </ng-template>
+                     </p-table>
+                  </div>
+            </div>
+      </div>
+</div>
+
+
+
+
+
+

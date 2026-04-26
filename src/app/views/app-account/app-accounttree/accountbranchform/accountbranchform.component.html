@@ -1,0 +1,146 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="AccountAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="accLevel" class="form-control " hidden>
+            <input type="text" formControlName="accOrder" class="form-control " hidden>
+            <input type="text" formControlName="hasChild" class="form-control " hidden>
+            <input type="text" formControlName="accNature" class="form-control " hidden>
+            <input type="text" formControlName="accType" class="form-control " hidden>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ParentAccount"|translate}} :
+                    </label>
+                    <label [innerText]="AccountAddForm.get('noAndName').value"></label>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"AccountType"|translate}}: </label>
+                    <label [innerText]="AccountAddForm.get('accTypeName').value"></label>
+                </div>
+                <!-- <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <input id="isMain" formControlName="isMain" type="checkbox" class="input border mr-2 mr-3 ml-3"  [attr.disabled]="hasChild || hasTransAction ? true : null"/>
+                    <label class="cursor-pointer select-none w-full" for="isMain" >{{"BranchAccount"|translate}}</label>
+                </div> -->
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"AccountNature"|translate}}: </label>
+                    <label [innerText]="AccountAddForm.get('accNatureName').value"></label>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="accountModelList" dataKey="id" 
+                        [loading]="loading" [globalFilterFields]="['',]" styleClass="p-datatable-gridlines"
+                        [rowHover]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder=' {{"search"|translate}} ' />
+                                    </span>                    
+                                </div>
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                                    <p-button label='{{"AddNew"|translate}}'
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    icon="pi pi-plus" (click)="AddNewLine(0)"></p-button>
+                                </div>  
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 10%" pSortableColumn="accNo">{{"AccountNo"|translate}} <p-sortIcon
+                                        field="accNo"></p-sortIcon></th>
+                                <th pSortableColumn="name">{{"ArabicName"|translate}} <p-sortIcon
+                                        field="name"></p-sortIcon></th>
+                                <th pSortableColumn="parentAccName">{{"EnglishName"|translate}} <p-sortIcon
+                                        field="parentAccName"></p-sortIcon></th>
+                                <th style="width: 10%" pSortableColumn="accTypeName">{{"DefaultCurrency"|translate}}
+                                    <p-sortIcon field="accTypeName"></p-sortIcon></th>
+                                <th style="width: 10%" pSortableColumn="accNatureName" *ngIf="useCostCenter">{{"CostCenterPolicy"|translate}}
+                                    <p-sortIcon field="accNatureName"></p-sortIcon>
+                                </th>
+                                <th style="width: 5%" pSortableColumn="isMain">{{"Branched"|translate}} <p-sortIcon
+                                        field="isMain"></p-sortIcon></th>
+                                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-accountList let-i="rowIndex">
+                            <tr>
+                                <td><input type="text" [(ngModel)]="accountList.accNo" class="input border w-full mt-1 " 
+                                    (blur)="IsValidAccNo($event)" [ngModelOptions]="{standalone: true}" [disabled]="accountList.id>0"
+                                    (keydown)="handleF4Key($event)">
+                                </td>
+                                <td><input type="text" [(ngModel)]="accountList.accNameA" class="input border w-full mt-1 "
+                                    (blur)="IsValidAccNameA($event)" [ngModelOptions]="{standalone: true}" [disabled]="accountList.id>0"
+                                    (keydown)="handleF4Key($event)">
+                                </td>
+                                <td><input type="text" [(ngModel)]="accountList.accNameE" class="input border w-full mt-1 "
+                                    (blur)="IsValidAccNameE($event)" [ngModelOptions]="{standalone: true}" [disabled]="accountList.id>0"
+                                    (keydown)="handleF4Key($event)">
+                                </td>
+                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="accountList.id>0"
+                                    [(ngModel)]="accountList.currencyId" [ngModelOptions]="{standalone: true}"
+                                    (keydown)="handleF4Key($event)"> 
+                                </p-dropdown></td>
+                                <td *ngIf="useCostCenter"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costCenterPolicyList"
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="accountList.id>0"
+                                    [(ngModel)]="accountList.costCenterPolicy" [ngModelOptions]="{standalone: true}"
+                                    (keydown)="handleF4Key($event)"> 
+                                </p-dropdown></td>
+                                <td><input [checked]="accountList.isMain" type="checkbox" [disabled]="accountList.id>0" (click)="UpdateVlaue($event,i)"
+                                    class="input border mr-2 mr-3 ml-3" />  
+                                </td>                                  
+                                <td>
+                                    <!-- <button mat-icon-button [matMenuTriggerFor]="userMenu" class="" [disabled]="accountList.id>0">
+                                        <mat-icon class="">more_vert</mat-icon>
+                                    </button> -->
+                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class=""
+                                    [disabled]="accountList.id>0"   type="button">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                            </button>
+                                    <mat-menu #userMenu="matMenu" >
+                                        <button mat-menu-item (click)="AddNewLine(0)">
+                                            <i class="material-icons" style="color:blue">add</i>
+                                            &nbsp;{{"Edit"|translate}}
+                                        </button>
+                                        <button mat-menu-item (click)="DeleteAccount(i)"> <i
+                                                class="material-icons" style="color:red">delete</i>
+                                            &nbsp;{{"Delete"|translate}} </button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <br>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="AccountAddForm.invalid" type="submit"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/Account/AccountTreeList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

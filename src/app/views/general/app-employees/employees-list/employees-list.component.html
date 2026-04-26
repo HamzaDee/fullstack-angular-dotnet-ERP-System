@@ -1,0 +1,115 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+            <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" [globalFilterFields]="['number','nameE','nameA','tel1','email','isActive']"
+                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+
+
+                    <div class="grid grid-cols-12 gap-5 ">
+
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 ">
+                            <p-button label='{{"AddNew"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="pi pi-plus" (click)="OpenEmployeeFormPopUp(0,true)"></p-button>     
+                             <p-button *ngIf="this.CompanyName == 'Hashmyieh'" label="{{ 'UpdateEmplyees' | translate }}"
+                                styleClass="p-ripple p-element button w-42 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="pi pi-refresh"
+                                (onClick)="UpdateHrEmp()">
+                            </p-button>
+                        </div> 
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder='{{"search"|translate}} ' />
+                        </div>
+
+
+
+
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                            <i class="pi pi-star-fill" 
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)"
+                                title= "{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="head_tb" pSortableColumn="number">{{"number"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="nameE">{{"EnglishName"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="nameA">{{"ArabicName"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="tel1">{{"MobileNumber"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="email">{{"Email"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="isActive">{{"Active"|translate}}</th>
+                        <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                    </tr>
+                </ng-template>
+
+                
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-employee>
+                    <tr>
+                        <td style="text-align: justify;">{{employee.number}}</td>
+                        <td style="text-align: justify;">{{employee.nameE}}</td>
+                        <td style="text-align: justify;">{{employee.nameA}}</td>
+                        <td style="text-align: justify;">{{employee.tel1}}</td>
+                        <td style="text-align: justify;">{{employee.email}}</td>
+                        <td style="text-align: justify;">
+                            <input id="check_{{employee.number}}" [disabled]="true" [checked]="employee.isActive"
+                                type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                            <label class="cursor-pointer select-none" for="check_{{employee.number}}"></label>
+
+                            <!-- <mat-checkbox [disabled]="true" [checked]="employee.isActive" class="pl-16"></mat-checkbox> -->
+
+                        </td>
+                        <td style="width:5%">
+                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                <mat-icon class="">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item (click)="OpenEmployeeFormPopUp(employee.id,false)">
+                                    <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                                </button>
+                                <button mat-menu-item (click)="DeleteEmployee(employee.id)"> <i class="material-icons"
+                                        style="color:red">delete</i>
+                                    &nbsp;{{"Delete"|translate}} </button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

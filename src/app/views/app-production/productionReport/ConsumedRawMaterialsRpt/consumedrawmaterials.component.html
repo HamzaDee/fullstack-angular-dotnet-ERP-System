@@ -1,0 +1,153 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="ConsumedRawMaterialsForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label for="fromDate" class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div >
+                    <label for="toDate" class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="prodId" class=" font-weight-bold">{{"ProdNo"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="productionVouchersList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName ="prodId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="itemId" class=" font-weight-bold">{{"MaterialItem"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="producedMaterialsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName ="itemId">
+                </p-dropdown>
+            </div>     
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label for="storeId" class=" font-weight-bold">{{"Store"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName ="storeId">
+                </p-dropdown>
+            </div>         
+        </div>
+        <br>
+        <br>
+         <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"ShowTransactions"|translate}}'
+                    styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()"></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="PrintReport()"></p-button>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['voucherName','voucherNo','itemName','unitName','producedQty','actualQty','cost','actualQty','diffQty']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 8%" class="head_tb" pSortableColumn="voucherNo">{{"VoucherNo"|translate}}</th>
+                            <th style="width: 8%" class="head_tb" pSortableColumn="voucherName">{{"voucherType"|translate}}</th>
+                            <th style="width: 10%" class="head_tb">{{"VoucherDate"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="itemName">{{"itemName"|translate}}</th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="unitName">{{"unit"|translate}}</th>
+                            <th style="width: 6%" class="head_tb" pSortableColumn="storeName">{{"Store"|translate}}</th>
+                            <th style="width: 6%" class="head_tb" pSortableColumn="qty">{{"Quantity"|translate}}</th>
+                            <th style="width: 7%" class="head_tb" pSortableColumn="cost">{{"Cost"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="actualQty">{{"ActualQtyConsumed"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="totalCost">{{"TotalCost"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="difference">{{"Difference"|translate}}</th>
+                        </tr>
+                    </ng-template>
+
+                 
+
+
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td hidden>{{item.id}}</td>
+                            <td style="text-align: justify;">{{item.voucherNo}}</td>
+                            <td style="text-align: justify;">{{item.voucherName}}</td>
+                            <td style="text-align: justify;">{{item.voucherDate | date:'yyyy-MM-dd'}}</td>
+                            <td style="text-align: justify;">{{item.itemName}} </td>
+                            <td style="text-align: justify;">{{item.unitName}} </td>
+                            <td style="text-align: justify;">{{item.storeName}}</td>
+                            <td style="text-align: justify;">{{item.qty | number:'1.3-3'}}</td>
+                            <td style="text-align: justify;">{{item.cost | number:'1.3-3'}}</td>  
+                            <td style="text-align: justify;">{{item.actualQty | number:'1.3-3'}}</td>
+                            <td style="text-align: justify;">{{item.totalCost | number:'1.3-3'}}</td>
+                            <td style="text-align: justify;">{{item.diffQty | number:'1.3-3'}}</td>  
+                                                      
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="5"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="8"></td>
+                            <td>{{"total"|translate}}</td>
+                            <td>{{ this.tot1Formatted}}</td>   
+                            <td colspan="1"></td>                         
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

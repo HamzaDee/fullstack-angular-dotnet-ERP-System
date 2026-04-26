@@ -1,0 +1,18 @@
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center mt-5">
+            <h1>{{data.title}}</h1>
+        </div>
+        <div class="intro-y box px-5 py-5  mt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-3">
+                <img [src]="imageurl">
+            </div>
+        </div>
+
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                (click)="dialogRef.close(false)"></p-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+
+    <app-app-search-form (searchResultEvent)="handleSearchResult($event)" [voucherTypeEnum]="48"></app-app-search-form>
+
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+    [globalFilterFields]="['voucherTypeName','voucherNo','voucherDate','custName','employeeName','branchName','currencyName','currRate','amount','note','statusName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4 ">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="OpenServiceInvoiceForm(0)"></p-button>
+                </div>                            
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">                    
+                    <i class="pi pi-star-fill" 
+                            [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                            (click)="updateFavourite(this.screenId)"
+                            title= "{{'AddToFavourite' | translate}}"
+                            tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="head_tb" pSortableColumn="voucherTypeName">{{"VoucherType"|translate}} </th>
+                <th class="head_tb" pSortableColumn="voucherNo">{{"VoucherNo"|translate}}</th>
+                <th class="head_tb" pSortableColumn="voucherDate">{{"VoucherDate"|translate}}</th>
+                <th class="head_tb" pSortableColumn="custName">{{"Customer"|translate}} </th>
+                <th class="head_tb" pSortableColumn="employeeName">{{"Man"|translate}} </th> 
+                <th class="head_tb" pSortableColumn="branchName">{{"Branch"|translate}}</th>
+                <th class="head_tb" pSortableColumn="currencyName">{{"Currency"|translate}}</th>
+                <th class="head_tb" pSortableColumn="currRate">{{"ExchangeRate"|translate}}</th>
+                <th class="head_tb" pSortableColumn="amount">{{"total"|translate}} </th>
+                <th class="head_tb" pSortableColumn="note">{{"Notes"|translate}} </th>
+                <th class="head_tb" pSortableColumn="statusName">{{"status"|translate}} </th>
+                <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+    
+
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-openingbalance>
+            <tr>
+                <td style="text-align: justify;">{{openingbalance.voucherTypeName}}</td>
+                <td style="text-align: justify;">{{openingbalance.voucherNo}}</td>
+                <td style="text-align: justify;">{{openingbalance.voucherDate|date:'yyyy/MM/dd'}}</td>
+                <td style="text-align: justify;">{{openingbalance.custName}}</td>
+                <td style="text-align: justify;">{{openingbalance.employeeName}}</td>
+                <td style="text-align: justify;">{{openingbalance.branchName}}</td>
+                <td style="text-align: justify;">{{openingbalance.currencyName}}</td>
+                <td style="text-align: justify;">{{openingbalance.currRate}}</td>
+                <td style="text-align: justify;">{{formatCurrency(openingbalance.amount,openingbalance.currencyDecimals)}}</td>
+                <td style="text-align: justify;">{{openingbalance.note}}</td>
+                <td style="text-align: justify;">{{openingbalance.statusName}}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenDetailsForm(openingbalance.id)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="EditServiceInvoiceForm(openingbalance.id,false)" [disabled]="!openingbalance.allowEditDelete">
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <button mat-menu-item (click)="PostServiceInvoice(openingbalance.id)" [disabled]="!openingbalance.allowEditDelete"> 
+                            <i class="material-icons" style="color:rgb(255, 166, 0)">done_all</i> &nbsp;{{"Post"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteServiceInvoice(openingbalance.id)" [disabled]="!openingbalance.allowEditDelete"> 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
+                <!--         <button mat-menu-item (click)="CopyServiceInvoice(openingbalance.id)" hidden> 
+                            <i class="material-icons" style="color:rgba(0, 255, 76, 0.747)">repeat</i> &nbsp;{{"VoucherIteration"|translate}} </button> -->
+                        <button mat-menu-item (click)="PrintServiceInvoice(openingbalance.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>
+                        <button mat-menu-item (click)="CopyServiceInvoice(openingbalance.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>
+                        <!-- <button mat-menu-item (click)="ReverseServiceInvoice(openingbalance.id)"> 
+                            <i class="material-icons" style="color:red">published_with_changes</i> &nbsp;{{"ReverseVoucher"|translate}} </button> -->
+                        <button mat-menu-item (click)="AttachmentServiceInvoice(openingbalance.id)"> 
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>                        
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td valign="top" colspan="7"> </td>
+                <td>{{"total"|translate}}</td>
+                <td>{{CalculateTotal()}}</td>
+                <td colspan="3"></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

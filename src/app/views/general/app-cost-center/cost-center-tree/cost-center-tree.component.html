@@ -1,0 +1,121 @@
+<div class="container">
+    <div>
+        <p-treeTable #tt [value]="tabelData" [columns]="cols" [lazy]="false" [filterMode]="filterMode"
+        [globalFilterFields]="['itemNo','name','note','status']"
+            [loading]="loading" class="p-datatable-table" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">
+            <ng-template pTemplate="caption">
+                <div class="grid grid-cols-12 gap-5 ">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 mb-5">
+                        <div class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="text" class="pInputText input border w-full mt-1" pInputText
+                                placeholder='{{"search"|translate}}'
+                                (input)="tt.filterGlobal($event.target.value, 'contains')" />
+                        </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                        <p-button label='{{"AddNew"|translate}}'
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                            icon="pi pi-plus" (click)="OpenCostCenterFormPopUp(0)"></p-button>
+                    </div>
+
+
+                    <div
+                        class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1 flex justify-start items-center gap-8">
+
+                        <i class="pi pi-star-fill mb-4"
+                            [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                            (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                            tooltipposition="bottom">
+                        </i>
+
+                        <button title="{{'ExportToExcel' | translate}}" type="button" pbutton pripple
+                            icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                            class="button px-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                        </button>
+
+                        <button title="{{'ExportToPdf' | translate}}" type="button" pbutton pripple
+                            icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                            class="button px-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                        </button>
+
+                    </div>
+
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+
+                <tr>
+                    <th class="head_tb" style="width: 5%">*</th>
+
+                    <th class="head_tb" ttSortableColumn="itemNo">{{"number"|translate}}
+                        <p-treeTableSortIcon field="itemNo"></p-treeTableSortIcon>
+                    </th>
+                    <th class="head_tb" ttSortableColumn="name">{{"Name"|translate}}
+                        <p-treeTableSortIcon field="name"></p-treeTableSortIcon>
+                    </th>
+                    <th class="head_tb" ttSortableColumn="note">{{"notes"|translate}}
+                        <p-treeTableSortIcon field="note"></p-treeTableSortIcon>
+                    </th>
+                    <th class="head_tb" ttSortableColumn="isMain">{{"Active"|translate}}
+                        <p-treeTableSortIcon field="isMain"></p-treeTableSortIcon>
+                    </th>
+
+                    <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                    <!-- <th class="head_tb" ttSortableColumn="isActive">{{"Test"|translate}}</th> -->
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                <tr [ngStyle]="{'background-color': rowData?.isMain ? '#d1e7dd' : ''}">
+                    <!-- <tr [ngClass]="{ 'p-highlight': rowData?.isMain === true }"> -->
+                    <td style="width: 5%">
+                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                        <!-- {{ rowData?.accNo }} -->
+                    </td>
+                    <td style="text-align: justify;">{{rowData?.itemNo}}</td>
+                    <td style="text-align: justify;">{{rowData?.name}}</td>
+                    <td style="text-align: justify;">{{rowData?.note}}</td>
+                    <td style="text-align: justify;"><input id="check_{{rowData.number}}" [checked]="rowData?.status==1"
+                            disabled type="checkbox" class="input border mr-2 mr-3 ml-3" /></td>
+
+                    <td style="width: 5%">
+
+                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                            <mat-icon class="">more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #userMenu="matMenu">
+
+                            <button mat-menu-item (click)="OpenCostCenterFormPopUp(rowData.id,false)">
+                                <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                            </button>
+
+                            <button mat-menu-item (click)="OpenSubCostCenter(rowData.id)">
+                                <i class="pi pi-sitemap" style="color:blue"></i>
+                                &nbsp;{{"AddSubCostCenter"|translate}}
+                            </button>
+
+                            <button mat-menu-item (click)="DeleteCostCenter(rowData.id)"> <i class="material-icons"
+                                    style="color:red">delete</i>
+                                &nbsp;{{"Delete"|translate}}
+                            </button>
+
+                        </mat-menu>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="cols.length" style="text-align: center !important">
+                        {{"ThereisNoData"|translate}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-treeTable>
+        <br>
+    </div>
+
+</div>

@@ -1,0 +1,109 @@
+
+<form [formGroup]="itemSerialForms" (ngSubmit)="onConfirm()">
+    <div class="content">
+        <div class="card"> 
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Quantity"|translate}}</label>
+                            <input type="number" [value]="qty"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"materialName"|translate}}</label>
+                            <input type="text" [value]="itemName"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">
+                                {{"SerialsCount"|translate}}
+                                {{selectedSerialCount}}
+                            </label>
+                        </div>
+                    </div>
+                <!-- <div class="grid grid-cols-12 gap-5 mt-5"> -->
+                    <!-- <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1"> -->
+                        <div class="container"> 
+                            <p-table #dt [value]="serialTransList" dataKey="id" 
+                            [rowHover]="true" [rows]="5" [paginator]="true" 
+                            [globalFilterFields]="['id','serialNo']"  
+                            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                            responsiveLayout="scroll" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+                            <ng-template pTemplate="caption">
+            
+                                <div class="grid grid-cols-12 gap-5 ">
+                                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5 ">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                placeholder=' {{"search"|translate}} ' />
+                                        </span>                    
+                                    </div>                                    
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="head_tb" >{{"Choose"|translate}}
+                                    <th class="head_tb" >{{"number"|translate}}
+                                    <th class="head_tb" >{{"SerialNo"|translate}}
+                                </tr>
+                            </ng-template>
+                            
+                            <ng-template pTemplate="body" class=".p-datatable-tbody" let-itemSerialForm let-i="rowIndex">
+                                <tr>
+                                    <td *ngIf="isShown">
+                                        <input type="number" [(ngModel)]="itemSerialForm.itemId"
+                                        [ngModelOptions]="{standalone: true}">
+                                    </td>
+                                    <td>                                                                          
+                                        <input type="checkbox" [(ngModel)]="itemSerialForm.isChecked"  
+                                        [disabled]="shouldDisableCheckbox(i)" 
+                                        (change)="onRowCheckboxChange(i, $event.target.checked)"
+                                        [ngModelOptions]="{standalone: true}">
+                                    </td>                                    
+                                    <td >{{ itemSerialForm.id }}</td>
+                                    <td >{{ itemSerialForm.serialNo}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="3"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">                               
+                            </ng-template>
+                        </p-table>
+
+                        </div>
+                        
+                    <!-- </div> -->
+                <!-- </div> -->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" [disabled]="isSaveButtonDisabled()"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" (click)="onCancel()"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(serialTransList)"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    
+</form>

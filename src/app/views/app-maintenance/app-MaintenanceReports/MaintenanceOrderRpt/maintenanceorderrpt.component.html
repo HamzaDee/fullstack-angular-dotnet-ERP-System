@@ -1,0 +1,239 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+  <form [formGroup]="MaintOrderAddForm">
+
+    <!-- 🔹 Filters -->
+    <div class="grid grid-cols-12 gap-3 pt-2">
+
+           <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label for="fromdate" class="font-weight-bold">{{"FromDate"|translate}}</label>
+                <input
+                type="date"
+                class="input border w-full mt-1"
+                formControlName="fromdate">
+           </div>
+
+            <!-- 🔹 To Date -->
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label for="todate" class="font-weight-bold">{{"ToDate"|translate}}</label>
+                <input
+                type="date"
+                class="input border w-full mt-1"
+                formControlName="todate">
+            </div>
+      <!-- InOrder -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="inorder" class="font-weight-bold">{{"OrderType"|translate}}</label>
+        <p-dropdown
+          [options]="inorderList" optionLabel="text" optionValue="id" [filter]="true"
+          appendTo="body" styleClass="input border w-full mt-1" formControlName="inorder">
+        </p-dropdown>
+      </div>
+
+      <!-- Request -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="reqOrderId" class="font-weight-bold">{{"MaintenanceOrder"|translate}}</label>
+        <p-dropdown
+          [options]="requestOrderList" optionLabel="text" optionValue="id" [filter]="true"
+          appendTo="body" styleClass="input border w-full mt-1" formControlName="reqOrderId">
+        </p-dropdown>
+      </div>
+
+      <!-- Status -->
+      <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+        <label for="status" class="font-weight-bold">{{"Status"|translate}}</label>
+        <p-dropdown
+          [options]="statusList" optionLabel="text" optionValue="id" [filter]="true"
+          appendTo="body" styleClass="input border w-full mt-1" formControlName="status">
+        </p-dropdown>
+      </div>
+
+      <!-- Priority -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="priorityId" class="font-weight-bold">{{"Priority"|translate}}</label>
+        <p-dropdown
+          [options]="prioritiesList" optionLabel="text" optionValue="id" [filter]="true"
+          appendTo="body" styleClass="input border w-full mt-1" formControlName="priorityId">
+        </p-dropdown>
+      </div>
+
+      <!-- Serial -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="serialNo" class="font-weight-bold">{{"Serials"|translate}}</label>
+        <p-dropdown
+          [options]="serialsList"
+          optionLabel="text"
+          optionValue="id"
+          [filter]="true"
+          appendTo="body"
+          styleClass="input border w-full mt-1"
+          formControlName="serialNo">
+        </p-dropdown>
+      </div>
+
+      <!-- Item -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="itemId" class="font-weight-bold">{{"material"|translate}}</label>
+        <p-dropdown
+          [options]="itemsList"
+          optionLabel="text"
+          optionValue="id"
+          [filter]="true"
+          appendTo="body"
+          styleClass="input border w-full mt-1"
+          formControlName="itemId">
+        </p-dropdown>
+      </div>
+
+      <!-- Model -->
+      <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label for="modelId" class="font-weight-bold">{{"Model"|translate}}</label>
+        <p-dropdown
+          [options]="modelsList"
+          optionLabel="text"
+          optionValue="id"
+          [filter]="true"
+          appendTo="body"
+          styleClass="input border w-full mt-1"
+          formControlName="modelId">
+        </p-dropdown>
+      </div>
+
+    </div>
+
+    <!-- 🔹 Buttons -->
+    <div class="grid grid-cols-12 gap-5 mr-2 mt-3">
+
+      <div class="col-span-12 sm:col-span-2">
+        <p-button
+          label='{{"ShowRecord"|translate}}'
+          styleClass="button w-32 bg-theme-1 text-white"
+          (click)="dt.reset()">
+        </p-button>
+      </div>
+
+      <div class="col-span-12 sm:col-span-2">
+        <p-button
+          label='{{"NewSearch"|translate}}'
+          styleClass="button w-32 bg-theme-1 text-white"
+          (click)="clearFormData()">
+        </p-button>
+      </div>
+
+    </div>
+
+    <!-- 🔹 Table -->
+    <div class="grid grid-cols-12 gap-2 pt-4">
+      <div class="col-span-12">
+
+        <p-table
+          #dt
+          [value]="voucherData"
+          [lazy]="true"
+          (onLazyLoad)="loadData($event)"
+          [paginator]="true"
+          [rows]="pageSize"
+          [totalRecords]="totalRecords"
+          [loading]="showLoader"
+          [globalFilterFields]="['orderNo','orderType','reqNo','priority','itemName','serialNo','itemModel','damage','warranty','tecCount','statusName']"
+          [first]="0"
+          styleClass="p-datatable-gridlines"
+          responsiveLayout="scroll"
+          dataKey="orderNo"          
+          currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}} {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+          [showCurrentPageReport]="true"
+        >
+
+          <!-- 🔍 Search -->
+             <ng-template pTemplate="caption">
+                <div class="grid grid-cols-12 gap-5 ">
+                    <div
+                        class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                           <input
+                                class="pInputText input border w-full mt-1"
+                                type="text"
+                                [(ngModel)]="searchText"
+                                [ngModelOptions]="{standalone: true}"
+                                (input)="onSearchChange()"
+                                placeholder="{{'search'|translate}}">
+                        </span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                        align="end">
+                        <i class="pi pi-star-fill"
+                            [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                            (click)="updateFavourite(this.screenId)"
+                            title="{{'AddToFavourite' | translate}}"
+                            tooltipposition="bottom">
+                        </i>
+                        <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                            type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                            ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                            class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/excel.svg"
+                                width="20px">
+                        </button>
+                        <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                            type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                            ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                            class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                width="20px">
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+
+          <!-- 🔹 Header -->
+          <ng-template pTemplate="header">
+            <tr>                
+              <th pSortableColumn="orderNo">{{"OrderNo"|translate}} <p-sortIcon field="orderNo"></p-sortIcon></th>
+              <th>{{"OrderDate"|translate}}</th>
+              <th pSortableColumn="orderType">{{"OrderType"|translate}} <p-sortIcon field="orderType"></p-sortIcon></th>
+              <th pSortableColumn="reqNo">{{"MaintenanceOrder"|translate}} <p-sortIcon field="reqNo"></p-sortIcon></th>
+              <th pSortableColumn="priority">{{"Priority"|translate}} <p-sortIcon field="priority"></p-sortIcon></th>
+              <th pSortableColumn="itemName">{{"material"|translate}} <p-sortIcon field="itemName"></p-sortIcon></th>
+              <th pSortableColumn="serialNo">{{"Serials"|translate}} <p-sortIcon field="serialNo"></p-sortIcon></th>
+              <th pSortableColumn="itemModel">{{"Model"|translate}} <p-sortIcon field="itemModel"></p-sortIcon></th>
+              <th pSortableColumn="damageType">{{"Damage"|translate}} <p-sortIcon field="damageType"></p-sortIcon></th>
+              <th pSortableColumn="damage">{{"DamageDecr"|translate}} <p-sortIcon field="damage"></p-sortIcon></th>
+              <th pSortableColumn="warranty">{{"Warranty"|translate}} <p-sortIcon field="warranty"></p-sortIcon></th>
+              <th pSortableColumn="tecCount">{{"TechniciansNo"|translate}} <p-sortIcon field="tecCount"></p-sortIcon></th>
+              <th pSortableColumn="statusName">{{"Status"|translate}} <p-sortIcon field="statusName"></p-sortIcon></th>
+            </tr>
+          </ng-template>
+
+          <!-- 🔹 Body -->
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{item.orderNo}}</td>
+              <td>{{item.orderDate | date:'yyyy-MM-dd'}}</td>
+              <td>{{item.orderType}}</td>
+              <td>{{item.reqNo}}</td>
+              <td>{{item.priority}}</td>
+              <td>{{item.itemName}}</td>
+              <td>{{item.serialNo}}</td>
+              <td>{{item.itemModel}}</td>
+              <td>{{item.damageType}}</td>
+              <td>{{item.damage}}</td>
+              <td>{{item.warranty}}</td>
+              <td>{{item.tecCount}}</td>
+              <td>{{item.statusName}}</td>
+            </tr>
+          </ng-template>
+
+          <!-- 🔹 Empty -->
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="12">{{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+
+      </div>
+    </div>
+
+  </form>
+</div>

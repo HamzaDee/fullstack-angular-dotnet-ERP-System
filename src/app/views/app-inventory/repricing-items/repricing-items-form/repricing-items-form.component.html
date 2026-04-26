@@ -1,0 +1,167 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="RepricingItemForm" (ngSubmit)="OnSaveForms()">
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold">{{"BondNumber"|translate}}
+                </label>
+                <input type="number" formControlName="id" class="input border w-full mt-1 " disabled="true">
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold" for="dateOfBirth">{{"TransDate"|translate}}</label>
+                <input type="date" id="dateOfBirth" formControlName="transDate" class="input border w-full mt-1 ">
+
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold">{{"EditType"|translate}}
+                </label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [options]="changeTypeNavigationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                    formControlName="changeTypeNavigationId" filterBy="text" appendTo="body" autoWidth="false"
+                    [virtualScroll]="false" [ngClass]="{ 'invalid-field': RepricingItemForm.get('changeTypeNavigationId').value <= 0}">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1"
+                *ngIf="RepricingItemForm.get('changeTypeNavigationId').value!=manualEditingId">
+                <label class="control-label font-weight-bold">{{"Value"|translate}}
+                    <span class="required-asterisk">*</span>
+                </label>
+                <input type="number" formControlName="amount" class="input border w-full mt-1 " min="0"
+                [ngClass]="{ 'invalid-field': RepricingItemForm.get('amount').value <= 0}">
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="text-align: center">
+                <label class="control-label font-weight-bold mr-3">{{"Increase"|translate}}</label>
+                <input type="radio" value="true" class="input border w-full mt-1 mr-3" formControlName="increase">
+                <label class="label mr-3" for="Checkbox1">{{"Decrease"|translate}}</label>
+                <input type="radio" value="false" class="input border w-full mt-1 mr-3" formControlName="increase"
+                    style="margin-right: 1rem;">
+            </div>
+            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                <input type="text" formControlName="note" class="input border w-full mt-1 ">
+            </div>
+        </div>
+        <div style="margin-top: 1rem;">
+            <h1 style="font-size: 15px; color: hsl(208, 100%, 73%);">{{"FilterItemsBy"|translate}}</h1>
+            <div class="grid grid-cols-12 gap-5 pt-5 border" style="margin-top: 1rem;">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"Group"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="groupList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="groupId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"CategoryPrice"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="priceCategoryList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="priceCategoryId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"unit"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="unitList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="unitId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"item"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="categoryList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="categoryId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"Model"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="modelList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="modelId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"Brand"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="brandList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="brandId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" style="margin: 1rem;"
+                    align="start">
+                    <p-button label='{{"ViewItems"|translate}}' class="ml-4"
+                        styleClass=" button w-24 mr-2 mb-2 flex items-center justify-center bg-theme-9 text-white p-button p-component"
+                        (onClick)="FilterLists()"></p-button>
+
+                    <p-button label='{{"NewSearch"|translate}}'
+                        styleClass=" p-element button w-24 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        (onClick)="clearForm()"></p-button>
+                </div>
+            </div>
+        </div>
+        <div class="border" style="margin-top: 1rem;">
+            <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+                [globalFilterFields]="['id','storeName','storeKeeperName','telephone','mobile','address','active']"
+                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="SelectAll">{{"SelectAll"|translate}}
+                            <input type="checkbox" (change)="selectAllItems($event)">
+                        </th>
+                        <th hidden>ID</th>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="materialNumber">
+                            {{"materialNumber"|translate}}
+                        </th>
+                        <th style="width: 30%" class="head_tb" pSortableColumn="materialName">
+                            {{"materialName"|translate}}
+                        </th>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="unit">{{"unit"|translate}}
+                        </th>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="OldPrice">{{"OldPrice"|translate}}
+                        </th>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="NewPrice">
+                            {{"NewPrice"|translate}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                    <tr>
+                        <td> <input type="checkbox" [checked]="item.selected" (change)="item.selected = !item.selected">
+                        </td>
+                        <td hidden style="text-align: justify;">{{item.itemId}}</td>
+                        <td style="text-align: justify;">{{item.itemNo}}</td>
+                        <td style="text-align: justify;">{{item.itemName}} </td>                       
+                        <td style="text-align: justify;">{{item.unitName}}</td>
+                        <td style="text-align: justify;">{{item.oldPrice}}</td>
+                        <td style="text-align: justify;"><input type="number" [(ngModel)]="item.newPrice" [ngModelOptions]="{standalone: true}"
+                            class="input border w-full mt-1 " [disabled]="RepricingItemForm.get('changeTypeNavigationId').value!=manualEditingId"></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" style="margin-top: 1rem;"
+                align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [disabled]="disableSave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    (onClick)="OnSaveForms()"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/RepricingItem/RepricingItems']"></p-button>
+            </div>
+        </div>
+    </form>
+</div>

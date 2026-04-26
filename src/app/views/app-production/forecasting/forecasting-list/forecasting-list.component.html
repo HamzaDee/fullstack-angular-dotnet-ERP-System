@@ -1,0 +1,106 @@
+<app-production-search-form (searchResultEvent)="handleSearchResult($event)"></app-production-search-form>
+
+
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+        [globalFilterFields]="['id','countryName','fYear','note','agentName','transDate','totalQty','totalvalue','statusName']"  paginatorDropdownAppendTo="body"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Show {first} To  {last} Of {totalRecords}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="['10','25','50']">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">                
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 mr-1">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-2 ">
+                    <p-button label='{{"AddNew"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="AddForecastingForm(0)"></p-button>
+                </div> 
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">{{"VoucherNo"|translate}} <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="transDate">{{"VoucherDate"|translate}} <p-sortIcon field="transDate"></p-sortIcon>
+                <th pSortableColumn="countryName">{{"COUNTRY"|translate}} <p-sortIcon field="countryName"></p-sortIcon></th>
+                <th pSortableColumn="countryName">{{"Agent"|translate}} <p-sortIcon field="countryName"></p-sortIcon></th>
+                <th pSortableColumn="fYear">{{"Totalquantities"|translate}} <p-sortIcon field="fYear"></p-sortIcon></th>
+                <th pSortableColumn="note">{{"TotalValues"|translate}} <p-sortIcon field="note"></p-sortIcon></th>
+                <th pSortableColumn="fYear">{{"PeriodFiscalYear"|translate}} <p-sortIcon field="fYear"></p-sortIcon></th>
+                <th pSortableColumn="note">{{"Notes"|translate}} <p-sortIcon field="note"></p-sortIcon></th>
+                <th pSortableColumn="note">{{"Status"|translate}} <p-sortIcon field="note"></p-sortIcon></th>
+                <th><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-forecastings>
+            <tr>
+                <td>{{forecastings.id}}</td>
+                <td>{{forecastings.transDate|date:'yyyy/MM/dd'}}</td>
+                <td>{{forecastings.countryName}}</td>
+                <td>{{forecastings.agentName}}</td>
+                <td>{{forecastings.totalQty}}</td>
+                <td>{{forecastings.totalvalue}}</td>
+                <td>{{forecastings.fYear}}</td>
+                <td>{{forecastings.note}}</td>
+                <td>{{forecastings.statusName}}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenDetailsForm(forecastings.id)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+                        <button mat-menu-item (click)="EditForecastingForm(forecastings.id,false)" *ngIf="forecastings.statusId == 1 || forecastings.statusId == 3">
+                            <i class="material-icons" style="color:green">edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <!-- <button mat-menu-item (click)="PostEntryVoucher(forecastings.id)" > 
+                            <i class="material-icons" style="color:rgb(255, 166, 0)">done_all</i> &nbsp;{{"Post"|translate}} </button> -->
+                        <button mat-menu-item (click)="DeleteVoucher(forecastings.id)"  *ngIf="forecastings.statusId == 1 || forecastings.statusId == 3"> 
+                            <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}}   </button>
+                        <button mat-menu-item (click)="Print(forecastings.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>
+                        <button mat-menu-item (click)="CopyEntryvoucher(forecastings.id)"> 
+                            <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>
+                        <button mat-menu-item (click)="AttachmentEntryvoucher(forecastings.id)"> 
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>  
+                        <button mat-menu-item (click)="ApproveForecasting(forecastings.id)" *ngIf="forecastings.statusId !=2"> 
+                            <i class="material-icons" style="color:green">check</i> &nbsp;{{"Approval"|translate}} </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+         <ng-template pTemplate="footer">
+            <tr>
+                <td valign="top" colspan="4"> </td>
+                <td>{{"total"|translate}}</td>
+                <td>{{CalculateTotal()}}</td>
+                <td colspan="4"></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

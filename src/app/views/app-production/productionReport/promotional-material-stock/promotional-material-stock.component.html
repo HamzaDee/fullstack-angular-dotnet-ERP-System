@@ -1,0 +1,75 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div>
+
+        <div class="intro-y box tab-content">
+            <div class="tab-content__pane active">
+                <div class="intro-y box px-5 pt-5">
+                    <div class="col-md-12" id="htmlData">
+
+                <p-table #dt [value]="Data" [rows]="10" [paginator]="true" 
+                 [globalFilterFields]="['prodName','promName','avlQuantities']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="Show {first} To  {last} Of {totalRecords}"
+                    [showCurrentPageReport]="true">
+
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="prodName">{{"ProductName"|translate}}</th>
+                            <th  pSortableColumn="promName">{{"NameOfThePromotionalMaterial"|translate}} </th>
+                            <th  pSortableColumn="avlQuantities">{{"AvailableQuantities"|translate}}</th>
+                            <th  pSortableColumn="avlQuantities">{{"RequestLimit"|translate}}</th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr  [ngClass]="{ 'notavlqty': item.notAvlQty }">
+                            <td>{{item.prodName}}</td>
+                            <td>{{item.promName}}</td>
+                            <td>{{item.avlQuantities}}</td>
+                            <td>{{item.ol}}</td>
+                        </tr>
+                    </ng-template>
+
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="14"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+              </div>
+           </div>
+         </div>
+       </div>
+    </div>
+</div>
+
+

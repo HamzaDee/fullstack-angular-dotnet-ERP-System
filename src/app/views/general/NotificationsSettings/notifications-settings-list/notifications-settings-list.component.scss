@@ -1,0 +1,15 @@
+.hdlbl {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: x-large;
+}
+
+p-dropdown {
+    width: 100%;
+    min-width:0 !important; // auto , initial 
+}
+
+p-multiSelect {
+    width: 50%;
+    min-width:0 !important; // auto , initial 
+}

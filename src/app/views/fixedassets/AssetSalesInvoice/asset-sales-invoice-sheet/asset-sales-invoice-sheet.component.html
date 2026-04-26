@@ -1,0 +1,82 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"SalesRequestForm"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+<div class="col-span-1"> {{"VoucherType"|translate}} : </div>
+<div class="pt-hlf pb-hlf col-span-11" > {{data.transTypeName}}</div>
+
+<div class="col-span-2"> {{"BillNo"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" > {{data.voucherNo}}</div>
+
+<div class="pt-hlf pb-hlf col-span-2">{{"BillDate"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10"  >{{data.voucherDate| date: 'dd/MM/yyyy'}}</div> 
+
+<div class="pt-hlf pb-hlf col-span-2">{{"Branch"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10"  > {{data.branchName}}</div>
+
+<div class="col-span-1"> {{"Currency"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-5" > {{data.currencyName}}</div>
+
+<div class="col-span-3"> {{"ConverionFactor"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-3" >{{data.currRate}} </div>
+
+<div class="col-span-2"> {{"Customer"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" > {{data.dealerName}}</div>
+
+<div class="col-span-2"> {{"Notes"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" > {{data.note}}</div>
+
+</div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="color: black; border: solid black"> {{"theOrigin"|translate}}</th>
+    <th style="color: black; border:solid black">   {{"CostCenter"|translate}} </th>
+    <th style="color: black; border: solid black">  {{"Quantity"|translate}}</th>
+    <th style="color: black; border: solid black">   {{"Price"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Total"|translate}}</th>
+    <th style="color: black; border:solid black">   {{"Tax"|translate}} </th>
+    <th style="color: black; border: solid black">  {{"TaxPercentage"|translate}}</th>
+    <th style="color: black; border: solid black">   {{"TaxAmt"|translate}} </th>
+    <th style="color: black; border: solid black">   {{"Totals"|translate}} </th> 
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let product of assetId" style="color: black;">
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.assestName }}</b></td>
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.creditCardName }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.qty }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ product.price }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ product.total }}</b></td>
+    <td style="width:27%;font-size:0.8rem;"><b>{{ product.taxName }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.taxPerc }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ product.taxAmount }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ product.AllTotal }}</b></td> 
+</tr>
+</tbody>
+
+<tfoot>
+    <th style="width:30%;color: black; border: solid black"> {{"total"|translate}}</th> 
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <td style="width:15%;font-size:0.8rem;"> <b>{{sumTotal}}</b></td>
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <td style="width:15%;font-size:0.8rem;"> <b>{{sumTax}}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{sumAllTotal}}</b></td> 
+</tfoot>
+</table>
+
+
+
+
+

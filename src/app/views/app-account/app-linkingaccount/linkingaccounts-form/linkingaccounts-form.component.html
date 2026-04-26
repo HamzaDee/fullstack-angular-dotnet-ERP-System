@@ -1,0 +1,129 @@
+<form [formGroup]="LinkingAccountsFormInitialForm" (ngSubmit)="OnSaveForms()">    
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center">
+            </div>
+            <input type="number" class="form-control" formControlName="id"  hidden>
+            <div class="card-body">
+                <div class="intro-y box p-5 mt-12 sm:mt-5">
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"discountAllowed"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="discountAllowed"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"discountReceived"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="discountReceived"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"IntermediatePurchaseAccount"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="unbilledPurchasesAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"AdditionalExpenseDifferencesAccount"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="expenseVarianceAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                    </div>   
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"FundAccount"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="cashAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ChequesGLAccount"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="chaqueAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CardAccount"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="cardAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ReceivableAccId"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="receivableAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"PayableAccId"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="payableAccId"
+                                filterBy="text" appendTo="body" autoWidth="false"
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"DeferredRevenueAccId"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="deferredRevenueAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"cliqAccId"|translate}} </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="linkingaccountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="cliqAccId"
+                                filterBy="text" appendTo="body" autoWidth="false"
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyAccountss($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div [hidden]="isHidden" class="grid grid-cols-12 gap-5 mt-5">
+                        <div [hidden]="isHidden" class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input type="" formControlName="id" class="input border w-full mt-1">
+                        </div>
+                    </div>                 
+                </div>       
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component" [disabled]="LinkingAccountsFormInitialForm.invalid"
+                        [disabled]="LinkingAccountsFormInitialForm.invalid"  type="submit"></p-button>                                                                                                                                              
+                </div>                
+            </div>
+        </div>
+    </div>
+</form>

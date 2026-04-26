@@ -1,0 +1,100 @@
+import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AssetPurchaseInvoiceService } from '../asset-purchase-invoice.service';
+import { sweetalert } from 'sweetalert';
+
+@Component({
+  providers: [DatePipe],
+  selector: 'app-asset-purchase-invoice-sheet',
+  templateUrl: './asset-purchase-invoice-sheet.component.html',
+  styleUrls: ['./asset-purchase-invoice-sheet.component.scss']
+})
+export class AssetPurchaseInvoiceSheetComponent implements OnInit {
+  data: any;
+  dateNow: Date;
+  assetId: any;
+  costCenterId: any;
+  qty: any;
+  price: any;
+  total: any;
+  taxId: any;
+  taxPerc: any;
+  taxAmount: any;
+  AllTotal: any;
+  Sum: any;
+  taxAmounts: any;
+  sumTax:any;
+  sumAllTotal: any;
+  sumTotal:any;
+
+  constructor(private route: ActivatedRoute,
+    private AssetPurchaseInvoiceService: AssetPurchaseInvoiceService,
+    private alert: sweetalert,
+  ) { }
+
+  async ngOnInit() {
+    debugger
+    $(".mat-checkbox-input").removeClass("cdk-visually-hidden");
+    this.dateNow = new Date();
+    let id = this.route.snapshot.params.id;
+    await (await this.AssetPurchaseInvoiceService.printAssetPurchaseInvoice(id)).toPromise().then((results) => {
+      debugger
+      if(results.isSuccess == false && results.message ==="msNoPermission")
+        {
+          this.alert.ShowAlert("msNoPermission",'error');
+          return;
+        }  
+      this.data = results;
+      this.assetId = results.faTransDTModelList;
+
+
+      this.sumTotal = 0;
+      this.sumTax = 0;
+      this.sumAllTotal = 0;
+      
+      for (let i = 0; i < results.faTransDTModelList.length; i++) {
+
+       // this.total = results.faTransDTModelList[i].total + results.faTransDTModelList[i].total;
+        const perTax = results.faTransDTModelList[i].taxPerc; // نسبه الضريبه
+        const taxAm = (results.faTransDTModelList[i].total * perTax) / 100; // مبلغ الضريبه
+
+
+        let allTot = taxAm + results.faTransDTModelList[i].total;// الاجمالي
+
+        if (results.priceWithTax) {
+          const calculatedTax = results.faTransDTModelList[i].total - (results.faTransDTModelList[i].total / (1 + perTax / 100));
+          results.faTransDTModelList[i].taxAmount = parseFloat(calculatedTax.toFixed(3));
+          allTot = results.faTransDTModelList[i].total;
+        } else {
+          const calculatedTax = (results.faTransDTModelList[i].total * perTax) / 100;// مبلغ الضريبه
+          results.faTransDTModelList[i].taxAmount = parseFloat(calculatedTax.toFixed(3));// مبلغ الضريبه
+          results.faTransDTModelList[i].AllTotal = results.faTransDTModelList[i].total + results.faTransDTModelList[i].taxAmount;// الاجمالي
+        }
+
+
+        if (results.priceWithTax) {
+          results.faTransDTModelList[i].AllTotal = results.faTransDTModelList[i].total;
+        }
+
+
+        this.sumTotal =  this.sumTotal + results.faTransDTModelList[i].total;// المجموع التحتاني
+        this.sumTax = this.sumTax + taxAm;// مجموع مبلغ الضريبه  
+        this.sumAllTotal = this.sumAllTotal + allTot;// مجموع الاجمالي 
+      }
+
+      setTimeout(function () {
+        window.focus();
+        window.print();
+      }, 100);
+    });
+
+  }
+
+
+  async Print(id) {
+    debugger
+    await window.open("/AssetPurchaseInvoice/AssetPurchaseInvoiceSheet/" + id, "PrintWindow",
+      "width=900,height=750,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=no");
+  }
+}

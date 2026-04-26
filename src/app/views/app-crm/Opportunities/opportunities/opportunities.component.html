@@ -1,0 +1,140 @@
+<app-opportunities-search (searchResultEvent)="handleSearchResult($event)"></app-opportunities-search>
+<div class="container">
+    <p-table #dt [value]="Data" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['opportunityNo','createdAt','customerName', 'title', 'stageName', 'probability', 'expectedCloseDate', 'expectedAmount', 'branchName','salesUserName']"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{ 'showing' | translate }} {first} {{ 'to' | translate }} {last} {{ 'of' | translate }} {totalRecords} {{ 'entries' | translate }}"
+        [showCurrentPageReport]="true">
+
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder="{{ 'search' | translate }}" />
+                    </span>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4">
+                    <p-button label="{{ 'AddNew' | translate }}"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="pi pi-plus" (click)="AddNewOpportunities(0)"></p-button>
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <i class="pi pi-star-fill" [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)" title="{{ 'AddToFavourite' | translate }}"
+                        tooltipposition="bottom"></i>
+
+                    <button title="{{ 'ExportToExcel' | translate }}" class="mr-2 button px-2 mr-1 mb-2 text-gray-700"
+                        type="button" pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                        (click)="exportExcel(dt)" tooltipposition="bottom">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+
+                    <button title="{{ 'ExportToPdf' | translate }}" class="mr-2 button px-2 mr-1 mb-2 text-gray-700"
+                        type="button" pbutton="" pripple="" icon="pi pi-file-pdf" ptooltip="PDF" (click)="exportPdf(dt)"
+                        tooltipposition="bottom">
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="head_tb" pSortableColumn="opportunityNo">{{'OpportunityNo' | translate}}</th>
+                <th class="head_tb" pSortableColumn="createdAt">{{'EntryDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="customerName">{{'PotentialClients' | translate}}</th>
+                <th class="head_tb" pSortableColumn="title">{{'description' | translate}}</th>
+                <th class="head_tb" pSortableColumn="stageName">{{'Stage' | translate}}</th>
+                <th class="head_tb" pSortableColumn="probability">{{'ProbabilityPerc' | translate}}</th>
+                <th class="head_tb" pSortableColumn="expectedCloseDate">{{'ExpectedCloseDate' | translate}}</th>
+                <th class="head_tb" pSortableColumn="expectedAmount">{{'ExpectedValue' | translate}}</th>
+                <th class="head_tb" pSortableColumn="branchName">{{'branch' | translate}}</th>
+                <th class="head_tb" pSortableColumn="salesUserName">{{'SalesEmployee' | translate}}</th>
+                <th class="head_tb" pSortableColumn="statusName">{{'Status' | translate}}</th>
+                <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" class="p-datatable-tbody" let-Opp>
+            <tr>
+                <td style="text-align: justify;">{{ Opp.opportunityNo }}</td>
+                <td style="text-align: justify;">{{ Opp.createdAt | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Opp.customerName }}</td>
+                <td style="text-align: justify;">{{ Opp.title }}</td>
+                <td style="text-align: justify;">{{ Opp.stageName}}</td>
+                <td style="text-align: justify;">{{ Opp.probability}}</td>
+                <td style="text-align: justify;">{{ Opp.expectedCloseDate | date: 'dd/MM/yyyy'}}</td>
+                <td style="text-align: justify;">{{ Opp.expectedAmount}}</td>
+                <td style="text-align: justify;">{{ Opp.branchName }}</td>
+                <td style="text-align: justify;">{{ Opp.salesUserName }}</td>
+                <td style="text-align: justify;">{{ Opp.statusName }}</td>
+                <td style="width:5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+
+                        <button mat-menu-item (click)="ShowDetailsOnly(Opp.id)"> <!-- تفاصيل -->
+                            <i class="material-icons">remove_red_eye</i> &nbsp;{{"showDetails"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="EditOpportunities(Opp.id,false)"
+                            [disabled]="Opp.isDeleted"><!-- تعديل -->
+                            <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="DeleteOpportunities(Opp.id, Opp)" [disabled]="Opp.isDeleted || Opp.allowDelete">
+                            <!--  حذف -->
+                            <i class="material-icons" style="color:red">delete</i>
+                            &nbsp;{{"Delete"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="ConvertToSalesOrder(Opp.id)" [disabled]="Opp.isDeleted">
+                            <i class="material-icons"
+                                style="color:blue">list_alt</i>&nbsp;{{"ConvertToSalesOrder"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="ConvertToPriceOffer(Opp.id)" [disabled]="Opp.isDeleted">
+                            <mat-icon color="primary">list_alt</mat-icon>
+                            <span>{{ "ConvertToPriceOffer" | translate }}</span>
+                        </button>
+
+                        <button mat-menu-item (click)="PrintOpportunities(Opp.id)">
+                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i>
+                            &nbsp;{{"PrintAction"|translate}}
+                        </button>
+
+                        <button mat-menu-item (click)="OpenFollowUpForm(Opp.opportunityNo)">
+                            <i class="material-icons"
+                                style="color:blue">add_task</i>&nbsp;{{"AddFollowUpForm"|translate}}
+                        </button>
+
+                    </mat-menu>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="10">{{ 'noEntriesFoundLabel' | translate }}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td style="vertical-align: top;" colspan="6"> </td>
+                <td>{{"total"|translate}}</td>
+                <td>{{CalculateTotal()}}</td>
+                <td colspan="4"></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

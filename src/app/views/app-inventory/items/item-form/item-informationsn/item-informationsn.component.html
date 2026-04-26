@@ -1,0 +1,201 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+
+    <form [formGroup]="informationForm">
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-10 xxl:col-span-10 mt-1">
+                <div class="border-grey">
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1"> 
+                            <label class="control-label font-weight-bold">{{"countryOrigin"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countriesOriginList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" 
+                                [formControl]="informationForm.get('countryOrigin')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <!-- categoriesList -->
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1" >
+                            <label class="control-label font-weight-bold">{{"category"|translate}}<span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="filteredCategoriesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('categoryId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [ngClass]="{ 'invalid-field': informationForm.get('categoryId').value <= 0}">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"model"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="modelsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('modelId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"brand"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="brandIsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('brandId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"color"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="colorsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('colorId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"supplier"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="suppliersList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('supplierId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1" *ngIf="UseTax">
+                            <label class="control-label font-weight-bold">{{"tax"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="taxesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('taxId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"priorityLevel"|translate}}
+                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="prioritiesLevelsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('priorityLevelId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"productionCompany"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="productionCompany" class="input border w-full mt-1 ">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"MinManufQty"|translate}}                                
+                            </label>
+                            <input type="number" formControlName="minProdQty" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-1">
+                            <label class="control-label font-weight-bold">{{"size"|translate}}                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="sizesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('sizeId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-1">
+                            <label class="control-label font-weight-bold">{{"season"|translate}}                                
+                            </label>
+                            <input type="text" formControlName="season" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"Store"|translate}}                                
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('storeId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"maxQty"|translate}}</label>
+                            <input type="text" formControlName="maxQty" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"minQty"|translate}}</label>
+                            <input type="text" formControlName="minQty" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"orderQty"|translate}} </label>
+                            <input type="text" formControlName="orderQty" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-1">
+                            <label class="control-label font-weight-bold">{{"AlertExpierDateOfItemsBefore"|translate}} </label>
+                            <input type="text" formControlName="expDateReminder" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 mt-1">
+                            <label class="control-label font-weight-bold">{{"specifications"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="specifications" class="input border w-full mt-1 ">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"length"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="length" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"width"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="width" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"height"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="height" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <label class="control-label font-weight-bold">{{"weight"|translate}}
+                                
+                            </label>
+                            <input type="text" formControlName="weight" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                            <label class="control-label font-weight-bold">{{"ItemType"|translate}}<span class="required-asterisk">*</span></label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemTypeList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true"
+                                [formControl]="informationForm.get('typeId')" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [ngClass]="{ 'invalid-field': informationForm.get('typeId').value <= 0    }">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

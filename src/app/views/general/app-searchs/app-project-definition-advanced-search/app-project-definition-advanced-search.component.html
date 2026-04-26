@@ -1,0 +1,149 @@
+<div class="intro-y box">
+    <div class="accordion__pane border border-gray-200 p-4 mt-3">
+        <mat-accordion class="accordion__pane__toggle font-medium block">
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span
+                                class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                        </h5>
+                        <mat-divider></mat-divider>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br>
+                <hr>
+                <div class="card-header text-center"></div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="entityName" class="control-label font-weight-bold">{{"ProjectNo"|translate}}</label>
+                        <input type="number" [(ngModel)]="searchCriteria.projectNo"
+                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="authoritieId"
+                            class="control-label font-weight-bold">{{"AuthorityDonor"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="authoritieList"
+                            [(ngModel)]="searchCriteria.authoritieId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" appendTo="body"
+                            autoWidth="false" [filter]="true" filterBy="text" [virtualScroll]="false"
+                            [virtualScroll]="true" [lazy]="true" (onLazyLoad)="AuthloadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="countryId" class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countryList"
+                            [(ngModel)]="searchCriteria.countryId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" appendTo="body"
+                            autoWidth="false" [filter]="true" filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label for="nationalNo"
+                            class="control-label font-weight-bold">{{"ProjShortName"|translate}}</label>
+                        <input type="text" [(ngModel)]="searchCriteria.projShortName"
+                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 pt-5">
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-5">
+                        <label for="GeograpicLocation"
+                            class="control-label font-weight-bold">{{"GeograpicLocation"|translate}}</label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                        <input id="geoInsideJordan" type="checkbox" class="input border mr-1 ml-1 mt-5"
+                            [(ngModel)]="searchCriteria.inJordan" />
+                        <label class="cursor-pointer select-none" for="geoInsideJordan"> {{"InsideJordan" | translate}}
+                        </label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                        <input id="geoOutsideJordan" type="checkbox" class="input border mr-1 ml-1 mt-5"
+                            [(ngModel)]="searchCriteria.outJordan" />
+                        <label class="cursor-pointer select-none" for="geoOutsideJordan"> {{"OutsideJordan" |translate}}
+                        </label>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="financingMethodId"
+                            class="control-label font-weight-bold">{{"ProjectFinancialMethod"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="financialMethodList" [(ngModel)]="searchCriteria.financingMethodId"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" appendTo="body" autoWidth="false" [filter]="true"
+                            filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="financingMethodId"
+                            class="control-label font-weight-bold">{{"ProjectImplementationType"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="projectImpTypeList" [(ngModel)]="searchCriteria.projImplTypeId"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" appendTo="body" autoWidth="false" [filter]="true"
+                            filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="liaisonOfficerId"
+                            class="control-label font-weight-bold">{{"LiaisonOfficer"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="projectOfficerList" [(ngModel)]="searchCriteria.liaisonOfficerId"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" appendTo="body" autoWidth="false" [filter]="true"
+                            filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="projectStatusId"
+                            class="control-label font-weight-bold">{{"ProjectStatus"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="projectStatusList" [(ngModel)]="searchCriteria.projectStatusId"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" appendTo="body" autoWidth="false" [filter]="true"
+                            filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+
+
+                </div>
+
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"ShowRecord"|translate}}' icon="pi pi-search" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component ml-4"
+                            type="submit" (onClick)="getData()"></p-button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"CancelSearch"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component ml-4"
+                            (click)="EmptySearch()"></p-button>
+                    </div>
+                </div>
+                <br>
+                <div class="loading-indicator" [hidden]="!showLoader">
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

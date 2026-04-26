@@ -1,0 +1,12 @@
+ .table_wrapper{
+    height:400px;
+    overflow:scroll;
+    
+}
+table thead,
+table tfoot {
+  position: sticky;
+}
+table thead {
+  inset-block-start: 0; /* "top" */
+}

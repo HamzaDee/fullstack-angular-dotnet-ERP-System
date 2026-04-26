@@ -1,0 +1,190 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    
+
+    <!-- AdvancedSearch to search specific column ticket  -->
+   
+<br>
+    
+<div class="intro-y box">
+    <div class="accordion__pane border border-gray-200 p-4 mt-3">
+
+<mat-accordion class="accordion__pane__toggle font-medium block">
+
+   <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h5>
+                  
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                   <span class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                </h5>
+                <mat-divider></mat-divider>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br>
+        <hr>
+     
+
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+               
+                    
+                        
+                
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"USERS"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" 
+                        styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id"
+                        [options]="usersLsit" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [(ngModel)]="selectedUsers">
+                    </p-multiSelect>
+                </div>
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Screen"|translate}}</label>
+                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" 
+                        styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="text"
+                        [options]="screansLsit" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [(ngModel)]="selectedScreen">
+                    </p-multiSelect>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="">{{"FILEDNAME"|translate}}</label>
+                    <input type="text" [(ngModel)]="filedName" class="input border w-full mt-1" #FiledName>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="">{{"TransNumber"|translate}}</label>
+                    <input type="number" [(ngModel)]="transNumber" class="input border w-full mt-1" #TransNumber>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="">{{"FromDate"|translate}}</label>
+                    <input type="date" [(ngModel)]="fromDate "
+                        (change)="CheckDateFromLessDateTo(FromDate.value,ToDate.value)" class="input border w-full mt-1" min="1"
+                        id="startDate" #FromDate>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="">{{"ToDate"|translate}}</label>
+                    <input type="date" (change)="CheckDateFromLessDateTo(FromDate.value,ToDate.value)"
+                        [(ngModel)]="toDate " class="input border w-full mt-1" min="1" id="endDate" #ToDate>
+                </div>
+
+             
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                    
+                    <p-button label='{{"search"|translate}}'
+                    (click)="AdvancedSearchInAuditChanagesLogList(ToDate,FromDate)" styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-search"></p-button> &nbsp;
+                <p-button label='{{"clear"|translate}}' (click)="ClearSearch()" color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+                    </div>
+
+                                         
+            </div>
+
+
+
+    </mat-expansion-panel>
+</mat-accordion>
+</div>
+</div>
+<!-- END AdvancedSearch -->
+
+   
+<div class="intro-y box px-5 pb-5">
+    <div class="grid grid-cols-12 gap-5 mt-5">   
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">   
+
+    <p-table #dt [value]="tabelData" dataKey="id" [paginator]="true" [rows]="10" [loading]="loading"
+         styleClass="p-datatable-gridlines" [rowHover]="true" [globalFilterFields]="['number','username','screenName','fieldName','voucherNo','originalValue','newValue','transDate','userIpaddress','userComputerName']"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+
+
+            <div class="grid grid-cols-12 gap-5 ">
+
+               
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+
+                   
+                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder='{{"search"|translate}} ' />
+
+                </div>  
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1" align="end">
+                    <i class="pi pi-star-fill" 
+                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                        (click)="updateFavourite(this.screenId)"
+                        title= "{{'AddToFavourite' | translate}}"
+                        tooltipposition="bottom">
+                    </i>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+
+                </div>
+
+            </div>
+
+            
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="text-center-m" pSortableColumn="number">{{"number"|translate}} </th>
+                <th class="head_tb" pSortableColumn="username">{{"Username"|translate}} </th>
+                <th class="head_tb" pSortableColumn="screenName">{{"ScreenName"|translate}} </th>
+                <th class="head_tb" pSortableColumn="fieldName">{{"FILEDNAME"|translate}} </th>
+                <th class="head_tb" pSortableColumn="voucherNo">{{"Recorednumber"|translate}}</th>
+                <th class="head_tb" pSortableColumn="originalValue">{{"OLDVALUE"|translate}} </th>
+                <th class="head_tb" style="width: 9%;" pSortableColumn="newValue">{{"NEWVALUE"|translate}} </th>
+                <th class="head_tb" pSortableColumn="transDate">{{"TransDate"|translate}} </th>
+                <th class="head_tb" pSortableColumn="userIpaddress">{{"IPAddress"|translate}} </th>
+                <th class="head_tb" pSortableColumn="userComputerName">{{"DeviceName"|translate}} </th>
+            </tr>
+        </ng-template>
+       
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-userTransaction>
+            <tr>
+                <td style="text-align: justify;">{{userTransaction.number}}</td>
+                <td style="text-align: justify;">{{userTransaction.userName}}</td>
+                <td style="text-align: justify;">{{userTransaction.screenName}}</td>
+                <td style="text-align: justify;">{{userTransaction.fieldName}}</td>
+                <td style="text-align: justify;">{{userTransaction.voucherNo}}</td>
+                <td style="text-align: justify;">{{userTransaction.originalValue}}</td>
+                <td style="text-align: justify;">{{userTransaction.newValue}}</td>
+                <td style="text-align: justify;">{{userTransaction.changeTime| date:'MMM d, y, HH:mm:ss'}}</td>
+                <td style="text-align: justify;">{{userTransaction.userIpaddress}}</td>
+                <td style="text-align: justify;">{{userTransaction.userComputerName}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    </div>
+    </div>
+    </div>
+</div>

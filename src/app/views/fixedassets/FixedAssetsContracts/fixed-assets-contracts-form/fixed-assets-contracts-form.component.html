@@ -1,0 +1,206 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+        <form [formGroup]="ContractsForm" (ngSubmit)="OnSaveForms()"> 
+            <input type="text" formControlName="id" class="form-control " [(ngModel)]="Data.id" hidden>
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ContractsNo"|translate}}</label>
+                     <input type="text" class="input border w-full mt-1" formControlName="contractNo" [ngModel]="Data.contractNo"
+                     (blur)="CheckContractNo($event.target.value)"
+                     [ngClass]="{ 'invalid-field': ContractsForm.get('contractNo').value <= 0}" [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ContractOFDate"|translate}}</label>
+                     <input type="date" class="input border w-full mt-1 " formControlName="contractDate" [ngModel]="Data.contractDate | date:'yyyy-MM-dd'"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ContractAmmount"|translate}}</label>
+                     <input type="number" class="input border w-full mt-1" formControlName="amount" [ngModel]="Data.amount"
+                     [ngClass]="{ 'invalid-field': ContractsForm.get('amount').value <= 0}" [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                         [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                         optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                         autoWidth="false" [virtualScroll]="false" formControlName="branchId" [options]="CompanyBranchList"
+                         [disabled]="disableAll">
+                     </p-dropdown>
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"Currency"|translate}}</label>
+                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                         [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                         optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body" (onChange)="getCurrencyRate($event)"
+                         autoWidth="false" [virtualScroll]="false" formControlName="currencyId" [options]="CurrenciesList"
+                         [ngClass]="{ 'invalid-field': ContractsForm.get('currencyId').value <= 0}"
+                         [disabled]="disableAll">
+                     </p-dropdown>
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ExchangeRate"|translate}}</label>
+                     <input type="number" class="input border w-full mt-1 " formControlName="currRate" [ngModel]="Data.currRate" [readOnly]="disableCurrRate"
+                     [ngClass]="{ 'invalid-field': ContractsForm.get('currRate').value <= 0}" [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"MaintenanceCompany"|translate}}</label>
+                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                         [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                         optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                         autoWidth="false" [virtualScroll]="false" formControlName="dealerId" [options]="DealersList" 
+                         [ngClass]="{ 'invalid-field': ContractsForm.get('dealerId').value <= 0}" [disabled]="disableAll">
+                     </p-dropdown>
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ReferenceNo"|translate}}</label>
+                     <input type="number" class="input border w-full mt-1" formControlName="referenceNo" [ngModel]="Data.referenceNo"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"DateOfStartOfContract"|translate}}</label>
+                     <input type="date" class="input border w-full mt-1" formControlName="startDate" [ngModel]="Data.startDate | date:'yyyy-MM-dd'"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"DateOfEndOfContract"|translate}}</label>
+                     <input type="date" class="input border w-full mt-1" formControlName="endDate" [ngModel]="Data.endDate | date:'yyyy-MM-dd'"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"ReferenceDate"|translate}}</label>
+                     <input type="date" class="input border w-full mt-1" formControlName="referenceDate" [ngModel]="Data.referenceDate | date:'yyyy-MM-dd'"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                     <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                     <input type="text" class="input border w-full mt-1" formControlName="noteHd" [ngModel]="Data.noteHd"
+                     [attr.disabled]="disableAll ? 'disabled' : null">
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                     <div class="intro-y tab-content">
+
+                         <div class="intro-y box px-5 pt-5 mt-5">
+                             <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+
+                                 <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                     class="py-4 sm:mr-8 active">{{"Voucher"|translate}}</a>
+
+                                 <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                                     class="py-4 sm:mr-8 ">{{"VoucherAttachments"|translate}}</a>
+                             </div>
+                         </div>
+
+                         <div class="intro-y box tab-content">
+
+                             <div class="tab-content__pane active" id="f01">
+                                 <div class="intro-y box px-5 pt-5 pb-5">
+                                         <p-table #dt [value]="assetsContractsList" dataKey="id" [loading]="loading" [scrollable]="true"
+                                         [paginator]="false" [style]="{width:'100%'}" [responsive]="true"
+                                         [resizableColumns]="true" styleClass="p-datatable-gridlines"
+                                         [rowHover]="true" scrollDirection="horizontal">
+
+                                         <ng-template pTemplate="caption">
+                                             <div class="grid grid-cols-12 gap-5 ">
+                                                 <div
+                                                     class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                     <p-button label='{{"AddLine"|translate}}'
+                                                         styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                         icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                                 </div>
+                                             </div>
+                                         </ng-template>
+
+                                         <ng-template pTemplate="header">
+                                             <tr>
+                                                 <th style="width: 30%" pSortableColumn="chequeAccId">{{"theOrigin"|translate}}</th>
+                                                 <th  pSortableColumn="chequeNo">{{"Notes"|translate}}</th>
+                                                 <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                                 <th style="width: 3%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                             </tr>
+                                         </ng-template>
+
+                                         <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                             <tr  [ngClass]="{ 'disabled-row': isDisabled(row.assetId) }">
+
+                                                 <td style="width: 30%">
+                                                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                     [optionLabel]="currentLang === 'ar' ? 'fanameA' : 'fanameE'" optionValue="id"[filter]="true" filterBy="text"
+                                                         appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                                         [options]="FixedAssetsList" [(ngModel)]="row.assetId"  (onChange)="CheckIfChooseSameAssest(i, row)"
+                                                         [ngClass]="{ 'invalid-field':row.assetId <= 0}" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                         [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)">
+                                                     </p-dropdown>                           
+                                                 </td>                                          
+
+                                                 <td >
+                                                      <input type="text" class="input border w-full mt-1 "  [(ngModel)]="row.note"
+                                                      [ngModelOptions]="{standalone: true}" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                 </td>
+
+                                                 <td style="width: 4%">
+                                                     <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                             class="material-icons" style="color:red">delete</i>
+                                                     </button>
+                                                 </td>
+                                                 <td>
+                                                    <button mat-menu-item (click)="CopyRow(row,i)"> <i class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i> &nbsp;{{"CopyRow"|translate}} </button>
+                                                 </td>
+                                             </tr>
+                                         </ng-template>
+
+                                         <ng-template pTemplate="emptymessage">
+                                             <tr class="odd">
+                                                 <td valign="top" colspan="10">
+                                                     {{"noEntriesFoundLabel"|translate}}</td>
+                                             </tr>
+                                         </ng-template>
+
+                                        </p-table>
+                                 </div>
+                             </div>
+
+                             <div class="tab-content__pane" id="f02">
+                                 <div class="intro-y box px-5 pt-5">
+                                        <app-app-general-attachment [voucherId]="id"></app-app-general-attachment> 
+                                 </div>
+                             </div>
+                         </div>
+
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit" [disabled]="ContractsForm.invalid || disableSave" [hidden]="showsave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" [routerLink]="['/FixedAssetsContracts/AssetsContractsList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component">
+                </p-button>
+
+            </div>
+        </form>
+  </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

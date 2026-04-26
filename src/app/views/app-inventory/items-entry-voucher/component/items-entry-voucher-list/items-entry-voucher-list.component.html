@@ -1,0 +1,173 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <br>
+    <!-- AdvancedSearch to search specific column ticket  -->
+    <div class="intro-y box">
+        <div class="accordion__pane border border-gray-200 p-4 mt-3">
+            <mat-accordion class="accordion__pane__toggle font-medium block">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <span
+                                    class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                            </h5>
+                            <mat-divider></mat-divider>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <br>
+                    <hr>
+                    <form [formGroup]="searchForm">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                                <label class="control-label font-weight-bold">{{"voucherType"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="voucherTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" [formControl]="searchForm.get('voucherTypeId')" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                                <label class="control-label font-weight-bold">{{"status"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="statusList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" [formControl]="searchForm.get('status')" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                                <label class="">{{"branch"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="branchsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" [formControl]="searchForm.get('branchId')" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <label class="">{{"startVoucherNo"|translate}}</label>
+                                <input type="number" [formControl]="searchForm.get('startVoucherNo')"
+                                    class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <label class="">{{"endVoucherNo"|translate}}</label>
+                                <input type="number" [formControl]="searchForm.get('endVoucherNo')"
+                                    class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <label>{{"FromDate"|translate}}</label>
+                                <input type="date" [formControl]="searchForm.get('startVoucherDate')"
+                                    (change)="checkStartDate()" class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <label>{{"ToDate"|translate}}</label>
+                                <input type="date" [formControl]="searchForm.get('endVoucherDate')"
+                                    (change)="checkEndDate()" class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 mt-1">
+                                <label class="">{{"notes"|translate}}</label>
+                                <input type="text" [formControl]="searchForm.get('note')"
+                                    class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-1" mat-dialog-actions align="end">
+                                <p-button label='{{"search"|translate}}' (click)="getItemEntryVoucherslist()"
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    icon="pi pi-search"></p-button> &nbsp;
+                                <p-button label='{{"clear"|translate}}' (click)="clearSearch()" color="warn"
+                                    icon="pi pi-undo"
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+                            </div>
+
+                        </div>
+                    </form>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    <!-- END AdvancedSearch -->
+    <div class="intro-y box px-5 pb-5">
+        <div class="grid grid-cols-12 gap-5 mt-5">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="tabelData" dataKey="id" [paginator]="true" [rows]="10" [loading]="loading"
+                    [globalFilterFields]="['',]" styleClass="p-datatable-gridlines" [rowHover]="true"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1 mb-5">
+                                <p-button label='{{"AddNew"|translate}}'
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    icon="pi pi-plus" (click)="navigateItemEntryVoucherForm(0)">
+                                </p-button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="head_tb" pSortableColumn="voucherNo">{{"voucherNo"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="voucherTypeName">{{"voucherType"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="voucherDate">{{"voucherDate"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="branchName">{{"branch"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="storeName">{{"store"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="amount">{{"Ammount"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="isOpeningBalance">{{"isOpeningBalance"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="statusName">{{"status"|translate}}</th>
+                            <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemEntryVoucher>
+                        <tr>
+                            <td>{{itemEntryVoucher.voucherNo}}</td>
+                            <td>{{itemEntryVoucher.voucherTypeName}}</td>
+                            <td>{{itemEntryVoucher.voucherDate| date:'MMM d, y'}}</td>
+                            <td>{{itemEntryVoucher.branchName}}</td>
+                            <td>{{itemEntryVoucher.storeName}}</td>
+                            <td style="text-align: right;">{{itemEntryVoucher.amount}}</td>
+                            <td><input type="checkbox" [checked]="itemEntryVoucher.isOpeningBalance" disabled /></td>
+                            <td>{{itemEntryVoucher.statusName}}</td>
+                            <td style="width:5%">
+                                <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                    <mat-icon class="">more_vert</mat-icon>
+                                </button>
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="navigateItemEntryVoucherForm(itemEntryVoucher.id,true)">
+                                        <i class="material-icons" style="color:blue">visibility</i>
+                                        &nbsp;{{"Details"|translate}}
+                                    </button>
+                                    <button mat-menu-item
+                                        (click)="navigateItemEntryVoucherForm(itemEntryVoucher.id,false)">
+                                        <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                                    </button>
+                                    <button mat-menu-item> <i class="material-icons" style="color:orange">approval</i>
+                                        &nbsp;{{"approval"|translate}} </button>
+                                    <button mat-menu-item (click)="openItemsEntryVoucherTemplate(itemEntryVoucher)">
+                                        <i class="material-icons" style="color:green">print</i>
+                                        &nbsp;{{"Print"|translate}}
+                                    </button>
+                                    <button mat-menu-item (click)="deleteItemEntryVoucher(itemEntryVoucher.id)"> <i
+                                            class="material-icons" style="color:red">delete</i>
+                                        &nbsp;{{"Delete"|translate}} </button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

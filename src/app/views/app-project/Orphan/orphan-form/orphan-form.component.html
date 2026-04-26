@@ -1,0 +1,265 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="OrphanForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"OrphanName"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1" formControlName="orphanName" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(OrphanForm.get('orphanName').value)}">
+                </div>
+
+               <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OrphanNationality"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="orpNationalityId" (onChange)="onNationalityOrphanChange($event)" 
+                        [options]="NationalityOrphanList" [ngClass]="{ 'invalid-field': OrphanForm.get('orpNationalityId').value <= 0}"> 
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"OrphanDocumentType"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="orpDocTypeId"
+                        [options]="OrphanDocTypeList" [ngClass]="{ 'invalid-field': OrphanForm.get('orpDocTypeId').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="isJordanianOrphan">
+                    <label class="control-label font-weight-bold">{{"OrphanNationalNumber"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="orpDocNo" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': OrphanForm.get('orpDocNo').value <= 0}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianOrphan">
+                    <label class="control-label font-weight-bold">{{"OrphanDocumentNumber"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1" formControlName="orpDocNo" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(OrphanForm.get('orpDocNo').value)}">
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianOrphan">
+                    <label class="control-label font-weight-bold">{{"OrphanSecurityIDNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="orpSecurityNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianOrphan">
+                    <label class="control-label font-weight-bold">{{"OrphanCommissionNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="orpCommitteeNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianOrphan">
+                    <label class="control-label font-weight-bold">{{"OrphanRegistrationNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="orpRegistrationNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SponsorName"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1" formControlName="guardianName" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(OrphanForm.get('guardianName').value)}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"SponsorNationality"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="grNationalityId" (onChange)="onNationalityGuardianChange($event)" 
+                        [options]="NationalityGuardianList" [ngClass]="{ 'invalid-field': OrphanForm.get('grNationalityId').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"SponsorDocumentType"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="grDocTypeId"
+                        [options]="GuardianDocTypeList" [ngClass]="{ 'invalid-field': OrphanForm.get('grDocTypeId').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorNationalNumber"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="grDocNo" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': OrphanForm.get('grDocNo').value <= 0}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorDocumentNumber"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grDocNo" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': isEmpty(OrphanForm.get('grDocNo').value)}">
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorSecurityIDNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grSecurityNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorCommissionNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grCommitteeNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="!isJordanianGuardian">
+                    <label class="control-label font-weight-bold">{{"SponsorRegistrationNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="grRegistrationNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"SponsorCode"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="sponsorCode" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"OrphanNo"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="orphanNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"MonthlyValue"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="monthlyValue" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': OrphanForm.get('monthlyValue').value <= 0}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"WarrantyPeriod"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1" formControlName="warrantyPeriod" [attr.disabled]="disableAll ? 'disabled' : null"
+                    [ngClass]="{ 'invalid-field': OrphanForm.get('warrantyPeriod').value <= 0}">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"TotalAmount"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="totalAmount" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"DonatingAssoName"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="donatingAssoName"
+                        [options]="SponsorList" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"Sponsor"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="sponsor"
+                        [options]="SponsorList" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PhoneNumber"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="phoneNo1" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PhoneNumber1"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="phoneNo2" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" >
+                    <label class="control-label font-weight-bold">{{"Relationship"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="relationshipId"
+                        [options]="RelationshipIdList">
+                    </p-dropdown>
+                </div>
+
+                <!--     -------------------------------------------------------- -->
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Address"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="address" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+               <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Governorate"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="governorateId"
+                        [options]="GovernorateList" (onChange)="FilterGover(OrphanForm.get('governorateId').value)">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="districtId"
+                        [options]="filteredDistrictList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"PayType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [disabled]="disableAll" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="paymentId"
+                        [options]="PaymentList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CreditCardNo"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="cardNo" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="OrphanForm.invalid  || disableSave" type="submit" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['//Orphan/OrphanList']">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

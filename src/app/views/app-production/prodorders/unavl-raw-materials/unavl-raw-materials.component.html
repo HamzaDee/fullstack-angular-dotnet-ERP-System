@@ -1,0 +1,78 @@
+<form >
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="RawMaterialList" dataKey="itemNo" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" responsiveLayout="scroll" [(selection)]="selectedRawMaterialList">
+                            <ng-template pTemplate="caption">                                
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th style="width: 15%" pSortableColumn="itemNo">{{"materialNumber"|translate}}
+                                        <p-sortIcon field="itemNo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 30%" pSortableColumn="itemName">{{"materialName"|translate}} <p-sortIcon
+                                            field="itemName"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="unitNo">{{"unit"|translate}} <p-sortIcon
+                                            field="unitNo"></p-sortIcon></th>
+                                    <th style="width: 20%" pSortableColumn="avlQty">{{"AvailableQty"|translate}} <p-sortIcon
+                                            field="avlQty"></p-sortIcon></th>
+                                    <th style="width: 15%" pSortableColumn="reqQty">{{"RequiredQty"|translate}} <p-sortIcon
+                                            field="reqQty"></p-sortIcon></th>
+                                    <th style="width: 15%" pSortableColumn="supplier">{{"Supplier"|translate}} <p-sortIcon
+                                        field="supplier"></p-sortIcon></th>
+                                    <th style="flex: 0 0 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemsList
+                                let-i="rowIndex">
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="itemsList"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{itemsList.itemNo}}</td>
+                                    <td>{{itemsList.itemName}}</td>
+                                    <td>{{itemsList.unitName}}</td>
+                                    <td>{{itemsList.avlQty| number:'1.0-6'}}</td>
+                                    <td>{{itemsList.reqQty| number:'1.0-3'}}</td>
+                                    <td>{{itemsList.supplierName}}</td>
+                                    <td hidden>{{itemsList.supplierId}}</td>
+                                    <td hidden>{{itemsList.cost}}</td>
+                                    <td style="flex: 0 0 5%">
+                                        <button type="button" (click)="SelectSupplier(itemsList,i)"> 
+                                            <i title='{{"SuppliersList"|translate}}' class="material-icons" style="color:green">list</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="5"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">                    
+                    <p-button label='{{"OpenSPO"|translate}}' color="warn" icon="pi pi-check-circle" class="ml-4"
+                        styleClass="p-ripple p-element button w-40 ml-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        (click)="OpenPO()">
+                    </p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(RawMaterialList)">
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

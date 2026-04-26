@@ -1,0 +1,225 @@
+<div class="content">
+    <div class="card-blue">
+        <div class="card-body mb-8">
+            <form [formGroup]="userForm">
+                <div class="row">
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"ArabicName"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1 " formControlName="nameA"
+                                    [ngClass]="{ 'invalid-field': userForm.get('nameA').value <= 0}">
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"EnglishName"|translate}}</label>
+                                <input type="text" class="input border w-full mt-1 " formControlName="nameE"
+                                [ngClass]="{ 'invalid-field': userForm.get('nameE').value <= 0}">
+                            </div>
+                            <!-- <div class="col-span-12 sm:col-span-4 xxl:col-span-4 mt-1">
+                                <label class="control-label font-weight-bold">{{"USERGROUP"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="groupsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="groupId" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [ngClass]="{'invalid-field': 
+                                    userForm.get('groupId').value<=0 && userForm.get('groupId').touched}">
+                                </p-dropdown>
+                                <span class="required-asterisk mt-1" *ngIf="userForm.get('groupId').value<=0 && userForm.get('groupId').touched" >
+                                    {{"required"|translate}}
+                                </span>
+                            </div> -->
+                        </div>
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"Email"|translate}}</label>
+                                <input type="text" class="input border w-full mt-1 " formControlName="email"
+                                [ngClass]="{ 'invalid-field': userForm.get('email').value == ''}">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"Password"|translate}}</label>
+                                <div class="mt-5">
+                                    <p-password formControlName="password" class="input border w-full mt-5"
+                                                [(ngModel)]="passwordGenerated" [toggleMask]="true"
+                                                [ngClass]="{ 'invalid-field': userForm.get('password').value == ''}">
+                                    </p-password>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer  mt-1">
+                                    <p-button label='{{"CREATENEWPASSWORD"|translate}}' 
+                                        styleClass="p-ripple p-element button w-50 mr-2 mt-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="GeneratePassword()"></p-button>
+                            </div>                            
+                        </div> 
+                            <div class="grid grid-cols-12 gap-5 pt-5">
+    
+                                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                    <label class="control-label font-weight-bold">{{"phoneNumber"|translate}}</label>
+                                    <input type="text" class="input border w-full mt-1 " formControlName="tel">
+                                </div>
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1" style="align-self: center;">
+                                    <label class="control-label font-weight-bold ml-3 mr-2">{{"Active"|translate}}</label>
+                                    <input type="checkbox" class="input border w-full mt-1" [(ngModel)]="isActive"
+                                    [ngModelOptions]="{standalone: true}">
+                                </div>   
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1" style="align-self: center;">
+                                    <label class="control-label font-weight-bold ml-3 mr-2">{{"ASKTOEDITPASSWORD"|translate}}</label>
+                                    <input type="checkbox" class="input border w-full mt-1" [(ngModel)]="isRequireChangePassword"
+                                    [ngModelOptions]="{standalone: true}">
+                                </div> 
+                                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1" style="align-self: center;">
+                                    <label class="control-label font-weight-bold ml-3 mr-2">{{"IsCashier"|translate}}</label>
+                                    <input type="checkbox" class="input border w-full mt-1" [(ngModel)]="isCashier"
+                                    [ngModelOptions]="{standalone: true}">
+                                </div>                                                                
+                            </div>
+
+
+                        <div class="form-group row mt-4">
+                            <div class="container">
+                                <div class="row">
+                                    <p-table #dt [value]="tabelData" [loading]="loading"
+                                        styleClass="p-datatable-gridlines" dataKey="id" [rows]="10" [paginator]="true"
+                                        responsiveLayout="scroll"  [rowHover]="true" currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                        [showCurrentPageReport]="true">
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                    <p-button label='{{"ADDROW"|translate}}' 
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewRow()" ></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 27.3%;">{{"THECOMPANY"|translate}}
+                                                <th style="width: 27.3%;">{{"THECOMPANYBRANCH"|translate}}
+                                                <th style="width: 27.3%;">{{"USERGROUP"|translate}}
+                                                <th style="width: 9%">{{"DEFAULT"|translate}}</th>
+                                                <th style="width: 9%;">
+                                                    <i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-userGroup let-i="rowIndex">
+                                            <tr>
+                                                <td>
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="companiesList"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        optionLabel="text" optionValue="id" [filter]="true"
+                                                        filterBy="text" appendTo="body" autoWidth="false"
+                                                        [virtualScroll]="false" [(ngModel)]="userGroup.companyId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [ngClass]="{ 'invalid-field': userGroup.companyId <= 0}"
+                                                        (onChange)="OnChange(i,userGroup)">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="branchsList"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        optionLabel="text" optionValue="id" [filter]="true"
+                                                        filterBy="text" appendTo="body" autoWidth="false"
+                                                        [virtualScroll]="false" [(ngModel)]="userGroup.branchId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (onChange)="OnChange(i,userGroup)">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="groupsList"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        optionLabel="text" optionValue="id" [filter]="true"
+                                                        filterBy="text" appendTo="body" autoWidth="false"
+                                                        [virtualScroll]="false" [(ngModel)]="userGroup.groupId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [ngClass]="{ 'invalid-field': userGroup.groupId <= 0}"
+                                                        (onChange)="OnChange(i,userGroup)">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <input id="expensesList.affectCost" [checked]="userGroup.isDefault" (change)="getvalue(userGroup,$event,i)"
+                                                           type="checkbox" class="input border mt-5" style="border: 1px solid #020202; margin-right: 50%;"/>                               
+                                                </td> 
+                                                <td style="width:5%">
+                                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                                        <mat-icon class="">more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #userMenu="matMenu">
+                                                        <button mat-menu-item (click)="AddNewRow()">
+                                                            <i class="material-icons" style="color:green">add_box</i>
+                                                            &nbsp;{{"AddAction"|translate}} </button>
+                                                        <button mat-menu-item (click)="DeleteRow(userGroup.id)"> <i
+                                                                class="material-icons" style="color:red">delete</i>
+                                                            &nbsp;{{"Delete"|translate}} </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                                <div class="mb-4 d-flex justify-content-center">
+                                    <img [src]="uploadImage" alt="example placeholder" class="companyImage" />
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                                <label
+                                    class="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    style="padding: 9px 22.5px;">
+                                    <input type="file" #image (change)="onUploadIamge($event.target.files)" accept="image/*"/>
+                                    Upload
+                                </label>
+                                <br><br>
+                                <p-button (click)="ClearImagePath(image)" label='{{"Delete"|translate}}'
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                                    type="button" icon="pi pi-undo">
+                                </p-button>                                
+                            </div>        
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                                <div class="mb-4 d-flex justify-content-center">
+                                    <img [src]="imagePath" alt="example placeholder" class="companyImage" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intro-y tab-content">
+                            <div class="grid grid-cols-12 gap-5 pt-5">
+                                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-1" align="end">
+                                    <p-button  label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        type="submit" (click)="OnSaveForms()"></p-button>
+                                        
+                                    <p-button label='{{"Cancel"|translate}}' [routerLink]="['/User/UserDefinitionList']"
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                                        type="button" icon="pi pi-undo"></p-button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+<!-- 
+                    <div class="row mt-4">
+                        <div mat-dialog-actions align="end">
+                            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                                styleClass="p-button-sm" type="submit" (click)="OnSaveForms()"></p-button>
+                            <p-button label='{{"Cancel"|translate}}' [routerLink]="['/User/UserDefinitionList']"
+                                styleClass="p-button-danger p-button-sm" type="button" icon="pi pi-undo"></p-button>
+                        </div>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

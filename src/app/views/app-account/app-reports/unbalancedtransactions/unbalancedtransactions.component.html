@@ -1,0 +1,116 @@
+<form>
+    <div class="content">
+        <div class="card">            
+            <div class="card-body">
+                <div class="intro-y box tab-content">
+                    <div class="tab-content__pane active">
+                        <div class="intro-y box px-5 pt-5">
+                            <div class="col-md-12" id="htmlData">
+
+                                <p-table #dt [value]="voucherData" [rows]="16" [paginator]="true"
+                                [globalFilterFields]="['voucherNo','voucherName','voucherDate','sumDebit','sumCredit']"
+                                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                    dataKey="id"
+                                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                    [showCurrentPageReport]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="grid grid-cols-12 gap-5 ">
+                                            <div
+                                                class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                                <span class="p-input-icon-left">
+                                                    <i class="pi pi-search"></i>
+                                                    <input class="pInputText input border w-full mt-1" pInputText
+                                                        type="text"
+                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                        placeholder=' {{"search"|translate}} ' />
+                                                </span>
+                                            </div>
+                                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                                <i class="pi pi-star-fill" 
+                                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                    (click)="updateFavourite(this.screenId)"
+                                                    title= "{{'AddToFavourite' | translate}}"
+                                                    tooltipposition="bottom">
+                                                </i>
+                                                <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                    ptooltip="XLS" (click)="exportExcel1()" tooltipposition="bottom"
+                                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                                    <img src="../../../../assets/dist/images/icons/excel.svg"
+                                                        width="20px">
+                                                </button>
+                                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button"
+                                                    pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="PDF"
+                                                    (click)="exportPdf1()" tooltipposition="bottom"
+                                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                                    <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                                        width="20px">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th class="head_tb" style="width: 15% !important;">{{"VoucherNo"|translate}}</th>
+                                            <th class="head_tb" style="width: 50% !important;">{{"VoucherType"|translate}} </th>
+                                            <th class="head_tb" style="width: 10% !important;">{{"VoucherDate"|translate}} </th>
+                                            <th class="head_tb" style="width: 10% !important;">{{"TotalDeb"|translate}}</th>
+                                            <th class="head_tb" style="width: 10% !important;">{{"TotalCred"|translate}}</th>
+                                            <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                            </th>
+
+                                    </ng-template>
+                                    
+                                    <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                        <tr>
+                                            <td [hidden]="hidden">{{row.id}}</td>
+                                            <td [hidden]="hidden">{{row.categoryId}}</td>
+                                            <td>{{ row.voucherNo }}</td>
+                                            <td>{{ row.voucherName }}</td>
+                                            <td>{{ row.voucherDate | date: 'yyyy-MM-dd' }}</td>
+                                            <td>{{ row.sumDebit | number: '1.3-3'}}</td>
+                                            <td>{{ row.sumCredit | number: '1.3-3' }}</td>
+                                            <td>
+                                                <i class="material-icons cursor-pointer"
+                                                    (click)="OpenVoucher(row.id,row.categoryId)" style="color:blue"
+                                                    title="{{ 'showDetails' | translate }}">
+                                                    visibility
+                                                </i>
+                                              </td>   
+
+                                            <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id"
+                                                    [ngModelOptions]="{standalone: true}"></td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr class="odd">
+                                            <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                        </tr>
+                                    </ng-template>
+                                               <ng-template pTemplate="footer">
+                                        <tr>                                            
+                                            <td style="flex: 0 0 90rem" colspan="2"></td>
+                                            <td style="flex: 0 0 7rem" >{{"total"|translate}}</td>
+                                            <td style="flex: 0 0 7rem">
+                                                <input type="text" [value]="this.tot1Formatted" style="width: 80%;"
+                                                    class="input border w-full mt-1"
+                                                     [disabled]="true">
+                                            </td>
+                                            <td style="flex: 0 0 7rem">
+                                                <input type="text" [value]="this.tot2Formatted" style="width: 80%;"
+                                                    class="input border w-full mt-1"
+                                                     [disabled]="true">
+                                            </td>
+                                           
+                                            <td style="flex: 0 0 33rem" [attr.colspan]="12"></td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

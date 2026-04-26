@@ -1,0 +1,285 @@
+<div class="grid grid-cols-12 gap-5 pt-5">
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+        <label class="control-label font-weight-bold">{{"Year"|translate}}</label>
+        <input type="number" class="input border w-full mt-1" [(ngModel)]="year">
+    </div>
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+        <label class="control-label font-weight-bold">{{"Month"|translate}} {{allMonths}}</label>
+        <input type="number" class="input border w-full mt-1" [(ngModel)]="month">
+    </div>
+
+    <div class="col-span-12 sm:col-span-3 xxl:col-span-3  ">
+        <label class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countriesList" [(ngModel)]="CountryId"
+            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+            optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+            appendTo="body" autoWidth="false" [virtualScroll]="false" >
+        </p-dropdown>
+    </div>
+
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1" *ngIf="showCost">
+        <input type="checkbox" class="input border mr-2 mr-3 ml-3" [(ngModel)]="ShowPrice"
+            (change)="ShowWithPrice($event)">
+        <label class="cursor-pointer select-none w-full"
+            for="TotalInvoices">{{"ShowPrice"|translate}}</label>
+    </div>
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1"*ngIf="showCost">
+        <input type="checkbox" class="input border mr-2 mr-3 ml-3" [(ngModel)]="ShowCost"
+            (change)="ShowWithCost($event)">
+        <label class="cursor-pointer select-none w-full"
+            for="TotalInvoices">{{"ShowCost"|translate}}</label>
+    </div>
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2">
+        <p-button label='{{"ShowReport"|translate}}' class="ml-4 mt-4" (click)="GetReport()" 
+            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            type="submit" [disabled]="year == 0 || year == null">
+        </p-button>
+    </div>
+</div>
+<div class="grid grid-cols-12 gap-5 pt-5" *ngIf="!ShowPrice && !ShowCost">
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+        <div class="table-container">
+            <p-table #dt [value]="products" class="p-datatable-customers" [globalFilterFields]="['name']">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>
+                        </div>
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" >
+                            <i class="pi pi-star-fill"
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2">{{"Product"|translate}}</th>
+                        <th *ngFor="let region of regions; let i = index" [attr.colspan]="4"
+                            [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ region }}</th>
+                            <th colspan="4">{{"Total"|translate}}  {{year}}</th>  
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Qty</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Free Qty</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Bonus (Others)</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Total Qty</th>
+                        </ng-container>
+                        <th >Qty</th>
+                        <th >Free Qty</th>
+                        <th >Bonus (Others)</th>
+                        <th >Total Qty</th>
+                    </tr>
+                </ng-template>
+
+                
+
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.qty |
+                                number:'1.0-0' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.freeQty |
+                                number:'1.0-0' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.bonus |
+                                number:'1.0-0' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{
+                                product[region]?.totalQty | number:'1.0-0' || 0 }}</td>
+                        </ng-container>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.qty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.freeQty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.bonus | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.totalQty | number:'1.0-0' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                      <td style="font-weight: bold;">{{"Total"|translate}}</td>
+                      <ng-container *ngFor="let region of regions; let i = index">
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.qty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.freeQty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.bonus | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.totalQty | number:'1.0-0' }}</td>
+                      </ng-container>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('qty') | number:'1.0-0' }}</td>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('freeQty') | number:'1.0-0' }}</td>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('bonus') | number:'1.0-0' }}</td>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('totalQty') | number:'1.0-0' }}</td>              
+                    </tr>
+                  </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<div class="grid grid-cols-12 gap-5 pt-5" *ngIf="ShowPrice">
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+        <div class="table-container">
+            <p-table #dt [value]="products" class="p-datatable-customers" [globalFilterFields]="['name']">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>
+                        </div>
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" >
+                            <i class="pi pi-star-fill"
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2">{{"Product"|translate}}</th>
+                        <th *ngFor="let region of regions; let i = index" [attr.colspan]="3"
+                            [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ region }}</th>
+                            <th colspan="4">{{"Total"|translate}}  {{year}}</th>  
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Qty</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Price</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Total Price</th>
+                        </ng-container>
+                        <th >Qty</th>
+                        <th >Price</th>
+                        <th >Total Price</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.qty |
+                                number:'1.0-0' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.price |
+                                number:'1.0-3' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{
+                                product[region]?.qty * product[region]?.price | number:'1.0-0' || 0 }}</td>
+                        </ng-container>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.qty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'font-weight': 'bold'}"></td>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.price | number:'1.0-0' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                      <td style="font-weight: bold;">{{"Total"|translate}}</td>
+                      <ng-container *ngFor="let region of regions; let i = index">
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.qty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}"></td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.price | number:'1.0-0' }}</td>
+                      </ng-container>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('qty') | number:'1.0-0' }}</td>
+                      <td [ngStyle]="{'font-weight': 'bold'}"></td>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('totalprice') | number:'1.0-0' }}</td>              
+                    </tr>
+                  </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<div class="grid grid-cols-12 gap-5 pt-5" *ngIf="ShowCost">
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12">
+        <div class="table-container">
+            <p-table #dt [value]="products" class="p-datatable-customers" [globalFilterFields]="['name']">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>
+                        </div>
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" >
+                            <i class="pi pi-star-fill"
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)" title="{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2">{{"Product"|translate}}</th>
+                        <th *ngFor="let region of regions; let i = index" [attr.colspan]="3"
+                            [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ region }}</th>
+                            <th colspan="4">{{"Total"|translate}}  {{year}}</th>  
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Qty</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Cost</th>
+                            <th [ngStyle]="{'background-color': getBackgroundColor(i)}">Total Cost</th>
+                        </ng-container>
+                        <th >Qty</th>
+                        <th >Cost</th>
+                        <th >Total Cost</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <ng-container *ngFor="let region of regions; let i = index">
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.totalQty |
+                                number:'1.0-0' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i)}">{{ product[region]?.itemCost |
+                                number:'1.0-3' || 0 }}</td>
+                            <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{
+                                product[region]?.totalQty * product[region]?.itemCost | number:'1.0-0' || 0 }}</td>
+                        </ng-container>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.totalQty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'font-weight': 'bold'}"></td>
+                        <td [ngStyle]="{'font-weight': 'bold'}">{{ productTotals[product.name]?.cost | number:'1.0-3' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                      <td style="font-weight: bold;">{{"Total"|translate}}</td>
+                      <ng-container *ngFor="let region of regions; let i = index">
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.totalQty | number:'1.0-0' }}</td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}"></td>
+                        <td [ngStyle]="{'background-color': getBackgroundColor(i), 'font-weight': 'bold'}">{{ totals[region]?.cost | number:'1.0-0' }}</td>
+                      </ng-container>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('totalQty') | number:'1.0-0' }}</td>
+                      <td [ngStyle]="{'font-weight': 'bold'}"></td>
+                      <td [ngStyle]="{'font-weight': 'bold'}">{{ getGrandTotal('totalCost') | number:'1.0-0' }}</td>              
+                    </tr>
+                  </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

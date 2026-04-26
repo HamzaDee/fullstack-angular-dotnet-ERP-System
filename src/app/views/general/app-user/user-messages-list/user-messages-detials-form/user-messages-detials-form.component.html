@@ -1,0 +1,70 @@
+<form [formGroup]="userMessageInitialForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-1">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label>{{"TOUESER"|translate}} </label>
+                        <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" 
+                            styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id"
+                            [options]="usersList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [(ngModel)]="selectedUser" formControlName="userTo">
+                        </p-multiSelect>
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label >{{"MESSAGE"|translate}}</label>
+                        <textarea formControlName="msg" class="input border w-full mt-2" [(ngModel)]="msg"  [rows]="4"
+                            pInputTextarea></textarea>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"PRIORATYDGREE"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" 
+                            styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id"
+                            [options]="priortitiesList" [filter]="true" filterBy="text"
+                            formControlName="messagePriority" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            [(ngModel)]="selectedprioraty">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"FromDate"|translate}}</label>
+                        <input type="date" [(ngModel)]="timeDate" class="input border w-full mt-1" min="1" #FromDate>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-6">
+                        <label>{{"DONE"|translate}}</label>
+
+                        <input id="check_msg_list" [checked]="true" disabled type="checkbox"
+                        class="input border mr-2 mr-3 ml-3" />
+                        <label class="cursor-pointer select-none"
+                        for="check_msg_list"></label>
+
+
+                       
+                 
+                        <!-- <mat-checkbox [checked]="true" disabled class="pl-16"></mat-checkbox> -->
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" mat-dialog-actions align="end">
+                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" (click)="dialogRef.close(false)"></p-button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</form>

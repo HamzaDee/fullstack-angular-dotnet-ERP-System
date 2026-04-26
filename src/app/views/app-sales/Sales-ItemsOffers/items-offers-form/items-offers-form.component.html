@@ -1,0 +1,331 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+
+        <form [formGroup]="ItemsOffersForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OfferNameArabic"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="offerNameA"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(ItemsOffersForm.get('offerNameA').value)}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OfferNameُEnglish"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="offerNameE"
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(ItemsOffersForm.get('offerNameE').value)}">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Priority"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="priority"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false" [options]="BranchesList" formControlName="branchId"
+                        [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isInvoiceOffer"
+                        (change)="OnChangeDiscount()" />
+                    <label class="cursor-pointer select-none w-full">{{"isInvoiceOffer"|translate}}</label>
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 mt-8">
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"minInvoiceAmount"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="minInvoiceAmount"
+                        [attr.disabled]="disableIsDisount || disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"invOfferType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false" [options]="OfferTypeList" formControlName="invOfferType"
+                        [disabled]="disableIsDisount || disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"invOfferValue"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="invOfferValue"
+                        [attr.disabled]="disableIsDisount || disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="active" />
+                    <label class="cursor-pointer select-none w-full">{{"Active"|translate}}</label>
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 mt-8">
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1 " formControlName="fromDate"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1 " formControlName="toDate"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1 " formControlName="note"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <div class="intro-y tab-content">
+
+                        <div class="intro-y box px-5 pt-5 mt-5">
+                            <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+
+                                <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                    class="py-4 sm:mr-8 active">{{"BondTerms"|translate}}</a>
+                            </div>
+                        </div>
+
+                        <div class="intro-y box tab-content">
+                            <div class="tab-content__pane active" id="f01">
+                                <div class="intro-y box px-5 pt-5 pb-5">
+                                    <p-table #dt [value]="itemsOffersDTList" dataKey="id" [loading]="loading"
+                                        [scrollable]="true" [paginator]="false" [style]="{width:'100%'}"
+                                        [responsive]="true" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+                                        [rowHover]="true" scrollDirection="horizontal">
+
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div
+                                                    class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                    <p-button label='{{"AddLine"|translate}}'
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewLine()"
+                                                        [disabled]="disableItemsTable || disableAll"></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 5%" pSortableColumn="itemId">
+                                                    {{"materialName"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="categoryId">
+                                                    {{"category"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="unitId">{{"UnitName"|translate}}
+                                                </th>
+                                                <th style="width: 5%" pSortableColumn="offerType">
+                                                    {{"DisplayType"|translate}}</th>
+                                                <th style="width: 2%" pSortableColumn="offerValue">
+                                                    {{"DiscountValuePrice"|translate}}</th>
+                                                <th style="width: 2%" pSortableColumn="minQty">{{"MinQty"|translate}}
+                                                </th>
+                                                <th style="width: 2%" pSortableColumn="maxQty">{{"maximum"|translate}}
+                                                </th>
+                                                <th style="width: 5%" pSortableColumn="freeItemId">
+                                                    {{"FreeItem"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="freeUnitId">
+                                                    {{"FreeUnit"|translate}}</th>
+                                                <th style="width: 2%" pSortableColumn="freeQty">{{"FreeQty"|translate}}
+                                                </th>
+                                                <th style="width: 2%"><i class="pi pi-cog"
+                                                        style="font-size: 1.2rem"></i></th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row
+                                            let-i="rowIndex">
+                                            <tr>
+
+                                                <td *ngIf="isdisabled">
+                                                    <input type="number" [(ngModel)]="row.id"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        class="input border w-full mt-1" [disabled]="disableAll">
+                                                </td>
+
+                                                <td *ngIf="isdisabled">
+                                                    <input type="number" [(ngModel)]="row.offerId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        class="input border w-full mt-1" [disabled]="disableAll">
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown [options]="ItemsList" optionLabel="text"
+                                                        optionValue="id" [(ngModel)]="row.itemId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (onChange)="onItemChange(row, i)" [filter]="true"
+                                                        appendTo="body" [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown [options]="CategoriesList" optionLabel="text"
+                                                        optionValue="id" [(ngModel)]="row.categoryId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (onChange)="onCategoryChange(row)" [filter]="true"
+                                                        appendTo="body" [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="this.unitsList[i]" optionLabel="text"
+                                                        optionValue="id" [filter]="true" filterBy="text"
+                                                        [ngModelOptions]="{standalone: true}" appendTo="body"
+                                                        autoWidth="false" [virtualScroll]="false"
+                                                        [(ngModel)]="row.unitId"
+                                                        (onChange)="checkDuplicateItemUnit(row, i)"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="DisplayTypeList" optionLabel="text" optionValue="id"
+                                                        [filter]="true" filterBy="text"
+                                                        [ngModelOptions]="{standalone: true}" appendTo="body"
+                                                        autoWidth="false" [virtualScroll]="false"
+                                                        [(ngModel)]="row.offerType"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        [disabled]="disableAll" (onChange)="onOfferTypeChange(row, i)"
+                                                        [ngClass]="{ 'invalid-field':row.offerType <= 0}">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 2%">
+                                                    <input type="text" class="input border w-full mt-1 "
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="row.offerValue" [disabled]="disableAll">
+                                                </td>
+
+                                                <td style="width: 2%">
+                                                    <input type="number" class="input border w-full mt-1 "
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="row.minQty"
+                                                        [ngClass]="{ 'invalid-field':row.minQty <= 0}"
+                                                        [disabled]="disableAll">
+                                                </td>
+
+                                                <td style="width: 2%">
+                                                    <input type="number" class="input border w-full mt-1 "
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="row.maxQty"
+                                                        [disabled]="disableAll">
+                                                </td>
+
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown [options]="FreeItemsList" optionLabel="text"
+                                                        optionValue="id" [(ngModel)]="row.freeItemId"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (onChange)="onFreeItemChange(row, i)" [filter]="true"
+                                                        appendTo="body" [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        [options]="this.freeUnitList[i]" optionLabel="text"
+                                                        optionValue="id" [filter]="true" filterBy="text"
+                                                        [ngModelOptions]="{standalone: true}" appendTo="body"
+                                                        autoWidth="false" [virtualScroll]="false"
+                                                        [(ngModel)]="row.freeUnitId"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        [disabled]="disableAll">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 2%">
+                                                    <input type="number" class="input border w-full mt-1 "
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="row.freeQty"
+                                                        [disabled]="disableAll">
+                                                </td>
+
+                                                <td style="width: 2%">
+                                                    <button mat-menu-item (click)="deleteRow(i)"
+                                                        [disabled]="disableAll"> <i class="material-icons"
+                                                            style="color:red">delete</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+
+
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="10">
+                                                    {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit"
+                    [disabled]="ItemsOffersForm.invalid || disableSave" [hidden]="showsave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" [hidden]="showsave"
+                    [disabled]="ItemsOffersForm.invalid" (click)="PrintItemsOffers(this.ItemsOffersForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    [hidden]="showsave" [disabled]="ItemsOffersForm.invalid" (click)="DeleteItemsOffers(this.ItemsOffersForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    [routerLink]="['/ItemsOffers/ItemsOffersList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+            </div>
+
+
+
+
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

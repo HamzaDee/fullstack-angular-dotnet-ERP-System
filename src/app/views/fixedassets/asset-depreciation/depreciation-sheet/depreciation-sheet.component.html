@@ -1,0 +1,77 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"DepreciationList"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+<div class="col-span-1"> {{"VoucherType"|translate}} : </div>
+ <div class="pt-hlf pb-hlf col-span-11" > {{data.voucherTypeName}}</div>
+
+<div class="col-span-2"> {{"BondNumber"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" > {{data.voucherNo}}</div>
+
+<div class="pt-hlf pb-hlf col-span-2">{{"VoucherDate"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10"  >{{data.voucherDate| date: 'dd/MM/yyyy'}}</div> 
+
+<div class="col-span-1"> {{"Currency"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-5" > {{data.currencyName}}</div>
+
+<div class="col-span-3"> {{"ExchangeRatio"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-3" >{{data.currRate}} </div>
+
+<div class="col-span-2"> {{"CalculatingToMonthDepreciation"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" > {{data.depreciationMonth| date: 'dd/MM/yyyy'}}</div>
+
+<div class="col-span-2"> {{"notes"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" > {{data.note}}</div>
+
+</div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="color: black; border: solid black"> {{"Origin"|translate}}</th>
+    <th style="color: black; border:solid black">   {{"CostCenter"|translate}} </th>
+    <th style="color: black; border: solid black">  {{"FixedCost"|translate}}</th>
+    <th style="color: black; border: solid black">   {{"AccumulatedDepreciation"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Additions"|translate}}</th>
+    <th style="color: black; border:solid black">   {{"Deleteation"|translate}} </th>
+    <th style="color: black; border: solid black">  {{"PersentDeprecitation"|translate}}</th>
+    <th style="color: black; border: solid black">   {{"DeprecitationCost"|translate}} </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let product of faTransDTModelList"  style="color: black;">
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.assestName }}</b></td>
+    <td style="width:22%;font-size:0.8rem;"><b>{{ product.creditCardName }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.assetAmount }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ product.depreciationComplex }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"><b>{{ product.additions }}</b></td>
+    <td style="width:27%;font-size:0.8rem;"><b>{{ product.decreases }}</b></td>
+    <td style="width:15%;font-size:0.8rem;"> <b>{{ product.depreciationPersantage }}</b></td>
+    <td style="width:18%;font-size:0.8rem;"><b>{{ product.total }}</b></td>  
+</tr>
+</tbody>
+
+<tfoot>
+    <th style="width:30%;color: black; border: solid black"> {{"total"|translate}}</th> 
+    <th style="width:30%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+    <th style="width:15%;color: black; border: solid black"></th> 
+     <td style="width:15%;font-size:0.8rem;"> <b>{{tfTotal}}</b></td> 
+</tfoot>
+</table>
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+<div class="intro-y box">
+    <div class="accordion__pane border border-gray-200 p-4 mt-3">
+        <mat-accordion class="accordion__pane__toggle font-medium block">
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span
+                                class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                        </h5>
+                        <mat-divider></mat-divider>
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                    <div class="grid grid-cols-12 gap-5 pt-5">                                                               
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countrylist"
+                                    [(ngModel)]= "searchCriteria.countryId"
+                                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                    [virtualScroll]="false" (onChange)="getCustomers($event)">
+                                </p-dropdown>
+                        </div>
+                         <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Agent"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="agentsList"
+                                [(ngModel)]= "searchCriteria.agentId"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="data2" [filter]="true"  filterBy="text"
+                                 [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"InvoiceNumber"|translate}}</label>
+                            <input type="number" [(ngModel)]= "searchCriteria.billNo" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"FromDate"|translate}}</label>
+                            <input type="date" [(ngModel)]= "searchCriteria.fromdate" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                            <input type="date" [(ngModel)]= "searchCriteria.todate" [ngModelOptions]="{standalone: true}"  class="input border w-full mt-1">                            
+                        </div>
+                    </div>
+
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"ShowRecord"|translate}}' icon="pi pi-search" class="ml-4" styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component ml-4"
+                        type="submit" (onClick)="getData()"></p-button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"CancelSearch"|translate}}' color="warn" icon="pi pi-undo"styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component ml-4" 
+                        (click)="EmptySearch()"></p-button>
+                    </div>                        
+                </div>
+                <!-- <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br> -->
+                <div class="loading-indicator" [hidden]="!showLoader">
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>   
+    </div>
+</div>
+                
+

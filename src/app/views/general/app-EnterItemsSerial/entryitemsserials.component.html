@@ -1,0 +1,102 @@
+
+<form [formGroup]="entryitemSerialForms" (ngSubmit)="onConfirm()">
+    <div class="content">
+        <div class="card"> 
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Quantity"|translate}}</label>
+                            <input type="number" [value]="qty"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"materialName"|translate}}</label>
+                            <input type="text" [value]="itemName"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-4 sm:col-span-4 xxl:col-span-4" [hidden]="this.invoice>0">
+                            <p-button
+                                styleClass="p-ripple p-element button mr-2 mb-2 flex items-center justify-center bg-theme-4 text-white p-button p-component"
+                                type="button"
+                                (click)="generateSerialNumbers()">{{"enterAutoSequenceLikeFristSequence"|translate}}
+                            </p-button>
+                        </div>
+                        <div class="col-span-4 sm:col-span-2 xxl:col-span-2" [hidden]="this.invoice>0">
+                            <p-button
+                                styleClass="p-ripple p-element button mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                                type="button" color="warn" (click)="clearAllSerialNumbers()">{{"Delete"|translate}}
+                            </p-button>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"SerialCounter"|translate}}</label>
+                            <input type="number" class="input border w-full mt-1 "
+                            [(ngModel)]="serialsCounter" 
+                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                            [readOnly]="true">
+                        </div>
+                    </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="serialTransList" dataKey="id" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" [rows]="5" [paginator]="true" responsiveLayout="scroll" [showCurrentPageReport]="true">
+                            
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <!-- <th class="text-center-m w-0">{{"Choose"|translate}} -->
+                                    <th class="text-center-m w-0">{{"number"|translate}}
+                                    <th class="text-center-m w-0">{{"SerialNo"|translate}}
+                                    <th style="flex: 0 0 5rem" class="text-center-m w-0" ><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                </tr>
+                            </ng-template>
+                            
+                            <ng-template pTemplate="body" class=".p-datatable-tbody" let-itemSerialForm let-i="rowIndex">
+                                <tr>
+                                    <td *ngIf="isShown">
+                                        <input type="number" [(ngModel)]="itemSerialForm.itemId"
+                                        [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                    </td>
+                                    <td><input type="number" [(ngModel)]="itemSerialForm.id" 
+                                        [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                        [readOnly]="true"></td> 
+                                        <!-- -->
+                                    <td><input type="number" [(ngModel)]="itemSerialForm.serialNo"
+                                        [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                         [disabled]="itemSerialForm.isDisabled"
+                                        (focus)="CheckIfAllowEditSerial(itemSerialForm,i)"
+                                        (keydown)="validateNumericInput($event)"
+                                        [readOnly]="disableSerials"                                        
+                                        (blur)="AllowAddSerial1(itemSerialForm.serialNo,i,itemSerialForm.itemId)">
+                                    </td>
+                                    <td style="width:2%">
+                                        <i class="material-icons cursor-pointer" (click)="deleteRow(itemSerialForm,i)"
+                                        style="color:red">delete</i> 
+                                    </td>  
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="3"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">                               
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" (onClick)="onConfirm()"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (onClick)="onCancel()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

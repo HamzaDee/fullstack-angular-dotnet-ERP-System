@@ -1,0 +1,193 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="TechnicalReportForm">
+
+        <div class="grid grid-cols-12 gap-5 pt-5">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"OrderType"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [options]="inorderList" formControlName="inorder">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"MaintenanceOrder"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="requestOrderList" formControlName="reqOrderId">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Priority"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="prioritiesList" formControlName="priorityId">
+                </p-dropdown>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Status"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" [options]="statusList" formControlName="status">
+                </p-dropdown>
+            </div>
+
+        </div>
+
+
+        <br>
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+
+            <p-button label='{{"ShowTransactions"|translate}}' class="ml-4" (onClick)="GetReport()"
+                styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+
+
+            <p-button label='{{"NewSearch"|translate}}' (onClick)="clearFormData()"
+                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component">
+            </p-button>
+
+        </div>
+
+        <br>
+
+        <div>
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5">
+                        <div class="col-md-12" id="htmlData">
+
+                            <p-table #dt [value]="Data" [rows]="10" [paginator]="true"
+                                [globalFilterFields]="['orderNo','orderDate','requestSource','maintenanceOrderName','description','techniciansNo','workHours','workCost','visitDate','note','statusName']"
+                                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText
+                                                    type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                            align="end">
+                                            <i class="pi pi-star-fill"
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                                (click)="exportExcel()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="PDF"
+                                                (click)="exportPdf()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="orderNo">{{"OrderNo"|translate}}</th>
+                                        <th pSortableColumn="orderDate">{{"OrderDate"|translate}}</th>
+                                        <th pSortableColumn="requestSource">{{"OrderType"|translate}} </th>
+                                        <th pSortableColumn="maintenanceOrderName">{{"MaintenanceOrder"|translate}}</th>
+                                        <th pSortableColumn="description">{{"Description"|translate}}</th>
+                                        <th pSortableColumn="techniciansNo">{{"TechniciansNo"|translate}}</th>
+                                        <th pSortableColumn="workHours">{{"WorkHours"|translate}}</th>
+                                        <th pSortableColumn="workCost">{{"WorkCost"|translate}}</th>
+                                        <th pSortableColumn="visitDate">{{"VisitDate"|translate}}</th>
+                                        <th pSortableColumn="note">{{"Notes"|translate}}</th>
+                                        <th pSortableColumn="statusName">{{"OrderStatus"|translate}}</th>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                                    <tr>
+                                        <td style="text-align: justify;">{{item.orderNo}}</td>
+                                        <td style="text-align: justify;">{{item.orderDate | date: 'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: justify;">{{item.requestSource}}</td>
+                                        <td style="text-align: justify;">{{item.maintenanceOrderName}}</td>
+                                        <td style="text-align: justify;">{{item.description}}</td>
+                                        <td style="text-align: justify;">{{item.techniciansNo}}</td>
+                                        <td style="text-align: justify;">{{item.workHours}}</td>
+                                        <td style="text-align: justify;">{{item.workCost}}</td>
+                                        <td style="text-align: justify;">{{item.visitDate | date: 'dd/MM/yyyy'}}</td>
+                                        <td style="text-align: justify;">{{item.note}}</td>
+                                        <td style="text-align: justify;">{{item.statusName}}</td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="11"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <!-- 1 → 5 -->
+                                        <td colspan="6" style="text-align: right;">
+                                            {{"total"|translate}}
+                                        </td>
+
+                                        <!-- 6: techniciansNo -->
+                                        <td>
+                                            <input type="text" [value]="tot1Formatted" class="input border w-full mt-1" style="font-size: 12px;"
+                                                disabled>
+                                        </td>
+
+                                        <!-- 7: workHours -->
+                                        <td>
+                                            <input type="text" [value]="tot2Formatted" class="input border w-full mt-1" style="font-size: 12px;"
+                                                disabled>
+                                        </td>
+
+                                        <!-- 8 → 11 -->
+                                        <td colspan="4"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</div>

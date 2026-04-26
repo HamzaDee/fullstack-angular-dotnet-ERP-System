@@ -1,0 +1,76 @@
+<div class="content">
+    <div class="card">
+        <div class="card-body mb-8">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <p-table #dt [value]="data" 
+                        [globalFilterFields]="['fullName' ,'extension']" styleClass="p-datatable-gridlines"
+                        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                        [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">                                
+                                <!-- <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search "></i>
+                                        <input class="pInputText mb-2" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder='{{"search"|translate}} ' />
+                                    </span>
+                                </div> -->
+                                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                                    <div class="file-upload">
+                                        <p-button label='{{"AttachFile"|translate}}' 
+                                            styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            icon="pi pi-upload" (click)="fileUpload.click()"></p-button>
+                                    </div>
+                                </div>
+
+<!--                                 <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" 
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        (click)="onCloseClicked()">
+                                    </p-button>
+                            </div> -->
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="head_tb" pSortableColumn="fullName">{{"FileName"|translate}} <p-sortIcon
+                                        field="fullName"></p-sortIcon></th>
+                                <th class="head_tb" pSortableColumn="extension">{{"FileType"|translate}} <p-sortIcon
+                                        field="extension"></p-sortIcon></th>
+                                <th class="text-center-m w-0"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                <th hidden></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-Attach>
+                            <tr>
+                                <td style="text-align: justify;">{{Attach.docName}}</td>
+                                <td style="text-align: justify;">{{Attach.docExt}}</td>
+                                <td style="width:5%">
+                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="" type="button">
+                                        <mat-icon class="">more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #userMenu="matMenu">
+                                        <a mat-menu-item [href]="Attach.url" target="_blank"><i class="material-icons"
+                                                style="color:blue ">visibility</i> &nbsp;{{"Show"|translate}}</a>
+                                        <button mat-menu-item (click)="deleteItem(Attach)"> <i class="material-icons"
+                                                style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
+                                    </mat-menu>
+                                </td>
+                                <td hidden>{{Attach.id}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="3"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

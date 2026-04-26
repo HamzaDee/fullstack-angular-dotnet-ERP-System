@@ -1,0 +1,345 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="VolunteersAddForm" (ngSubmit)="OnSaveForms()">
+
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <mat-vertical-stepper [linear]="false" class="w-full">
+
+                    <!-- Step 1 – البيانات الشخصية -->
+                    <mat-step label="البيانات الشخصية">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label for="volunteerName"
+                                    class="control-label font-weight-bold">{{"VolunteerName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="volunteerName" type="text" formControlName="volunteerName"
+                                    class="input border w-full mt-1 " [readonly]="true"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('volunteerName').value)}">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="firstName"
+                                    class="control-label font-weight-bold">{{"VFirstName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="firstName" type="text" formControlName="firstName"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('firstName').value)}"
+                                    (blur)="UpdateFullName()">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="secondName"
+                                    class="control-label font-weight-bold">{{"VSecondName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="secondName" type="text" formControlName="secondName"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('secondName').value)}"
+                                    (blur)="UpdateFullName()">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="thirdName"
+                                    class="control-label font-weight-bold">{{"VThirdName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="thirdName" type="text" formControlName="thirdName"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('thirdName').value)}"
+                                    (blur)="UpdateFullName()">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="lastName"
+                                    class="control-label font-weight-bold">{{"VLastName"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="lastName" type="text" formControlName="lastName"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('lastName').value)}"
+                                    (blur)="UpdateFullName()">
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label for="birthPlace"
+                                    class="control-label font-weight-bold">{{"PlaceOfBirth"|translate}}</label>
+                                <input id="birthPlace" type="text" formControlName="birthPlace"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="birthDate"
+                                    class="control-label font-weight-bold">{{"BirthdayDate"|translate}}</label>
+                                <input id="birthDate" type="date" formControlName="birthDate"
+                                    class="input border w-full mt-1 " [attr.disabled]=" disableAll ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': !validDate}">
+                            </div>
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperNext>التالي</button>
+                        </div>
+                    </mat-step>
+
+
+
+                    <!-- Step 2 – المعلومات الجغرافية -->
+                    <mat-step label="المعلومات الجغرافية">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="volunteerSide"
+                                    class="control-label font-weight-bold">{{"VolunteerSide"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <p-dropdown id="volunteerSide" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="volunteerSideList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="volunteerSide" filterBy="text" appendTo="body"
+                                    autoWidth="false" [virtualScroll]="false"
+                                    [ngClass]="{ 'invalid-field': VolunteersAddForm.get('volunteerSide').value <= 0}"
+                                    [disabled]="disableAll " [virtualScroll]="true" [lazy]="true"
+                                    (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="nationalityId"
+                                    class="control-label font-weight-bold">{{"Nationality"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <p-dropdown id="nationalityId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="nationalitiesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="nationalityId" filterBy="text"
+                                    [ngClass]="{ 'invalid-field': VolunteersAddForm.get('nationalityId').value <= 0}"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="governorateId"
+                                    class="control-label font-weight-bold">{{"Governorate"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <p-dropdown id="governorateId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="governorateList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="governorateId" filterBy="text"
+                                    [ngClass]="{ 'invalid-field': VolunteersAddForm.get('governorateId').value <= 0}"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                                    (onChange)="FilterGover(VolunteersAddForm.get('governorateId').value)">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                                <label for="districtId"
+                                    class="control-label font-weight-bold">{{"BrigadierGeneral"|translate}}</label>
+                                <p-dropdown id="districtId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="filteredDistrectList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="districtId" filterBy="text" appendTo="body"
+                                    autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                                <label for="residentialAddress"
+                                    class="control-label font-weight-bold">{{"ResidentialAddress"|translate}}</label>
+                                <input id="residentialAddress" type="text" formControlName="residentialAddress"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperPrevious
+                                class="mr-2">السابق</button>&nbsp;
+                            <button type="button" mat-raised-button matStepperNext>التالي</button>
+                        </div>
+                    </mat-step>
+
+                    <!-- Step 3 – بيانات التواصل -->
+                    <mat-step label="بيانات التواصل">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="mobileNo" class="control-label font-weight-bold">{{"Mobile"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="mobileNo" type="text" formControlName="mobileNo"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableName ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('mobileNo').value)}"
+                                    [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                <label for="emergencyNo"
+                                    class="control-label font-weight-bold">{{"EmergencyNo"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <input id="emergencyNo" type="number" formControlName="emergencyNo"
+                                    class="input border w-full mt-1 " [attr.disabled]="disableName ? 'disabled' : null"
+                                    [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('emergencyNo').value)}"
+                                    [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label for="email" class="control-label font-weight-bold">{{"Email"|translate}}</label>
+                                <input id="email" type="text" formControlName="email" class="input border w-full mt-1 "
+                                    [attr.disabled]="disableAll ? 'disabled' : null">
+                            </div>
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperPrevious class="mr-2">
+                                السابق
+                            </button>&nbsp;
+                            <button type="button" mat-raised-button matStepperNext>التالي</button>
+                        </div>
+                    </mat-step>
+
+                    <!-- Step 4 – الخبرات والمؤهلات -->
+                    <mat-step label="الخبرات والمؤهلات">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+<div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                    <label for="workplace" class="control-label font-weight-bold">{{"WorkPlace"|translate}}</label>
+                    <input id="workplace" type="text" formControlName="workplace" class="input border w-full mt-1 "
+                        [attr.disabled]="disableName ? 'disabled' : null"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="experienceYears"
+                        class="control-label font-weight-bold">{{"YearsExperience"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="experienceYears" type="number" formControlName="experienceYears"
+                        class="input border w-full mt-1 " [attr.disabled]="disableName ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('experienceYears').value)}"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="totalVolunteerHours"
+                        class="control-label font-weight-bold">{{"TotalVolunteerHours"|translate}}</label>
+                    <input id="totalVolunteerHours" type="number" formControlName="totalVolunteerHours"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+ <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="educationalQualification"
+                        class="control-label font-weight-bold">{{"EducationalQualification"|translate}}</label>
+                    <input id="educationalQualification" type="text" formControlName="educationalQualification"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <label for="skills" class="control-label font-weight-bold">{{"Skills"|translate}}</label>
+                    <input id="skills" type="text" formControlName="skills" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperPrevious class="mr-2">
+                                السابق
+                            </button>&nbsp;
+                            <button type="button" mat-raised-button matStepperNext>التالي</button>
+                        </div>
+                    </mat-step>
+
+                    <!-- Step 5 – الوثائق والهوية -->
+                    <mat-step label="الوثائق والهوية">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+
+
+ <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="nationalID" class="control-label font-weight-bold">{{"NationalID"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="nationalID" type="number" formControlName="nationalID" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(VolunteersAddForm.get('nationalID').value)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="documentNumber"
+                        class="control-label font-weight-bold">{{"documentNumber"|translate}}</label>
+                    <input id="documentNumber" type="text" formControlName="iDNumber" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+   <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="identityProof" class="control-label font-weight-bold">{{"IdentityProof"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="identityProof" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="identityProofList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="identityProofId" filterBy="text"
+                        [ngClass]="{ 'invalid-field': VolunteersAddForm.get('identityProofId').value <= 0}"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperPrevious class="mr-2">
+                                السابق
+                            </button>&nbsp;
+                            <button type="button" mat-raised-button matStepperNext>التالي</button>
+                        </div>
+                    </mat-step>
+
+                    <!-- Step 6 – التوفر -->
+                    <mat-step label="التوفر">
+                        <div class="grid grid-cols-12 gap-5 mt-5">
+
+<div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="availableDays" class="control-label font-weight-bold">{{"AvailableDays"|translate}}
+                    </label>
+                    <p-multiSelect id="availableDays" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                        styleClass="input border w-full mt-1" optionValue="id" formControlName="availableDays"
+                        [options]="availableDaysList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </p-multiSelect>
+                </div>
+
+
+                        </div>
+                        <div class="mt-5 text-right">
+                            <button type="button" mat-raised-button matStepperPrevious class="mr-2">
+                                السابق
+                            </button>
+                        </div>
+                    </mat-step>
+
+
+
+                </mat-vertical-stepper>
+
+
+            </div>
+
+
+            <div class="px-5 pt-5 mt-5">
+                <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                    <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                        class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                </div>
+            </div>
+            <div class="tab-content__pane" id="f04">
+                <div class="intro-y box px-5 pt-5">
+                    <app-app-general-attachment [voucherId]="Id"></app-app-general-attachment>
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="VolunteersAddForm.invalid || !this.validDate || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="VolunteersAddForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteVolunteer(this.VolunteersAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/Volunteers/Volnteerlist']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

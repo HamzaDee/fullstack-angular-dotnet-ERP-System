@@ -1,0 +1,125 @@
+<div class="container intro-y box px-5 pb-5 mb-5">
+ <p-treeTable #dt [value]="tabelData" [rows]="10" 
+   [globalFilterFields]="['id','groupName','mainGroupName','category','discountName']"
+       [tableStyle]="{'min-width':'50rem'}" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        class="p-datatable-table">
+    <!-- <p-treeTable #tt [value]="tabelData" [columns]="cols" [lazy]="false" [filterMode]="filterMode" [loading]="loading" [scrollable]="true"
+    [globalFilterFields]="['id','groupName','mainGroupName','category','discountName']"
+        [tableStyle]="{'min-width':'50rem'}" class="p-datatable-table"> -->
+        <ng-template pTemplate="caption">
+
+            <div class="grid grid-cols-12 gap-5 ">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <!-- <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 mb-5">
+                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder='{{"search"|translate}} ' />
+                </div> -->
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-4 ">
+                    <p-button label='{{"AddNew"|translate}}'
+                     styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="pi pi-plus" (click)="OpenItemsGroupForm(0,'Add')"></p-button>
+                </div>
+
+
+
+                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                    <button type="button" pButton icon="pi pi-window-maximize" style="font-size: 1.5rem" class="button px-2 mr-1 mb-2 text-gray-700"
+                    title='{{"ExpandAll"|translate}}' tooltipPosition="top" (click)="expandAll()"></button>
+                    <button type="button" pButton icon="pi pi-window-minimize" style="font-size: 1.5rem" class="button px-2 mr-1 mb-2 text-gray-700"
+                    title='{{"CollapseAll"|translate}}' tooltipPosition="top" 
+                    (click)="collapseAll()"></button>
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                        class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-excel" ptooltip="PDF" (click)="exportToPDF()" tooltipposition="bottom"
+                        class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width: 5%">*</th>
+                <th ttSortableColumn="id">{{"CollectionNumber"|translate}} <p-treeTableSortIcon
+                        field="id"></p-treeTableSortIcon></th>
+                <th ttSortableColumn="groupName">{{"CollectionName"|translate}} <p-treeTableSortIcon
+                        field="groupName"></p-treeTableSortIcon></th>
+                <th ttSortableColumn="mainGroupName">{{"MainCollection"|translate}}
+                    <p-treeTableSortIcon field="mainGroupName"></p-treeTableSortIcon>
+                </th>
+                <th ttSortableColumn="category">{{"Category"|translate}} <p-treeTableSortIcon
+                        field="category"></p-treeTableSortIcon></th>
+                <th ttSortableColumn="taxName">{{"Tax"|translate}}
+                    <p-treeTableSortIcon field="taxName"></p-treeTableSortIcon>
+                </th>
+                <th ttSortableColumn="discountName">{{"Discount"|translate}}
+                    <p-treeTableSortIcon field="discountName"></p-treeTableSortIcon>
+                </th>
+                <th style="width: 5%" ttSortableColumn="isActive">{{"Active"|translate}} <p-treeTableSortIcon
+                        field="isActive"></p-treeTableSortIcon></th>
+                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr [ngClass]="{ 'p-highlight': rowData?.isMain === true }">
+                <td style="width: 5%">
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    <!-- {{ rowData?.id }} -->
+                </td>
+                <td>{{rowData?.id}}</td>
+                <td>{{rowData?.groupName}}</td>
+                <td>{{rowData?.mainGroupName}}</td>
+                <td>{{rowData?.category}}</td>
+                <td>{{rowData?.taxName}}</td>
+                <td>{{rowData?.discountName}}</td>
+                <td style="width: 5%"><input id="check2_{{rowData.id}}" [checked]="rowData?.isActive" disabled type="checkbox"
+                        class="input border mr-2 mr-3 ml-3" /></td>
+                <td style="width: 5%">
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+
+                        <button mat-menu-item (click)="OpenDetailsForm(rowData.id,true)"> 
+                            <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} 
+                        </button>
+
+                        <button mat-menu-item (click)="OpenItemsGroupForm(rowData.id,false)">
+                            <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}} 
+                        </button>
+
+                        <button mat-menu-item (click)="OpenSubItemsGroupForm(rowData.id,rowData.discountName,rowData.groupName,rowData.taxName,rowData.category)"
+                            *ngIf="rowData?.isMain">
+                            <i class="pi pi-sitemap" style="color:blue"></i> &nbsp;{{"BranchingGroup"|translate}} 
+                        </button>
+
+                        <button mat-menu-item (click)="DeleteItemsGroup(rowData.id)"> <i class="material-icons"
+                                style="color:red">delete</i>
+                            &nbsp;{{"Delete"|translate}} 
+                        </button>
+
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td [attr.colspan]="cols.length" style="text-align: center !important">{{"ThereisNoData"|translate}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+    <br>
+</div>

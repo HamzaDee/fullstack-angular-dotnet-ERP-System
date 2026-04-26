@@ -1,0 +1,127 @@
+<div class="container">
+    <mat-accordion class="card-blue">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h5>
+                        <mat-icon class=" text-blue">search</mat-icon> {{"AdvancedSearch"|translate}}
+                    </h5>
+                    <mat-divider></mat-divider>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <hr>
+            <mat-panel-description>
+                <div class="row col-12 mt-3">
+                    <div class="col-md-5">
+                        <label class="control-label font-weight-bold">{{"USERS"|translate}}</label>
+                        <!-- <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id"
+                            [options]="usersLsit" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [(ngModel)]="selectedUsers">
+                        </p-multiSelect> -->
+                    </div>
+                    <div class="col-md-5">
+                        <label class="control-label font-weight-bold">{{"Screen"|translate}}</label>
+                        <!-- <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="text"
+                            [options]="screansLsit" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [(ngModel)]="selectedScreen">
+                        </p-multiSelect> -->
+                    </div>
+                </div>
+            </mat-panel-description>
+            <mat-panel-description>
+                <div class="row col-12 mt-3">
+                    <div class="col-md-5">
+                        <label class="control-label font-weight-bold">{{"TransType"|translate}}</label>
+                        <!-- <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text" optionValue="id"
+                            [options]="tansTypeLsit" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                            [virtualScroll]="false" [(ngModel)]="selectedTransType">
+                        </p-multiSelect> -->
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="">{{"TransNumber"|translate}}</label>
+                        <!-- <input type="number" [(ngModel)]="transNumber" class="form-control" #TransNumber> -->
+                    </div>
+                </div>
+            </mat-panel-description>            
+            <hr>
+            <div class="row">
+                <div mat-dialog-actions align="end">
+                    <!-- <p-button label='{{"search"|translate}}' (click)="AdvancedSearchInTransLogList(ToDate,FromDate)"
+                        styleClass="p-button-sm" icon="pi pi-search"></p-button> |
+                    <p-button label='{{"clear"|translate}}' (click)="ClearSearch()" color="warn" icon="pi pi-undo"
+                        styleClass="p-button-danger p-button-sm"></p-button> -->
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <p-table #dt [value]="tabelData" dataKey="id" [paginator]="true" [rows]="10" [loading]="loading"
+        [globalFilterFields]="['accNo','name','parentAccName','accNatureName','']" styleClass="p-datatable-gridlines" [rowHover]="true"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="row mb-8">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6 flex ng-star-inserted" style="text-align:end;">
+                    
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+                        pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" class="p-button-warning mr-2"
+                        pTooltip="PDF" tooltipPosition="bottom"></button>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input class="pInputText" pInputText type="text"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder='{{"search"|translate}} ' />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 10%" pSortableColumn="accNo">{{"AccountNo"|translate}} <p-sortIcon field="accNo"></p-sortIcon></th>
+                <th pSortableColumn="name">{{"AccountName"|translate}} <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="parentAccName">{{"ParentAccount"|translate}} <p-sortIcon field="parentAccName"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="accTypeName">{{"AccountType"|translate}} <p-sortIcon field="accTypeName"></p-sortIcon></th>
+                <th style="width: 10%" pSortableColumn="accNatureName">{{"AccountNature"|translate}} <p-sortIcon field="accNatureName"></p-sortIcon></th>
+                <th style="width: 5%" pSortableColumn="isMain">{{"Branched"|translate}} <p-sortIcon field="isMain"></p-sortIcon></th>
+                <th style="width: 5%" pSortableColumn="isActive">{{"Active"|translate}} <p-sortIcon field="isActive"></p-sortIcon></th>
+                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-accountList>
+            <tr>
+                <td>{{accountList.accNo}}</td>
+                <td>{{accountList.name}}</td>
+                <td>{{accountList.parentAccName}}</td>
+                <td>{{accountList.accTypeName}}</td>
+                <td>{{accountList.accNatureName}}</td>
+                <td><mat-checkbox [disabled]="true" [checked]="accountList.isMain" class="pl-16"></mat-checkbox></td>
+                <td><mat-checkbox [disabled]="true" [checked]="accountList.isActive" class="pl-16"></mat-checkbox></td>
+                <td>
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                        <mat-icon class="">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="OpenAccountFormPopUp(accountList.id,false)">
+                            <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}} </button>
+                        <button mat-menu-item (click)="DeleteAccount(accountList.id)"> <i class="material-icons"
+                                style="color:red">delete</i>
+                            &nbsp;{{"Delete"|translate}} </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

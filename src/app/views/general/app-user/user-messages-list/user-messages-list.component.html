@@ -1,0 +1,125 @@
+
+<div class="container intro-y box px-5 pb-5 mb-5">
+
+    <div class="grid grid-cols-12 gap-5 mt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+            <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" [globalFilterFields]="['',]"
+                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+
+
+                    <div class="grid grid-cols-12 gap-5 ">
+
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 ">
+
+                            <p-button label='{{"AddNew"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="pi pi-plus" (click)="OpenUserMessageFormPopUp(0,true)"></p-button>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+
+                  
+                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder='{{"search"|translate}} ' />
+
+                        </div>
+
+
+                       
+
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                            <i class="pi pi-star-fill" 
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)"
+                                title= "{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+
+                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                   
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="head_tb" style="width: 8%;" pSortableColumn="number">{{"number"|translate}} <p-sortIcon
+                                field="number"></p-sortIcon>
+                        <th class="head_tb" style="width: 8%;" pSortableColumn="">{{"MESSAGETYPE"|translate}} </th>
+                        <th class="head_tb" style="width: 9%;" pSortableColumn="">{{"FROMUESER"|translate}} </th>
+                        <th class="head_tb" style="width: 9%;" pSortableColumn="">{{"TOUESER"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="">{{"MESSAGE"|translate}} </th>
+                        <th class="head_tb" style="width: 10%;" pSortableColumn="">{{"DATETIME"|translate}} </th>
+                        <th class="head_tb" style="width: 9%;" pSortableColumn="">{{"PRIORATYDGREE"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="">{{"SEEN"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="">{{"DONE"|translate}} </th>
+
+                        <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-message>
+                    <tr>
+                        <td style="text-align: justify;">{{message.number}}</td>
+                        <td style="text-align: justify;">{{message.messageType}}</td>
+                        <td style="text-align: justify;">{{message.fromUserName}}</td>
+                        <td style="text-align: justify;">{{message.toUserName}}</td>
+                        <td style="text-align: justify;">{{message.msg}}</td>
+                        <td style="text-align: justify;">{{message.msgDate|date :'medium'}}</td>
+                        <td style="text-align: justify;">{{message.priortityName}}</td>
+                        <td style="text-align: justify;">
+                            <div *ngIf="message.isRead" (click)="ChancgeRead()" class="read">
+                                <mat-icon class="">visibility_off</mat-icon>
+                            </div>
+                            <div *ngIf="!message.isRead" class="read">
+                                <mat-icon class="">visibility</mat-icon>
+                            </div>
+                        </td>
+                        <td><input type="checkbox" (click)="UpdateStatus(message.id,$event)" [checked]="message.done" class="pl-16" /></td>
+                        <td style="width:5%">
+                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                <mat-icon class="">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item (click)="OpenUserMessageFormPopUp(message.id,false,true)"> <i
+                                    class="material-icons" style="color:green">message</i>
+                                     &nbsp;{{"NEWMESSAGEDETAILS"|translate}} </button>
+                                <button mat-menu-item (click)="OpenUserMessageFormPopUp(message.id,false)">
+                                    <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                                </button>
+                                <button mat-menu-item (click)="DeleteUserMessage(message.id)"> <i class="material-icons"
+                                        style="color:red">delete</i>
+                                    &nbsp;{{"Delete"|translate}} </button>                               
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" [hidden]="!loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

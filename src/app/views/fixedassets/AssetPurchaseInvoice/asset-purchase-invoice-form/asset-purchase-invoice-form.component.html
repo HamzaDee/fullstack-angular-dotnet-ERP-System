@@ -1,0 +1,329 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+        <form [formGroup]="AssetPurchaseInvoiceForm" (ngSubmit)="OnSaveForms()"> 
+            <input type="text" formControlName="id" class="form-control " [(ngModel)]="Data.id" hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"VoucherType"|translate}}<span class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false"  [options]="VoucherTypeList" [(ngModel)]="selectedVoucherType" formControlName="voucherTypeId"
+                        (onChange)="getVoucherNo($event)"
+                        [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('voucherTypeId').value <= 0}" [disabled]="disableAll || disapleVoucherType">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BillNo"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" class="input border w-full mt-1" formControlName="voucherNo" [(ngModel)]="Data.voucherNo"
+                    [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('voucherNo').value <= 0}"
+                    [attr.disabled]="allowEditVoucherSerial||disableAll ? 'disabled' : null"
+                    (blur)="voucherNoBlur(this.AssetPurchaseInvoiceForm.value.voucherTypeId,this.AssetPurchaseInvoiceForm.value.voucherNo)">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"BillDate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="date" class="input border w-full mt-1 " formControlName="voucherDate" [ngModel]="Data.voucherDate | date:'yyyy-MM-dd'"
+                    [attr.disabled]="allowEditDate||disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false"  [options]="branchesList" formControlName="branchId" 
+                        [disabled]="allowEditBranch||disableAll" [(ngModel)]="selectedbranches">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false"  [options]="currencyList" formControlName="currencyId" [(ngModel)]="selectedcurrency"
+                        (onChange)="getCurrencyRate($event)"
+                        [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('currencyId').value <= 0}" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ExchangeRate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="number" class="input border w-full mt-1 " formControlName="currRate" [(ngModel)]="Data.currRate"
+                    [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('currRate').value <= 0}" [readOnly]="disableCurrRate"
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"CreditAcc"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false"  [options]="accountsList" formControlName="creditAccountId" [(ngModel)]="selectedaccounts"
+                        [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('creditAccountId').value <= 0}" [disabled]="disableAll">
+                     
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Supplier"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        autoWidth="false" [virtualScroll]="false"  [options]="SuppliersList" formControlName="dealerId" [(ngModel)]="selectedeSuppliers"
+                        [ngClass]="{ 'invalid-field': AssetPurchaseInvoiceForm.get('dealerId').value <= 0}" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="note" [(ngModel)]="Data.note"
+                    [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="isCash" [(ngModel)]="Data.isCash" 
+                    [attr.disabled]="disableAll ? 'disabled' : null" [checked]="isCash==1" (change)="isCash=(isCash==0)?1:0"/>
+                    <label class="cursor-pointer select-none w-full">{{"Cash"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3" formControlName="priceWithTax" [(ngModel)]="Data.priceWithTax" 
+                    [attr.disabled]="disableAll ? 'disabled' : null" (change)="claculateAllAmount()" />
+                    <label class="cursor-pointer select-none w-full">{{"ThePriceIncludesTax"|translate}}</label>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <div class="intro-y tab-content">
+
+                        <div class="intro-y box px-5 pt-5 mt-5">
+                            <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+
+                                <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                    class="py-4 sm:mr-8 active">{{"BondTerms"|translate}}</a>
+
+                                <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                                    class="py-4 sm:mr-8 ">{{"VoucherAttachments"|translate}}</a>
+
+                                <a data-toggle="tab" data-target="#f03" href="javascript:;" *ngIf="voucherId > 0 && !HideVoucher"
+                                    class="py-4 sm:mr-8">{{"FinancailVoucher"|translate}}</a>
+                            </div>
+                        </div>
+
+                        <div class="intro-y box tab-content">
+                            <div class="tab-content__pane active" id="f01">
+                                <div class="intro-y box px-5 pt-5 pb-5">
+                                       <p-table #dt [value]="accVouchersDTsList" dataKey="id" [loading]="loading" [scrollable]="true"
+                                        [paginator]="false" [style]="{width:'100%'}" [responsive]="true"
+                                        [resizableColumns]="true" styleClass="p-datatable-gridlines"
+                                        [rowHover]="true" scrollDirection="horizontal">
+
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div
+                                                    class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                    <p-button label='{{"AddLine"|translate}}'
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewLine()" [disabled]="disableAll"></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                           
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 7%" pSortableColumn="assetId">{{"theOrigin"|translate}}</th>
+                                                <th style="width: 7%" pSortableColumn="costCenterId" *ngIf="useCostCenter">{{"CostCenter"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="qty">{{"Quantity"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="price">{{"Price"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="total">{{"Total"|translate}}</th>
+                                                <th style="width: 7%" pSortableColumn="taxId" *ngIf="UseTax">{{"Tax"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="taxPerc" *ngIf="UseTax">{{"TaxPercentage"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="taxAmount"  *ngIf="UseTax">{{"TaxAmt"|translate}}</th>
+                                                <th style="width: 5%" pSortableColumn="AllTotal">{{"Totals"|translate}}</th>
+                                                <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                                <th style="width: 3%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                            <tr>
+
+                                                <td style="width: 4%">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [ngModelOptions]="{standalone: true}" (onChange)="CheckIfChooseSameAssest(i, row)"
+                                                        [options]="AssestList"  [(ngModel)]="row.assetId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        [ngClass]="{ 'invalid-field':row.assetId <= 0}" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)">
+                                                    </p-dropdown>
+                                                </td>
+                                      
+
+                                                <td style="width: 7%" *ngIf="useCostCenter">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [ngModelOptions]="{standalone: true}"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="CostCenterList" [(ngModel)]="row.costCenterId"
+                                                        [style]="{'minWidth':'100%', 'width': '100%'}" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td style="width: 5%">
+                                                    <input type="number" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.qty"  (blur)="claculateAllAmount()" 
+                                                    [ngClass]="{ 'invalid-field':row.qty <= 0}" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)">
+                                                </td>
+
+
+                                                <td style="width: 5%">
+                                                    <input type="number" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.price" (blur)="claculateAllAmount()" 
+                                                    [ngClass]="{ 'invalid-field':row.price <= 0}" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                </td>
+
+
+                                                <td style="width: 5%">
+                                                    <input type="text" class="input border w-full mt-1 "  readonly [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.total" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)">
+                                                </td>
+
+
+                                                <td style="width: 7%" *ngIf="UseTax">
+                                                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [ngModelOptions]="{standalone: true}"
+                                                        appendTo="body" autoWidth="false" [virtualScroll]="false" [options]="TaxModelList" [(ngModel)]="row.taxId"
+                                                         (onChange)="getTaxPersantage(i ,row)" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                        [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)">
+                                                    </p-dropdown>
+                                                </td>
+
+                                                <td *ngIf="UseTax" style="width: 5%">
+                                                    <input type="number" class="input border w-full mt-1 " readonly [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.taxPerc" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                </td>
+
+
+                                                <td *ngIf="UseTax" style="width: 5%">
+                                                    <input type="text" class="input border w-full mt-1 "  readonly [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.taxAmount" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                </td>
+
+
+                                                <td style="width: 5%">
+                                                    <input type="text" class="input border w-full mt-1 "  readonly [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="row.AllTotal" [disabled]="disableAll" (keydown)="handleF3Key($event, row,i)"> 
+                                                </td>
+
+
+                                                <td style="width: 2%">
+                                                    <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                            class="material-icons" style="color:red">delete</i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button mat-menu-item (click)="CopyRow(row,i)"> <i class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i>&nbsp;{{"CopyRow"|translate}} </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+
+
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="10">
+                                                    {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="footer" *ngIf="useCostCenter">
+                                            <tr>
+                                                
+                                                 <td style="width: 7%">{{"total"|translate}}</td> 
+                                                 <td colspan="3"></td>
+                                                 <td style="width: 7%">{{totalNo}}</td> 
+                                                 <td colspan="3"></td> 
+                                                 <td style="width: 4%">{{taxAmount}}</td>
+                                                 <td style="width: 7%">{{AllTotal}}</td> 
+                                                 <td colspan="4"></td>
+                                            </tr>
+                                        </ng-template> 
+                                        <ng-template pTemplate="footer" *ngIf="!useCostCenter">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{{"total"|translate}}</td>
+                                                <td>{{totalNo}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{{taxAmount}}</td>
+                                                <td>{{AllTotal}}</td>
+                                                <td></td>
+                                            </tr>
+                                        </ng-template> 
+                                       </p-table>
+                                </div>
+                            </div>
+
+                            <div class="tab-content__pane" id="f02">
+                                <div class="intro-y box px-5 pt-5">
+                                       <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment> 
+                                </div>
+                            </div>
+
+                            <div class="tab-content__pane" id="f03" *ngIf="voucherId && voucherId > 0 && !HideVoucher">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-financialvoucher [voucherId]="voucherId" [voucherType]="voucherType"></app-financialvoucher>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" type="submit" [disabled]="AssetPurchaseInvoiceForm.invalid || disableSave" [hidden]="showsave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" [hidden]="showsave" [disabled]="AssetPurchaseInvoiceForm.invalid"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button" (click)="PrintPurchaseAssestInvoice(Data.id)">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4" [hidden]="showsave" [disabled]="AssetPurchaseInvoiceForm.invalid"
+                   (click)="DeleteAssetPurchaseInvoice(Data.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="button">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" [routerLink]="['/AssetPurchaseInvoice/AssetPurchaseInvoiceList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,141 @@
+
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+        <form [formGroup]="FixedassetsChangeLocationForm" (ngSubmit)="OnSaveForms()">
+            <input hidden formControlName="id" [(ngModel)]="Data.id"> 
+
+            <div class="grid grid-cols-12 gap-5 mt-5">
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"TransNumber"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" formControlName="transNo" [(ngModel)]="Data.transNo" [readonly]="true">
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer">
+                    <label class="control-label mb-4">{{"transDate"|translate}}</label>
+                    <input type="date" class="input w-full border mt-1" formControlName="transDate" [ngModel]="Data.transDate | date:'yyyy-MM-dd'" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-10 xxl:col-span-10 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Statement"|translate}}</label>
+                    <input type="text" class="input border w-full mt-1" formControlName="note" [(ngModel)]="Data.note" [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                  <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+
+                            <p-table #dt [value]="LocationList" dataKey="id" [loading]="loading"  [globalFilterFields]="['',]" 
+                            styleClass="p-datatable-gridlines" [style]="{width:'100%'}" [scrollable]="true" 
+                            [rowHover]="true" dataKey="id"  scrollDirection="horizontal"
+                            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                            [showCurrentPageReport]="true">
+                                
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"  [disabled]="disableAll">
+                                            </p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 30%" class="head_tb" pSortableColumn="assetId">{{"theOrigin"|translate}} </th>
+                                        <th class="head_tb" pSortableColumn="fromLocationId">{{"currentLocation"|translate}} </th>
+                                        <th class="head_tb" pSortableColumn="toLocationId">{{"NewLocation"|translate}} </th>
+                                        <th class="head_tb" pSortableColumn="transNote">{{"Statement"|translate}} </th>
+                                        <th style="width: 2%" class="text-center-m"> <i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                        <!-- <th style="width: 8%" class="text-center-m"> <i class="pi pi-cog" style="font-size: 1.2rem"></i></th> -->
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+
+                                    <tr  [ngClass]="{ 'disabled-row': isDisabled(row.assetId) }">
+                                        <td style="width: 30%">
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="AssestList" [style]="{'minWidth':'100%', 'width': '300px'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="row.assetId" [ngModelOptions]="{standalone: true}"
+                                                (onChange)="CheckIfChooseSameAssest(i, row)"
+                                                (onChange)="GetCurrentLocation(i ,row)" [disabled]="disableAll"
+                                                [ngClass]="{ 'invalid-field':row.assetId <= 0}" >
+                                            </p-dropdown>
+                                        </td>  
+
+                                        <td >
+                                           <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                               [style]="{'minWidth':'100%', 'width': '200px'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                                [options]="unitsList[i]" [(ngModel)]="row.fromLocationId" [disabled]="isDropdownDisabled"
+                                                [ngClass]="{ 'invalid-field': row.fromLocationId <= 0}" >
+                                            </p-dropdown>  
+                                        </td>
+
+                                        <td >
+                                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [style]="{'minWidth':'100%', 'width': '200px'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text" [disabled]="disableAll"
+                                            optionValue="id" [filter]="true" filterBy="text" appendTo="body" [ngModelOptions]="{standalone: true}"
+                                            autoWidth="false" [virtualScroll]="false" [options]="NewLocationList"  [(ngModel)]="row.toLocationId"
+                                            (onChange)="CheckIfLocationDifferent(i)" >
+                                            </p-dropdown>
+                                        </td>  
+
+                                        <td >
+                                            <input type="text" class="input border w-full mt-1 "  [ngModelOptions]="{standalone: true}" [disabled]="disableAll"
+                                             [(ngModel)]="row.transNote" >
+                                        </td>
+
+                                        <td>
+                                            <button mat-menu-item (click)="deleteRow(i)"  [disabled]="disableAll" > <i
+                                                    class="material-icons" style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                        <!-- <td>
+                                            <button mat-menu-item (click)="CopyRow(row,i)"> <i
+                                                class="material-icons" style="color:rgba(0, 255, 76, 0.747)">file_copy</i> &nbsp;{{"CopyRow"|translate}} 
+                                            </button>
+                                        </td> -->
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="5"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button  label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [disabled]="FixedassetsChangeLocationForm.invalid" [hidden]="showsave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit" [disabled]="disabled == true || disableSave"></p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" [routerLink]="['/ChangeFixedAssetsLocation/ChangeFixedAssetsLocationList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,163 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="ManOrderAddForm" (ngSubmit)="OnSaveForms(false)">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="productionOrderId" class="form-control " hidden>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OrderNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="orderNo" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(ManOrderAddForm.get('orderNo').value)}">
+                    <!-- (blur)="IsValidAccNo($event)"> -->
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"OrdrDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="orderDate" class="input border w-full mt-1 ">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ProdNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown
+                        emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="prodOrdersList" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                        appendTo="body" autoWidth="false"
+                        (onChange)="GetProdDetailsById($event)"
+                        formControlName="productionOrderId"
+                        [ngClass]="{ 'invalid-field': ManOrderAddForm.get('productionOrderId').value <= 0}">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DeliveryDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="deliveryDate" class="input border w-full mt-1 ">
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 ">
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="ManOrderDTList" dataKey="id" [loading]="loading"
+                        styleClass="p-datatable-gridlines" [rowHover]="true" [scrollable]="true"
+                        [resizableColumns]="true">
+                        <!-- <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"AddLine"|translate}}'
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="AddNewLine()"></p-button>
+                                </div>
+                            </div>
+                        </ng-template> -->
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:25%" pSortableColumn="item_no">{{"Product"|translate}}
+                                    <p-sortIcon field="item_no"></p-sortIcon>
+                                </th>
+                                <th style="width:5%">{{"LineNo"|translate}}</th>
+                                <th style="width:5%">{{"ProdQty"|translate}}</th>
+                                <th style="width:10%">{{"MinManufQty"|translate}}</th>
+                                <th style="width:5%">{{"TubeCapacity"|translate}}</th>                               
+                                <th style="width:10%">{{"RunNo"|translate}}</th>
+                                <th style="width:10%">{{"RunCapacity"|translate}}</th>
+                                <th style="width:15%">{{"Countries"|translate}}</th>
+                                <th style="width:10%">{{"ManfactQty"|translate}}</th>                              
+                                <th style="width:5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemList let-i="rowIndex">
+                            <tr [ngClass]="{ 'notavlqty': itemList.notAvlQty }">
+                                <td style="width:25%">
+                                    {{itemList.itemName}}
+                                    <!-- <p-dropdown
+                                        emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsList"
+                                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="data1"
+                                        [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                        (onChange)="GetItemUnits(itemList,i)" [(ngModel)]="itemList.itemNo"
+                                        [ngClass]="{ 'invalid-field': isEmpty(itemList.itemNo)}"
+                                        [ngModelOptions]="{standalone: true}">
+                                    </p-dropdown> -->
+                                </td>
+                                <td style="width:5%">{{itemList.prodLineNo}}</td>
+                                <td style="width:5%">{{itemList.prodQty}}</td>
+                                <td style="width:10%">{{itemList.minProdQty}}</td>
+                                <td style="width:5%">{{itemList.tubeCapacity}}</td>
+                                <td style="width:10%"><input type="number" [(ngModel)]="itemList.batchQty"
+                                        class="input border w-full mt-1 " (input)="updateSum(itemList)"
+                                        [ngClass]="{ 'invalid-field': itemList.batchQty <= 0 }"
+                                        [ngModelOptions]="{standalone: true}" >
+                                </td>
+                                <td style="width:10%"><input type="number" [(ngModel)]="itemList.batchSize"
+                                        class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                        [ngClass]="{ 'invalid-field': itemList.batchSize <=0}">
+                                </td>
+                                <td style="width:15%">
+                                    <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                        [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                        styleClass="input border w-full mt-1" optionValue="id" [(ngModel)]="itemList.countries"
+                                        [options]="countriesList" [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                        [virtualScroll]="false" [ngModelOptions]="{standalone: true}"
+                                        [ngClass]="{ 'invalid-field': isEmpty(itemList.countries)}">
+                                    </p-multiSelect>
+                                </td>
+                                <td style="width:10%"><input type="text" [(ngModel)]="itemList.manufactQty"
+                                        class="input border w-full mt-1 " 
+                                        [ngClass]="{ 'invalid-field': itemList.manufactQty <= 0}"
+                                        [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <td style="width:5%">
+                                    <button (click)="deleteRow(i)" [disabled]="itemList.salesOrderId>0"> <i
+                                            class="material-icons" style="color:red">delete</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                        <!-- <ng-template pTemplate="footer">
+                            <tr>
+                                <td style="width:110%" colspan="8">{{"total"|translate}}</td>
+                                <td style="width:10%">{{calculateSum(1) | number: '1.3-3'}}</td>
+                                <td style="width:5%"></td>
+                            </tr>
+                        </ng-template> -->
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ManOrderAddForm.invalid || disableSave" type="submit" *ngIf="!showOnly && !approval"></p-button>
+                <p-button label='{{"Approval"|translate}}' icon="pi pi-check" class="ml-4"
+                    (click)="ApproveOrder(ManOrderAddForm.get('id').value)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ManOrderAddForm.invalid" type="button" *ngIf="approval"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="ManOrderAddForm.invalid" type="button" *ngIf="false"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/ManOrder/GetManOrdersList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

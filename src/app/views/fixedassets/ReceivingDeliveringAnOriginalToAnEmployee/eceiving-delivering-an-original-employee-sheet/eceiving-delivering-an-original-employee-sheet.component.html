@@ -1,0 +1,51 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"Transaction"|translate}} {{transTypeIdName }} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+
+<!-- <div class="pt-hlf pb-hlf col-span-8" >{{transTypeIdName }} </div>
+<div class="col-span-4">  </div>  -->
+
+
+<div class="col-span-4"> {{"TransNumber"|translate}} </div>
+<div class="pt-hlf pb-hlf col-span-8" >{{TransNo }} </div>
+
+<div class="pt-hlf pb-hlf col-span-4">{{"transDate"|translate}} </div>
+<div class="pt-hlf pb-hlf col-span-8"  >{{ transDate | date: 'dd/MM/yyyy' }}</div>
+
+<div class="pt-hlf pb-hlf col-span-4">{{"Statement"|translate}} </div>
+<div class="pt-hlf pb-hlf col-span-8"  >{{ note }} </div>
+</div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="color: black; border: solid black"> {{"Employee"|translate}}</th>
+    <th style="color: black; border:solid black">  {{"theOrigin"|translate}} </th>
+    <th style="color: black; border: solid black"> {{"Originalconditionupondelivery"|translate}}</th>
+    <th style="color: black; border: solid black"> {{"Originalconditionuponreceipt"|translate}}</th>
+    <th style="color: black; border: solid black"> {{"Statement"|translate}} </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let product of data" style="color: black;">
+    <td style="width:25%;font-size:0.8rem;"><b>{{ product.employeeName}}</b></td>
+    <td style="width:25%;font-size:0.8rem;"><b>{{ product.assetName }}</b></td>
+    <td style="width:10%;font-size:0.8rem;"> <b>{{ product.deliveryStatusName}}</b></td>
+    <td style="width:10%;font-size:0.8rem;"> <b>{{ product.receiptStatusName}}</b></td>
+    <td style="width:30%;font-size:0.8rem;"><b>{{ product.transNote}}</b></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+

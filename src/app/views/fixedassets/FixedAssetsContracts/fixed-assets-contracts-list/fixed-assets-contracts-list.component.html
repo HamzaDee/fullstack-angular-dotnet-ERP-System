@@ -1,0 +1,149 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+
+            <p-table [value]="ContractsList" #dt [rows]="10" [paginator]="true"
+            [globalFilterFields]="['contractNo','contractDate','dealerName','branchName','currencyName','currRate','amount','note','statusName']"
+            styleClass="p-datatable-gridlines"
+            responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+            [showCurrentPageReport]="true">
+
+
+            <ng-template pTemplate="caption">
+
+                <div class="grid grid-cols-12 gap-5 ">
+    
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder=' {{"search"|translate}} ' />
+                        </span>
+                    </div>
+    
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-4 ">
+                        <p-button label='{{"AddNew"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="pi pi-plus" (click)="AddNewAssetsContracts(0)"></p-button>
+                    </div> 
+    
+    
+                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                        <i class="pi pi-star-fill" 
+                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                        (click)="updateFavourite(this.screenId)"
+                                        title= "{{'AddToFavourite' | translate}}"
+                                        tooltipposition="bottom">
+                        </i>
+    
+                        <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                        pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                        </button>
+                        
+                        <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                        </button>
+                    </div>
+                </div>
+                
+            </ng-template>
+
+
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="head_tb" pSortableColumn="contractNo">{{"ContractsNo"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="contractDate">{{"ContractOFDate"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="dealerName">{{"MaintenanceCompany"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="branchName">{{"branch"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="currencyName">{{"Currency"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="currRate">{{"ConversionPrice"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="amount">{{"Amount"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="note">{{"Notes"|translate}}</th>
+                    <th class="head_tb" pSortableColumn="statusName">{{"Status"|translate}}</th>
+                    <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" class=".p-datatable-tbody " let-contract>
+                <tr>
+                    <td style="text-align: justify;">{{contract.contractNo}}</td>
+                    <td style="text-align: justify;">{{contract.contractDate | date: "dd/MM/yyyy"}} </td>
+                    <td style="text-align: justify;">{{contract.dealerName}}</td>
+                    <td style="text-align: justify;">{{contract.branchName}}</td>
+                    <td style="text-align: justify;">{{contract.currencyName}}</td>
+                    <td style="text-align: justify;">{{contract.currRate}}</td>
+                    <td style="text-align: justify;">{{formatCurrency(contract.amount,contract.currencyDecimals)}}</td>
+                    <td style="text-align: justify;">{{contract.note}}</td>
+                    <td style="text-align: justify;">{{contract.statusName}}</td>
+                    
+
+                    <td style="width:5%">
+                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                            <mat-icon class="">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #userMenu="matMenu">
+
+                           <button mat-menu-item (click)="ShowDetailsOnly(contract.id)"> <!--  تفاصيل -->
+                              <i class="material-icons">remove_red_eye</i> &nbsp;{{"Details"|translate}}
+                            </button> 
+
+                            <button mat-menu-item (click)="EditAssetsContracts(contract.id)" [disabled]="!contract.allowEditDelete"> <!--  تعديل -->
+                                <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+                            </button>
+
+                            <button mat-menu-item (click)="PostContract(contract.id)" [disabled]="!contract.allowEditDelete"> <!--  ترحيل -->
+                                <i class="material-icons" style="color:rgb(255, 166, 0)">done_all</i> &nbsp;{{"Post"|translate}} 
+                             </button>
+
+                             <button mat-menu-item (click)="DeleteContract(contract.id, contract)" [disabled]="!contract.allowEditDelete"> <!--  حذف -->
+                                <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}}
+                            </button>
+                           
+                             <button mat-menu-item (click)="PrintAssetsContracts(contract.id)"> <!--  طباعة -->
+                                <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}}
+                             </button>
+
+                             <button mat-menu-item (click)="CopyContract(contract.id)"> <!--  نسخ -->
+                                <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}}
+                             </button>
+
+                             <button mat-menu-item (click)="Attachmentcontract(contract.contractNo)"> 
+                                <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}}
+                             </button>  
+
+                        </mat-menu>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr class="odd">
+                    <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td valign="top" colspan="5"> </td>
+                    <td>{{"total"|translate}}</td>
+                    <td>{{CalculateTotal()}}</td>
+                    <td colspan="3"></td>
+                </tr>
+            </ng-template> 
+        </p-table>
+        </div>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

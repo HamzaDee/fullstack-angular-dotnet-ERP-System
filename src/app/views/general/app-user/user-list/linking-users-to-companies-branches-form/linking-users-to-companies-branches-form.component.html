@@ -1,0 +1,109 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <br>
+    <div>
+        <h1>{{"User"|translate}} : {{ fullName }}</h1>
+    </div>
+
+    <br>
+
+    <div class="container intro-y box px-5 pb-5 mb-5">
+        <form [formGroup]="UsersForm" (ngSubmit)="OnSaveForms()">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+
+                    <p-table #dt [value]="UsersList" [rows]="10" [paginator]="true"
+                        [globalFilterFields]="['companyName','branchName']" [(selection)]="selectedItems"
+                        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="uniqueKey"
+                        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                        [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <span class="p-input-icon-left"> <i class="pi pi-search"></i>
+                                        <input class="input w-full border mt-1 txt_r" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder='{{"search"|translate}} ' />
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="head_tb"> <p-tableHeaderCheckbox></p-tableHeaderCheckbox> </th>
+                                <th class="head_tb" pSortableColumn="companyName">{{"THECOMPANY"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="branchName">{{"THECOMPANYBRANCH"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="companyName" hidden>{{"CompanyId"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="branchId" hidden>{{"branchId"|translate}}</th>
+                                <th class="head_tb" pSortableColumn="isDefault">{{"DEFAULT"|translate}}</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-rowData  let-i="rowIndex">
+                            <tr>
+                                <td style="text-align: justify;">
+                                    <p-tableCheckbox [value]="rowData" [checked]="!isSelected[i]" (click)="handleCheckboxClick(rowData,i)"></p-tableCheckbox>
+                                </td>
+                                <td style="text-align: justify;">{{rowData.companyName}} </td>
+                                <td style="text-align: justify;">{{rowData.branchName}}</td>
+                                <td style="text-align: justify;" hidden>{{rowData.companyId}} </td>
+                                <td style="text-align: justify;" hidden>{{rowData.branchId}} </td>
+                                <td style="text-align: justify;"> 
+                                <div>
+                                    <input
+                                    name="isDefault"
+                                    type="checkbox"
+                                    class="input border mr-2"
+                                    (change)="onDefaultChange(rowData, $event.target.checked)"
+                                    [disabled]="!isRowSelected(rowData)"
+                                    [(ngModel)]="rowData.isDefault"
+                                    [ngModelOptions]="{ standalone: true }" />
+                                    <label class="cursor-pointer select-none"></label>
+                                </div>
+                                </td>
+
+                                <!-- <td style="text-align: justify;"> 
+                                    <div>
+                                        <input name="isDefault" type="checkbox" class="input border mr-2" (change)="CheckIFIsDefult(i)"
+                                        [disabled]="!isSelected[i]" [(ngModel)]="rowData.isDefault" [ngModelOptions]="{ standalone: true }">
+                                       <label class="cursor-pointer select-none" ></label> 
+                                      
+                                   </div>
+                              </td> -->
+
+                            </tr>
+                        </ng-template>
+
+
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="4"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+
+                </div>
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" 
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit"></p-button>
+
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        [routerLink]="['/User/UserDefinitionList']"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"></p-button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

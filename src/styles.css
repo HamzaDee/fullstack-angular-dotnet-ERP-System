@@ -1,0 +1,107 @@
+@import 'devextreme/dist/css/dx.light.css';
+@import '@devexpress/analytics-core/dist/css/dx-analytics.common.css';
+@import '@devexpress/analytics-core/dist/css/dx-analytics.light.css';
+@import 'devexpress-reporting/dist/css/dx-webdocumentviewer.css';
+
+@font-face {
+    font-family: "Cairo";
+    src: local("Cairo"), url(./assets/fonts/Cairo-Regular.ttf) format("truetype");
+  }
+ 
+  .p-sortable-column-icon.pi.pi-fw.pi-sort-alt {
+   display: none;
+ }
+ 
+ /* Chrome, Safari, Edge, Opera */
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+ 
+ /* Firefox */
+ input[type=number] {
+   -moz-appearance: textfield;
+ }
+ 
+ .invalid-field {
+   border: 1px solid red;
+ }
+ 
+ .p-datatable-resizable .p-datatable-thead>tr>th, .p-datatable-resizable .p-datatable-tfoot>tr>td, .p-datatable-resizable .p-datatable-tbody>tr>td{
+   white-space: normal !important;
+ }
+ 
+ .p-datatable-table tr td {
+   padding: 1px !important;
+ }
+ 
+ /* .p-datatable-thead th {
+   text-align: center !important;
+ } */
+ 
+ .input[type="checkbox"] {
+   border-color:black ;
+ }
+ 
+ .p-checkbox{
+   border: solid 0.5px black !important;
+ }
+ 
+ .ui-multiselect-panel {
+   position: absolute !important; /* Ensure the panel is positioned correctly */
+   z-index: 100000 !important;      /* Adjust this value as needed to ensure it appears above other elements */
+ }
+ 
+ .p-multiselect-panel{
+   position: absolute !important; /* Ensure the panel is positioned correctly */
+   z-index: 100000 !important;      /* Adjust this value as needed to ensure it appears above other elements */
+ }
+
+ /* Custom scrollbar for dropdown only */
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar {
+  width: 10px !important; /* Set scrollbar width */
+  height: 20px !important; /* Adjust horizontal scrollbar height if needed */
+}
+
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888 !important; /* Customize the scrollbar thumb color */
+  border-radius: 10px !important; 
+}
+
+.custom-dropdown-scroll .ui-dropdown-panel .ui-dropdown-items-wrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1 !important; /* Customize the scrollbar track color */
+}
+
+.p-datatable-tfoot tr{
+  background-color: #203858;
+  color: #ffffff; 
+  height: 30px;
+}
+
+.p-datatable-tfoot tr input{
+  
+  color: #000 !important; 
+}
+
+.p-datatable-scrollable .p-datatable-frozen-column {
+  position: sticky;
+  background: var(--p-datatable-header-cell-background);
+} 
+
+/* إصلاح نص عناصر p-dropdown ليظهر كامل */
+.p-dropdown-items .p-dropdown-item {
+  white-space: normal !important;   /* السماح بلف السطر */
+  word-break: break-word !important; /* كسر الكلمات الطويلة */
+  /*text-align: right !important;      محاذاة لليمين */
+}
+
+.p-dropdown {
+  width: 100% !important;
+}
+
+.p-dropdown-panel {
+  min-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box; /* عشان يحافظ على البادينغ */
+}

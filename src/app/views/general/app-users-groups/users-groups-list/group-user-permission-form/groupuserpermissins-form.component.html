@@ -1,0 +1,177 @@
+<!-- <div class="card-header text-center mt-5">
+    <h1>{{this.TitlePage}}</h1>
+</div> -->
+<div class="intro-y box px-5 pb-5 mb-5">
+<div [hidden]="showLoader">
+<form [formGroup]="UserGroupPermissionForm" (ngSubmit)="OnSaveForms()">
+<div class="grid grid-cols-12 gap-5 pt-5">
+    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label class="control-label font-weight-bold">{{"user"|translate}}
+            <span class="required-asterisk">*</span>
+        </label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="groupList"
+            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+            optionLabel="text" optionValue="id" [filter]="true" formControlName="groupId"
+            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+            (onChange)="GetPermissionBygroup(this.UserGroupPermissionForm.value.groupId)" 
+            >
+        </p-dropdown>
+    </div>
+    <!-- <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label class="control-label font-weight-bold">{{"Group"|translate}}
+            <span class="required-asterisk">*</span>
+        </label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="groupList"
+            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+            optionLabel="text" optionValue="id" [filter]="true" formControlName="groupId"
+            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+            [disabled]="isDisabled">
+        </p-dropdown>
+    </div> -->
+    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+        <label class="control-label font-weight-bold">{{"MainModule"|translate}}
+            <!-- <span class="required-asterisk">*</span> -->
+        </label>
+        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="systemList"
+            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+            optionLabel="text" optionValue="id" [filter]="true" formControlName="systemId"
+            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+            (onChange)="GetPermissionsListByGroupAndScreen(this.UserGroupPermissionForm.value.groupId,this.UserGroupPermissionForm.value.systemId)">
+        </p-dropdown>
+    </div>
+    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-10" [hidden]="isDisabled">
+        <input type="checkbox"  class="input border mr-2 mr-3 ml-3">
+        <label class="cursor-pointer select-none w-full" for="isActive"  >{{"AddspeichalPermissionForTheUser"|translate}}</label>
+    </div>
+</div>
+<br>
+<div class="grid grid-cols-12 gap-5 mr-2">
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2" [hidden]="isDisabled">
+        <p-button label='{{"ReturnGroupPermissionToUser"|translate}}'
+            styleClass="p-ripple p-element button w-50 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            icon="" ></p-button>
+    </div>
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+        <p-button label='{{"SelectAll"|translate}}'
+            styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            (onClick)="SelectALLCheckBox()"
+            icon="" ></p-button>
+    </div>
+    
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+        <p-button label='{{"DeSelectAll"|translate}}'
+            styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            (onClick)="DeselectALLCheckBox()"
+            icon=""></p-button>
+    </div>
+    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+        <p-button label='{{"CopyPermissionsFromUserOrGroup"|translate}}'
+            styleClass="p-ripple p-element button w-50 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+            (onClick)="OpenCopyUserPermissionForm()"
+            icon=""></p-button>
+    </div>
+</div>
+<br>
+<div class="card" class="card-blue">
+    <div class="intro-y tab-content">
+        <div class="tab-content__pane active">
+            <div class="intro-y box px-5 pt-5">
+                <p-table #dt [value]="permissionList" dataKey="id" [loading]="loading"
+                [globalFilterFields]="['screenId','screenName','','','','','','']"     
+                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5 ">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>                    
+                        </div>
+                    </div>                            
+                </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <!-- <th style="width: 10%">{{"NO"|translate}}</th>  -->
+                            <th style="width: 5%" pSortableColumn="screenId">{{"NO"|translate}} <p-sortIcon field="screenId"></p-sortIcon></th>
+                            <th style="width: 15%" pSortableColumn="screenName">{{"Screen"|translate}} <p-sortIcon field="screenName"></p-sortIcon></th>                                       
+                            <!-- <th style="width: 20%">{{"Screen"|translate}}</th> -->
+                            <th style="width: 10%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="openCheckbox" (click)="updateOpen($event)">
+                                    <label for="openCheckbox">{{"Open" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="addCheckbox" (click)="updateAdd($event)">
+                                    <label for="addCheckbox">{{"Add" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="editCheckbox" (click)="updateEdit($event)">
+                                    <label for="editCheckbox">{{"Edit" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="deleteCheckbox" (click)="updateDelete($event)">
+                                    <label for="deleteCheckbox">{{"Delete" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="printCheckbox" (click)="updatePrint($event)">
+                                    <label for="printCheckbox">{{"Print" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="postCheckbox" (click)="updatePost($event)">
+                                    <label for="postCheckbox">{{"Post" | translate}}</label>
+                                </div>
+                            </th>
+                            <th style="width: 15%">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="approveCheckbox" (click)="updateApprove($event)">
+                                    <label for="approveCheckbox">{{"Approval" | translate}}</label>
+                                </div>
+                            </th>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-perList let-i="rowIndex">                                
+                        <tr>
+                            <td [hidden]="isDisabled">{{perList.actionId}}</td>
+                            <td>{{ perList.screenId }}</td>
+                            <td>{{ perList.screenName }}</td>
+                            <td><input type="checkbox" [checked]="perList.open == 1" (change)="updatePermission($event, perList, 'open', 1)"></td>
+                            <td><input type="checkbox" [checked]="perList.add == 2" (change)="updatePermission($event, perList, 'add', 2)"></td>
+                            <td><input type="checkbox" [checked]="perList.edit == 3" (change)="updatePermission($event, perList, 'edit', 3)"></td>
+                            <td><input type="checkbox" [checked]="perList.delete == 4" (change)="updatePermission($event, perList, 'delete', 4)"></td>
+                            <td><input type="checkbox" [checked]="perList.print == 5" (change)="updatePermission($event, perList, 'print', 5)"></td>
+                            <td><input type="checkbox" [checked]="perList.post == 181" (change)="updatePermission($event, perList, 'post', 181)"></td> 
+                            <td><input type="checkbox" [checked]="perList.approve == 186" (change)="updatePermission($event, perList, 'approve', 186)"></td>              
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" 
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component" type="submit" [disabled]="this.UserGroupPermissionForm.value.groupId <= 0"></p-button>                
+    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+        styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+        [routerLink]="['/UsersGroups/GetUesrGrouptList']"></p-button>
+</div>
+</form>
+</div>
+</div>

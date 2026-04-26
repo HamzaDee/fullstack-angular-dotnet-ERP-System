@@ -1,0 +1,274 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="YearlyDepreciationForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"FiscalYear"|translate}}<span class="required-asterisk">*</span></label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="FiscalYearList" [(ngModel)]="SelectedFiscalYear"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="fiscalYear"
+                    optionLabel="text" optionValue="data1" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"theOrigin"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="AssestList" [(ngModel)]="SelectedAssestList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="fixedAssetsId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+           <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"ParentClass"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="FixedAssetTypeModelList" [(ngModel)]="SelectedFixedAssetType"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="fixedAssetsTypesId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+           <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"ParentStatus"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="StatusList" [(ngModel)]="SelectedStatus"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="status"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+               <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromPurchaseDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromPurchaseDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToPurchaseDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toPurchaseDate">
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Employee"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' 
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" [options]="EmployeeList"[(ngModel)]="SelectedEmployee"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body" formControlName="employeeId"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+          <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Location"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="LocationList" [(ngModel)]="SelectedLocation"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="locationId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="BranchList" [(ngModel)]="SelectedBranchList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="branchId"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"SubjectToConsumption"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="IsDepreciablList" [(ngModel)]="selectedIsDepreciabl"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1" formControlName="isDepreciable"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body" 
+                    autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <input type="checkbox" class="input border w-full mt-1"  formControlName="assetsWhoseValueHasBeenDepreciated">
+                <label class="control-label font-weight-bold ml-3" style="margin-right: 1rem;">{{"AssetsThatHaveBeenImpaired"|translate}}</label>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <input type="checkbox" class="input border w-full mt-1"  formControlName="addedAssets">
+                <label class="control-label font-weight-bold ml-3" style="margin-right: 1rem;">{{"AddedAssets"|translate}}</label>
+            </div> 
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+
+                <p-button label='{{"ShowTransactions"|translate}}' class="ml-4"  (onClick)="GetReport()" [disabled]="YearlyDepreciationForm.invalid" 
+                    styleClass="p-ripple p-element button w-34 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                &nbsp;
+
+                <p-button label='{{"NewSearch"|translate}}' (onClick)="clearFormData()"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                &nbsp;
+
+                <p-button label='{{"Print"|translate}}' hidden
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10"  [paginator]="true"  
+                [globalFilterFields]="['fixedAssetNo','faName','faTypeName','purchaseDate','amount','rounded_Depreciation','additions','decreases','month1','month2','month3','month4',
+                'month5','month6','month7','month8','month9','month10','month11','month12','annual_Depreciation','bookValue']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"  [responsive]="true"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true"   scrollDirection="virtical" >
+
+                     <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                <i class="pi pi-star-fill" 
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title= "{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="head_tb" pSortableColumn="fixedAssetNo"> {{"ParentNumber"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="faName">{{"theOrigin"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="faTypeName">{{"ParentClass"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="purchaseDate" width="350px">{{"PurchaseDate"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="amount">{{"ParentCost"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="rounded_Depreciation">{{"RecycledConsumption"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="additions">{{"Additions"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="decreases">{{"Deleteation"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="month1">{{"Month1"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month2">{{"Month2"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month3"> {{"Month3"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month4"> {{"Month4"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month5">{{"Month5"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month6">{{"Month6"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month7"> {{"Month7"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="month8">{{"Month8"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month9"> {{"Month9"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month10"> {{"Month10"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="month11">{{"Month11"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="month12">{{"Month12"|translate}}</th>
+                            <th class="head_tb" pSortableColumn="annual_Depreciation">{{"YearlyConsumption"|translate}} </th>
+                            <th class="head_tb" pSortableColumn="bookValue">{{"NominalValue"|translate}}</th>
+                            <th style="width: 10%" class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td style="text-align: justify;">{{item.fixedAssetNo}}</td>
+                            <td style="text-align: justify;">{{item.faName}}</td>
+                            <td style="text-align: justify;">{{item.faTypeName}}</td>
+                            <td style="text-align: justify;"  width="350px">{{item.purchaseDate| date: "dd/MM/yyyy"}}</td>
+                            <td style="text-align: justify;">{{item.amount}}</td>
+                            <td style="text-align: justify;">{{item.rounded_Depreciation}}</td>
+                            <td style="text-align: justify;">{{item.additions}}</td>
+                            <td style="text-align: justify;">{{item.decreases}}</td>
+                            <td style="text-align: justify;">{{item.month1}}</td>
+                            <td style="text-align: justify;">{{item.month2}}</td>
+                            <td style="text-align: justify;">{{item.month3}}</td>
+                            <td style="text-align: justify;">{{item.month4}}</td>
+                            <td style="text-align: justify;">{{item.month5}}</td>
+                            <td style="text-align: justify;">{{item.month6}}</td>
+                            <td style="text-align: justify;">{{item.month7}}</td>
+                            <td style="text-align: justify;">{{item.month8}}</td>
+                            <td style="text-align: justify;">{{item.month9}}</td>
+                            <td style="text-align: justify;">{{item.month10}}</td>
+                            <td style="text-align: justify;">{{item.month11}}</td>
+                            <td style="text-align: justify;">{{item.month12}}</td>
+                            <td style="text-align: justify;">{{item.annual_Depreciation}}</td>
+                            <td style="text-align: justify;">{{item.bookValue}}</td>
+
+                           <td style="width:5%">
+                                <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                    <mat-icon class="">more_vert</mat-icon>
+                                </button>
+
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="detailsYearlyDepreciationOperation(item.fixedAssetId)">
+                                        <i class="material-icons" style="color:blue">details</i> &nbsp;{{"ShowDetails"|translate}} 
+                                    </button>
+
+                                    <button mat-menu-item  (click)="AssetYearlyDepreciationReport(item.fixedAssetId)">
+                                        <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"AssetTransactionReport"|translate}} 
+                                    </button>          
+
+                                </mat-menu>
+                             
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="23"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td>{{"total"|translate}}</td>
+                            <td colspan="3"></td>
+                            <td>{{AssetsAmmountTotal}}</td>                        
+                            <td>{{RoundedDepreciationTotal}}</td>                        
+                            <td>{{AdditionsTotal}}</td>                        
+                            <td>{{DecreasionTotal}}</td>     
+                            <td>{{Month1Total}}</td> 
+                            <td>{{Month2Total}}</td>  
+                            <td>{{Month3Total}}</td>                        
+                            <td>{{Month4Total}}</td>                        
+                            <td>{{Month5Total}}</td>                        
+                            <td>{{Month6Total}}</td>                        
+                            <td>{{Month7Total}}</td> 
+                            <td>{{Month8Total}}</td>  
+                            <td>{{Month9Total}}</td>                        
+                            <td>{{Month10Total}}</td>                        
+                            <td>{{Month11Total}}</td>                        
+                            <td>{{Month12Total}}</td>                     
+                            <td>{{AnnualDepreciationTotal}}</td> 
+                            <td>{{BookValueTotal}}</td> 
+                            <td colspan="1"></td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

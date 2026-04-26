@@ -1,0 +1,180 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="cusCreditVoucherAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="isCanceled" class="form-control " hidden>
+            <input type="text" formControlName="isPosted" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"VoucherType"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            (onChange)="getVoucherNo($event)" [(ngModel)]="selectedVoucherType"
+                            [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('voucherTypeId').value <= 0}" [disabled]="disableAll || disableVouchertype">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"VoucherNo"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                            [ngClass]="{ 'invalid-field': isEmpty(cusCreditVoucherAddForm.get('voucherNo').value)}"
+                            (blur)="voucherNoBlur(cusCreditVoucherAddForm.value.voucherNo, cusCreditVoucherAddForm.value.voucherTypeId)"
+                            [attr.disabled]="allowEditVoucherSerial||disableAll ? 'disabled' : null">  
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"VoucherDate"|translate}}
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)"
+                            class="input border w-full mt-1 " [ngClass]="{ 'invalid-field': !validDate}"
+                            [attr.disabled]="allowEditDate||disableAll ? 'disabled' : null">
+                        <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Customer"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="customersList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="customerId" filterBy="text"
+                            appendTo="body" autoWidth="false" 
+                             [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyCustomerOptions($event)"  [virtualScrollItemSize]="40"
+                            [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('customerId').value <= 0}" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">                    
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"DebitAccount"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="debitAccountId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" 
+                            [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('debitAccountId').value <= 0}" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                        </label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="allowEditBranch||disableAll">
+                        </p-dropdown>      
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"EmployeesList"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="empList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="representId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Ammount"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                        <input type="number" formControlName="amount" class="input border w-full mt-1 " (blur)="claculateAmount()" [(ngModel)]="Amount"
+                        [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('amount').value <= 0}" [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                            class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)"
+                            [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('currencyId').value <= 0}" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ExchangeRate"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                        <input type="number" formControlName="currRate" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': cusCreditVoucherAddForm.get('currRate').value <= 0}"
+                        [attr.disabled]="disableAll ? 'disabled' : null" [readOnly]="disableCurrRate">
+                    </div>
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" *ngIf="useCostCenter">
+                        <label class="control-label font-weight-bold">{{"CostCenter"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costcenterList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="costCenterId" filterBy="text"
+                            appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    
+                    
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ReferenceDate"|translate}}</label>
+                        <input type="date" formControlName="referenceDate" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ReferenceNo"|translate}}</label>
+                        <input type="text" formControlName="referenceNo" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                        <input type="text" formControlName="note" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">                       
+                        <input type="text"  class="input border w-full mt-1 " [hidden]="true">
+                    </div>
+                </div>
+                <div class="card" class="card-blue">
+                    <div class="intro-y box px-5 pt-5 mt-5">
+                        <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                            <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                class="py-4 sm:mr-8 active">{{"VoucherAttachments"|translate}}</a>
+                            <a data-toggle="tab" data-target="#f02" href="javascript:;" *ngIf="voucherId > 0"
+                                class="py-4 sm:mr-8">{{"FinancailVoucher"|translate}}</a>
+                        </div>
+                    </div>
+                    <div class="intro-y tab-content">
+                        <div class="tab-content__pane active" id="f01">
+                            <div class="intro-y box px-5 pt-5">
+                                <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                            </div>
+                        </div>           
+                        <div class="tab-content__pane" id="f02" *ngIf="voucherId && voucherId > 0">
+                            <div class="intro-y box px-5 pt-5">
+                                <app-financialvoucher [voucherId]="voucherId" [voucherType]="voucherType"></app-financialvoucher>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        [disabled]="cusCreditVoucherAddForm.invalid || !this.validDate || disableSave" type="submit" [hidden]="showsave"></p-button>
+                    <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintCustomerCreditNote(this.cusCreditVoucherAddForm.value.id)"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        [disabled]="cusCreditVoucherAddForm.invalid" type="button"></p-button>
+                    <p-button label='{{"Delete"|translate}}' (onClick)="DeleteVoucher(this.cusCreditVoucherAddForm.value.id) " color="warn" icon="pi pi-trash" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        [disabled]="cusCreditVoucherAddForm.invalid" type="button" [hidden]="showsave"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                        [routerLink]="['/CustomersCreditNote/CustCreditvoucherList']"></p-button>
+                </div>
+        </form>
+    </div>
+</div>

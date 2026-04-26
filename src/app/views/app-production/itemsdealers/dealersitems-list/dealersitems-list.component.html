@@ -1,0 +1,83 @@
+<mat-dialog-content >
+    <form [formGroup]="DealerItemsForm" >
+        <div class="content">
+            <div class="card">
+                <div class="card-header text-center mt-5">
+                    <h1>{{data.title}}</h1>
+                </div>
+                <input type="number" formControlName="id" hidden>
+                <!-- <div class="intro-y box p-5 mt-12 sm:mt-5"> -->
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-6 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold mr-2">{{"ItemNo"|translate}}: </label>
+                            <label class="control-label font-weight-bold">{{data.itemNo}}</label>
+                            <input type="text" formControlName="no" class="form-control " hidden>
+                        </div>
+                        <div class="col-span-6 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold mr-2">{{"materialName"|translate}}: </label>
+                            <label class="control-label font-weight-bold">{{data.itemName}}</label>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                            <p-table #dt [value]="dealersItemsList" dataKey="id" [scrollable]="true" 
+                            scrollHeight="250px" [style]="{width:'100%'}" [responsive]="true" [resizableColumns]="true" 
+                            styleClass="p-datatable-gridlines" [rowHover]="true" >
+                                <!-- <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}' 
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template> -->
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="flex: 0 0 30%" pSortableColumn="dealerName">{{"Supplier"|translate}}
+                                            <p-sortIcon field="dealerName"></p-sortIcon></th>
+                                        <th style="flex: 0 0 15%" pSortableColumn="unitName">{{"unit"|translate}} <p-sortIcon
+                                                field="unitName"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%" pSortableColumn="price">{{"Price"|translate}} <p-sortIcon
+                                                field="price"></p-sortIcon></th>
+                                        <th style="flex: 0 0 15%" pSortableColumn="originCountry">{{"countryOrigin"|translate}}
+                                            <p-sortIcon field="originCountry"></p-sortIcon></th>    
+                                        <th style="flex: 0 0 10%" pSortableColumn="deliveryTime">{{"DeliveryTime"|translate}} <p-sortIcon
+                                            field="deliveryTime"></p-sortIcon></th>
+                                        <th style="flex: 0 0 10%; white-space: normal !important;" pSortableColumn="minOrderQty">{{"MinQtyOrder"|translate}} <p-sortIcon
+                                            field="minOrderQty"></p-sortIcon></th>  
+                                        <th style="flex: 0 0 10%; white-space: normal !important;" pSortableColumn="packageSize">{{"PackageSize"|translate}} <p-sortIcon
+                                            field="packageSize"></p-sortIcon></th>                              
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-ditemList let-i="rowIndex">
+                                    <tr>
+                                        <td style="flex: 0 0 30%">{{ditemList.dealerName}}</td>
+                                        <td style="flex: 0 0 15%">{{ditemList.unitName}}</td>
+                                        <td style="flex: 0 0 10%">{{ditemList.price}}</td>
+                                        <td style="flex: 0 0 15%">{{ditemList.originCountry}}</td>
+                                        <td style="flex: 0 0 10%">{{ditemList.deliveryTime}}</td>
+                                        <td style="flex: 0 0 10%">{{ditemList.minOrderQty}}</td>
+                                        <td style="flex: 0 0 10%">{{ditemList.packageSize}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+    
+                        <div class=" col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                            align="end">
+                            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                                (click)="dialogRef.close(false)"></p-button>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        <!-- </div> -->
+    </form>
+    </mat-dialog-content>

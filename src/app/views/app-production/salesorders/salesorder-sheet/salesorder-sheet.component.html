@@ -1,0 +1,67 @@
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"SalesorderSheet"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1"
+    style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+    <div class="grid grid-cols-12">
+
+        <div class="col-span-2"> {{"OrderType"|translate}} : </div>
+        <div  class="pt-hlf pb-hlf col-span-4"> {{data.voucherTypeName}}</div>
+
+        <div class="col-span-2"> {{"OrderNumber"|translate}} :</div>
+        <div  class="pt-hlf pb-hlf col-span-4"> {{data.sales_No}}</div>
+
+        <div class="col-span-2">{{"OrderDate"|translate}} :</div>
+        <div  class="pt-hlf pb-hlf col-span-4">{{data.sdate| date: 'dd/MM/yyyy'}}</div>
+
+        <div class="col-span-2">{{"DeliveryDate"|translate}} :</div>
+        <div  class="pt-hlf pb-hlf col-span-4">{{data.deliveryDate| date: 'dd/MM/yyyy'}}</div>
+
+        <div class="col-span-2"> {{"Customer"|translate}} :</div>
+        <div  class="pt-hlf pb-hlf col-span-10"> {{data.customerName}}</div>
+
+        <div class="col-span-2"> {{"Notes"|translate}} :</div>
+        <div  class="pt-hlf pb-hlf col-span-4">{{data.note}} </div>
+
+
+    </div>
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+    <thead>
+        <tr>
+            <th style="color: black; border: solid black">{{"Product"|translate}}</th>
+            <th style="color: black; border:solid black">{{"unit"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Quantity"|translate}}</th>
+            <th style="color: black; border: solid black">{{"Free"|translate}} </th>
+            <th style="color: black; border: solid black">{{"Bonus"|translate}}</th>
+            <th style="color: black; border:solid black">{{"OtherQty"|translate}} </th>
+            <th style="color: black; border: solid black">{{"total"|translate}}</th>
+
+        </tr>
+    </thead>
+      <tbody>
+
+    <tr *ngFor="let product of Product" style="color: black;">
+        <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.itemName }}</b></td>
+        <td style="width:22%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.unitNmae }}</b></td>
+        <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.oq2 }}</b></td>
+        <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.freeQty }}</b></td>
+        <td style="width:15%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.bonusQty }}</b></td>
+        <td style="width:27%;font-size:0.8rem;color: black; border: solid black"><b>{{ product.otherQty }}</b></td>
+        <td style="width:15%;font-size:0.8rem;color: black; border: solid black"> <b>{{ product.total }}</b></td>
+    </tr>
+    </tbody>
+    
+    <tfoot>
+        <th style="width:22%;text-align: left; color: black; border: solid black">{{"Total"|translate}}</th>
+        <td style="width:22%;font-size:0.8rem; color: black; border: solid black;"></td>
+        <td style="width:15%;font-size:0.8rem; color: black; border: solid black;"><b>{{ SumAllQty }}</b></td>
+        <td style="width:15%;font-size:0.8rem; color: black; border: solid black;"><b>{{ SumAllFree }}</b></td>
+        <td style="width:15%;font-size:0.8rem; color: black; border: solid black;"><b>{{ SumAllBonus }}</b></td>
+        <td style="width:27%;font-size:0.8rem; color: black; border: solid black;"><b>{{ SumAllOtherQty }}</b></td>
+        <td style="width:15%;font-size:0.8rem; color: black; border: solid black; text-align: right;"><b>{{ SumAllTotal }}</b></td>
+    </tfoot>
+</table>

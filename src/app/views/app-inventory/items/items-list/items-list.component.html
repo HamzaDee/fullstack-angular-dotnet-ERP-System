@@ -1,0 +1,118 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <!-- AdvancedSearch to search specific column ticket  -->
+
+        <app-item-search-form (searchResultEvent)="handleSearchResult($event)" [voucherTypeEnum]="111"></app-item-search-form>
+
+    <!-- END AdvancedSearch -->
+
+    <div class="intro-y box px-5 pb-5">
+        <div class="grid grid-cols-12 gap-5 mt-5">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-1">
+
+                <p-table #dt [value]="tabelData" dataKey="id" [paginator]="true" [rows]="10" [loading]="loading"
+                [globalFilterFields]="['itemNo','itemName','itemGroupName','categoryName','brandName','modelName','stopped']" styleClass="p-datatable-gridlines" [rowHover]="true"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        
+                        <div class="grid grid-cols-12 gap-5 ">
+                            
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 mb-5">
+                                <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder='{{"search"|translate}} ' />
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-4 ">
+                                <p-button label='{{"AddNew"|translate}}'
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                    icon="pi pi-plus" (click)="AddItemForm(0)"></p-button>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:10%" pSortableColumn="itemNo">{{"itemNo"|translate}} </th>
+                            <th style="width:35%" pSortableColumn="itemName">{{"itemName"|translate}} </th>
+                            <th style="width:10%" pSortableColumn="itemGroup">{{"itemGroup"|translate}} </th>
+                            <th style="width:10%" pSortableColumn="category">{{"category"|translate}} </th>
+                            <th style="width:10%" pSortableColumn="brand">{{"brand"|translate}}</th>
+                            <th style="width:10%" pSortableColumn="model">{{"model"|translate}} </th>
+                            <th style="width:5%" pSortableColumn="image">{{"image"|translate}}
+                            </th>
+                            <th style="width:5%" pSortableColumn="   ">{{"stopped"|translate}} </th>
+                            <th style="width:5%" class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                        </tr>
+                    </ng-template>
+
+                    
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td style="text-align: justify;">{{item.itemNo}}</td>
+                            <td style="text-align: justify;">{{item.itemName}}</td>
+                            <td style="text-align: justify;">{{item.itemGroupName}}</td>
+                            <td style="text-align: justify;">{{item.categoryName}}</td>
+                            <td style="text-align: justify;">{{item.brandName}}</td>
+                            <td style="text-align: justify;">{{item.modelName}}</td>
+                            <td style="text-align: justify;">
+                                <img (click)="viewImage(item.image)" *ngIf="item.image"
+                                    style="cursor: pointer; width: 50px; height: 40px;" [src]="baseUrl+ item.image"
+                                    [alt]="item.image" class="shadow-4" />
+                            </td>
+                            <td style="text-align: justify;">
+                                <input [(ngModel)]="item.stopped" disabled type="checkbox"
+                                    class="input border mr-2 mr-3 ml-3" />
+                            </td>
+                            <td style="width:5%">
+                                <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                    <mat-icon class="">more_vert</mat-icon>
+                                </button>
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="ShowItemForm(item.id,true)">
+                                        <i class="material-icons" style="color:blue">visibility</i>
+                                        &nbsp;{{"Details"|translate}}
+                                    </button>
+                                    <button mat-menu-item (click)="EditItemForm(item.id)">
+                                        <i class="material-icons" style="color:green">edit</i>
+                                        &nbsp;{{"Edit"|translate}}
+                                    </button>
+                                    <button mat-menu-item (click)="TransactionItemLogs(item.id)">
+                                        <i class="material-icons" style="color:blue">assignment</i>
+                                        &nbsp;{{"TransactionItemLogs"|translate}}
+                                    </button>
+                                    <button (click)="CopyItemForm(item.id)" mat-menu-item> <i
+                                            class="material-icons" style="color:orange">file_copy</i>
+                                        &nbsp;{{"Copy"|translate}} </button>
+                                    <button mat-menu-item (click)="DeleteItem(item.id)"> <i class="material-icons"
+                                            style="color:red">delete</i>
+                                        &nbsp;{{"Delete"|translate}} </button>
+
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+        </div>
+    </div>
+</div>

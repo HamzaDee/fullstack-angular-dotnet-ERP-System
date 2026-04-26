@@ -1,0 +1,185 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="ItempricesAddForm">
+        
+            <div class="grid grid-cols-12 gap-5 mr-2">
+                 <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="itemId" class="font-weight-bold">{{"materialName"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" formControlName="itemId"
+                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="categoryId" class="font-weight-bold">{{"category"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="categoryList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="categoryId">
+                    </p-dropdown>
+                </div>
+
+                 <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="unitId" class="font-weight-bold">{{"unit"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="unitList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="unitId">
+                    </p-dropdown>
+                </div>
+            </div>
+            <br>
+            <div class="grid grid-cols-12 gap-5 mr-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="groupId" class="font-weight-bold">{{"Groups"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="groupList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="groupId">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="typeId" class="font-weight-bold">{{"ItemType"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="typeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="typeId">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1" style="align-self: center;">
+                    <label for="showItemCat" class="control-label font-weight-bold ml-3">{{"ShowItemCategory"|translate}}</label>
+                    &nbsp;
+                    <input type="checkbox" class="input border w-full mt-2"
+                        [(ngModel)]="catcheckBox" [ngModelOptions]="{ standalone: true }"(change)="HandelShow($event)"/>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="showItemCat">
+                    <label for="priceCatId" class="font-weight-bold">{{"ItemPriceCategory"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="priceCatList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" formControlName="priceCatId">
+                    </p-dropdown>
+                </div>
+                
+            </div>
+            
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <input type="checkbox" class="input border w-full mt-1" hidden="true">
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"ShowRecord"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="ItempricesAddForm.invalid"></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon=""></p-button>
+            </div>           
+        </div>
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="15" [paginator]="true"
+                    [globalFilterFields]="['itemName','categoryName','unitName','convertRate','price','taxName','groupName','priceCatName','catPrice']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div
+                                class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText
+                                        type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title="{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg"
+                                        width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                        width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th [hidden]="true">{{"Id"|translate}}</th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemName">{{"materialNumber"|translate}}</th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="categoryName">{{"category"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="unitName">{{"unit"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="convertRate">{{"CurrenyRate"|translate}}</th>
+                            <th style="width: 5%" class="head_tb" pSortableColumn="price">{{"Price"|translate}}</th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="taxName">{{"Tax"|translate}}</th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="groupName">{{"Group"|translate}}</th>
+                            <th style="width: 10%" *ngIf="showItemCat" class="head_tb" pSortableColumn="priceCatName">{{"categoryPrice"|translate}}</th>
+                            <th style="width: 5%" *ngIf="showItemCat" class="head_tb" pSortableColumn="catPrice">{{"itemCategoryPrice"|translate}}</th>
+                            <th style="width: 3%" class="text-center-m"><i class="pi pi-cog"
+                                    style="font-size: 1.2rem"></i>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td *ngIf="showItemId">{{item.id}}</td>
+                            <td>{{item.itemName}} </td>
+                            <td>{{item.categoryName}}</td>
+                            <td>{{item.unitName}}</td>
+                            <td>{{item.convertRate}}</td>
+                            <td>{{item.price | number : '1.3-3'}}</td>
+                            <td>{{item.taxName}}</td>
+                            <td>{{item.groupName}}</td>
+                            <td *ngIf="showItemCat">{{item.priceCatName}}</td>
+                            <td *ngIf="showItemCat">{{item.catPrice | number : '1.3-3'}}</td>
+                            <td>
+                                <i class="material-icons cursor-pointer"
+                                    (click)="OpenItemTransactionsForm(item.id)" style="color:blue ; text-align: center;"
+                                    title="{{ 'OpenItemCard' | translate }}">
+                                    visibility
+                                </i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="ProdCapacityForm" (ngSubmit)="OnSaveForms()">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3">{{"PharmaceuticalProductLine"|translate}}</label>
+                <input type="number" class="input border w-full mt-1" formControlName="pharmaLine"
+                [ngClass]="{ 'invalid-field': isEmpty(ProdCapacityForm.get('pharmaLine').value)}">
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3">{{"LineOfCosmeticProducts"|translate}}</label>
+                <input type="number" class="input border w-full mt-1" formControlName="cosmeticLine"
+                [ngClass]="{ 'invalid-field': isEmpty(ProdCapacityForm.get('cosmeticLine').value)}">
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3">{{"FluidProductLine"|translate}}</label>
+                <input type="number" class="input border w-full mt-1" formControlName="fluidLine"
+                [ngClass]="{ 'invalid-field': isEmpty(ProdCapacityForm.get('fluidLine').value)}">
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3">{{"FoamProductsLine"|translate}}</label>
+                <input type="number" class="input border w-full mt-1" formControlName="foamLine"
+                [ngClass]="{ 'invalid-field': isEmpty(ProdCapacityForm.get('foamLine').value)}">
+            </div>
+            <br>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+                <p-button label='{{"Save"|translate}}' class="ml-4" type="submit" [disabled]="ProdCapacityForm.invalid || this.disableSave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+            </div>
+        </div>
+        <br>
+    </form>
+</div>

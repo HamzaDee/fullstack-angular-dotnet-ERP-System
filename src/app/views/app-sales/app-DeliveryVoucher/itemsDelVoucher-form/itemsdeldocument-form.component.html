@@ -1,0 +1,393 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="DeliveryItemsAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+            <input type="text" formControlName="status" class="form-control " hidden>
+            <input type="text" formControlName="amount" class="form-control " hidden>
+            <input type="text" formControlName="voucherTypeEnum" class="form-control " hidden>
+            <!-- ==========================================================================> Begin Form -->
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DeliveryType"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="voucherTypeList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true" formControlName="voucherTypeId"
+                        filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        (onChange)="getVoucherNo($event)" 
+                        [ngClass]="{ 'invalid-field': DeliveryItemsAddForm.get('voucherTypeId').value <= 0}" [disabled]="disableAll || disapleVoucherType">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DeliveryNo"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="text" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [attr.disabled]="allowEditVoucherSerial || disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': isEmpty(DeliveryItemsAddForm.get('voucherNo').value)}"
+                        (blur)="voucherNoBlur(this.DeliveryItemsAddForm.value.voucherTypeId,this.DeliveryItemsAddForm.value.voucherNo)">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DeliveryDate"|translate}}
+                        <span class="required-asterisk">*</span>
+                    </label>
+                    <input type="date" formControlName="voucherDate" (blur)="isValidVoucherDate($event)" class="input border w-full mt-1 "
+                        [attr.disabled]="allowEditDate || disableAll ? 'disabled' : null"
+                        [ngClass]="{ 'invalid-field': !validDate}">
+                    <span *ngIf="!validDate" class="required-asterisk">{{"msgInvalidDate"|translate}}</span>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Branch"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [disabled]="allowEditBranch || disableAll ">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Currency"|translate}} <span
+                        class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="currencyList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" (onChange)="getCurrencyRate($event)" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-1 xxl:col-span-1 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ExchangeRatio"|translate}}<span class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="currRate" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null"
+                    [readOnly]="disableCurrRate">
+                </div>                
+            </div>
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" [hidden]="hideGetFromSalesOrder">
+                    <label class="control-label font-weight-bold">{{"GetSalesOrder"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="purchaseRequestList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [(ngModel)]="reqPurInvoice"
+                        [ngModelOptions]="{standalone: true}"
+                        (onChange)="GetSalesOrder($event,0)" [disabled]="disableAll || disableReqSales">
+                    </p-dropdown>   
+                </div>
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" [hidden]="hideGetFromSalesbill">
+                    <label class="control-label font-weight-bold">{{"GetSalesInvoices"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="purchaseInvoicesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="value" optionValue="label" [filter]="true"  filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [(ngModel)]="purchaseInvoices"
+                        [ngModelOptions]="{standalone: true}"
+                        (onChange)="GetSalesInvoices($event)" [disabled]="disableAll ">
+                    </p-dropdown>
+                </div>                   
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Customer"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="suppliersList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="dealerId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        (onChange)="getDealerAcc($event)" 
+                        [disabled]="disableAll || disableDetails">
+                    </p-dropdown>
+                </div>
+
+                <div hidden class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"DebitAccount"|translate}} <span
+                        class="required-asterisk">*</span></label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="accountId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [ngClass]="{ 'invalid-field': DeliveryItemsAddForm.get('accountId').value <= 0}" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>                
+            </div>           
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="useCostCenter">
+                    <label class="control-label font-weight-bold">{{"CostCenter"|translate}}
+                    </label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="costCenterList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="costCenterId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div *ngIf="!useStoreInGrid" class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Store"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" formControlName="storeId" filterBy="text"
+                        appendTo="body" autoWidth="false" [virtualScroll]="false"
+                        [ngClass]="{ 'invalid-field': DeliveryItemsAddForm.get('storeId').value <= 0}"
+                        (onChange)="onStoreChange($event,0,0)" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Notes"|translate}}</label>
+                    <input type="text" formControlName="note" class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+            
+<!-- =============================================================================================>> Details Begin -->
+<div class="card" class="card-blue">
+    <div class="intro-y box px-5 pt-5 mt-5">
+        <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+            <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                class="py-4 sm:mr-8 active">{{"DeliveryDetails"|translate}}</a>            
+            <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                class="py-4 sm:mr-8">{{"DeliveryAttachments"|translate}}</a>
+            <a data-toggle="tab" data-target="#f03" href="javascript:;" *ngIf="voucherId > 0"
+                class="py-4 sm:mr-8">{{"FinancailVoucher"|translate}}</a>
+        </div>
+    </div>
+    <div class="intro-y tab-content">
+        <div class="tab-content__pane active" id="f01">
+            <div class="intro-y box px-5 pt-5">
+                <div class="col-md-12" id="htmlData">
+                    <p-table #dt [value]="invDtlList" [scrollable]="true" scrollHeight="felx"
+                    [paginator]="false" [globalFilterFields]="['',]" [rowHover]="true"
+                    dataKey="id" [style]="{width:'100%'}" [responsive]="true" [resizableColumns]="true" 
+                    [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"AddLine"|translate}}' 
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="getaccountId(this.DeliveryItemsAddForm.value.voucherTypeId,1,0)" [disabled]="disableAll || disableDetails"></p-button>                                        
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngIf="isdisabled"></th>
+                                <th *ngIf="isdisabled"></th>
+                                <th style="width: 10%">{{"materialName"|translate}}</th>
+                                <th style="width: 8%">{{"Unit"|translate}}</th>
+                                <th style="width: 10%" *ngIf="useStoreInGrid">{{"Store"|translate}}</th>
+                                <th style="width: 8%">{{"Qty"|translate}}</th>
+                                <th style="width: 5%">{{"Bonus"|translate}}</th>
+                                <th style="width: 5%">{{"BounsUnit"|translate}}</th>
+                                <th style="width: 10%">{{"Cost"|translate}}</th>
+                                <th style="width: 10%">{{"Total"|translate}}</th>                                
+                                <th style="width: 10%" *ngIf="useProductDate">{{"ProdDate"|translate}}</th>
+                                <th style="width: 10%" *ngIf="useExpiryDate" >{{"EXPIRYDATE"|translate}}</th>
+                                <th style="width: 10%" *ngIf="useBatch">{{"PatchNumber"|translate}}</th>
+                                <!-- <th style="width: 14%" >{{"AccountNo"|translate}}</th>             -->
+                                <th style="width: 8%" *ngIf="useSerial" >{{"Serial"|translate}}</th>
+                                <th style="width: 5%" class="text-center-m w-0" ><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-purDtlList let-i="rowIndex">
+                                        <tr>   
+                                            <td style="text-align: justify;" *ngIf="isdisabled">
+                                                <input type="number" [(ngModel)]="purDtlList.id" 
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                            </td> 
+                                            <td *ngIf="isdisabled">
+                                                <input type="number" [(ngModel)]="purDtlList.hDId" 
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                            </td>  
+                                            <td style="width: 10%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="itemsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" 
+                                                [(ngModel)]="purDtlList.itemId" 
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': purDtlList.itemId <= 0}"
+                                                (onChange)="onChangeItem($event,purDtlList,i)" [disabled]="disableAll || disableDetails"
+                                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                                            </p-dropdown></td>
+                                            <td style="width: 8%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                    [options]="this.unitsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                    appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                    [(ngModel)]="purDtlList.unitId" 
+                                                    [ngClass]="{ 'invalid-field': purDtlList.unitId <= 0}"
+                                                    styleClass="input border w-full mt-1"
+                                                    (ngModelChange)="onChangeUnit($event,purDtlList,i)"
+                                                    [ngModelOptions]="{standalone: true}" [disabled]="disableAll ">
+                                                </p-dropdown>
+                                            </td>
+                                            <td style="width: 10%" *ngIf="useStoreInGrid"><p-dropdown
+                                                emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="storesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="purDtlList.storeId"
+                                                [ngClass]="{ 'invalid-field': purDtlList.storeId <= 0}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keydown)="handleF3Key($event, purDtlList,i)"
+                                                (onChange)="onStoreChange($event,purDtlList,i)" [disabled]="disableAll">
+                                            </p-dropdown></td>
+                                            <td style="width: 8%"><input type="number"
+                                                [(ngModel)]="purDtlList.qty" 
+                                                [ngClass]="{ 'invalid-field': purDtlList.qty <= 0}"
+                                                [ngModelOptions]="{standalone: true, updateOn: 'blur'}"
+                                                class="input border w-full mt-1"
+                                                (ngModelChange)="OnQtyChange($event,purDtlList,i)" 
+                                                (blur)="OnPriceBlur(purDtlList,i)" [disabled]="disableAll">
+                                            </td>
+                                            <td style="width: 5%"><input type="number"
+                                                [(ngModel)]="purDtlList.bonus" 
+                                                (blur)="onChangeBouns($event,purDtlList,i)"                                               
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1" [disabled]="disableAll">                                            
+                                            </td>     
+                                            <td style="width: 5%"><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="this.bounsunitsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="purDtlList.bonusUnitId" 
+                                                styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onChange)="onChangeBounsUnit(purDtlList,i)"
+                                                [ngClass]="{ 'invalid-field': purDtlList.bonus > 0 && purDtlList.bonusUnitId ==0}"
+                                                [disabled]="disableAll || disableDetails">
+                                            </p-dropdown></td>                                       
+                                            <td style="width: 10%"><input type="number"
+                                                [(ngModel)]="purDtlList.cost" 
+                                                [ngClass]="{ 'invalid-field': purDtlList.cost <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                (ngModelChange)="OnPriceChange(purDtlList)"
+                                                (blur)="OnPriceBlur(purDtlList,i)" readonly [disabled]="disableAll">
+                                            </td>
+                                            <td style="width: 10%"><input type="number"
+                                                [(ngModel)]="purDtlList.total"   
+                                                [ngClass]="{ 'invalid-field': purDtlList.total <= 0}" 
+                                                [readonly]="true"                                            
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">                                            
+                                            </td>                                                                                      
+                                            <td style="width: 10%" *ngIf="useProductDate"><input type="date"
+                                                [(ngModel)]="purDtlList.productDate" class="input border w-full mt-1"
+                                                [ngModelOptions]="{ standalone: true }" [readonly]="true"
+                                                (keydown)="handleF3Key($event, outputList,i)" [disabled]="disableAll">                                            
+                                            </td>
+                                            <td style="width: 10%" *ngIf="useExpiryDate">
+                                                <div style="width: 100%; display: flex">
+                                                    <span>
+                                                        <input type="date" [(ngModel)]="purDtlList.expiryDate"
+                                                        class="input border w-full mt-1 "
+                                                        [ngClass]="{ 'invalid-field': isRequierdEx(purDtlList,i) }"
+                                                        [ngModelOptions]="{standalone: true}" [readonly]="true"
+                                                        (keydown)="handleF3Key($event, purDtlList,i)" [disabled]="disableAll">
+                                                    </span>
+                                                    <button type="button" (click)="listofproduct(purDtlList,i)" [disabled]="costingMethod!=162"> 
+                                                        <i title="{{'ADDITEMSINFO'|translate}}" class="material-icons" style="color:green">checklist_rtl</i>
+                                                    </button>                                                
+                                                </div>
+                                            </td>
+                                            <td style="width: 10%" *ngIf="useBatch"><input type="text" [(ngModel)]="purDtlList.batchNo"
+                                                    class="input border w-full mt-1 "
+                                                    [ngClass]="{ 'invalid-field': isRequierdBatch(purDtlList,i) }"
+                                                    [ngModelOptions]="{standalone: true}" [readonly]="true"
+                                                    (keydown)="handleF3Key($event, purDtlList,i)" [disabled]="disableAll">
+                                            </td>
+                                            <!-- <td style="width: 14%"><p-dropdown
+                                                emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                styleClass="input border w-full mt-1" optionLabel="text"
+                                                optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="purDtlList.accountId"
+                                                [ngClass]="{ 'invalid-field': purDtlList.accountId <= 0}"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                            </p-dropdown></td> -->
+                                            <td     style="width: 8%" *ngIf="useSerial" [disabled]="useSerial"><p-button label='{{"Serials"|translate}}' 
+                                                    styleClass="p-ripple p-element button mt-1 w-32 mr-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                    (click)="GetItemSerials(purDtlList,i)"                                             
+                                                    [disabled]="  purDtlList.itemId <= 0 || purDtlList.unitId<= 0 || purDtlList.qty <= 0 || (purDtlList.bonus > 0 && purDtlList.bonusUnitId <=0) ||isRequierdSerial(purDtlList)">
+                                                </p-button>
+                                            </td>                                                              
+                                            <td style="width: 5%">
+                                                <button mat-icon-button [matMenuTriggerFor]="userMenu" class=""
+                                                type="button">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                                </button>    
+                                                <mat-menu #userMenu="matMenu">
+                                                    <button mat-menu-item (click)="getaccountId(this.DeliveryItemsAddForm.value.voucherTypeId,2,i)" [disabled]="disableAll">
+                                                        <i class="material-icons" style="color:green">add</i>
+                                                        &nbsp;{{"AddRowBefore"|translate}}
+                                                    </button>    
+                                                    <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                            class="material-icons" style="color:red">delete</i>
+                                                        &nbsp;{{"Delete"|translate}} </button>
+                                                </mat-menu>
+                                            </td>
+                                        </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td style="width: 169rem" colspan="3">{{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="footer">
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>{{"total"|translate}}</td>
+                                <td>{{ formatedTotal }}</td>
+                                <td colspan="7"></td>
+                            </tr>                            
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content__pane" id="f02">
+            <div class="intro-y box px-5 pt-5">
+                <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+            </div>
+        </div>
+
+        <div class="tab-content__pane" id="f03" *ngIf="voucherId && voucherId > 0">
+            <div class="intro-y box px-5 pt-5">
+                <app-financialvoucher [voucherId]="voucherId" [voucherType]="voucherType"></app-financialvoucher>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showRemainQty" class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+            <label class="control-label font-weight-bold" style="color: rgb(255, 0, 0); font-size: large;">
+                {{"RemainingQty="|translate}}
+                {{this.remainingQty}}
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================================================================>> Details End -->
+           
+<!-- ==============================================================================================> End Form -->
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DeliveryItemsAddForm.invalid || !this.validDate || disableSave" type="submit"
+                    [hidden]="showsave"></p-button>
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintDeliveryItems( this.DeliveryItemsAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DeliveryItemsAddForm.invalid" type="button"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    (click)="DeleteDeliveryItems(this.DeliveryItemsAddForm.value.id)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="DeliveryItemsAddForm.invalid" type="button"[hidden]="showsave"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/ItemsDeliveryVoucher/ItemsDeliveryList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

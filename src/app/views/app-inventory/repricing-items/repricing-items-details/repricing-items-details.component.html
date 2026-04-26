@@ -1,0 +1,104 @@
+<hr>
+<div class="content ">
+    <div class="card">
+        <div class=" intro-y box px-5 pb-5 mb-5 ">
+            <div class="overflow-scroll">
+                <form [formGroup]="RepricingItemForm" (ngSubmit)="OnSaveForms()">
+                    <div class="card-header text-center mt-6">
+                        <h1>{{data.title}}</h1>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5" style="margin-top: 1rem;">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="font-weight-bold">{{"BondNumber"|translate}} :
+                            </label>
+                            <label class=" font-weight-bold">{{ RepricingItemForm.get('id').value}}
+                            </label>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class="font-weight-bold">{{"TransDate"|translate}} :
+                            </label>
+                            <label class=" font-weight-bold">{{ RepricingItemForm.get('transDate').value |
+                                date:'yyyy-MM-dd'}}
+                            </label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class=" font-weight-bold">{{"Username"|translate}} :
+                            </label>
+                            <label class=" font-weight-bold">{{ RepricingItemForm.get('userName').value}}</label>
+
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class=" font-weight-bold">{{"EditType"|translate}} :
+                            </label>
+                            <label class=" font-weight-bold">{{ RepricingItemForm.get('changeTypeName').value}}
+                            </label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label class=" font-weight-bold">{{"Value"|translate}}
+                            </label>
+                            <label class=" font-weight-bold">{{ RepricingItemForm.get('amount').value}}
+                            </label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1"
+                            style="text-align: start">
+                            <div *ngIf="RepricingItemForm.get('increase').value === true">{{"Increase"|translate}}
+                            </div>
+                            <div *ngIf="RepricingItemForm.get('increase').value === false">{{"Decrease"|translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border" style="margin-top: 1rem;">
+                        <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" style="margin: 1rem;"
+                            [globalFilterFields]="['id','storeName','storeKeeperName','telephone','mobile','address','active']"
+                            styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                            [showCurrentPageReport]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+
+                                    <th style="width: 10%" class="head_tb" pSortableColumn="materialNumber">
+                                        {{"materialNumber"|translate}}
+                                    </th>
+                                    <th style="width: 30%" class="head_tb" pSortableColumn="materialName">
+                                        {{"materialName"|translate}}
+                                    </th>
+                                    <th style="width: 10%" class="head_tb" pSortableColumn="unit">{{"unit"|translate}}
+                                    </th>
+                                    <th style="width: 10%" class="head_tb" pSortableColumn="OldPrice">
+                                        {{"OldPrice"|translate}}
+                                    </th>
+                                    <th style="width: 10%" class="head_tb" pSortableColumn="NewPrice">
+                                        {{"NewPrice"|translate}}
+                                    </th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                                <tr>
+                                    <td>{{item.itemNo}}</td>
+                                    <td>{{item.itemName}} </td>
+                                    <td>{{item.unitName}}</td>
+                                    <td>{{item.oldPrice}}</td>
+                                    <td>{{item.newPrice}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                    </div>
+                    <div class="no-print col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1"
+                        style="margin-top: 1rem;" align="end">
+                        <p-button label='{{"Print"|translate}}' (click)="printPage()"
+                            styleClass=" p-element button w-24 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"></p-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

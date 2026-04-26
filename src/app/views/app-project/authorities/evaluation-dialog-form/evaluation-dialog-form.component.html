@@ -1,0 +1,152 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div class="content"> 
+        <div class="card"> 
+
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div> 
+
+            <form [formGroup]="EvaluationDialogForm"> 
+                <div class="grid grid-cols-12 gap-5 mt-5"> 
+    
+                    <input type="text" formControlName="id" class="form-control" hidden>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"RatingCode"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" formControlName="ratingCode"  [options]="ratingCodeList"
+                            [ngClass]="{ 'invalid-field': EvaluationDialogForm.get('ratingCode').value <= 0}" >
+                        </p-dropdown>
+                    </div>
+    
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"RatingDateFrom"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1 " formControlName="ratingDateFrom">
+                    </div>
+    
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"RatingDateTo"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1" formControlName="ratingDateTo">
+                    </div>
+    
+                    <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ReasonForDate"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="ratingReason"
+                        [ngClass]="{ 'invalid-field': isEmpty(EvaluationDialogForm.get('ratingReason').value)}">
+                    </div>
+    
+                </div>
+
+                <div class="intro-y box px-5 pt-5 pb-5"> 
+                    <p-table #dt [value]="authEvaluationDTsList" dataKey="id" [loading]="loading" [scrollable]="true"
+                        [paginator]="false" [style]="{width:'100%'}" [responsive]="true"
+                        [resizableColumns]="true" styleClass="p-datatable-gridlines" [rowHover]="true"
+                        scrollDirection="horizontal">
+
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div
+                                    class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                    <p-button label='{{"Save"|translate}}'
+                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                        icon="pi pi-plus" (click)="OnSaveForms()"
+                                        [disabled]="disableAll"></p-button>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="head_tb" hidden="true">{{"id"|translate}}</th>
+                                <th style="width: 7%" pSortableColumn="ratingCode"> {{"RatingCode"|translate}}</th>
+                                <th style="width: 7%" pSortableColumn="ratingDateFrom"> {{"RatingDateFrom"|translate}}</th>
+                                <th style="width: 5%" pSortableColumn="ratingDateTo">{{"RatingDateTo"|translate}} </th>
+                                <th style="width: 30%" pSortableColumn="ratingReason"> {{"ReasonForDate"|translate}}</th>
+                                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row
+                            let-i="rowIndex">
+                            <tr>
+
+                                <td style="width: 5%"  hidden="true">
+                                    <input type="number" class="input border w-full mt-1 " [(ngModel)]="row.id">
+                                </td>
+
+                                <td style="width: 5%">
+                                    <input type="number" class="input border w-full mt-1 " readonly [(ngModel)]="row.ratingCode" 
+                                    [ngModelOptions]="{standalone: true}" [disabled]="disableAll" >
+                                </td>
+
+                                <td style="width: 5%">
+                                    <input type="date" class="input border w-full mt-1 " readonly [(ngModel)]="row.ratingDateFrom"  
+                                    [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                </td>
+
+                                <td style="width: 5%">
+                                    <input type="date" class="input border w-full mt-1 " readonly [(ngModel)]="row.ratingDateTo"  
+                                    [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                </td>
+
+                                <td style="width: 30%">
+                                    <input type="text" class="input border w-full mt-1 " readonly [(ngModel)]="row.ratingReason" 
+                                     [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                </td>
+
+                                <td style="width: 5%">
+                                    <button type="button" (click)="deleteRow(row.id)" [disabled]="disableAll"> <i
+                                            class="material-icons" style="color:red">delete</i>
+                                    </button>
+
+                                    <button type="button" (click)="updateRow(row,i)" [disabled]="disableAll"> <i
+                                        class="material-icons" style="color:blue">edit</i>
+                                    </button>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="5">
+                                    {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                 </div>
+
+                 <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo" (click)="dialogRef.close(false)"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component">
+                    </p-button>
+    
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

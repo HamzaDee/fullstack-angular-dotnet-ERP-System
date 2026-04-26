@@ -1,0 +1,45 @@
+@media print {
+    @page {
+        margin-top: 6px;
+        margin-bottom: 4px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    body {
+        padding-top: 72px;
+        padding-bottom: 72px;
+        font-size: 1.1em !important;
+    font-weight: 600 !important;
+    }
+}
+
+@page {
+    size: 32cm 45.9cm;
+}
+
+
+::ng-deep .mat-checkbox-label {
+    font-weight: normal;
+    font-size: 13px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  table{
+    margin-bottom: 0rem;
+  }
+
+  .table th {
+
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.1rem !important;
+}
+.table td {
+
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2em !important;
+}

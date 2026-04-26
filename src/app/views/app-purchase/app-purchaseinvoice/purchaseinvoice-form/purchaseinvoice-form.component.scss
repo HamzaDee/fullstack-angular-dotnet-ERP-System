@@ -1,0 +1,9 @@
+p-dropdown {
+    width: 100%;
+    min-width:0 !important; // auto , initial 
+}
+
+.p-datatable-scrollable .p-datatable-frozen-column {
+    position: sticky;
+    background: var(--p-datatable-header-cell-background);
+  } 

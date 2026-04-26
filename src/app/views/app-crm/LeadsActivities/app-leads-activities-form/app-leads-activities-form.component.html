@@ -1,0 +1,92 @@
+<div class="intro-y box p-5 mb-5">
+  <div [hidden]="showLoader">
+
+    <form [formGroup]="ActivityLeadAddForm" (ngSubmit)="OnSaveForms()">
+
+
+      <input type="hidden" formControlName="activityId">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 sm:col-span-2">
+          <label for="activityId" class="control-label font-weight-bold">{{ "ActivityNO" | translate }}</label>
+          <input type="text" class="input border w-full mt-1" formControlName="activityId" readonly [disabled]="true">
+        </div>
+
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+          <label for="leadId" class="control-label font-weight-bold">{{ "PotentialClient" | translate }}<span
+              class="required-asterisk">*</span></label>
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="leadList"
+            formControlName="leadId" [style]="{'minWidth':'100%', 'width': '100%'}"
+            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+            appendTo="body" autoWidth="false" [virtualScroll]="false" [lazy]="true" [virtualScrollItemSize]="40"
+            [disabled]="disableAll" [ngClass]="{ 'invalid-field': ActivityLeadAddForm.get('leadId')?.value <= 0}">>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+          <label for="activityTypeId" class="control-label font-weight-bold">{{ "TypeActivity" | translate }}<span
+              class="required-asterisk">*</span></label>
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="activityTypeList"
+            formControlName="activityTypeId" [style]="{'minWidth':'100%', 'width': '100%'}"
+            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+            appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+            [ngClass]="{ 'invalid-field': ActivityLeadAddForm.get('activityTypeId')?.value <= 0}">>
+          </p-dropdown>
+        </div>
+
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+          <label for="startAt" class="control-label font-weight-bold">{{"FromDate"|translate}}</label>
+          <input id="startAt" type="datetime-local" formControlName="startAt" class="input border w-full mt-1"
+            [attr.disabled]="disableAll ? 'disabled' : null">
+        </div>
+        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+          <label for="endAt" class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+          <input id="endAt" type="datetime-local" formControlName="endAt" class="input border w-full mt-1"
+            [attr.disabled]="disableAll ? 'disabled' : null">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4 mt-4">
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+          <label for="description" class="control-label font-weight-bold">{{ "Description" | translate }}</label>
+          <textarea type="text" formControlName="description" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null" rows="6"> </textarea>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+          <label for="note" class="control-label font-weight-bold">{{ "Notes" | translate }} </label>
+          <textarea type="text" formControlName="note" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null" rows="6"> </textarea>
+        </div>        
+      </div>
+      <div class="grid grid-cols-12 gap-4 mt-4">
+        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" *ngIf="this.showStatus">
+          <label for="status" class="control-label font-weight-bold">{{ "status" | translate }}</label>
+          <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="statusList"
+            formControlName="status" [style]="{'minWidth':'100%', 'width': '100%'}"
+            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+            appendTo="body" autoWidth="false" [virtualScroll]="false" [lazy]="true" [virtualScrollItemSize]="40"
+            [disabled]="disableAll">
+          </p-dropdown>
+        </div>
+
+      </div>
+      <br>
+
+
+      <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end" mat-dialog-actions>
+        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" *ngIf="!disableAll"
+          styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+          [disabled]="ActivityLeadAddForm.invalid  || disableSave" type="submit" [hidden]="showsave"></p-button>
+
+        <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" *ngIf="opType !== 'Add' "
+          styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+          (onClick)="PrintLeadsActivities(ActivityLeadAddForm.get('activityId')?.value)"
+          [disabled]="ActivityLeadAddForm.get('activityId')?.invalid" type="button">
+        </p-button>
+
+        <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+          styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+          [routerLink]="['/LeadsActivities/LeadsActivitiesList']"></p-button>
+      </div>
+    </form>
+
+  </div>
+</div>

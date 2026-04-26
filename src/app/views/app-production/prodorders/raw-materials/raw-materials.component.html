@@ -1,0 +1,81 @@
+<form >
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold mr-2">{{"materialNumber"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.itemNo}}</label>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold mr-2">{{"materialName"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.itemName}}</label>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"ProdQty"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.totQty| number:'1.3-3'}}</label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="RawMaterialList" dataKey="id" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" [rows]="5" [paginator]="true" responsiveLayout="scroll"
+                            [globalFilterFields]="['costCenterName']" [showCurrentPageReport]="true">
+                            <ng-template pTemplate="caption">                                
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 15%" pSortableColumn="itemNo">{{"materialNumber"|translate}}
+                                        <p-sortIcon field="itemNo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 30%" pSortableColumn="itemName">{{"materialName"|translate}} <p-sortIcon
+                                            field="itemName"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="unitNo">{{"unit"|translate}} <p-sortIcon
+                                            field="unitNo"></p-sortIcon></th>
+                                    <th style="width: 10%" pSortableColumn="qty">{{"FactorQty"|translate}} <p-sortIcon
+                                        field="qty"></p-sortIcon></th>
+                                    <th style="width: 20%" pSortableColumn="avlQty">{{"AvailableQty"|translate}} <p-sortIcon
+                                            field="avlQty"></p-sortIcon></th>
+                                    <th style="width: 15%" pSortableColumn="reqQty">{{"RequiredQty"|translate}} <p-sortIcon
+                                            field="reqQty"></p-sortIcon></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemsList
+                                let-i="rowIndex">
+                                <tr [ngClass]="{ 'notavlqty': (itemsList.qty * data.totQty) > itemsList.avlQty}">
+                                    <td>{{itemsList.itemNo}}</td>
+                                    <td>{{itemsList.itemName}}</td>
+                                    <td>{{itemsList.unitName}}</td>
+                                    <td>{{itemsList.qty| number:'1.0-6'}}</td>
+                                    <td>{{itemsList.avlQty| number:'1.0-3'}}</td>
+                                    <td>{{itemsList.qty * data.totQty | number:'1.0-3' }}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="5"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <!-- <ng-template pTemplate="footer">
+                                <tr>
+                                    <td></td>
+                                    <td>{{"total"|translate}}</td>
+                                    <td>{{calculateSum() | number: '1.3-3'}}</td>
+                                </tr>
+                            </ng-template> -->
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(RawMaterialList)"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

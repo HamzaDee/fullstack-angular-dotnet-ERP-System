@@ -1,0 +1,116 @@
+<br>
+<div class="container intro-y box px-5 pb-5 mb-5">
+    <div class="grid grid-cols-12 gap-5 pt-5">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+            <p-table #dt [value]="data" [rows]="10" [paginator]="true"
+            [globalFilterFields]="['id','dealerName','categoryName','dealerTypeName','className','accountName','tel1','website','isActive']"
+            styleClass="p-datatable-gridlines"
+                responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>
+                        </div>
+                         <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                            <p-button label='{{"AddNew"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="pi pi-plus" (click)="EditDealerForm(0)"></p-button>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-5" align="end">
+                            <i class="pi pi-star-fill" 
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)"
+                                title= "{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                            </button>
+                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                            </button>
+                        </div>
+                    </div>                
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="head_tb" pSortableColumn="id">{{"number"|translate}}</th>
+                        <th class="head_tb" pSortableColumn="dealerName">{{"Name"|translate}}</th>
+                        <th class="head_tb" pSortableColumn="dealerTypeName">{{dealerType|translate}}</th>                        
+                        <th class="head_tb" pSortableColumn="categoryName">{{"Category"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="className">{{"Classification"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="accountName">{{"ACCOUNT"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="tel1">{{"PhoneNumber"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="website">{{"Website"|translate}} </th>
+                        <th class="head_tb" pSortableColumn="isActive">{{"Active"|translate}} </th>                        
+                        <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                        <!-- <th class="head_tb">{{"icon"|translate}}</th> -->
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-dealer>
+                    <tr>
+                        <td *ngIf="shouldHideAccountId">{{dealer.accountId}}</td>
+                        <td *ngIf="shouldHideAccountId">{{dealer.id}}</td>
+                        <td>{{dealer.dealerNo}}</td>
+                        <td>{{dealer.dealerName }} </td>
+                        <td>{{dealer.dealerTypeName}}</td>
+                        <td>{{dealer.categoryName}}</td>
+                        <td>{{dealer.className}}</td>
+                        <td>{{dealer.accountName}}</td>
+                        <td>{{dealer.tel1}}</td>
+                        <td>{{dealer.website}}</td>
+                        <td><input type="checkbox" disabled="true" [checked]="dealer.isActive" class="pl-16" /></td>
+                        <!-- <td><img style="width: 50px; height: 40px;" [src]="'http://localhost:7205'+ company.logo"
+                                [alt]="company.logo" class="shadow-4" /></td> -->
+                      
+                        <td style="width:5%">
+                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                <mat-icon class="">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item (click)="ShowDealerForm(dealer.id)"> 
+                                    <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"showDetails"|translate}} </button>
+
+                                 <button mat-menu-item (click)="EditDealerForm(dealer.id)">
+                                    <i class="material-icons" style="color:blue">edit</i> &nbsp;{{"Edit"|translate}}
+
+                                </button>
+                                <button mat-menu-item (click)="DeleteDealer(dealer.id)" > 
+                                    <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
+
+                                <button mat-menu-item (click)="AttachmentDealer(dealer.id)"> 
+                                    <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>
+
+                                <button mat-menu-item (click)="OpenAccountStatementForm(dealer.id,false)">
+                                    <i class="material-icons" style="color:blue">visibility</i> &nbsp;{{"accountsstatement"|translate}}
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

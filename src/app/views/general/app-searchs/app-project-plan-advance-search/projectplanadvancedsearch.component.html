@@ -1,0 +1,98 @@
+<div class="intro-y box">
+    <div class="accordion__pane border border-gray-200 p-4 mt-3">
+        <mat-accordion class="accordion__pane__toggle font-medium block">
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-search w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span
+                                class="accordion__pane__toggle font-medium block px-10">{{"AdvancedSearch"|translate}}</span>
+                        </h5>
+                        <mat-divider></mat-divider>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br>
+                <hr>
+                <div class="card-header text-center"></div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="fromDate" class="control-label font-weight-bold">{{"FromDate"|translate}}</label>
+                        <input type="date" [(ngModel)]="searchCriteria.fromDate"
+                            [ngModelOptions]="{standalone: true}"
+                            class="input border w-full mt-1">
+                    </div>
+
+                    <!-- To Date -->
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="toDate" class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                        <input type="date" [(ngModel)]="searchCriteria.toDate"
+                            [ngModelOptions]="{standalone: true}"
+                            class="input border w-full mt-1">
+                    </div>
+                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-1">
+                        <label for="distAuthoritiesIds" class="control-label font-weight-bold">{{"DistributionSiteDirection"|translate}}</label>
+                        <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                            styleClass="input border w-full mt-1" optionValue="id" [(ngModel)]="distIds"
+                            [options]="distSiteDirectionList" [filter]="true" filterBy="text" appendTo="body"
+                            [panelStyle]="{ 'width': '100%' }"                         
+                            [virtualScroll]="true" [lazy]="true" (onLazyLoad)="AuthloadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                        </p-multiSelect>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label for="projectPlanNo" class="control-label font-weight-bold">{{"ProjectPlanNo"|translate}}</label>
+                        <input type="number" [(ngModel)]="searchCriteria.projectPlanNo"
+                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label for="projectId"class="control-label font-weight-bold">{{"ProjectName"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="projectsList"
+                            [(ngModel)]="searchCriteria.projectId" [style]="{'minWidth':'100%', 'width': '100%'}"
+                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" appendTo="body"
+                            autoWidth="false" [filter]="true" filterBy="text" 
+                            [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)"  [virtualScrollItemSize]="40">
+                        </p-dropdown>
+                    </div>                     
+                     <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                        <label for="representativeId" class="control-label font-weight-bold">{{"Man"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                            [options]="employeeList" [(ngModel)]="searchCriteria.representativeId"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" appendTo="body" autoWidth="false" [filter]="true"
+                            filterBy="text" [virtualScroll]="false">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+           
+
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"ShowRecord"|translate}}' icon="pi pi-search" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component ml-4"
+                            type="submit" (onClick)="getData()"></p-button>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <p-button label='{{"CancelSearch"|translate}}' color="warn" icon="pi pi-undo"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component ml-4"
+                            (click)="EmptySearch()"></p-button>
+                    </div>
+                </div>
+                <br>
+                <div class="loading-indicator" [hidden]="!showLoader">
+                    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

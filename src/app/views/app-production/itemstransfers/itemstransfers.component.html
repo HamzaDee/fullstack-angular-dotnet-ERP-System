@@ -1,0 +1,91 @@
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true"  [globalFilterFields]="['itemNo','itemName','unitName','qty','runNo','runNo','prodDate','expiryDate','oldCountryName','newCountryName','transferDate']"
+        paginatorDropdownAppendTo="body" styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="['10','25','50']">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-5" align="end">
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel(dt)" tooltipposition="bottom"
+                        class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton="" pripple=""
+                        icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf(dt)" tooltipposition="bottom"
+                        class="button px-2 mr-1 mb-2 text-gray-700">
+                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 10%" pSortableColumn="itemNo">{{"ItemNo"|translate}}</th>
+                <th pSortableColumn="itemName">{{"materialName"|translate}}</th>
+                <th style="width: 8%">{{"unit"|translate}}</th>
+                <th style="width: 10%">{{"Quantity"|translate}}</th>
+                <th style="width: 10%">{{"RunNumber"|translate}}</th>
+                <th style="width: 8%">{{"ProdDate"|translate}}</th>
+                <th style="width: 8%">{{"ExpiryDate"|translate}}</th>
+                <th style="width: 8%">{{"OldCountry"|translate}}</th>
+                <th style="width: 8%">{{"NewCountry"|translate}}</th>
+                <th style="width: 8%">{{"TransferDate"|translate}}</th>
+                <th style="width: 10%">{{"Notes"|translate}}</th>
+                <th style="width: 10%">{{"ReceivedValue"|translate}}</th>
+                <th style="width: 3%">{{"Delivered"|translate}}</th>
+                <th style="width:5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemsTransfer>
+            <tr>
+                <td hidden>{{itemsTransfer.id}}</td>
+                <td>{{itemsTransfer.itemNo}}</td>
+                <td>{{itemsTransfer.itemName}}</td>
+                <td>{{itemsTransfer.unitName}}</td>
+                <td>{{itemsTransfer.qty}}</td>
+                <td>{{itemsTransfer.runNo}}</td>
+                <td>{{itemsTransfer.prodDate | date:'yyyy-MM-dd'}}</td>
+                <td>{{itemsTransfer.expiryDate | date:'yyyy-MM-dd'}}</td>
+                <td>{{itemsTransfer.oldCountryName}}</td>
+                <td>{{itemsTransfer.newCountryName}}</td>
+                <td>{{itemsTransfer.transferDate | date:'yyyy-MM-dd'}}</td>
+
+                <td style="width:10%"><input type="text" [(ngModel)]="itemsTransfer.note" class="input border w-full mt-1 "
+                    [ngModelOptions]="{standalone: true}" >
+                </td>
+
+                <td style="width:10%"><input type="number" [(ngModel)]="itemsTransfer.receivedValue"  (ngModelChange)="CheckreceivedValue(itemsTransfer)"
+                        class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}">
+                </td>
+                              
+                <td style="flex: 0 0 6%;justify-content: center !important;" >
+                    <input type="checkbox" [(ngModel)]="itemsTransfer.received"class="input border w-full mt-1 " 
+                    [ngModelOptions]="{standalone: true}">              
+                </td>
+
+                <td style="width:5%" >
+                    <button (click)="SaveItemstransfersRow(itemsTransfer)"> <i class="material-icons"
+                            style="color:rgb(4, 28, 243)">save</i>
+                    </button>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="12"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

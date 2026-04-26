@@ -1,0 +1,26 @@
+.custom-star-icon {
+    color: gold; 
+    font-size: 24px;
+    margin-right: 16px;
+  }
+
+  .custom-star-icon2  
+  {
+    color: gray; 
+    font-size: 24px;
+    margin-right: 16px;
+  }
+  .custom-cursor {
+    cursor: pointer; /* Hand cursor */
+  }
+  
+  /* Custom Tooltip Style */
+  .custom-tooltip {
+    background-color: #333; /* Tooltip background color */
+    color:#000000 !important; /* Tooltip text color */
+    font-size: 14px; /* Font size */
+    padding: 8px 12px; /* Padding */
+    border-radius: 4px; /* Border radius */
+    max-width: 200px; /* Maximum width */
+    text-align: center; /* Center align text */
+  }

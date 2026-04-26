@@ -1,0 +1,69 @@
+
+
+<div style="border-bottom:1px solid black;">
+    <h1 style="text-align:center; font-weight: 600;font-size: 2.1em; "> {{"FixedAssetsContractsForm"|translate}} </h1>
+</div>
+
+<div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" style="padding:15px; border-bottom: 1px solid black; font-size: 1.3em; font-weight: 600;">
+<div class="grid grid-cols-12" >
+
+ <div class="col-span-2"> {{"ContractsNo"|translate}} : </div>
+ <div class="pt-hlf pb-hlf col-span-4" >{{data.contractNo }} </div> 
+
+<div class="col-span-2">{{"ContractOFDate"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-4"  >{{ data.contractDate | date: 'dd/MM/yyyy' }}</div> 
+
+<div class="col-span-2">{{"ContractAmmount"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10" >{{ data.amount }} </div> 
+
+<div class="col-span-2"> {{"Branch"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-10">{{data.branchName }} </div> 
+
+<div class="col-span-1"> {{"Currency"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-5" > {{data.currencyName}}</div>
+
+<div class="col-span-3"> {{"ConverionFactor"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-3" >{{data.currRate}} </div>
+
+<div class="col-span-2"> {{"MaintenanceCompany"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" >{{data.dealerName }} </div> 
+
+<div class="col-span-2">{{"DateOfStartOfContract"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-4" >{{ data.startDate | date: 'dd/MM/yyyy' }}</div> 
+
+<div class="col-span-2">{{"DateOfEndOfContract"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-4"  >{{ data.endDate | date: 'dd/MM/yyyy'}} </div> 
+
+<div class="col-span-2"> {{"ReferenceNo"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-4" >{{data.referenceNo }} </div> 
+
+<div class="col-span-2">{{"ReferenceDate"|translate}} :</div>
+ <div class="pt-hlf pb-hlf col-span-4"  >{{ data.referenceDate | date: 'dd/MM/yyyy' }}</div> 
+
+<div class="col-span-2">{{"Notes"|translate}} :</div>
+<div class="pt-hlf pb-hlf col-span-10" >{{ data.note }} </div>  
+
+</div> 
+</div>
+
+
+<table class="table" style="width:100%; text-align:center;padding:30%; direction: rtl;" border="1">
+<thead>
+<tr>
+    <th style="color: black; border: solid black"> {{"theOrigin"|translate}}</th>
+    <th style="color: black; border:solid black">   {{"Notes"|translate}} </th>
+</tr>
+</thead>
+<tbody>
+ <tr *ngFor="let product of AssetsContractsDTList" style="color: black;">
+  <td style="width:22%;font-size:0.8rem;"><b>{{ product.assestName }}</b></td> 
+   <td style="width:22%;font-size:0.8rem;"><b>{{ product.note }}</b></td>
+
+</tr>
+</tbody>
+</table> 
+
+
+
+
+

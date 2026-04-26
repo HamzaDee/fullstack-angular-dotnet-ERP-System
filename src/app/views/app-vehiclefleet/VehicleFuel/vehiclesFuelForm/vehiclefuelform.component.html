@@ -1,0 +1,213 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="CheckUpsAddForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="voucherNo" class="control-label font-weight-bold">{{"transNo"|translate}}</label>
+                    <input id="voucherNo" type="number" formControlName="voucherNo" class="input border w-full mt-1 "
+                        [readOnly]="true">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label for="voucherDate" class="control-label font-weight-bold">{{"Date"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="voucherDate" type="date" formControlName="voucherDate" class="input border w-full mt-1 "
+                        [attr.disabled]=" disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+
+            <div class="card" class="card-blue">
+                <div class="intro-y box px-5 pt-5 mt-5">
+                    <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                        <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                            class="py-4 sm:mr-8 active">{{"Details"|translate}}</a>
+                        <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                            class="py-4 sm:mr-8">{{"VoucherAttachments"|translate}}</a>
+                    </div>
+                </div>
+
+                <div class="intro-y tab-content">
+                    <div class="tab-content__pane active" id="f01">
+                        <div class="intro-y box px-5 pt-5">
+                            <p-table #dt [value]="vehiclesFuelList" dataKey="id" [loading]="loading"
+                                styleClass="p-datatable-gridlines" [rowHover]="true" scrollHeight="400px">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mb-5">
+                                            <p-button label='{{"AddLine"|translate}}'
+                                                styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="AddNewLine()"
+                                                [disabled]="disableAll"></p-button>
+
+                                                
+                                            <p-button label='{{"DownloadExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-42 mr-2 mb-5 items-center justify-center text-white p-button p-component"
+                                                [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                                icon="pi pi-file-excel" (click)="exportHeadersToExcel()">
+                                            </p-button>
+                                            
+
+                                            <input type="file" #fileInput (change)="ImportFromExcel($event)"
+                                                accept=".xlsx, .xls" style="display: none;" />
+                                            <p-button label='{{"ImportFromExcel"|translate}}'
+                                                styleClass="p-ripple p-element button w-82 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                icon="pi pi-plus" (click)="onImportClick(fileInput)">
+                                            </p-button>
+                                        </div>
+
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" style="width: 5%">{{"MechanismNo"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"PlateNumber"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"FuelType"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"FromDate"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"ToDate"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"DistanceTraveled"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"AmountOfFuelConsumed"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"km20liters"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"PricePerLiter"|translate}}</th>
+                                        <th class="head_tb" style="width: 5%">{{"Value"|translate}}</th>
+                                        <th style="width: 2%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-vFuel let-i="rowIndex">
+                                    <tr>
+                                        <td style="text-align: justify;" *ngIf="isdisabled">
+                                            <input type="number" [(ngModel)]="vFuel.id"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1">
+                                        </td>
+                                        <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                [options]="vehiclesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text"
+                                                appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                                [(ngModel)]="vFuel.vehicleId" styleClass="input border w-full mt-1"
+                                                [ngModelOptions]="{standalone: true}"
+                                                [ngClass]="{ 'invalid-field': vFuel.vehicleId <= 0}"
+                                                [disabled]="disableAll" (onChange)="getVehicleDetails($event,i)">
+                                            </p-dropdown>
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="vFuel.plateNo"
+                                                [ngClass]="{ 'invalid-field': vFuel.plateNo <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [readOnly]="true">
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="vFuel.fuelTypeId"
+                                                [ngClass]="{ 'invalid-field': vFuel.fuelTypeId <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [readOnly]="true">
+                                        </td>
+
+                                        <td>
+                                            <input type="date" name="transFromDate" [(ngModel)]="vFuel.transFromDate"
+                                                [ngModelOptions]="{ standalone: true }" class="input border w-full mt-1"
+                                                [ngClass]="{ 'invalid-field': isDateInvalid(vFuel.transFromDate) }" />
+                                            <div *ngIf="isDateInvalid(vFuel.transFromDate)"
+                                                class="text-red-500 text-xs mt-1">
+                                                Please enter a valid date.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="date" name="transToDate" [(ngModel)]="vFuel.transToDate"
+                                                [ngModelOptions]="{ standalone: true }" class="input border w-full mt-1"
+                                                [ngClass]="{ 'invalid-field': isDateInvalid(vFuel.transToDate) }" />
+                                            <div *ngIf="isDateInvalid(vFuel.transToDate)"
+                                                class="text-red-500 text-xs mt-1">
+                                                Please enter a valid date.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="vFuel.millage"
+                                             (ngModelChange)="onPriceOrQtyChange(vFuel)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="vFuel.qty"
+                                                (ngModelChange)="onPriceOrQtyChange(vFuel)"
+                                                [ngClass]="{ 'invalid-field': vFuel.qty <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="vFuel.totalKM20"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="true">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="vFuel.price"
+                                                [ngClass]="{ 'invalid-field': vFuel.price <= 0}"
+                                                (ngModelChange)="onPriceOrQtyChange(vFuel)"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" step="0.001">
+                                        </td>
+                                        <td>
+                                            <input type="number" [(ngModel)]="vFuel.total"
+                                                [ngClass]="{ 'invalid-field': vFuel.total <= 0}"
+                                                [ngModelOptions]="{standalone: true}" class="input border w-full mt-1"
+                                                [disabled]="disableAll" [readOnly]="true">
+                                        </td>
+                                        <td style="width: 2% !important;">
+                                            <button mat-menu-item (click)="deleteRow(i)" [disabled]="disableAll"> <i
+                                                    class="material-icons" style="color:red">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td style="vertical-align: top;" colspan="9">
+                                            {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td colspan="8"></td>
+                                        <td>{{"total"|translate}}</td>
+                                        <td>{{calculateSum()}}</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="tab-content__pane" id="f02">
+                        <div class="intro-y box px-5 pt-5">
+                            <app-app-general-attachment [voucherId]="voucherId"></app-app-general-attachment>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="CheckUpsAddForm.invalid  || disableSave" type="submit" [hidden]="showsave"></p-button>
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="CheckUpsAddForm.invalid" type="button" [hidden]="showsave"
+                    (onClick)="DeleteVoucher(this.CheckUpsAddForm.value.id)"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/VehicleFuel/VehiclefuelList']"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

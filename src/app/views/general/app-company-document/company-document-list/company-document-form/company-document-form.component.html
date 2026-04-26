@@ -1,0 +1,124 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        
+            <form [formGroup]="companyDocumentAddForm" (ngSubmit)="OnSaveForms()">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+
+                    
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"documentType"|translate}}<span
+                                        class="required-asterisk">*</span></label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="DocTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1"
+                                    optionLabel="text" optionValue="id" [filter]="true" formControlName="docTypeId"
+                                    filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                    [(ngModel)]="selectedDocType">
+                                </p-dropdown>
+                            </div>
+                     
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"ArabicName"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input type="text" formControlName="docNameA" class="input border w-full mt-1 ">
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"EnglishName"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input type="text" formControlName="docNameE" class="input border w-full mt-1 ">
+                            </div>
+                      
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"documentNumber"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input type="text" formControlName="docNo" class="input border w-full mt-1 ">
+                            </div>
+                       
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"ISSUEDATE"|translate}}</label>
+                                <input type="date" formControlName="issueDate" class="input border w-full mt-1">
+                            </div>
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"EXPIRYDATE"|translate}}</label>
+                                <input type="date" formControlName="expiryDate" class="input border w-full mt-1">
+                            </div>
+                       
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"placeOfIssue"|translate}}</label>
+                                <input type="text" formControlName="issuePlace" class="input border w-full mt-1 ">
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+                                <label class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component" style="padding: 9px 22.5px;">
+                                    <input type="file" #image (change)="onUploadIamge($event.target.files)" />
+                                    Upload
+                                </label>
+                                <br><br>
+                                <p-button (click)="ClearImagePath(image)" label='{{"Delete"|translate}}'
+                                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" type="button" icon="pi pi-undo"></p-button>
+                            </div>
+                        
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 ">
+
+
+                        <div class="mb-4 d-flex justify-content-center">
+                            <img [src]="companyDocument" alt="example placeholder" class="companyDocument" />
+                        </div>
+                       
+                    </div>
+                
+        <div class="col-span-12">
+          
+          <br>
+          <hr>
+          <br>
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold ">{{"ReminderExpirydateisbefore/oneday"|translate}}</label>
+                        <input formControlName="expDateReminder" type="number" min="0" class="input border w-full mt-1">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label>{{"SendReminderTo"|translate}}</label>
+                        <p-multiSelect emptyFilterMessage='{{"SendReminderTo"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [options]="usersList"
+                        [filter]="true" filterBy="text" appendTo="body" formControlName="expDateReminderUsers" autoWidth="false"[virtualScroll]="false">
+                        </p-multiSelect>
+                    </div>
+                    </div>
+
+
+          <br>
+          <hr>
+          <br>
+        </div>
+
+                            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                                <label class="control-label font-weight-bold">{{"notes"|translate}}</label>
+                                <input type="text" formControlName="note" class="input border w-full mt-1 ">
+                            </div>
+                      
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                              [disabled]="companyDocumentAddForm.invalid"  styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component" type="submit"></p-button>
+                            <p-button label='{{"Cancel"|translate}}'
+                                [routerLink]="['/CompanyDocument/CompanyDocumentList']"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" type="button" icon="pi pi-undo"></p-button>
+                        </div>
+                    
+                </div>
+            </form>
+        
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,272 @@
+<form [formGroup]="cusAgingAddForm">
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center">
+            </div>
+            <input type="number" class="form-control" formControlName="id" hidden>
+            <div class="card-body">
+                <div class="intro-y box p-5 mt-12 sm:mt-5">
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Customer"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="customersList" [(ngModel)]="selectedsup"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="customerId"
+                                filterBy="text" appendTo="body" autoWidth="false"
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyCustomerOptions($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"VoucherStatus"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="vStatusList"
+                                [(ngModel)]="selectedstatus" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="voucherStatus" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                            <input type="date" formControlName="toDate" class="input border w-full mt-1 ">
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="userbranchList" [(ngModel)]="selectedbranch"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CustomerCategory"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="categoriesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="categoryId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CustomerClassification"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="classificationList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="classId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Man"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="employeesList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="employeeId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class=" font-weight-bold">{{"AREA"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                formControlName="areaId" autoWidth="false" [virtualScroll]="false" [options]="AreaList">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Days"|translate}}</label>
+                            <input type="number" formControlName="period" class="input border w-full mt-1 "
+                                (input)="generateHeaders()"
+                                [ngClass]="{ 'invalid-field': cusAgingAddForm.get('period')?.value <= 0}">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CustomerType"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="dealerTypesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="dealerTypeId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="currencyId" class="control-label font-weight-bold">{{"ShowReportInCurrency"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="currenciesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                (onChange)="onCurrencyChange(cusAgingAddForm.get('currencyId')?.value)">
+                            </p-dropdown>
+                        </div>
+
+                         <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="currRate" class="control-label font-weight-bold">{{"ExchangeRatio"|translate}}</label>
+                            <input type="number" formControlName="currRate" class="input border w-full mt-1 " [readOnly]="true">
+                        </div>
+                    </div>
+                     
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input type="text" class="input border w-full mt-1 " [hidden]="true">
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-12 gap-5 mr-2">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"ShowRecord"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="GetReport()" [disabled]="cusAgingAddForm.invalid"></p-button>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"NewSearch"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="clearFormData()"></p-button>
+                        </div>
+
+          <!--               <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"Print"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon=""></p-button>
+                        </div> -->
+                    </div>
+
+                </div>
+
+                <!-- stadndered Table ============================================================================= START -->
+                <div>
+                    <div class="intro-y box tab-content">
+                        <div class="tab-content__pane active">
+                            <div class="intro-y box px-5 pt-5">
+                                <div class="col-md-12" id="htmlData">
+
+                                    <p-table #dt [value]="voucherData"
+                                        [globalFilterFields]="['id','dealerName','total_Balance']"
+                                        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                        dataKey="id">
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div
+                                                    class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                                    <span class="p-input-icon-left">
+                                                        <i class="pi pi-search"></i>
+                                                        <input class="pInputText input border w-full mt-1" pInputText
+                                                            type="text"
+                                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                            placeholder=' {{"search"|translate}} ' />
+                                                    </span>
+                                                </div>
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                                    align="end">
+                                                    <i class="pi pi-star-fill"
+                                                        [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                        (click)="updateFavourite(this.screenId)"
+                                                        title="{{'AddToFavourite' | translate}}"
+                                                        tooltipposition="bottom">
+                                                    </i>
+                                                    <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="XLS" (click)="exportExcel(dt)" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/excel.svg"
+                                                            width="20px">
+                                                    </button>
+                                                    <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                                        type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                                        ptooltip="PDF" (click)="exportPdf(dt)" tooltipposition="bottom"
+                                                        class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                                            width="20px">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="head_tb" style="width: 5% !important;">{{"NO"|translate}}
+                                                </th>
+                                                <th class="head_tb" style="width: 15% !important;">
+                                                    {{"Customer"|translate}} </th>
+                                                <th class="head_tb" style="width: 6% !important;">
+                                                    {{"Balance"|translate}} </th>
+                                                <th *ngFor="let header of dynamicHeaders" class="head_tb"
+                                                    style="width: 5% !important;">{{ header }}</th>
+                                                <th class="head_tb" style="width: 5% !important;"><i class="pi pi-cog"
+                                                        style="font-size: 1.2rem"></i></th>
+                                        </ng-template>    
+
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody" let-row
+                                            let-i="rowIndex">
+                                            <tr>
+                                                <td style="width: 5% !important;">{{ row.id }}</td>
+                                                <td style="width: 15% !important;">{{ row.dealerName }}</td>
+                                                <td style="width: 5% !important;">{{
+                                                    row.total_Balance.toLocaleString(undefined, { minimumFractionDigits:
+                                                    3, maximumFractionDigits: 3 }) }}</td>
+                                                <ng-container *ngFor="let period of dynamicHeaders; let j = index"  style="text-align: right;">
+                                                    <td>{{ row['period_' + (j + 1)] | number:'1.3-3' }}</td>
+                                                </ng-container>
+                                                <td>                                                   
+                                                    <i class="material-icons cursor-pointer" (click)="OpenCustomerStatementForm(row.id)" style="color:blue" title="{{ 'CustomerStatement' | translate }}">                                                        
+                                                        visibility
+                                                    </i>
+                                                </td>
+                                                <!-- <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                                        <mat-icon class="">more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #userMenu="matMenu">
+                                                        <button mat-menu-item (click)="OpenCustomerStatementForm(row.id)">
+                                                            <i class="material-icons" style="color:blue">Show</i> &nbsp;{{"CustomerStatement"|translate}} </button>                                                        
+                                                    </mat-menu>
+                                                </td> -->
+
+                                                <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id"
+                                                        [ngModelOptions]="{standalone: true}"></td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+
+
+                                        <ng-template pTemplate="footer">
+                                            <tr>
+                                                <td style="flex: 0 0 90rem" colspan="{{ dynamicHeaders.length + 6 }}">
+                                                </td>
+                                                <td style="flex: 0 0 7rem">{{ 'total' | translate }}</td>
+                                                <td style="flex: 0 0 7rem">
+                                                    <input type="text" [value]="this.tot1Formatted" style="width: 100%;"
+                                                        class="input border w-full mt-1" [disabled]="true">
+                                                </td>
+                                                <td *ngFor="let period of dynamicHeaders; let i = index"
+                                                    style="flex: 0 0 7rem">
+                                                    <input type="text" [value]="getPeriodTotal(i + 1).formattedValue"
+                                                        style="width: 100%;" class="input border w-full mt-1"
+                                                        [disabled]="true">
+                                                </td>
+                                                <td style="flex: 0 0 33rem" [attr.colspan]="12"></td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- stadndered Table ============================================================================= ===================End  -->
+
+
+            </div>
+        </div>
+    </div>
+</form>

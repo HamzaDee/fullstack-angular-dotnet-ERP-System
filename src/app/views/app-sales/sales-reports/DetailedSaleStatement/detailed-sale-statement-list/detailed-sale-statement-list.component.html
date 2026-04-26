@@ -1,0 +1,459 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="SaleReportForm">
+             <div class="grid grid-cols-12 gap-5 pt-5">
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Customer"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    formControlName="customer" autoWidth="false" [virtualScroll]="false" [options]="SuppliersList">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"ClientType"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    formControlName="customerType" autoWidth="false" [virtualScroll]="false" [options]="categoryList">
+                </p-dropdown>
+            </div>
+             </div>
+           
+             <div class="grid grid-cols-12 gap-5 pt-5">
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label for="itemGroupId" class="control-label font-weight-bold">{{"GroupItem"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsGroupList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" formControlName="itemGroupId" filterBy="text"
+                    appendTo="body" autoWidth="false" [virtualScroll]="false">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Man"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    formControlName="represntedId" autoWidth="false" [virtualScroll]="false" [options]="EmployeeList">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"AREA"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    formControlName="area" autoWidth="false" [virtualScroll]="false" [options]="AreaList">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"category"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    formControlName="category" autoWidth="false" [virtualScroll]="false" [options]="TypesList">
+                </p-dropdown>
+            </div>
+             </div>
+
+             <div class="grid grid-cols-12 gap-5 pt-5">
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"Currency"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        formControlName="currancyId" autoWidth="false" [virtualScroll]="false" [options]="curranciesList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"store"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        formControlName="storeId" autoWidth="false" [virtualScroll]="false" [options]="StoreList">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"itemName"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        formControlName="itemId" autoWidth="false" [options]="ItemsList"
+                        [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                    </p-dropdown>
+                </div>
+
+                 <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class=" font-weight-bold">{{"branch"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                        formControlName="branchId" autoWidth="false" [virtualScroll]="false" [options]="BranchList">
+                    </p-dropdown>
+                </div>
+             </div>
+
+             <div class="grid grid-cols-12 gap-5 pt-5">
+               <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3 mt-8" [checked]="TotalInvoices" (change)="HandelCheckBox($event)">
+                    <label class="cursor-pointer select-none w-full"for="TotalInvoices">{{"CollectInvoices"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3 mt-8" [checked]="ExcludeReturnIvoice" (change)="HandelReturnIvoice($event)">
+                    <label class="cursor-pointer select-none w-full"for="ExcludeReturnIvoice">{{"withoutReturns"|translate}}</label>
+                </div>
+
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" class="input border mr-2 mr-3 ml-3 mt-8" [checked]="ExcludeSalesIvoice" (change)="HandelSalesIvoice($event)">
+                    <label class="cursor-pointer select-none w-full"for="ExcludeSalesIvoice">{{"ExcludeSalesInvoice"|translate}}</label>
+                </div>
+                
+             </div>
+            <br>
+            <br>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 ">
+
+                <p-button label='{{"ShowTransactions"|translate}}' class="ml-4" (onClick)="GetReport()"
+                    styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                &nbsp;
+
+                <p-button label='{{"NewSearch"|translate}}' (onClick)="clearFormData()"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                &nbsp;
+
+                <p-button label='{{"Print"|translate}}' (onClick)="PrintReport()" [disabled]="SaleReportForm.invalid"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component">
+                </p-button>
+
+                <!-- <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                    <p-button label='{{"Print"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="" (click)="PrintReport()" [disabled]="SaleReportForm.invalid"></p-button>
+                </div> -->
+
+            </div>
+        <br>
+        <div *ngIf="!TotalInvoices">
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5">
+                        <div class="col-md-12" id="htmlData">
+                            <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                                [globalFilterFields]="['voucherName','voucherNo','currName','dealerName','repName','categoryName','itemName','unitName','areaName']"
+                                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText
+                                                    type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                            align="end">
+                                            <i class="pi pi-star-fill"
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                                (click)="exportExcel1()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="PDF"
+                                                (click)="exportPdf1()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" pSortableColumn="voucherName">{{"BillType"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="voucherNo">{{"InvoiceNumber"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="voucherDate">{{"Date"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="currName">{{"Currency"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="dealerName"> {{"Client"|translate}} </th>
+                                        <th class="head_tb" pSortableColumn="repName">{{"Man"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="areaName">{{"AREA"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="categoryName">{{"category"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="itemName">{{"itemName"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="unitName">{{"UnitName"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="qty">{{"Quantity"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="price">{{"Price"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="discountAmt">{{"Discount"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="bouns">{{"Bonus"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="taxAmt">{{"tax"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="netTotal">{{"Totals"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="netLocalTotal">{{"TotalMainCurrency"|translate}}</th>
+                                        <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody " let-sale>
+                                    <tr>
+                                        <td [hidden]="true">{{sale.id}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherName}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherNo}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherDate | date: "dd/MM/yyyy"}}</td>
+                                        <td style="text-align: justify;">{{sale.currName}}</td>
+                                        <td style="text-align: justify;">{{sale.dealerName}}</td>
+                                        <td style="text-align: justify;">{{sale.repName}}</td>
+                                        <td style="text-align: justify;">{{sale.areaName}}</td>
+                                        <td style="text-align: justify;">{{sale.categoryName}}</td>
+                                        <td style="text-align: justify;">{{sale.itemName}}</td>
+                                        <td style="text-align: justify;">{{sale.unitName}}</td>
+                                        <td style="text-align: justify;">{{sale.qty}}</td>
+                                        <td style="text-align: justify;">{{sale.price.toFixed(3)}}</td>
+                                        <td style="text-align: justify;">{{sale.discountAmt.toFixed(3)}}</td>
+                                        <td style="text-align: justify;">{{sale.bouns}}</td>
+                                        <td style="text-align: justify;">{{sale.taxAmt.toFixed(3)}}</td>
+                                        <td style="text-align: justify;">{{sale.netTotal.toFixed(3)}}</td>
+                                        <td style="text-align: center;">{{sale.netLocalTotal.toFixed(3)}}</td>
+                                        <td>
+                                            <i class="material-icons cursor-pointer"
+                                                (click)="OpenSalesInvoiceForm(sale.id,sale.categoryId)" style="color:blue"
+                                                title="{{ 'ShowSalesInvoice' | translate }}">
+                                                visibility
+                                            </i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="14"> {{"noEntriesFoundLabel"|translate}}</td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="footer">
+                                    <tr *ngIf="this.SaleReportForm.value.invoiceType == 1">
+                                        <td style=" background-color: rgb(139, 190, 233)" colspan="15"></td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{"TotalSales"|translate}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{SalesTotalFormatted}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)"></td>
+                                    </tr>
+                                    <tr *ngIf=" this.SaleReportForm.value.invoiceType == 2">
+                                        <td style=" background-color: rgb(139, 190, 233)" colspan="15"></td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{"TotalReturns"|translate}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{ReturnsTotalFormatted}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)"></td>
+                                    </tr>
+                                    <tr *ngIf="this.SaleReportForm.value.invoiceType == 0">
+                                        <td style=" background-color: rgb(139, 190, 233)" colspan="15"></td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{"TotalSales"|translate}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233) ;  padding-left: 50px ;text-align: right" >{{SalesTotalFormatted}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)"></td>
+                                    </tr>
+
+                                    <tr *ngIf="this.SaleReportForm.value.invoiceType == 0">
+                                        <td style=" background-color: rgb(139, 190, 233)" colspan="15"></td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{"TotalReturns"|translate}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)" >{{ReturnsTotalFormatted}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)"></td>
+                                    </tr>
+
+                                     <tr *ngIf="this.SaleReportForm.value.invoiceType == 0">
+                                        <td style=" background-color: rgb(139, 190, 233)" colspan="15"></td>
+                                        <td style=" background-color: rgb(139, 190, 233)">{{"Totals"|translate}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)" >{{NetTotalFormatted}}</td>
+                                        <td style=" background-color: rgb(139, 190, 233)"></td>
+                                    </tr>
+
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="TotalInvoices">
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5">
+                        <div class="col-md-12" id="htmlData">
+                            <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                                [globalFilterFields]="['voucherName','currName','dealerName','repName','categoryName','itemName','unitName','areaName']"
+                                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true"
+                                dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true" sortField="voucherNo" sortMode="single"
+                                rowGroupMode="subheader" groupRowsBy="voucherCategoryGroup">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText
+                                                    type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                            align="end">
+                                            <i class="pi pi-star-fill"
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                                (click)="exportExcel2()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button"
+                                                pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="PDF"
+                                                (click)="exportPdf2()" tooltipposition="bottom"
+                                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>                                
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="head_tb" pSortableColumn="voucherName">{{"BillType"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="voucherNo">{{"InvoiceNumber"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="voucherDate">{{"Date"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="currName">{{"Currency"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="dealerName">{{"Client"|translate}} </th>
+                                        <th class="head_tb" pSortableColumn="repName">{{"Man"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="areaName">{{"AREA"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="categoryName">{{"category"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="itemName">{{"itemName"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="unitName">{{"UnitName"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="qty">{{"Quantity"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="price">{{"Price"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="discount">{{"Discount"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="bouns">{{"Bonus"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="tax">{{"tax"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="netTotal">{{"Totals"|translate}}</th>
+                                        <th class="head_tb" pSortableColumn="netLocalTotal">{{"TotalMainCurrency"|translate}}</th>
+                                        <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <!-- Group Header Template -->
+                               <ng-template pTemplate="groupheader" let-sale>
+                                    <tr pRowGroupHeader>
+                                        <td colspan="17" class="font-bold">
+                                        {{ "InvoiceNumber" | translate }}: {{ sale.voucherNo }}
+                                        &nbsp; | &nbsp;
+                                        {{ "VoucherType" | translate }}: {{ sale.voucherCategoryName }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                                <!-- Body Template -->
+                                <ng-template pTemplate="body" let-sale let-rowIndex="rowIndex">
+                                    <tr>
+                                        <td [hidden]="true">{{sale.id}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherName}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherNo}}</td>
+                                        <td style="text-align: justify;">{{sale.voucherDate | date: "dd/MM/yyyy"}}</td>
+                                        <td style="text-align: justify;">{{sale.currName}}</td>
+                                        <td style="text-align: justify;">{{sale.dealerName}}</td>
+                                        <td style="text-align: justify;">{{sale.repName}}</td>
+                                        <td style="text-align: justify;">{{sale.areaName}}</td>
+                                        <td style="text-align: justify;">{{sale.categoryName}}</td>
+                                        <td style="text-align: justify;">{{sale.itemName}}</td>
+                                        <td style="text-align: justify;">{{sale.unitName}}</td>
+                                        <td style="text-align: justify;">{{sale.qty}}</td>
+                                        <td style="text-align: justify;">{{sale.price}}</td>
+                                        <td style="text-align: justify;">{{sale.discountAmt.toFixed(3)}}</td>
+                                        <td style="text-align: justify;">{{sale.bouns}}</td>
+                                        <td style="text-align: justify;">{{sale.taxAmt.toFixed(3)}}</td>
+                                        <td style="text-align: justify;">{{sale.netTotal.toFixed(3)}}</td>
+                                        <td style="text-align: center;">{{sale.netLocalTotal.toFixed(3)}}</td>
+                                        <td>
+                                            <i class="material-icons cursor-pointer"
+                                                (click)="OpenSalesInvoiceForm(sale.id,sale.categoryId)" style="color:blue"
+                                                title="{{ 'ShowSalesInvoice' | translate }}">
+                                                visibility
+                                            </i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+
+                            <ng-template pTemplate="groupfooter" let-sale>
+                                <tr>
+                                    <td colspan="14" style="background-color: rgb(139, 190, 233)"></td>
+
+                                    <td style="background-color: rgb(139, 190, 233)">
+                                    {{ "TotalInvoice" | translate }}
+                                    </td>
+
+                                    <td style="background-color: rgb(139, 190, 233)"></td>
+
+                                    <td style="background-color: rgb(139, 190, 233)">
+                                    <input
+                                        type="text"
+                                        style="width: 100px;"
+                                        class="input border w-full mt-1"
+                                        [value]="netTotalFormattedMap.get(sale.voucherCategoryGroup)?.toFixed(3)"
+                                        readonly
+                                    />
+                                    </td>
+
+                                    <td colspan="3" style="background-color: rgb(139, 190, 233)"></td>
+                                </tr>
+                            </ng-template>
+
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr class="odd">
+                                        <td valign="top" colspan="14">{{ "noEntriesFoundLabel" | translate }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

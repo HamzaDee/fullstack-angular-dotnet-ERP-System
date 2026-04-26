@@ -1,0 +1,109 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <br>
+
+        <div class="grid grid-cols-12 gap-5 mt-5">
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <div class="intro-y box tab-content">
+                    <div class="intro-y box px-5 pt-5 pb-5">
+                        <p-table #dt dataKey="id" [value]="StudentList" [rows]="10" [paginator]="true"
+                            styleClass="p-datatable-gridlines" [rowHover]="true" scrollDirection="horizontal"
+                            [globalFilterFields]="['accounts_Tree_ID','full_Name','specialization_Name','totalDebit']"
+                            responsiveLayout="scroll" [showCurrentPageReport]="true" [rowHover]="true"
+                            currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}">
+
+                            <ng-template pTemplate="caption">
+
+                                <div class="grid grid-cols-12 gap-5 ">
+
+                                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mb-5">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                placeholder=' {{"search"|translate}} ' />
+                                        </span>
+                                    </div>
+
+
+                                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                        align="end">
+                                        <p-button label='{{"ImportStudent"|translate}}'
+                                            styleClass="p-ripple p-element button ml-3 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            [style]="{'background-color': '#217346', 'border-color': '#217346'}"
+                                            icon="pi pi-plus" (click)="onImportClick(fileInput)">
+                                        </p-button>
+                                        <p-button label='{{"SaveAll"|translate}}'
+                                            styleClass="p-ripple p-element button ml-3 items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            icon="pi pi-plus" (click)="OnSaveAll(0)">
+                                        </p-button>
+                                    </div>
+                                </div>
+
+                            </ng-template>
+
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th><label><input type="checkbox" (change)="toggleAllCheckboxes($event,dt)"> {{
+                                            "Choose" | translate }} </label></th>
+                                    <th class="head_tb" pSortableColumn="accounts_Tree_ID">{{"StudentId"|translate}}</th>
+                                    <th class="head_tb" pSortableColumn="full_Name">{{"StudentName"|translate}}</th>
+                                    <th class="head_tb" pSortableColumn="specialization_Name">{{"Major"|translate}}</th>
+                                    <th class="head_tb" pSortableColumn="totalDebit">{{"Fees"|translate}}</th>
+                                    <th class="head_tb" pSortableColumn="totalDebit">{{"CreditAccount"|translate}}</th>
+                                    <th class="text-center-m"><i class="pi pi-cog" style="font-size: 1.2rem"></i>
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                <tr>
+                                    <td style="text-align: justify;"><input type="checkbox" [(ngModel)]="row.isChecked"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (ngModelChange)="updateIsAnyRowChecked()"></td>
+                                    <td>
+                                        {{row.accounts_Tree_ID}}
+                                    </td>
+                                    <td>
+                                        {{row.full_Name}}
+                                    </td>
+                                    <td>
+                                        {{row.specialization_Name}}
+                                    </td>
+                                    <td>
+                                        {{row.totalDebit}}
+                                    </td>
+                                    <td>
+                                        <p-dropdown [options]="accountsList" optionLabel="text" optionValue="id"  [(ngModel)]="row.accId"
+                                            [filter]="true" filterBy="text" appendTo="body" [virtualScroll]="false"
+                                            [style]="{'minWidth':'100%', 'width': '100%'}">
+                                        </p-dropdown>
+                                    </td>
+                                    <td style="flex: 0 0 5%">
+                                        <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                                            type="submit" (click)="OnSaveAll(row)"
+                                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                                        </p-button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="10">
+                                        {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

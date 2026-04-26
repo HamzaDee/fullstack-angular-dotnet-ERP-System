@@ -1,0 +1,860 @@
+<div class="container">
+    <div class="intro-y box">
+        <form [formGroup]="ForcastingForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="id" class="form-control " hidden>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2  ">
+                        <label class="control-label font-weight-bold">{{"TransDate"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="date" class="input border w-full mt-1" formControlName="transDate"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2  ">
+                        <label class="control-label font-weight-bold">{{"YEAR"|translate}}<span
+                                class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1" formControlName="fYear">
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3  ">
+                        <label class="control-label font-weight-bold">{{"COUNTRY"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="countriesList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="id" [filter]="true" formControlName="countryId"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            [disabled]="disableAll" (onChange)="getCustomers($event)" 
+                            [ngClass]="{ 'invalid-field': ForcastingForm.get('countryId')?.value <= 0}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3">
+                        <label class="control-label font-weight-bold"> {{"Agent"|translate}} <span
+                                class="required-asterisk">*</span></label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="customersList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="data1" [filter]="true" formControlName="agentId"
+                            filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                            (onChange)="getCountry($event)"
+                            [ngClass]="{ 'invalid-field': ForcastingForm.get('agentId')?.value <= 0}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6">
+                        <label class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                        <input type="text" class="input border w-full mt-1" formControlName="note"
+                            [attr.disabled]="disableAll ? 'disabled' : null">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label
+                            class="control-label font-weight-bold">{{"TotalQuantitiesForTheWholeYear"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" id="totalQty" [(ngModel)]="totalQty"
+                            [ngModelOptions]="{standalone: true}" [disabled]="disableTotal || disableAll">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Totalvalue"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" id="totalvalue" [(ngModel)]="totalvalue"
+                            [ngModelOptions]="{standalone: true}" [disabled]="disableTotal || disableAll">
+                    </div>
+
+
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"AveragePricePerPiece"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="totalPrice"
+                            [ngModelOptions]="{standalone: true}" [disabled]="disableTotal || disableAll || this.ForcastingForm.value.agentId <=0 || this.ForcastingForm.value.countryId <=0 ">
+                    </div>
+
+
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                     <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="freePer" class="control-label font-weight-bold">{{ "FreePercentage" | translate }}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="freePer" name="freePer"
+                        [ngModelOptions]="{standalone: true}">
+                    </div>                  
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                        <label for="bonusPer" class="control-label font-weight-bold">{{ "BounsPercentage" | translate }}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="bonusPer" name="bonusPer" 
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+
+                   
+
+                    <div class="col-span-12 sm:col-span-8 xxl:col-span-8  " align="end">
+                        <p-button (click)="exportToExcel()" class="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-3 text-white p-button p-component">
+                            <i class="pi pi-file-excel"></i> {{"ExportToExcel"|translate}}
+                          </p-button>
+                        <p-button (click)="DeleteAll()" [disabled]="disableAll"
+                            class="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component">
+                            {{"DelAll"|translate}}</p-button>
+                        &nbsp;
+                        <p-button (click)="GetItems()" [disabled]="disableAll || this.ForcastingForm.value.agentId <=0 || this.ForcastingForm.value.countryId <=0 || this.forcastingList.length > 0"
+                            class="p-ripple p-element button w-40 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component">
+                            {{"GetAllItems"|translate}} </p-button>
+                        <p-button (click)="AddNewRow()"
+                            [disabled]="disableAll || this.ForcastingForm.value.agentId <=0 || this.ForcastingForm.value.countryId <=0"
+                            label="{{'AddNewMaterial'|translate}}"
+                            class="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                            styleClass="p-button-success p-button-sm" icon="pi pi-plus"></p-button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-y box tab-content">
+                <div class="tab-content__pane active">
+                    <div class="intro-y box px-5 pt-5 pb-5">
+                        <!-- <div class="scroll"> -->
+                        <p-table #dt id="forecastingTable"  [value]="forcastingList" styleClass="p-datatable-gridlines" scrollableWidth="600px"
+                            [scrollable]="true" scrollHeight="800px" [frozenWidth]="'300px'" [rowHover]="true" [tableStyle]="{'table-layout': 'fixed'}"
+                            dataKey="id">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 50px" pFrozenColumn></th>
+                                    <th style="width: 300px" pFrozenColumn> </th>
+                                    <th style="width: 100px"> </th>
+                                    <th style="width: 100px"> </th>
+                                    <th style="width: 500px;color: black; background-color: aqua;text-align: center;" colspan="5">{{ ForcastingForm.get('fYear')?.value || '' }}</th>
+                                    <th *ngFor="let month of monthsList; let i = index"
+                                        [style.background-color]="i % 2 === 0 ? '#a8e6a3' : '#d2b48c'"
+                                        style="width: 500px ;text-align: center;color: black;" colspan="5">
+                                        {{ 'Month' + (i + 1) | translate }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 50px" pFrozenColumn><i class="pi pi-cog"></i></th>
+                                    <th style="width: 300px" pFrozenColumn>{{"itemName"|translate}}</th>
+                                    <th style="width: 100px">{{"unit"|translate}}</th>
+                                    <th style="width: 100px">{{"Price"|translate}}</th>
+                                    <th style="width: 100px">{{"Totalquantities"|translate}}</th>
+                                    <th style="width: 100px">{{"TotalFree"|translate}}</th>
+                                    <th style="width: 100px">{{"TotalBouns"|translate}}</th>
+                                    <th style="width: 100px">{{"TotalAllQty"|translate}}</th>
+                                    <th style="width: 100px">{{"Totalvalue"|translate}}</th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+                                    <th style="width: 100px">{{"Qty"|translate}} </th>
+                                    <th style="width: 100px">{{"Free"|translate}} </th>
+                                    <th style="width: 100px">{{"Bonus"|translate}} </th>
+                                    <th style="width: 100px">{{"Total"|translate}} </th>
+                                    <th style="width: 100px">{{"MonthTotal"|translate}} </th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                <tr (click)="setFocusedRow(i)"
+                                    (focus)="setFocusedRow(i)"
+                                    tabindex="0">
+                                    <td style="width: 50px" pFrozenColumn>
+                                        <button mat-menu-item (click)="deleteRow(i)"> <i class="material-icons"
+                                                [disabled]="disableAll" style="color:red">delete</i>
+                                        </button>
+                                    </td>
+                                    <td style="width: 300px" pFrozenColumn>
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="itemsList" styleClass="input border w-full mt-1"
+                                            [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                            optionValue="data1" [filter]="true" filterBy="text" appendTo="body"
+                                            autoWidth="false" [virtualScroll]="false"
+                                            [ngClass]="{ 'invalid-field': row.itemNo == null}"
+                                            (onChange)="filterUnits($event, i)" [(ngModel)]="row.itemNo"
+                                            [ngModelOptions]="{standalone: true}" [disabled]="disableAll">
+                                        </p-dropdown>
+                                    </td>
+
+                                    <td style="width: 100px">
+                                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                            [options]="unitsList[i]" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                            styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                            [filter]="true" filterBy="text" appendTo="body" autoWidth="false"
+                                            [virtualScroll]="false" [(ngModel)]="row.unitNo"
+                                            [ngClass]="{ 'invalid-field': row.unitNo <= 0}"
+                                            [ngModelOptions]="{standalone: true}">
+                                        </p-dropdown>
+                                    </td>
+
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%'}" [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'price')"
+                                            [value]="row.price" class="input border w-full mt-1 " appendTo="body"
+                                            [ngClass]="{ 'invalid-field': row.price <= 0 }" />
+                                            <span style="display: none;">{{ row.price }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input class="amt" type="number" [style]="{'width': '100%'}"
+                                            [disabled]="disableAll" [(ngModel)]="row.totalQuantities" [disabled]="true"
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 " />
+                                            <span style="display: none;">{{ row.totalQuantities }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input class="amt" type="number" [style]="{'width': '100%'}"
+                                            [disabled]="disableAll" [(ngModel)]="row.totalFree" [disabled]="true"
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 " />
+                                            <span style="display: none;">{{ row.totalFree }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input class="amt" type="number" [style]="{'width': '100%'}"
+                                            [disabled]="disableAll" [(ngModel)]="row.totalBouns" [disabled]="true"
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 " />
+                                            <span style="display: none;">{{ row.totalBouns }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input class="amt" type="number" [style]="{'width': '100%'}"
+                                            (input)="updateValueField(inputField.value, row,'total')"
+                                            [disabled]="disableAll" [ngClass]="{ 'invalid-field': row.total <= 0}"
+                                            [disabled]="true" [(ngModel)]="row.total"
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 " />
+                                            <span style="display: none;">{{ row.total }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input class="amt" type="number" [style]="{'width': '100%'}"
+                                            [disabled]="disableAll" [(ngModel)]="row.totalvalue" [disabled]="true"
+                                            [ngModelOptions]="{standalone: true}" class="input border w-full mt-1 " />
+                                            <span style="display: none;">{{ row.totalvalue }}</span>
+                                    </td>
+                                    <!-- month 1 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll" 
+                                            (input)="updateValueField($event.target.value, row, 'qty1')"
+                                            (blur)="calcBounsAndFree(row.qty1, row, 'qty1')"
+                                            [value]="row.qty1" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty1 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free1')"
+                                            [value]="row.free1" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free1 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus1')"
+                                            [value]="row.bonus1" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus1 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total1" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total1 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal1" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal1 }}</span>
+                                    </td>
+                                    <!-- month 1 end  -->
+
+                                    <!-- Month 2 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty2')"
+                                            (blur)="calcBounsAndFree(row.qty2, row, 'qty2')"
+                                            [value]="row.qty2" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty2 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free2')"
+                                            [value]="row.free2" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free2 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus2')"
+                                            [value]="row.bonus2" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus2 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total2" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total2 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal2" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal2 }}</span>
+                                    </td>
+                                    <!-- month 2 end  -->
+
+                                    <!-- month 3 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty3')"
+                                            (blur)="calcBounsAndFree(row.qty3, row, 'qty3')"
+                                            [value]="row.qty3" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty3 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free3')"
+                                            [value]="row.free3" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free3 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus3')"
+                                            [value]="row.bonus3" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus3 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total3" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total3 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal3" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal3 }}</span>
+                                    </td>
+                                    <!-- month 3 end  -->
+
+                                    <!-- month 4 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty4')"
+                                            (blur)="calcBounsAndFree(row.qty4, row, 'qty4')"
+                                            [value]="row.qty4" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty4 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free4')"
+                                            [value]="row.free4" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free4 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus4')"
+                                            [value]="row.bonus4" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus4 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total4" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total4 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal4" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal4 }}</span>
+                                    </td>
+                                    <!-- month 4 End -->
+
+                                    <!-- month 5 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty5')"
+                                            (blur)="calcBounsAndFree(row.qty5, row, 'qty5')"
+                                            [value]="row.qty5" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty5 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free5')"
+                                            [value]="row.free5" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free5 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus5')"
+                                            [value]="row.bonus5" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus5 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total5" [disabled]="true"
+                                            class="total input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total5 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal5" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal5 }}</span>
+                                    </td>
+                                    <!-- month 5 End -->
+
+                                    <!-- month 6 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty6')"
+                                            (blur)="calcBounsAndFree(row.qty6, row, 'qty6')"
+                                            [value]="row.qty6" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty6 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free6')"
+                                            [value]="row.free6" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free6 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus6')"
+                                            [value]="row.bonus6" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus6 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total6" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total6 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal6" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal6 }}</span>
+                                    </td>
+                                    <!-- month 6 End -->
+
+                                    <!-- month 7 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty7')"
+                                            (blur)="calcBounsAndFree(row.qty7, row, 'qty7')"
+                                            [value]="row.qty7" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty7 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free7')"
+                                            [value]="row.free7" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free7 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus7')"
+                                            [value]="row.bonus7" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus7 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total7" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total7 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal7" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal7 }}</span>
+                                    </td>
+                                    <!-- month 7 End -->
+
+                                    <!-- month 8  -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty8')"
+                                            (blur)="calcBounsAndFree(row.qty8, row, 'qty8')"
+                                            [value]="row.qty8" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty8 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free8')"
+                                            [value]="row.free8" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free8 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus8')"
+                                            [value]="row.bonus8" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus8 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total8" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total8 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal8" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal8 }}</span>
+                                    </td>
+                                    <!-- month 8 End -->
+
+                                    <!-- month 9 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty9')"
+                                            (blur)="calcBounsAndFree(row.qty9, row, 'qty9')"
+                                            [value]="row.qty9" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty9 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free9')"
+                                            [value]="row.free9" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free9 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus9')"
+                                            [value]="row.bonus9" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus9 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total9" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total9 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal9" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal9 }}</span>
+                                    </td>
+                                    <!-- month 9 End -->
+
+                                    <!-- month 10 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty10')"
+                                            (blur)="calcBounsAndFree(row.qty10, row, 'qty10')"
+                                            [value]="row.qty10" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty10 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free10')"
+                                            [value]="row.free10" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free10 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus10')"
+                                            [value]="row.bonus10" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus10 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total10" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total10 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal10" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal10 }}</span>
+                                    </td>
+                                    <!-- month 10 End -->
+
+                                    <!-- month 11 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty11')"
+                                            (blur)="calcBounsAndFree(row.qty11, row, 'qty11')"
+                                            [value]="row.qty11" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty11 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free11')"
+                                            [value]="row.free11" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free11 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#a8e6a3'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus11')"
+                                            [value]="row.bonus11" class="input border w-full mt-1" />
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.total11" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total11 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#a8e6a3 !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal11" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal11 }}</span>
+                                    </td>
+                                    <!-- month 11 End  -->
+
+                                    <!-- month12 -->
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'qty12')"
+                                            (blur)="calcBounsAndFree(row.qty12, row, 'qty12')"
+                                            [value]="row.qty12" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.qty12 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'free12')"
+                                            [value]="row.free12" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.free12 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number" [style]="{'width': '100%', 'background-color': '#d2b48c'}"
+                                            [disabled]="disableAll"
+                                            (input)="updateValueField($event.target.value, row, 'bonus12')"
+                                            [value]="row.bonus12" class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.bonus12 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.total12" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.total12 }}</span>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <input type="number"
+                                            [style]="{'width': '100%', 'background-color': '#d2b48c !important'}"
+                                            [disabled]="disableAll" [value]="row.mtotal12" [disabled]="true"
+                                            class="input border w-full mt-1" />
+                                            <span style="display: none;">{{ row.mtotal12 }}</span>
+                                    </td>
+                                    <!-- month 12 End -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td pFrozenColumn></td>
+                                    <td style="width:300px" pFrozenColumn></td>
+                                    <td style="width:750px" colspan="2">{{"total"|translate}}</td>
+                                    <td style="width:100px">{{calculateSum(3) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(4) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(5) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(1) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(2) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(6) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(7) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(8) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(9) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(54) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(10) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(11) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(12) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(13) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(55) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(14) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(15) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(16) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(17) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(56) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(18) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(19) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(20) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(21) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(57) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(22) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(23) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(24) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(25) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(58) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(26) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(27) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(28) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(29) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(59) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(30) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(31) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(32) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(33) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(60) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(34) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(35) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(36) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(37) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(61) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(38) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(39) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(40) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(41) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(62) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(42) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(43) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(44) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(45) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(63) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(46) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(47) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(48) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(49) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(64) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(50) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(51) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(52) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(53) | number: '1.3-3'}}</td>
+                                    <td style="width:100px">{{calculateSum(65) | number: '1.3-3'}}</td>
+                                    <td style="width: 50px"></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <!-- </div> -->
+                    </div>
+                    <div class="intro-y box px-5 pt-5 pb-5">
+                        <p *ngIf="focusedRowIndex !== null">
+                            Selected Item Name: 
+                            <strong>{{ getSelectedItemName(forcastingList[focusedRowIndex]?.itemNo) || 'None' }}</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                                    <input id="tempSave" [checked]="sts==3" (change)="sts=(sts==0)?3:0"
+                                        type="checkbox" class="input border mr-3 ml-3 mt-5" [attr.disabled]="disableAll ? 'disabled' : null"/>
+                                    <label class="cursor-pointer select-none"for="tempSave">{{"TempSave"|translate}}</label>
+                                </div>   
+            <!-- <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <input type="checkbox" id="tempSave" class="input border mr-2 mr-3 ml-3" [(ngModel)]="tempSave">
+                    <label class="cursor-pointer select-none w-full" for="isActive">{{"TempSave"|translate}}</label>                
+                </div>
+            </div> -->
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 ml-3 " mat-dialog-actions
+                align="end">
+                <p-button (click)="ApproveForecasting(this.ForcastingForm.value.id)" *ngIf="!this.HideApproval"
+                    class="p-ripple p-element button w-40 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component">
+                    {{"Approval"|translate}}</p-button>
+                <p-button [disabled]="!ForcastingForm.valid" label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    [hidden]="showsave" [disabled]="disableSave"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit">
+                </p-button>
+                <p-button label='{{"Cancel"|translate}}' [routerLink]="['/Forecasting/ForecastingList']"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2  items-center justify-center bg-theme-6 text-white p-button p-component"
+                    type="button" icon="pi pi-undo">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+
+<hr>

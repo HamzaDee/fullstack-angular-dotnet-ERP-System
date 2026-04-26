@@ -1,0 +1,162 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+
+        <form [formGroup]="LeadsCustomerForm" (ngSubmit)="OnSaveForms()">
+            <input type="text" formControlName="companyId" class="form-control " hidden>
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="leadId" class="control-label font-weight-bold">{{"LeadId"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="leadId" type="number" formControlName="leadId" class="input border w-full mt-1 " readonly
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="customerName" class="control-label font-weight-bold">{{"CustomerName"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input id="customerName" type="text" formControlName="customerName"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="mainContactName"
+                        class="control-label font-weight-bold">{{"MainContactName"|translate}}</label>
+                    <input id="mainContactName" type="text" formControlName="mainContactName"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label for="mainContactEmail" class="control-label font-weight-bold">{{"MainContactEmail"|translate}}</label>
+                    <input type="text" formControlName="mainContactEmail" class="input border w-full mt-1" [attr.disabled]="disableAll ? 'disabled' : null"
+                           placeholder="john.doe@example.com">
+                    <br>
+                    <div *ngIf="LeadsCustomerForm.get('mainContactEmail')?.hasError('email') && LeadsCustomerForm.get('mainContactEmail')?.touched">
+                        <p class="text-red-500">{{"Invalidemailformat"|translate}}</p>
+                    </div>
+                </div>
+
+                <!-- <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="mainContactEmail"
+                        class="control-label font-weight-bold">{{"MainContactEmail"|translate}}</label>
+                    <input id="mainContactEmail" type="text" formControlName="mainContactEmail"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div> -->
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="mainContactPhone"
+                        class="control-label font-weight-bold">{{"MainContactPhone"|translate}}</label>
+                    <input id="mainContactPhone" type="number" formControlName="mainContactPhone"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="sourceId" class="control-label font-weight-bold">{{"Source"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="sourceId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="SourceList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="sourceId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': LeadsCustomerForm.get('sourceId')?.value <= 0}">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" *ngIf="this.opType !== 'Add'">
+                    <label for="status" class="control-label font-weight-bold">{{"Status"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <p-dropdown id="status" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="StatusList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="status" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll"
+                        [ngClass]="{ 'invalid-field': LeadsCustomerForm.get('status').value <= 0}">
+                    </p-dropdown>
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="branchId" class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                    <p-dropdown id="branchId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="BranchList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="branchId" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="expectedValue"
+                        class="control-label font-weight-bold">{{"ExpectedValue"|translate}}</label>
+                    <input id="expectedValue" type="number" formControlName="expectedValue"
+                        class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="assignedTo" class="control-label font-weight-bold">{{"ConvertedTo"|translate}}</label>
+                    <p-dropdown id="assignedTo" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                        [options]="ConvertedToList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        formControlName="assignedTo" filterBy="text" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <label for="lostReasonId" class="control-label font-weight-bold">{{"LostReasons"|translate}}</label>
+                    <p-dropdown id="lostReasonId" [options]="LostReasonList" optionLabel="text" optionValue="id"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        formControlName="lostReasonId" filter="true" filterBy="label" appendTo="body" autoWidth="false"
+                        [virtualScroll]="false" [disabled]="disableAll">
+                    </p-dropdown>
+                </div>
+
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <label for="note" class="control-label font-weight-bold">{{"Note"|translate}}</label>
+                    <input id="note" type="text" formControlName="note" class="input border w-full mt-1 "
+                        [attr.disabled]="disableAll ? 'disabled' : null">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="LeadsCustomerForm.invalid  || disableSave" type="submit" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4"
+                    (click)="PrintLeadsCustomers(this.LeadsCustomerForm.value.leadId)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="LeadsCustomerForm.invalid" type="button">
+                </p-button>
+
+                <p-button label='{{"Delete"|translate}}' color="warn" icon="pi pi-trash" class="ml-4"
+                    (click)="DeleteLeadsCustomers(this.LeadsCustomerForm.value.leadId)"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="LeadsCustomerForm.invalid" type="button" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    [routerLink]="['/LeadsCustomers/LeadsCustomersList']">
+                </p-button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

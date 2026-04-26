@@ -1,0 +1,281 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="ReservedItemsAddForm">
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"FromDate"|translate}} </label>
+                    <input type="date" class="input border w-full mt-1" formControlName="fromDate">
+                </div>
+            </div>
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                    <input type="date" class="input border w-full mt-1" formControlName="toDate">
+                </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"materialName"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40" formControlName="itemId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"GroupItem"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="groupsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="groupId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"item"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="typesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="catId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="branchId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Store"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="storeId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Client"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="customersList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="customerId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                <input type="checkbox" class="input border w-full mt-1" (change)="OnChange()" [(ngModel)]="collective"
+                [ngModelOptions]="{standalone: true}">
+                <label class="control-label font-weight-bold ml-3">{{"cumulative"|translate}}</label>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <input type="checkbox" class="input border w-full mt-1" hidden="true">
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"ShowRecord"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="ReservedItemsAddForm.invalid"></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon=""></p-button>
+            </div>           
+        </div>
+<div *ngIf="!collective">
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                    [globalFilterFields]="['itemNo','itemName','voucherNo','voucherName','storeName','customerName','unitName','qty','reserveDays']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div
+                                class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText
+                                        type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                                align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title="{{'AddToFavourite' | translate}}"
+                                    tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg"
+                                        width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                    type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                    ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                        width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemNo">
+                                {{"materialNumber"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemName">
+                                {{"materialName"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="voucherNo">
+                                {{"BondNumber"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="voucherName">
+                                {{"VoucherType"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="voucherDate">
+                                {{"VoucherDate"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="storeName">
+                                {{"Store"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="customerName">
+                                {{"Client"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="unitName">
+                                {{"unit"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="qty">{{"Quantity"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="reserveDays">
+                                {{"DurationOfReservation"|translate}}
+                            </th>
+                            <th style="width: 10%" class="text-center-m"><i class="pi pi-cog"
+                                    style="font-size: 1.2rem"></i>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+                            <td *ngif="showItemId">{{item.id}}</td>
+                            <td>{{item.itemNo}} </td>
+                            <td>{{item.itemName}}</td>
+                            <td>{{item.voucherNo}}</td>
+                            <td>{{item.voucherName}}</td>
+                            <td>{{item.voucherDate | date:'yyyy-MM-dd'}}</td>
+                            <td> {{item.storeName}} </td>
+                            <td>{{item.customerName}}</td>
+                            <td>{{item.unitName}}</td>
+                            <td>{{item.qty}}</td>
+                            <td>{{item.reserveDays}}</td>
+                            <td>
+                                <i class="material-icons cursor-pointer"
+                                    (click)="OpenItemTransactionsForm(item.id)" style="color:blue"
+                                    title="{{ 'OpenTransaction' | translate }}">
+                                    visibility
+                                </i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+</div>
+<div *ngIf="collective">
+    <div class="grid grid-cols-12 gap-2 pt-2">
+        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+            <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['id','storeName','storeKeeperName','telephone','mobile','address','active']"
+                styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="grid grid-cols-12 gap-5 ">
+                        <div
+                            class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="pInputText input border w-full mt-1" pInputText
+                                    type="text"
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder=' {{"search"|translate}} ' />
+                            </span>
+                        </div>
+                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5"
+                            align="end">
+                            <i class="pi pi-star-fill"
+                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                (click)="updateFavourite(this.screenId)"
+                                title="{{'AddToFavourite' | translate}}"
+                                tooltipposition="bottom">
+                            </i>
+                            <button title="{{'ExportToExcel' | translate}}" class="mr-2"
+                                type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                ptooltip="XLS" (click)="exportExcel()" tooltipposition="bottom"
+                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/excel.svg"
+                                    width="20px">
+                            </button>
+                            <button title="{{'ExportToPdf' | translate}}" class="mr-2"
+                                type="button" pbutton="" pripple="" icon="pi pi-file-excel"
+                                ptooltip="PDF" (click)="exportPdf()" tooltipposition="bottom"
+                                class="button px-2 mr-1 mb-2 text-gray-700">
+                                <img src="../../../../assets/dist/images/icons/pdf.svg"
+                                    width="20px">
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 10%" class="head_tb" pSortableColumn="itemNo">
+                            {{"materialNumber"|translate}}
+                        </th>
+                        <th style="width: 80%" class="head_tb" pSortableColumn="itemName">
+                            {{"materialName"|translate}}
+                        </th>                        
+                        <th style="width: 10%" class="head_tb" pSortableColumn="qty">{{"Quantity"|translate}}
+                        </th>                                              
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                    <tr>
+                        <td *ngif="showItemId">{{item.id}}</td>
+                        <td>{{item.itemNo}} </td>
+                        <td>{{item.itemName}}</td>                        
+                        <td>{{item.qty}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="odd">
+                        <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+    </form>
+</div>

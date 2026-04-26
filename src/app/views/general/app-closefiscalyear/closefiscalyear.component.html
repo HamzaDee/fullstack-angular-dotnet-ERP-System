@@ -1,0 +1,197 @@
+<form [formGroup]="CloseYearAddForm" >
+    <div class="content">
+        <div class="card"> 
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">                
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1" [hidden]="disableAll">                            
+                            <input type="number" formControlName="id"  class="input border w-full mt-1">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"FiscalYear"|translate}} <span class="required-asterisk">*</span> </label>
+                            <input type="text" formControlName="year"  class="input border w-full mt-1" disabled="true">                            
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"profLossAccId"|translate}}
+                                <span class="required-asterisk">*</span>
+                            </label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="accountsList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="profLossAccId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                [ngClass]="{ 'invalid-field': CloseYearAddForm.get('profLossAccId').value <= 0}">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="card" class="card-blue">
+                        <div class="intro-y box px-5 pt-5 mt-5">
+                            <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                                <a width="200px" data-toggle="tab" data-target="#f01" href="javascript:;"
+                                    class="py-4 sm:mr-8 active">{{"GoodbeginningPeriod"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"InventoryAmmount"|translate}}</a>
+                            </div>
+                        </div>
+                        <div class="intro-y tab-content">
+                            <div class="tab-content__pane active" id="f01">
+                                <div class="intro-y box px-5 pt-5">
+                                    <p-table #dt [value]="firstInventoryAccList" dataKey="id" [loading]="loading" styleClass="p-datatable-gridlines" [rowHover]="true">
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                    <p-button label='{{"AddLine"|translate}}' 
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewLine(1)"></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 50%" pSortableColumn="AccID">{{"InventoryStockAccount"|translate}}<p-sortIcon field="AccID"></p-sortIcon></th>
+                                                <th style="width: 50%" pSortableColumn="Amt">{{"CostOfGoods"|translate}} <p-sortIcon field="Amt"></p-sortIcon></th>                                                                               
+                                                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-fInventory let-i="rowIndex">
+                                            <tr>
+                                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                    [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                    styleClass="input border w-full mt-1" optionLabel="text"
+                                                    optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                    autoWidth="false" [virtualScroll]="false"  
+                                                    [(ngModel)]="fInventory.AccID" [ngClass]="{ 'invalid-field': fInventory.AccID <= 0}"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                </p-dropdown></td>                                    
+                                                <td><input type="number" [(ngModel)]="fInventory.Amt" class="input border w-full mt-1 " 
+                                                    [ngClass]="{ 'invalid-field': isEmpty(fInventory.Amt) }"
+                                                    [ngModelOptions]="{standalone: true}" (blur)="formatAmt(fInventory)">
+                                                </td>                                            
+                                                <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="" type="button">
+                                                        <mat-icon class="">more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #userMenu="matMenu">
+                                                        <button mat-menu-item (click)="onAddRowBefore(i,1)">
+                                                            <i class="material-icons" style="color:green">add</i>
+                                                            &nbsp;{{"AddRowBefore"|translate}}
+                                                        </button>
+                                                        <button mat-menu-item (click)="deleteRow(i,1)"> <i
+                                                                class="material-icons" style="color:red">delete</i>
+                                                            &nbsp;{{"Delete"|translate}} </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="footer" >
+                                            <tr>
+                                                <td>{{"total"|translate}}</td>
+                                                <td>{{calculateSum(1)}}</td>
+                                                <td></td>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f02">
+                                <div class="intro-y box px-5 pt-5">
+                                    <p-table #dt [value]="lastInventoryAccList" dataKey="id" [loading]="loading" styleClass="p-datatable-gridlines" [rowHover]="true">
+                                        <ng-template pTemplate="caption">
+                                            <div class="grid grid-cols-12 gap-5 ">
+                                                <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mb-5">
+                                                    <p-button label='{{"AddLine"|translate}}' 
+                                                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                                        icon="pi pi-plus" (click)="AddNewLine(2)"></p-button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 50%" pSortableColumn="AccID">{{"InventoryStockAccount"|translate}}<p-sortIcon field="AccID"></p-sortIcon></th>
+                                                <th style="width: 50%" pSortableColumn="Amt">{{"CostOfGoods"|translate}} <p-sortIcon field="Amt"></p-sortIcon></th>                                                                               
+                                                <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-lInventory let-i="rowIndex">
+                                            <tr>
+                                                <td><p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                                    [options]="accountsList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                                    styleClass="input border w-full mt-1" optionLabel="text"
+                                                    optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                                                    autoWidth="false" [virtualScroll]="false" 
+                                                    [(ngModel)]="lInventory.AccID" [ngClass]="{ 'invalid-field': lInventory.AccID <= 0}"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                </p-dropdown></td>                                    
+                                                <td><input type="number" [(ngModel)]="lInventory.Amt" class="input border w-full mt-1 " 
+                                                    [ngClass]="{ 'invalid-field': isEmpty(lInventory.Amt) }"
+                                                    [ngModelOptions]="{standalone: true}" (blur)="formatAmt(lInventory)">
+                                                </td>                                            
+                                                <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="" type="button">
+                                                        <mat-icon class="">more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #userMenu="matMenu">
+                                                        <button mat-menu-item (click)="onAddRowBefore(i,2)">
+                                                            <i class="material-icons" style="color:green">add</i>
+                                                            &nbsp;{{"AddRowBefore"|translate}}
+                                                        </button>
+                                                        <button mat-menu-item (click)="deleteRow(i,2)"> <i
+                                                                class="material-icons" style="color:red">delete</i>
+                                                            &nbsp;{{"Delete"|translate}} </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr class="odd">
+                                                <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="footer" >
+                                            <tr>
+                                                <td>{{"total"|translate}}</td>
+                                                <td>{{calculateSum(2)}}</td>
+                                                <td></td>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-3">
+                            <input id="isDetails" type="checkbox" [(ngModel)]="collective" class="input border mr-2 mr-3 ml-3 mt-5" 
+                             [ngModelOptions]="{standalone: true}" (click)="handelCollectiveCB($event)"/>
+                            <label class="cursor-pointer select-none" for="isDetails">{{"Cumulative"|translate}}</label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-3">
+                            <input id="isDetails" type="checkbox"[(ngModel)]="detalied" class="input border mr-2 mr-3 ml-3 mt-5" 
+                            [ngModelOptions]="{standalone: true}" (click)="handelDetaliedCB($event)"/>
+                            <label class="cursor-pointer select-none" for="isDetails">{{"Detaile"|translate}}</label>
+                        </div>
+                    </div>
+                    
+
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" [disabled]="CloseYearAddForm.invalid"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit" (onClick)="onConfirm()"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (onClick)="onCancel()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,88 @@
+<form [formGroup]="FiscalYearFormInitialForm" (ngSubmit)="OnSaveForms()">
+    
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>{{data.title}}</h4>
+            </div>
+            <input type="number" class="form-control" formControlName="id" hidden>
+            <div class="card-body">
+         <!-- <div class="row">   -->
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label >{{"FiscalYear"|translate}} <span class="required-asterisk">*</span></label>
+                        <input type="number" class="input border w-full mt-1" formControlName="yearNo">
+                    </div>
+                </div>   
+                    <div class="grid grid-cols-12 gap-5 mt-5">  
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label >{{"ArabicName"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="yearNameA">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label >{{"EnglishName"|translate}}<span class="required-asterisk">*</span></label>
+                        <input type="text" class="input border w-full mt-1" formControlName="yearNameE">
+                    </div>
+                    
+                    <!-- <div class="grid grid-cols-12 gap-5 mt-5"> -->
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"FromDate"|translate}}
+                                <span class="required-asterisk">*</span>
+                            </label>
+                            <input type="date" formControlName="startDate" class="input border w-full mt-1"    >
+                        </div>
+
+
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ToDate"|translate}}
+                                <span class="required-asterisk">*</span>
+                            </label>
+                            <input type="date" formControlName="endDate" class="input border w-full mt-1"    >
+                            <div *ngIf="FiscalYearFormInitialForm.controls.endDate.valid && (FiscalYearFormInitialForm.controls.endDate?.dirty || FiscalYearFormInitialForm.controls.endDate?.touched)" class="error">
+                                <div [hidden]="validatorsService.compareDates(FiscalYearFormInitialForm.controls.startDate.value,FiscalYearFormInitialForm.controls.endDate.value)" style="color: red;">
+                                    {{"msgDateCompare"|translate}}
+                                </div>
+                              </div>
+                        </div>
+                    <!-- </div> -->
+
+
+                    <div class="grid grid-cols-12 gap-5 mt-5">  
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input id="Active" [checked]="active==1" (change)="active=(active==0)?1:0" type="checkbox"
+                                    class="input border mr-2 mr-3 ml-3" [disabled]="this.disable" />
+                             <label class="cursor-pointer select-none"
+                                    for="Active">{{"Active"|translate}}</label>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input id="Closed" [checked]="closed==1" (change)="closed=(closed==0)?1:0" type="checkbox"
+                                   class="input border mr-2 mr-3 ml-3" [disabled]="this.disableCloseYear "/>
+                            <label class="cursor-pointer select-none"
+                                   for="Closed">{{"Closed"|translate}}</label>
+                        </div>
+                    </div>                       
+                </div>
+                    <div class="grid grid-cols-12 gap-5 mt-5">
+                        <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"  [disabled]="FiscalYearFormInitialForm.invalid || !validatorsService.compareDates(FiscalYearFormInitialForm.controls.startDate.value,FiscalYearFormInitialForm.controls.endDate.value)"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                type="submit"></p-button>
+                            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component" (click)="dialogRef.close(false)"></p-button>
+                        </div>
+                    </div>
+                        <!-- <div mat-dialog-actions align="end">
+                            <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4" styleClass="p-button-sm" [disabled]="FiscalYearFormInitialForm.invalid || !validatorsService.compareDates(FiscalYearFormInitialForm.controls.startDate.value,FiscalYearFormInitialForm.controls.endDate.value)"
+                                type="submit"></p-button>
+                                  
+                            <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                                styleClass="p-button-danger p-button-sm" (click)="dialogRef.close(false)"></p-button>
+                        </div> -->
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</form>

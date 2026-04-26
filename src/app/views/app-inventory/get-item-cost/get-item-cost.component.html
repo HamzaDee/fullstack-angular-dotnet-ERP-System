@@ -1,0 +1,85 @@
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center mt-5">
+            <h1>{{data.title}}</h1>
+        </div>
+        <div class="intro-y box p-5 mt-12 sm:mt-5">
+            <div class="grid grid-cols-12 gap-2 pt-2">
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="itemsBatchesList" [rows]="10" [paginator]="true"
+                        [globalFilterFields]="['qoh','cost']"
+                        styleClass="p-datatable-gridlines" responsiveLayout="scroll"
+                        [(selection)]="selectedItem" selectionMode="single" [rowHover]="true" dataKey="id"
+                        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                        [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder=' {{"search"|translate}} ' />
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>
+                                    <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+                                </th>
+                                <th *ngIf="hidden" class="head_tb">
+                                    {{"materialNumber"|translate}}
+                                </th>
+                                <th class="head_tb" pSortableColumn="qoh">
+                                    {{"Quantity"|translate}}
+                                </th>
+                                <th class="head_tb" pSortableColumn="cost">
+                                    {{"Cost"|translate}}
+                                </th>
+                                <th class="head_tb" pSortableColumn="productDate">
+                                    {{"ProdDate"|translate}}
+                                </th>
+                                <th class="head_tb" pSortableColumn="expiryDate">
+                                    {{"ExpiryDate"|translate}}
+                                </th>
+                                <th class="head_tb" pSortableColumn="batchNo">
+                                    {{"PatchNumber"|translate}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-item let-i="rowIndex">
+                            <tr [pSelectableRow]="item">
+                                <td>
+                                    <p-tableCheckbox [value]="item" ></p-tableCheckbox>
+                                </td>
+                                <td *ngIf="hidden">{{item.row}}</td>
+                                <td *ngIf="hidden">{{item.itemId}}</td>
+                                <td *ngIf="hidden">{{item.id}}</td>
+                                <td>{{item.inQty - item.outQty}}</td>
+                                <td>{{item.cost}}</td>
+                                <td>{{item.productDate | date:'yyyy/MM/dd'}}</td>
+                                <td>{{item.expiryDate | date:'yyyy/MM/dd'}}</td>
+                                <td>{{item.batchNo}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions align="end">
+                <p-button label='{{"Choose"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="submit" (click)="SelectedCost()"></p-button>
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                    (click)="dialogRef.close(itemsBatchesList)"></p-button>
+            </div>
+        </div>
+    </div>
+</div>

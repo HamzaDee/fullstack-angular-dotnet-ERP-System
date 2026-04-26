@@ -1,0 +1,217 @@
+<div class="intro-y box px-5 pb-5 mb-5">
+    <form [formGroup]="itemsBatchesAddForm" >
+        <div class="grid grid-cols-12 gap-3 pt-2">
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold"> 
+                        <input type="checkbox" class="input border w-full mt-1" 
+                        (change)="OnChange(toThisDate)" [(ngModel)]="toThisDate"
+                            [ngModelOptions]="{standalone: true}" style="margin-left: 1rem;">
+                        {{"ToExpiryDate"|translate}}
+                    </label>
+                    <input id="fDate"  type="date" class="input border w-full mt-1" disabled="true" formControlName="fromDate">
+                </div>
+            </div>
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                <div>
+                    <label class="control-label font-weight-bold"> 
+                        <input type="checkbox" class="input border w-full mt-1" style="margin-left: 1rem;"
+                        (change)="OnChange2(forThisDate)" [(ngModel)]="forThisDate"
+                        [ngModelOptions]="{standalone: true}">{{"ExpiryyDate"|translate}}</label>
+                    <input id="tDate" type="date" class="input border w-full mt-1" disabled="true" formControlName="toDate">
+                </div>
+            </div>
+            <div class="col-span-6 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1" style="margin-top: 0.9rem;">
+                <div>
+                    <label class="control-label font-weight-bold">{{"PatchNumber"|translate}}</label>
+                    <input type="input" class="input border w-full mt-1" formControlName="batchNo">
+                </div>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="margin-top: 0.9rem;">
+                <label class=" font-weight-bold">{{"materialName"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false"  formControlName="itemId" [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyOptions($event)" [virtualScrollItemSize]="40">
+                </p-dropdown>
+            </div>
+            <div class="col-span-8 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="margin-top: 0.9rem;">
+                <label class=" font-weight-bold">{{"GroupItem"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsGroupList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="groupId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"item"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="typesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="typeId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"branch"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="branchesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="branchId">
+                </p-dropdown>
+            </div>
+            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                <label class=" font-weight-bold">{{"Store"|translate}}</label>
+                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="storesList"
+                    [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                    optionLabel="text" optionValue="id" [filter]="true" filterBy="text" appendTo="body"
+                    autoWidth="false" [virtualScroll]="false" formControlName="storeId">
+                </p-dropdown>
+            </div>
+
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3 mr-2">{{"ShowTheQuantityDependStore"|translate}}</label>
+                <input type="checkbox" class="input border w-full mt-1" [(ngModel)]="showStore"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3 mr-2">{{"ShowTheExpiredMaterial"|translate}}</label>
+                <input type="checkbox" class="input border w-full mt-1"[(ngModel)]="showEndItems"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1" style="align-self: center;">
+                <label class="control-label font-weight-bold ml-3 mr-2">{{"DontShowDatesWithZeroBalance"|translate}}</label>
+                <input type="checkbox" class="input border w-full mt-1"[(ngModel)]="dontShowZeroBalance"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+
+            <!-- <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" style="margin: 1rem;"
+                align="start">
+                <p-button label='{{"ShowTheBalances"|translate}}' class="ml-4"
+                    styleClass="button w-24 mr-2 mb-2 flex items-center justify-center bg-black text-white p-button p-component"></p-button>
+                (onClick)=""
+
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass=" p-element button w-24 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"></p-button>
+                (onClick)=""
+            </div> -->
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <input type="checkbox" class="input border w-full mt-1" hidden="true">
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-5 mr-2">
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"ShowTheBalances"|translate}}'
+                    styleClass="p-ripple p-element button w-34 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="GetReport()" [disabled]="itemsBatchesAddForm.invalid"></p-button>
+            </div>
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"NewSearch"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon="" (click)="clearFormData()"></p-button>
+            </div>
+
+            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                <p-button label='{{"Print"|translate}}'
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-5 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    icon=""></p-button>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-2 pt-2">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="voucherData" [rows]="10" [paginator]="true"
+                    [globalFilterFields]="['itemNo','itemName','batchNo','balance']"
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="grid grid-cols-12 gap-5 ">
+                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder=' {{"search"|translate}} ' />
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                <i class="pi pi-star-fill"
+                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                    (click)="updateFavourite(this.screenId)"
+                                    title="{{'AddToFavourite' | translate}}" tooltipposition="bottom">
+                                </i>
+                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button"
+                                    pbutton="" pripple="" icon="pi pi-file-excel" ptooltip="XLS"
+                                    (click)="exportExcel()" tooltipposition="bottom"
+                                    class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                </button>
+                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemNo">
+                                {{"materialNumber"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemName">
+                                {{"materialName"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="itemName">
+                                {{"Supplier"|translate}}
+                            </th>
+                            <th *ngIf="showStore" style="width: 5%" class="head_tb" pSortableColumn="batchNo">
+                                {{"Store"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="EXPIRYDATE">
+                                {{"EXPIRYDATE"|translate}}
+                            </th>
+                           
+                            <th style="width: 10%" class="head_tb" pSortableColumn="batchNo">
+                                {{"PatchNumber"|translate}}
+                            </th>
+                            <th style="width: 10%" class="head_tb" pSortableColumn="balance">
+                                {{"Quantity"|translate}}
+                            </th>
+                            <th style="width: 5%" class="text-center-m"><i class="pi pi-cog"
+                                    style="font-size: 1.2rem"></i>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" class=".p-datatable-tbody " let-item>
+                        <tr>
+
+                            <td *ngif="isDisabled">{{item.itemId}}</td>
+                            <td style="text-align: justify;">{{item.itemNo}} </td>
+                            <td style="text-align: justify;">{{item.itemName}}</td>
+                            <td style="text-align: justify;">{{item.dealerName}}</td>
+                            <td style="text-align: justify;"*ngIf="showStore">{{item.storeName}}</td>
+                            <td style="text-align: justify;">{{item.expiryDate | date:'dd-MM-yyyy'}}</td>
+                            <td style="text-align: justify;">{{item.batchNo}}</td>
+                            <td style="text-align: justify;">{{item.balance}}</td>
+                            <td>
+                                <i class="material-icons cursor-pointer"
+                                    (click)="OpenItemTransactionsForm(item.itemId)" style="color:blue"
+                                    title="{{ 'ItemTransactions' | translate }}">
+                                    visibility
+                                </i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="odd">
+                            <td valign="top" colspan="7"> {{"noEntriesFoundLabel"|translate}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </form>
+</div>

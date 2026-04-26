@@ -1,0 +1,57 @@
+
+
+<div class="container">
+    <p-table #dt [value]="tabelData" [rows]="10" [paginator]="true" 
+        [globalFilterFields]="['no','dealerName']"  paginatorDropdownAppendTo="body"
+        styleClass="p-datatable-gridlines" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="caption">
+            <div class="grid grid-cols-12 gap-5 ">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1 mb-5">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="pInputText input border w-full mt-1" pInputText type="text"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder=' {{"search"|translate}} ' />
+                    </span>
+                </div>
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-5" align="end">
+                    <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                    pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel()"
+                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                    <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                    </button>
+                    <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                            pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf()"
+                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                            <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 20%" pSortableColumn="no">{{"DealerNo"|translate}} <p-sortIcon field="no"></p-sortIcon></th>
+                <th pSortableColumn="dealerName">{{"Supplier"|translate}} <p-sortIcon field="dealerName"></p-sortIcon></th>
+                <th style="width:20%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" class=".p-datatable-tbody " let-dealer>
+            <tr>
+                <td>{{dealer.no}}</td>
+                <td>{{dealer.dealerName}}</td>
+                <td style="width:5%">
+                    <p-button label='{{"AddItems"|translate}}' icon="pi pi-plus" class="mr-4"
+                    styleClass="p-ripple p-element button flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                    type="bottom" (click)="AddNewItems(dealer.no,dealer.dealerName)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="odd">
+                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

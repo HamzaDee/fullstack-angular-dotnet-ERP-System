@@ -1,0 +1,94 @@
+<form [formGroup]="ProjectsTransForm" (ngSubmit)="OnSaveForms()">
+    <div class="content">
+        <div class="card"> 
+            <div class="card-header text-center mt-5">
+                <h1>{{data.title}}</h1>
+            </div>
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-6 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold mr-2">{{"AccountName"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.accName}}</label>
+                    </div>
+                    <div class="col-span-6 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Ammount"|translate}}: </label>
+                        <label class="control-label font-weight-bold">{{data.debit + data.credit | number: '1.3-3'}}</label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                        <p-table #dt [value]="ProjectsTransList" dataKey="id" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" [scrollable]="true" scrollHeight="400px" 
+                            [globalFilterFields]="['costCenterName']" [showCurrentPageReport]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="grid grid-cols-12 gap-5 ">
+                                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mb-5">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                placeholder=' {{"search"|translate}} ' />
+                                        </span>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-3 mb-5">
+                                        <p-button label='{{"ReEnter"|translate}}'
+                                            styleClass="p-ripple p-element button w-full mr-2 ml-3 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            (click)="ReEnterValues()"></p-button>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-3 mb-5">
+                                        <p-button label='{{"DistributeAmtToAllCenters"|translate}}'
+                                            styleClass="p-ripple p-element button w-full mr-2 ml-3 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            (click)="DistributeAmtToAllProjects()"></p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 20%" pSortableColumn="costCenterId">{{"number"|translate}}
+                                        <p-sortIcon field="costCenterId"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="costCenterName">{{"CostCenter"|translate}} <p-sortIcon
+                                            field="costCenterName"></p-sortIcon></th>
+                                    <th style="width: 20%" pSortableColumn="credit">{{"Amount"|translate}} <p-sortIcon
+                                            field="credit"></p-sortIcon></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" class=".p-datatable-tbody " let-projectsList
+                                let-i="rowIndex">
+                                <tr>
+                                    <td>{{projectsList.projectId}}</td>
+                                    <td>{{projectsList.projectName}}</td>
+                                    <td><input type="number" [(ngModel)]="projectsList.amount"
+                                            class="input border w-full mt-1 " [ngModelOptions]="{standalone: true}"
+                                            (blur)="CheckBudget(projectsList)">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="odd">
+                                    <td valign="top" colspan="3"> {{"noEntriesFoundLabel"|translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td></td>
+                                    <td>{{"total"|translate}}</td>
+                                    <td>{{calculateSum() | number: '1.3-3'}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">
+                    <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                        type="submit"></p-button>
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close(ProjectsTransList)"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

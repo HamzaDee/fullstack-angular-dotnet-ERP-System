@@ -1,0 +1,313 @@
+<!-- <app-mobile-menu></app-mobile-menu> -->
+<div class="flex">
+
+
+
+  <!-- BEGIN: Side Menu -->
+
+
+  <nav class="side-nav  hide_scroll">
+
+    <!-- <a id="linklink" class="intro-x flex items-center pl-5 pt-2"> -->
+    <a id="linklink" class="intro-x flex items-center pt-2">
+
+      <img alt="Galaxy" class="text-logo-w pl-2" src="../../../../assets/dist/images/w_logo_text.svg">
+      <img alt="Galaxy" class="w-10" src="../../../../assets/dist/images/w_logo.svg">
+      
+
+    </a>
+
+    <div class="side-nav__devider my-6"></div>
+
+
+
+
+    <app-sidebar-side class="side-nav"></app-sidebar-side>
+
+
+  </nav>
+
+
+
+
+  <!-- BEGIN: Content -->
+  <div class="content fix-content">
+    <!-- BEGIN: Top Bar -->
+    <div class="top-bar">
+      <!-- BEGIN: Breadcrumb -->
+
+      <!-- Breadcrumb -->
+
+      <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+        <app-breadcrumb></app-breadcrumb>
+
+      </div>
+      <!-- END: Breadcrumb -->
+
+
+      <!-- BEGIN: Notifications -->
+      <app-notifications></app-notifications>
+      <!-- <div class="intro-x dropdown relative mr-auto sm:mr-6">
+        <div class="dropdown-toggle notification notification--bullet cursor-pointer"> <svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-bell notification__icon">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg> </div>
+        <div
+          class="notification-content dropdown-box mt-8 absolute top-0 left-00 sm:left-auto sm:right-0 z-20 -ml-10 sm:ml-0">
+          <div class="notification-content__box dropdown-box__content box">
+            <div class="notification-content__title">{{"Notifications"|translate}}</div>
+            <div class="cursor-pointer relative flex items-center mt-3 p-1 ">
+
+              <div class="w-12 h-12 flex-none image-fit ml-1">
+                <img alt="Midone Tailwind HTML Admin Template" class="rounded-full"
+                  src="../../../../../assets/dist/images/profile-3.jpg">
+
+              </div>
+              <div class="ml-2 overflow-hidden w-full">
+                <div class="flex items-center">
+                  <a href="javascript:;" class="font-medium truncate ml-5 mb-1">سندات القبض</a>
+                  <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">05:09 AM</div>
+                </div>
+                <div class="w-full truncate text-gray-600">تم اضافة السند الجديد بواسطة المستخدم</div>
+              </div>
+            </div>
+            <div class="cursor-pointer relative flex items-center mt-3 p-1 unred_n">
+              <div class="w-12 h-12 flex-none image-fit ml-1">
+                <img alt="Midone Tailwind HTML Admin Template" class="rounded-full"
+                  src="../../../../../assets/dist/images/profile-3.jpg">
+
+              </div>
+              <div class="ml-2 overflow-hidden w-full">
+                <div class="flex items-center">
+                  <a href="javascript:;" class="font-medium truncate ml-5 mb-1">شجرة الحسابات</a>
+                  <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">05:09 AM</div>
+                </div>
+                <div class="w-full truncate text-gray-600">تم اضافة السند الجديد بواسطة المستخدم</div>
+              </div>
+            </div>
+            <div class="cursor-pointer relative flex items-center mt-3 p-1">
+              <div class="w-12 h-12 flex-none image-fit ml-1">
+                <img alt="Midone Tailwind HTML Admin Template" class="rounded-full"
+                  src="../../../../../assets/dist/images/profile-3.jpg">
+
+              </div>
+              <div class="ml-2 overflow-hidden w-full">
+                <div class="flex items-center">
+                  <a href="javascript:;" class="font-medium truncate ml-5 mb-1">البنوك والصناديق</a>
+                  <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">01:10 PM</div>
+                </div>
+                <div class="w-full truncate text-gray-600">تم اضافة السند الجديد بواسطة المستخدم</div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div> -->
+
+
+      <!-- END: Notifications -->
+      <app-header-top></app-header-top>
+
+
+
+
+
+      <!-- BEGIN: Account Menu -->
+
+
+      <div class="intro-x w-8 h-8 relative">
+        <label for="user-info-drop" style="z-index: 500000;">
+          <div class=" w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
+            <img alt="" src="../../../../assets/dist/images/profile-3.jpg">
+          </div>
+        </label>
+        <input type="checkbox" id="user-info-drop" style=" opacity: 0; position:absolute;" />
+        <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 z-20 user-info-d">
+          <div class="dropdown-box__content box bg-theme-38 text-white">
+
+            <div class="p-2 border-b border-theme-40">
+              <a (click)="EditUserPersonalInfo()"
+                class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i
+                  data-feather="user" class="w-4 h-4 mr-2 ml-2 ml-2"></i> {{ "PROFILE" | translate }} </a>
+            </div>
+            <div class="p-2 border-t border-theme-40">
+              <a (click)="PopupChangePasswordForm()"
+                class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i
+                  data-feather="toggle-right" class="w-4 h-4 mr-2 ml-2"></i> {{ "CHANGEPASSWORD" | translate }} </a>
+            </div>
+            <div class="p-2 border-t border-theme-40">
+              <a (click)="jwtAuth.signout()"
+                class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i
+                  data-feather="toggle-right" class="w-4 h-4 mr-2 ml-2"></i> {{ "SIGNOUT" | translate }} </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- END: Account Menu -->
+    </div>
+
+    <!--main page-->
+
+    <!--page content -->
+    <div class="app-admin-wrap main-cont" [dir]='layoutConf?.dir'>
+      <!-- Header for top navigation layout -->
+      <!-- ONLY REQUIRED FOR **TOP** NAVIGATION LAYOUT -->
+      <!--<app-header-top></app-header-top>-->
+      <!--<app-nav-bar></app-nav-bar>-->
+
+
+
+
+      <!-- Main Container -->
+      <mat-sidenav-container [dir]='layoutConf.dir' class="container-fluid mat-drawer-transition  "
+        [ngClass]="adminContainerClasses">
+        <mat-sidenav-content>
+          <!-- App content -->
+          <div class="main-content-wrap container-fluid" id="main-content-wrap" [perfectScrollbar]=""
+            [disabled]="true || !layoutConf.perfectScrollbar">
+            <div class="" id="rightside-content-hold" [perfectScrollbar]="scrollConfig"
+              [disabled]="true || !layoutConf.perfectScrollbar">
+              <!-- View Loader -->
+              <div class="view-loader" *ngIf="isModuleLoading" style="position:fixed;" fxLayout="column"
+                fxLayoutAlign="center center">
+                <div class="spinner">
+                  <div class="double-bounce1 mat-bg-accent"></div>
+                  <div class="double-bounce2 mat-bg-primary"></div>
+                </div>
+              </div>
+              <!-- Breadcrumb -->
+              <!--<app-breadcrumb></app-breadcrumb>-->
+              <!-- View outlet -->
+              <div class="container-dynamic">
+                <router-outlet></router-outlet>
+              </div>
+
+              <span class="m-auto" *ngIf="!layoutConf.footerFixed"></span>
+              <app-footer *ngIf="!layoutConf.footerFixed" style="margin: 0 -.33rem -.33rem"></app-footer>
+            </div>
+            <span class="m-auto" *ngIf="layoutConf.footerFixed"></span>
+            <app-footer *ngIf="layoutConf.footerFixed"></app-footer>
+          </div>
+          <!-- View overlay for mobile navigation -->
+          <div class="sidebar-backdrop"
+            [ngClass]="{'visible': layoutConf.sidebarStyle !== 'closed' && layoutConf.isMobile}"
+            (click)="closeSidebar()"></div>
+        </mat-sidenav-content>
+
+
+        <!-- Notificaation bar -->
+        <mat-sidenav #notificationPanel mode="over" class="" position="end">
+          <div class="nofication-panel" fxLayout="column">
+            <app-notifications [notificPanel]="notificationPanel"></app-notifications>
+          </div>
+        </mat-sidenav>
+
+        <egret-notifications2></egret-notifications2>
+      </mat-sidenav-container>
+
+
+    </div>
+    <!-- Only for demo purpose -->
+    <!-- Remove this from your production version -->
+    <!-- <app-customizer ></app-customizer>-->
+    <!-- end page content -->
+    <!--END main page-->
+
+    <!-- END: Top Bar -->
+
+  </div>
+
+</div>
+
+
+
+<!-- <script>
+    __Zone_enable_cross_context_check = true;
+    </script> -->
+
+
+<!-- 
+    <div class="app-admin-wrap" [dir]='layoutConf?.dir'>
+      <!~~ Header for top navigation layout ~~>
+      <!~~ ONLY REQUIRED FOR **TOP** NAVIGATION LAYOUT ~~>
+      <app-header-top 
+        *ngIf="layoutConf.navigationPos === 'top'" 
+        [notificPanel]="notificationPanel">
+      </app-header-top>
+      <!~~ Main Container ~~>
+      <mat-sidenav-container 
+      [dir]='layoutConf.dir'
+      class="app-admin-container app-side-nav-container mat-drawer-transition sidebar-{{layoutConf?.sidebarColor}} topbar-{{layoutConf?.topbarColor}} footer-{{layoutConf?.footerColor}}"
+      [ngClass]="adminContainerClasses">
+        <mat-sidenav-content>
+        <!~~ SIDEBAR ~~>
+        <!~~ ONLY REQUIRED FOR **SIDE** NAVIGATION LAYOUT ~~>
+        <app-sidebar-side 
+        *ngIf="layoutConf.navigationPos === 'side'" 
+        (mouseenter)="sidebarMouseenter($event)"
+        (mouseleave)="sidebarMouseleave($event)"
+        ></app-sidebar-side>
+        
+        <!~~ Top navigation layout (navigation for mobile screen) ~~>
+        <!~~ ONLY REQUIRED FOR **TOP** NAVIGATION MOBILE LAYOUT ~~>
+        <app-sidebar-top *ngIf="layoutConf.navigationPos === 'top' && layoutConf.isMobile"></app-sidebar-top>
+    
+        <!~~ App content ~~>
+        <div class="main-content-wrap" id="main-content-wrap" [perfectScrollbar]="" [disabled]="layoutConf.topbarFixed || !layoutConf.perfectScrollbar">
+          <!~~ Header for side navigation layout ~~>
+          <!~~ ONLY REQUIRED FOR **SIDE** NAVIGATION LAYOUT ~~>
+          <app-header-side 
+            *ngIf="layoutConf.navigationPos === 'side'"
+            [notificPanel]="notificationPanel">
+          </app-header-side>
+    
+          <div class="rightside-content-hold" id="rightside-content-hold" [perfectScrollbar]="scrollConfig" [disabled]="!layoutConf.topbarFixed || !layoutConf.perfectScrollbar">
+            <!~~ View Loader ~~>
+            <div class="view-loader" *ngIf="isModuleLoading" style="position:fixed;"
+            fxLayout="column" fxLayoutAlign="center center">
+              <div class="spinner">
+                <div class="double-bounce1 mat-bg-accent"></div>
+                <div class="double-bounce2 mat-bg-primary"></div>
+              </div>
+            </div>
+            <!~~ Breadcrumb ~~>
+            <app-breadcrumb></app-breadcrumb>
+            <!~~ View outlet ~~>
+            <div class="container-dynamic">
+              <router-outlet></router-outlet>
+            </div>
+            
+            <span class="m-auto" *ngIf="!layoutConf.footerFixed"></span>
+            <app-footer *ngIf="!layoutConf.footerFixed" style="margin: 0 -.33rem -.33rem"></app-footer>
+          </div>
+          <span class="m-auto" *ngIf="layoutConf.footerFixed"></span>
+          <app-footer *ngIf="layoutConf.footerFixed"></app-footer>
+        </div>
+        <!~~ View overlay for mobile navigation ~~>
+        <div class="sidebar-backdrop"
+        [ngClass]="{'visible': layoutConf.sidebarStyle !== 'closed' && layoutConf.isMobile}"
+        (click)="closeSidebar()"></div>
+        </mat-sidenav-content>
+    
+    
+        <!~~ Notificaation bar ~~>
+        <mat-sidenav #notificationPanel mode="over" class="" position="end">
+          <div class="nofication-panel" fxLayout="column">
+            <app-notifications [notificPanel]="notificationPanel"></app-notifications>
+          </div>
+        </mat-sidenav>
+        
+        <egret-notifications2></egret-notifications2>
+      </mat-sidenav-container>
+    </div>
+    
+    
+    <!~~ Only for demo purpose ~~>
+    <!~~ Remove this from your production version ~~>
+    <!~~ <app-customizer ></app-customizer>~~> -->

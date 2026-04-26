@@ -1,0 +1,228 @@
+<br>
+<div class="intro-y box px-5 pb-5 mb-5">
+    <div [hidden]="showLoader">
+        <form [formGroup]="itemForm" (ngSubmit)="OnSaveForm()">
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                        <div class="mb-4 d-flex justify-content-center">
+                            <img [src]="imagePath" alt="example placeholder" class="companyImage" />
+                        </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1 ">
+                        <label
+                            class="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            style="padding: 9px 22.5px;">
+                            <input type="file" #image (change)="onUploadIamge($event.target.files)" accept="image/*"/>
+                            Upload
+                        </label>
+                        <br><br>
+                        <p-button (click)="ClearImagePath(image)" label='{{"Delete"|translate}}'
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            type="button" icon="pi pi-undo">
+                        </p-button>
+                    </div>
+
+                </div>
+                <div class="col-span-12 sm:col-span-10 xxl:col-span-10 mt-1">
+                    <div class="border-grey">
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemGroup"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                    [options]="itemGroupList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                    styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                    [filter]="true" formControlName="itemGroupId" filterBy="text"
+                                    appendTo="body" autoWidth="false" [virtualScroll]="false" [ngClass]="{'invalid-field': 
+                                    itemForm.get('itemGroupId').value<=0 && itemForm.get('itemGroupId').touched}"
+                                    (onChange)="onChangeItemGroup($event.value)">
+                                </p-dropdown>
+                                <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemGroupId').value<=0 && itemForm.get('itemGroupId').touched" >
+                                    {{"required"|translate}}
+                                </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemNo"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input
+                                    [ngClass]="{'invalid-field': (itemForm.get('itemNo').invalid||itemForm.get('itemNo').hasError('required')) && itemForm.get('itemNo').touched}"
+                                    type="text" (blur)="isValidItemCode($event.target.value)" formControlName="itemNo"
+                                    class="input border w-full mt-1 ">
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNo').hasError('required') && itemForm.get('itemNo').touched" >
+                                        {{"required"|translate}}
+                                    </span>
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNo').hasError('isValidItemCode') && itemForm.get('itemNo').touched" >
+                                        {{"ItemaCodeExists"|translate}}
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemName-Arabic"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input
+                                    [ngClass]="{'invalid-field': itemForm.get('itemNameA').hasError('required') && itemForm.get('itemNameA').touched}"
+                                    type="text" formControlName="itemNameA" class="input border w-full mt-1 " (blur)="isValidItemNameA($event.target.value)">
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNameA').hasError('required') && itemForm.get('itemNameA').touched" >
+                                        {{"required"|translate}}
+                                    </span>
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNameA').hasError('isValidItemNameA') && itemForm.get('itemNameA').touched" >
+                                        {{"isValidItemName"|translate}}
+                                    </span>
+                            </div>
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemName-English"|translate}}
+                                    <span class="required-asterisk">*</span>
+                                </label>
+                                <input
+                                    [ngClass]="{'invalid-field': itemForm.get('itemNameE').hasError('required') && itemForm.get('itemNameE').touched}"
+                                    type="text" formControlName="itemNameE" class="input border w-full mt-1 " (blur)="isValidItemNameE($event.target.value)">
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNameE').hasError('required') && itemForm.get('itemNameE').touched" >
+                                        {{"required"|translate}}
+                                    </span>
+                                    <span class="required-asterisk mt-1" *ngIf="itemForm.get('itemNameE').hasError('isValidItemNameE') && itemForm.get('itemNameE').touched" >
+                                        {{"isValidItemName"|translate}}
+                                    </span>
+                               
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemPrint-Arabic"|translate}}
+                                </label>
+                                <input type="text" formControlName="printNameA" class="input border w-full mt-1 ">
+                            </div>
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"itemPrint-English"|translate}}
+                                </label>
+                                <input type="text" formControlName="printNameE" class="input border w-full mt-1 ">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <input id="stopped" type="checkbox" [formControl]="itemForm.get('stopped')"
+                                    type="checkbox" class="input border mr-2 mr-3 ml-3" />
+                                <label class="cursor-pointer select-none" for="stopped">{{"stopped"|translate}}</label>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1" *ngIf="UseTax">
+                                <input id="taxable" type="checkbox" [formControl]="itemForm.get('taxable')"
+                                    class="input border mr-2 mr-3 ml-3" />
+                                <label class="cursor-pointer select-none" for="taxable">{{"taxable"|translate}}</label>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <input id="hasSerialNo" type="checkbox" [formControl]="itemForm.get('hasSerialNo')"
+                                    class="input border mr-2 mr-3 ml-3" />
+                                <label class="cursor-pointer select-none"
+                                    for="hasSerialNo">{{"hasSerialNo"|translate}}</label>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <input id="hasExpDate" type="checkbox" [formControl]="itemForm.get('hasExpDate')"
+                                    class="input border mr-2 mr-3 ml-3" />
+                                <label class="cursor-pointer select-none"
+                                    for="hasExpDate">{{"hasExpDate"|translate}}</label>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-2 xxl:col-span-2 mt-1">
+                                <input id="isNonStockItem" type="checkbox" [formControl]="itemForm.get('isNonStockItem')"
+                                    class="input border mr-2 mr-3 ml-3" />
+                                <label class="cursor-pointer select-none"
+                                    for="isNonStockItem">{{"NonStockItem"|translate}}</label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 gap-5 pt-5">
+                            <div class="col-span-12 sm:col-span-6 xxl:col-span-6 mt-1">
+                                <label class="control-label font-weight-bold">{{"note"|translate}}
+                                </label>
+                                <input type="text" formControlName="note" class="input border w-full mt-1 ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-blue border-grey">
+                        <div class="intro-y box px-5 pt-5 mt-5">
+                            <div class="nav-tabs flex flex-col sm:flex-row justify-center lg:justify-start">
+                                <a data-toggle="tab" data-target="#f01" href="javascript:;"
+                                    class="py-4 sm:mr-8 active">{{"informations"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f02" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"unitsPrices"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f03" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"accounts"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f04" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"itemLocation"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f05" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"alternativeVarieties"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f06" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"Suppliers"|translate}}</a>
+                                <a data-toggle="tab" data-target="#f07" href="javascript:;"
+                                    class="py-4 sm:mr-8">{{"ItemsADdInfo"|translate}}</a>
+                            </div>
+                        </div>
+                        <div class="intro-y tab-content">
+                            <div [ngClass]="{ 'disabled-tab': isTabDisabled }"  class="tab-content__pane active" id="f01">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-item-informationsn *ngIf="isItemInformationloaded" #ItemInformation 
+                                        [informationFormData]="informationFormData" [UseTax]="UseTax"></app-item-informationsn>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f02" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-units-prices *ngIf="isUnitsPricesloaded"
+                                        [unitsPricesFormData]="unitsPricesFormData" #UnitPrice></app-units-prices>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f03" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-accounts *ngIf="isItemAccountloaded" [accountFormData]="accountFormData"
+                                        #Accounts></app-accounts>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f04" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-items-locations *ngIf="isItemsLocationsloaded"
+                                        [itemsLocationsFormData]="itemsLocationsFormData"
+                                        #ItemsLocations></app-items-locations>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f05" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-alternative-varieties *ngIf="isAlternativeItemloaded"
+                                        [alternativeItemFormData]="alternativeItemFormData"
+                                        #AlternativeVarieties></app-alternative-varieties>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f06" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-itemsdelears *ngIf="isItemsDealersloaded"
+                                        [itemsdealersFormData]="itemsdealersFormData"
+                                        #Itemsdelears></app-itemsdelears>
+                                </div>
+                            </div>
+                            <div class="tab-content__pane" id="f07" [ngClass]="{ 'disabled-tab': isTabDisabled }">
+                                <div class="intro-y box px-5 pt-5">
+                                    <app-itemaddinfo-form *ngIf="isItemsAddInfoloaded"
+                                        [itemsAddInfoFormData]="itemsAddInfoFormData"
+                                        #ItemsAddInfo></app-itemaddinfo-form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="intro-y tab-content">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 mt-1" align="end">
+                        <p-button *ngIf="!isViewMode" [disabled]="itemForm.invalid || disableSave"  label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                            type="submit"></p-button>
+                        <p-button label='{{"Cancel"|translate}}' (click)="onCancel()"
+                            styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                            type="button" icon="pi pi-undo"></p-button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

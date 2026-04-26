@@ -1,0 +1,20 @@
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.uploaded-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 30%;
+}
+
+:host ::ng-deep .p-password input {
+    width: 15rem
+}

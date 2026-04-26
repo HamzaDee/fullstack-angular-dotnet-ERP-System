@@ -1,0 +1,190 @@
+<div class="grid grid-cols-12 gap-3 pt-2">
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <h3>{{"SalesForecastRpt"|translate}}</h3>            
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                        <div class="card mb-0 col-md-12">
+                            <div class="card-body" style="align-content: center;">
+                                <p-chart type="doughnut" id="myCostChart" [data]="data" [options]="options" width="100%" height="400px" ></p-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <h2>{{"ProfitCostRpt"|translate}}</h2>
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                        <div class="card mb-0 col-md-12">
+                            <div class="card-body">
+                                <div style="width: 100%;"></div>
+                                <p-chart type="pie" [data]="dataCost" [options]="optionsCost" width="100%" height="400px"></p-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="grid grid-cols-12 gap-3 pt-2">
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">    
+            <h2>{{"AllRpt"|translate}}</h2>       
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ProductedItem"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="ItemsList2"
+                        [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                        optionLabel="text" optionValue="id" [filter]="true" filterBy="text" [(ngModel)]="itemId"
+                        appendTo="body" autoWidth="false">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetReport1()"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                        <div class="card mb-0 col-md-12">
+                            <div class="card-body">
+                                <div style="width: 100%;"></div>
+                                <canvas id="myAnnualChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 " style="text-align: center;">
+            <!-- <h1 style="font-size: xx-large;">{{"ProductionCapacityList"|translate}}</h1> -->
+            <div class="grid grid-cols-12 gap-5 pt-5">
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"COUNTRY"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="CountryList"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        filterBy="text" appendTo="body" autoWidth="false" [(ngModel)]="this.countryId"
+                        (onChange)="getCustomers($event)" >
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Agent"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="AgentsList"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="data1" [filter]="true"
+                        filterBy="text" appendTo="body" autoWidth="false" [(ngModel)]="this.agentId">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"ProductedItem"|translate}}</label>
+                    <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="ItemsList"
+                        styleClass="input border w-full mt-1" optionLabel="text" optionValue="id" [filter]="true"
+                        filterBy="text" appendTo="body" autoWidth="false" [(ngModel)]="this.itemId">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <label class="control-label font-weight-bold">{{"Year"|translate}}<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" [(ngModel)]="this.year" class="input border w-full mt-1 "
+                        [ngClass]="{ 'invalid-field': isEmpty(this.year)}">
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mr-2">
+                    <p-button label='{{"ShowRecord"|translate}}'
+                        styleClass="p-ripple p-element button w-32 mr-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                        icon="" (click)="GetReport()"></p-button>
+                </div>
+                <!-- Details  ------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                    <p-table #dt [value]="dashboredList" dataKey="id" [loading]="loading" currentPageReportTemplate="Show {first} To  {last} Of {totalRecords}"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10" [paginator]="true" 
+                        styleClass="p-datatable-gridlines" [rowHover]="true" [scrollable]="true"
+                        [resizableColumns]="true">
+                        <!-- <ng-template pTemplate="caption">   [globalFilterFields]="['item_No','item_Name']"
+                <div class="grid grid-cols-12 gap-5 ">
+                    <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1 mr-5 ">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input class="pInputText input border w-full mt-1 " pInputText type="text"
+                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder=' {{"search"|translate}} ' />
+                        </span>                    
+                    </div>
+                </div>
+                <br>
+            </ng-template>  -->
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:5%">{{"ProductedItem"|translate}}</th>
+                                <th style="width:5%">{{"UnitName"|translate}}</th>
+                                <th style="width:5%">{{"UnitPrice"|translate}}</th>
+                                <th style="width:5%">{{"UnitCost"|translate}}</th>
+                                <th style="width:5%">{{"ExpectedQty"|translate}}</th>
+                                <th style="width:5%">{{"ExpectedAmount"|translate}}</th>
+                                <th style="width:5%">{{"ExpectedCost"|translate}}</th>
+                                <th style="width:5%">{{"SoldQty"|translate}}</th>
+                                <th style="width:5%">{{"SoldAmount"|translate}}</th>
+                                <th style="width:5%">{{"SoldCost"|translate}}</th>
+                                <th style="width:5%">{{"ExpectedFree"|translate}}</th>
+                                <th style="width:5%">{{"FreeCost"|translate}}</th>
+                                <th style="width:5%">{{"ActualFree"|translate}}</th>
+                                <th style="width:5%">{{"SoldFreeCost"|translate}}</th>
+                                <th style="width:5%">{{"QtyInvestigationRate"|translate}}</th>
+                                <th style="width:5%">{{"AmountInvestigationRate"|translate}}</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-itemList let-i="rowIndex">
+                            <tr>
+                                <td style="width:5%">{{itemList.itemName}}</td>
+                                <td style="width:5%">{{itemList.unitName}}</td>
+                                <td style="width:5%">{{itemList.unitPrice}}</td>
+                                <td style="width:5%">{{itemList.unitCost}}</td>
+                                <td style="width:5%">{{itemList.forcastingQty}}</td>
+                                <td style="width:5%">{{itemList.forcastingAmount}}</td>
+                                <td style="width:5%">{{itemList.forcastingCost}}</td>
+                                <td style="width:5%">{{itemList.salesQty}}</td>
+                                <td style="width:5%">{{itemList.salesAmount}}</td>
+                                <td style="width:5%">{{itemList.salesCost}}</td>
+                                <td style="width:5%">{{itemList.forcastingFree}}</td>
+                                <td style="width:5%">{{itemList.forcastingFreeAmount}}</td>
+                                <td style="width:5%">{{itemList.forcastingSalesQty}}</td>
+                                <td style="width:5%">{{itemList.forcastingSoldAmount}}</td>
+                                <td style="width:5%">{{itemList.realizationRateQty}}</td>
+                                <td style="width:5%">{{itemList.realizationRateAmount}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="10"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </div>
+                <!-- </div> -->
+                <!-- End      ------------------------------------------------------------------------------------------------------------------------------------->
+            </div>
+
+            <!-- </div> -->
+            <!-- </div> -->
+
+
+
+
+        </div>
+    </div>
+</div>

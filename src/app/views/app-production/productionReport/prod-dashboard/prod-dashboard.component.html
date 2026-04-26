@@ -1,0 +1,162 @@
+<div class="grid grid-cols-12 gap-3 pt-2">
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <div>
+                        <label class="control-label font-weight-bold">{{"FromYear"|translate}} </label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="fromYear">
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <div>
+                        <label class="control-label font-weight-bold">{{"ToYear"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="toYear">
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetReport()"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                        <div class="card mb-0 col-md-12">
+                            <div class="card-body">
+                                <div style="width: 100%;"></div>
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <h1>{{"AnnualProductsStatusList"|translate}}</h1>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                    <div>
+                        <label class=" font-weight-bold">{{"Product"|translate}}</label>
+                        <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="itemsList"
+                            [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                            optionLabel="text" optionValue="data1" [filter]="true" filterBy="text" appendTo="body"
+                            autoWidth="false" [virtualScroll]="false" [(ngModel)]="itemId"
+                            (onChange)="onItemSelectionChange()">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <div>
+                        <label class="control-label font-weight-bold">{{"FromYear"|translate}} </label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="fromYear">
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <div>
+                        <label class="control-label font-weight-bold">{{"ToYear"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="toYear">
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetAnnualReport()"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+                    <div class="mt-1 col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer">
+                        <div class="text-center">
+                            <h5> {{selectedItemName}}</h5>
+                        </div>
+                        <div class="card mb-0 col-md-12">
+                            <div class="card-body">
+                                <div style="width: 100%;"></div>
+                                <canvas id="myAnnualChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="grid grid-cols-12 gap-3 pt-2">
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <h1 style="font-size: xx-large;">{{"PerformanceList"|translate}}</h1>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                    <div>
+                        <label class="control-label font-weight-bold">{{"Year"|translate}} </label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="toYear">
+                    </div>
+                </div>
+                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-6">
+                    <p-button label='{{"ShowReport"|translate}}' class="ml-4" (click)="GetPerfReport()"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component">
+                    </p-button>
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12" id="htmlData">
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer  mt-1">
+                        <label class="control-label mb-4">{{"ActualquantityRequired"|translate}}</label>
+                        <input type="number" class="input w-full border mt-1" [(ngModel)]="requiredTotal" readonly>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                        <label class="control-label font-weight-bold">{{"Actualquantityproduced"|translate}}</label>
+                        <input type="number" class="input border w-full mt-1" [(ngModel)]="manufactTotal" readonly>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-5 pt-5">
+                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer  mt-1">
+                        <label class="control-label mb-4">{{"PerformanceList"|translate}}</label>
+                        <input type="text" class="input w-full border mt-1" [(ngModel)]="performPer" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+        <div class="intro-y box px-5 pb-5 mb-5" style="text-align: center;">
+            <h1 style="font-size: xx-large;">{{"ProductionCapacityList"|translate}}</h1>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                    <label class="control-label font-weight-bold ml-3">{{"PharmaceuticalProductLine"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" [(ngModel)]="pharmaLine" readonly>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                    <label class="control-label font-weight-bold ml-3">{{"LineOfCosmeticProducts"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" [(ngModel)]="cosmeticLine" readonly>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                    <label class="control-label font-weight-bold ml-3">{{"FluidProductLine"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" [(ngModel)]="fluidLine" readonly>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-3 pt-2">
+                <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1" style="align-self: center;">
+                    <label class="control-label font-weight-bold ml-3">{{"FoamProductsLine"|translate}}</label>
+                    <input type="number" class="input border w-full mt-1" [(ngModel)]="foamLine" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

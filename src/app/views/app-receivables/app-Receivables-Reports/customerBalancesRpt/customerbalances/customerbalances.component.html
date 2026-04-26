@@ -1,0 +1,665 @@
+<form [formGroup]="customerbalanceAddForm" >    
+    <div class="content">
+        <div class="card">
+            <div class="card-header text-center">
+            </div>
+            <input type="number" class="form-control" formControlName="id"  hidden>
+            <div class="card-body">
+                <div class="intro-y box p-5 mt-12 sm:mt-5">
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Customer"|translate}}
+                                
+                            </label>                            
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="customersList"
+                                [(ngModel)]="selectedsup"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="dealerId"
+                                filterBy="text" appendTo="body" autoWidth="false"
+                                [virtualScroll]="true" [lazy]="true" (onLazyLoad)="loadLazyCustomerOptions($event)"  [virtualScrollItemSize]="40">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"VoucherStatus"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="statusList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="status"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" >
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="userbranchList"
+                                [(ngModel)]="selectedbranch"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="branchId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>  
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"ToDate"|translate}}</label>
+                            <input type="date" formControlName="toDate" class="input border w-full mt-1 " >  
+                        </div>
+
+                    </div>   
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <input type="checkbox" formControlName="isFiscalYear" class="input border mr-2 mr-3 ml-3"
+                                [(ngModel)]="showfiscalyear" (ngModelChange)="onFiscalYearChange()">
+                            <label class="cursor-pointer select-none w-full"
+                                for="isFiscalYear">{{"OnFiscalYear"|translate}}</label>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <input type="checkbox" formControlName="isMonthlyBalance" class="input border mr-2 mr-3 ml-3"
+                                [(ngModel)]="showmonthlybalance" (ngModelChange)="onMonthlyChange()">
+                            <label class="cursor-pointer select-none w-full"
+                                for="isMonthlyBalance">{{"OnMonthlyBalance"|translate}}</label>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <input type="checkbox" formControlName="isBranched" class="input border mr-2 mr-3 ml-3"
+                                [(ngModel)]="showbranched" (ngModelChange)="onbranchedChange()">
+                            <label class="cursor-pointer select-none w-full"
+                                for="isBranched">{{"OnBranched"|translate}}</label>
+                        </div>                        
+                    </div>
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"  >
+                            <label class="control-label font-weight-bold">{{"FiscalYear"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="fiscalYearsList"
+                                [(ngModel)]="selectedyear"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="yearId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="!showfiscalyear"
+                                (onChange)="GetPeriodFiscalYear()">
+                            </p-dropdown> 
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"  >
+                            <label class="control-label font-weight-bold">{{"FiscalYear"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="fiscalYearsList"
+                                [(ngModel)]="selectedyear2"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="monthYearId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false" [disabled]="!showmonthlybalance"
+                                (onChange)="checkmonthlyValue()"
+                                >
+                            </p-dropdown> 
+                        </div>
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1"  >
+                            <label class="control-label font-weight-bold">{{"Branch"|translate}}</label>
+                            <p-multiSelect emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [style]="{'minWidth':'100%', 'width': '100%'}" optionLabel="text"
+                                styleClass="input border w-full mt-1" optionValue="id" formControlName="branchIds"
+                                [options]="userbranchlist2" [filter]="true" filterBy="text" appendTo="body" autoWidth="false" 
+                                [virtualScroll]="false" [disabled]="!showbranched" (onChange)="checkbranchValue($event)"  >                                
+                            </p-multiSelect>
+                       </div>
+                       <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label class="control-label font-weight-bold">{{"CustomerType"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="dealerTypesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="dealerTypeId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                     <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="currencyId" class="control-label font-weight-bold">{{"ShowReportInCurrency"|translate}}</label>
+                            <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="currenciesList"
+                                [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
+                                optionLabel="text" optionValue="id" [filter]="true" formControlName="currencyId"
+                                filterBy="text" appendTo="body" autoWidth="false" [virtualScroll]="false"
+                                (onChange)="onCurrencyChange(customerbalanceAddForm.get('currencyId')?.value)">
+                            </p-dropdown>
+                        </div>
+
+                         <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-1">
+                            <label for="currRate" class="control-label font-weight-bold">{{"ExchangeRatio"|translate}}</label>
+                            <input type="number" formControlName="currRate" class="input border w-full mt-1 " [readOnly]="true">
+                        </div>
+                     </div>
+                        
+
+                    
+                    <div class="grid grid-cols-12 gap-5 pt-5">
+                        <div class="col-span-12 sm:col-span-6 xxl:col-span-6 cursor-pointer mt-1">
+                            <input type="text"  class="input border w-full mt-1 " [hidden]="true" >
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-12 gap-5 mr-2">
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"ShowRecord"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="GetReport()" [disabled]="disableGet" ></p-button>
+                        </div>
+                        <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mb-5 mr-2">
+                            <p-button label='{{"NewSearch"|translate}}'
+                                styleClass="p-ripple p-element button w-32 mr-2 mb-5  items-center justify-center bg-theme-1 text-white p-button p-component"
+                                icon="" (click)="clearFormData()"></p-button>
+                        </div>
+                        
+                    </div>
+
+                </div> 
+<!-- FiscalYear Table ============================================================================= START -->
+<div *ngIf="showfiscalyear">      
+    <div class="intro-y box tab-content">
+        <div class="tab-content__pane active">
+            <div class="intro-y box px-5 pt-5">
+                <div class="col-md-12" id="htmlData">
+                    <p-table #dt [value]="voucherData" [rows]="16" [paginator]="true"
+                                [globalFilterFields]="['id','dealerName','openingBalance','CustomerNo']" styleClass="p-datatable-gridlines" 
+                                responsiveLayout="scroll" [rowHover]="true" dataKey="id" 
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true" paginatorDropdownAppendTo="body">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                            <i class="pi pi-star-fill" 
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title= "{{'AddToFavourite' | translate}}"
+                                                tooltipposition="bottom">
+                                            </i>
+
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                            pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel2(dt)"
+                                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                            <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf2(dt)"
+                                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>     
+                                        <!-- <th class="head_tb" style="width: 10% !important;" >{{"CustomerNo"|translate}} </th> -->
+                                        <th class="head_tb" style="width: 10% !important;" pSortableColumn="dealerNo">{{"CustomerNo"|translate}} <p-sortIcon field="dealerNo"></p-sortIcon></th>
+                                        <!-- <th class="head_tb" >{{"Customer"|translate}} </th> -->
+                                        <th class="head_tb" style="width: 10% !important;" pSortableColumn="dealerName">{{"Customer"|translate}} <p-sortIcon field="dealerName"></p-sortIcon></th>
+                                        <!-- <th class="head_tb" style="width: 10% !important;" >{{"OpeningBalanceV"|translate}} </th>                       -->
+                                        <th class="head_tb" style="width: 10% !important;" pSortableColumn="openingBalance">{{"OpeningBalanceV"|translate}} <p-sortIcon field="openingBalance"></p-sortIcon></th>
+                                        <th style="width: 10% !important;" *ngFor="let header of dynamicHeaders">{{ header }}</th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                    <tr>
+                                      <td [hidden]="true">{{ row.id }}</td>
+                                      <td>{{ row.dealerNo }}</td>
+                                      <td>{{ row.dealerName }}</td>
+                                      <td  style="text-align: right;">{{ row.openingBalance }}</td>
+                                      <ng-container *ngFor="let header of dynamicHeaders; let j = index">
+                                        <td>{{ row['c' + (j+1)]| number:'1.3-3' }}</td>
+                                      </ng-container>
+                                      <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                            <mat-icon class="">more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #userMenu="matMenu">
+                                            <button mat-menu-item (click)="OpenAccountStatementForm(row.dealerId)">
+                                                <i class="material-icons" style="color:blue">Show</i> &nbsp;{{"accountsstatement"|translate}} </button>
+                                        </mat-menu>
+                                    </td>
+                                      
+                                      <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id" [ngModelOptions]="{standalone: true}"></td>                                                              
+                                    </tr>
+                                  </ng-template>
+
+                                  <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td style="flex: 0 0 90rem" colspan="1"></td>
+                                        <td style="flex: 0 0 7rem" class="total_b" >{{"total"|translate}}</td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.total"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <ng-container *ngFor="let header of dynamicHeaders; let j = index">
+                                            <td style="flex: 0 0 7rem">
+                                                <input type="text" [value]="this['tot' + (j + 1)]"
+                                                    class="input border w-full mt-1"
+                                                    [disabled]="true">
+                                            </td>
+                                        </ng-container>
+                                        <td style="flex: 0 0 33rem" [attr.colspan]="dynamicHeadersCount + 1"></td>
+                                        <!-- <td style="flex: 0 0 33rem" colspan="12"></td> -->
+                                    </tr>
+                                </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FiscalYear Table ================================================================================= END -->
+
+
+<!-- MonthlyBalance Table ============================================================================= START -->
+<div *ngIf="showmonthlybalance">      
+    <div class="intro-y box tab-content">
+        <div class="tab-content__pane active">
+            <div class="intro-y box px-5 pt-5">
+                <div class="col-md-12" id="htmlData">
+                    <p-table #dt [value]="voucherData"  [rows]="16" [paginator]="true"
+                                 [globalFilterFields]="['dealerNo','dealerName','openingBalance','month1','month2','month3','month4','month5','month6','month7','month8','month9','month10','month11','month12']"
+                                 styleClass="p-datatable-gridlines" 
+                                responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                            <i class="pi pi-star-fill" 
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title= "{{'AddToFavourite' | translate}}"
+                                                tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                            pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel3(dt)"
+                                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                            <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf3(dt)"
+                                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>                                                                         
+                                        <th class="head_tb" >{{"CustomerNo"|translate}} </th>
+                                        <th class="head_tb" >{{"Customer"|translate}} </th>
+                                        <th class="head_tb" >{{"OpeningBalanceV"|translate}} </th>
+                                        <th class="head_tb" >{{"Month1"|translate}} </th>
+                                        <th class="head_tb" >{{"Month2"|translate}} </th>
+                                        <th class="head_tb" >{{"Month3"|translate}} </th>
+                                        <th class="head_tb" >{{"Month4"|translate}} </th>
+                                        <th class="head_tb" >{{"Month5"|translate}} </th>
+                                        <th class="head_tb" >{{"Month6"|translate}} </th>
+                                        <th class="head_tb" >{{"Month7"|translate}} </th>
+                                        <th class="head_tb" >{{"Month8"|translate}} </th>
+                                        <th class="head_tb" >{{"Month9"|translate}} </th>
+                                        <th class="head_tb" >{{"Month10"|translate}} </th>
+                                        <th class="head_tb" >{{"Month11"|translate}} </th>
+                                        <th class="head_tb" >{{"Month12"|translate}} </th>
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                    <tr>
+                                      <td [hidden]="true">{{ row.dealerId}}</td>
+                                      <td>{{ row.dealerNo}}</td>
+                                      <td>{{ row.dealerName}}</td>
+                                      <td>{{ row.openingBalance }}</td>
+                                      <td>{{ row.month1 | number:'1.3-3' }}</td>
+                                      <td>{{ row.month2 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month3 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month4 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month5 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month6 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month7 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month8 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month9 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month10 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month11 | number:'1.3-3'}}</td>
+                                      <td>{{ row.month12 | number:'1.3-3'}}</td>
+                                      <!-- <td [hidden]="true">{{ row.accountOrder }}></td> -->
+                                      <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                            <mat-icon class="">more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #userMenu="matMenu">
+                                            <button mat-menu-item (click)="OpenAccountStatementForm(row.dealerId)">
+                                                <i class="material-icons" style="color:blue">Show</i> &nbsp;{{"accountsstatement"|translate}} </button>
+                                            <!-- <button mat-menu-item (click)="DeleteAccount(accountList.id)"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                                &nbsp;{{"Delete"|translate}} </button> -->
+                                        </mat-menu>
+                                    </td>
+                                      
+                                      <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id" [ngModelOptions]="{standalone: true}"></td>                                                              
+                                    </tr>
+                                  </ng-template>
+                                  <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td style="flex: 0 0 90rem" colspan="1"></td>
+                                        <td style="flex: 0 0 7rem" >{{"total"|translate}}</td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.total"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot1"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot2"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot3"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot4"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot5"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot6"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot7"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot8"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot9"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot10"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot11"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="text" [value]="this.tot12"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <td style="flex: 0 0 33rem" ></td>
+                                        <!-- <td style="flex: 0 0 33rem" colspan="12"></td> -->
+                                    </tr>
+                                </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MonthlyBalance Table ================================================================================= END -->
+
+
+<!-- Branched Table======================================================================================== START  -->
+<div *ngIf="showbranched">      
+    <div class="intro-y box tab-content">
+        <div class="tab-content__pane active">
+            <div class="intro-y box px-5 pt-5">
+                <div class="col-md-12" id="htmlData">
+                    <p-table #dt [value]="voucherData" [rows]="16" [paginator]="true"
+                                [globalFilterFields]="['dealerNo','DealerName','branch','accountOrder']"styleClass="p-datatable-gridlines" 
+                                responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                                currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                [showCurrentPageReport]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="grid grid-cols-12 gap-5 ">
+                                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder=' {{"search"|translate}} ' />
+                                            </span>
+                                        </div>
+                                        <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                            <i class="pi pi-star-fill" 
+                                                [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                (click)="updateFavourite(this.screenId)"
+                                                title= "{{'AddToFavourite' | translate}}"
+                                                tooltipposition="bottom">
+                                            </i>
+                                            <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                            pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel4(dt)"
+                                            tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                            <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                            </button>
+                                            <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                                    pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf4(dt)"
+                                                    tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                                    <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>     
+                                        
+
+                                        <th class="head_tb" style="width: 15% !important;" >{{"CustomerNo"|translate}} </th>
+                                        <th class="head_tb" style="width: 30% !important;" >{{"Customer"|translate}} </th>
+                                        <th *ngFor="let header of dynamicHeaders">{{ header }}</th>                                                            
+                                        <!-- <th *ngFor="let header of dynamicHeaders">{{ header }}</th> -->
+                                        <!-- <th class="head_tb" style="width: 15% !important;">{{ selectedBranch }}</th> -->
+                                        <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                                    </tr>
+                                </ng-template>
+
+                                
+
+
+                                <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                    <tr>
+                                   <!--    <td>{{ row.AccountNumber }}</td>
+                                      <td>{{ row.AccountName }}</td>
+                                      <td>{{ row.balance }}</td> -->
+                                      <td>{{ row.dealerNo }}</td>
+                                      <td>{{ row.DealerName }}</td>
+                                      <td *ngFor="let branch of dynamicHeaders">{{ row[branch]| number:'1.3-3' }}</td>
+                                      <!-- <ng-container *ngFor="let header of dynamicHeaders; let j = index">
+                                        <td>{{ row['c' + (j+1)]| number:'1.3-3' }}</td>
+                                      </ng-container> -->
+                                      <td [hidden]="true">{{ row.accountOrder }}></td>
+                                      <td>
+                                        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                            <mat-icon class="">more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #userMenu="matMenu">
+                                            <button mat-menu-item (click)="OpenAccountStatementForm(row.DealerId)">
+                                                <i class="material-icons" style="color:blue">Show</i> &nbsp;{{"accountsstatement"|translate}} </button>
+                                            <!-- <button mat-menu-item (click)="DeleteAccount(accountList.id)"> <i class="material-icons"
+                                                    style="color:red">delete</i>
+                                                &nbsp;{{"Delete"|translate}} </button> -->
+                                        </mat-menu>
+                                    </td>
+                                      
+                                      <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id" [ngModelOptions]="{standalone: true}"></td>                                                              
+                                    </tr>
+                                  </ng-template>
+
+
+                                  <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td style="flex: 0 0 15%" colspan="1"></td>
+                                        <td style="flex: 0 0 30%" >{{"total"|translate}}</td>
+                                        <td *ngFor="let branch of dynamicHeaders">{{ branchTotals[branch]| number:'1.3-3' }}</td>
+                                        <td style="flex: 0 0 5%" ></td>
+                                        <!-- <td style="flex: 0 0 33rem" colspan="12"></td> -->
+                                    </tr>
+                                </ng-template>
+
+                                <!--   <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td style="flex: 0 0 90rem" colspan="1"></td>
+                                        <td style="flex: 0 0 7rem" >{{"total"|translate}}</td>
+                                        <td style="flex: 0 0 7rem">
+                                            <input type="number" [value]="this.total"
+                                                class="input border w-full mt-1"
+                                                 [disabled]="true">
+                                        </td>
+                                        <ng-container *ngFor="let header of dynamicHeaders; let j = index">
+                                            <td style="flex: 0 0 7rem">
+                                                <input type="number" [value]="this['tot' + (j + 1)]"
+                                                    class="input border w-full mt-1"
+                                                    [disabled]="true">
+                                            </td>
+                                        </ng-container>
+                                        <td style="flex: 0 0 33rem" [attr.colspan]="dynamicHeadersCount + 1"></td>
+                                         <td style="flex: 0 0 33rem" colspan="12"></td> 
+                                    </tr>
+                                </ng-template> -->
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Branched Table======================================================================================== END -->
+
+
+<!-- stadndered Table ============================================================================= START -->
+<div *ngIf="!showfiscalyear && !showmonthlybalance && !showbranched">
+                <div class="intro-y box tab-content">
+                    <div class="tab-content__pane active">
+                        <div class="intro-y box px-5 pt-5">
+                            <div class="col-md-12" id="htmlData">    
+                                <p-table #dt [value]="voucherData" [rows]="16" [paginator]="true"
+                                    [globalFilterFields]="['dealerNo','dealerName','balance']" styleClass="p-datatable-gridlines" 
+                                    responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+                                    currentPageReportTemplate="{{'showing'|translate}} {first} {{'to'|translate}}  {last} {{'of'|translate}} {totalRecords} {{'entries'|translate}}"
+                                    [showCurrentPageReport]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="grid grid-cols-12 gap-5 ">
+                                            <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1 mb-5">
+                                                <span class="p-input-icon-left">
+                                                    <i class="pi pi-search"></i>
+                                                    <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                        placeholder=' {{"search"|translate}} ' />
+                                                </span>
+                                            </div>
+                                            <div class="col-span-12 sm:col-span-8 xxl:col-span-8 cursor-pointer mt-5" align="end">
+                                                <i class="pi pi-star-fill" 
+                                                    [ngClass]="{'custom-star-icon': custom, 'custom-star-icon2': !custom}"
+                                                    (click)="updateFavourite(this.screenId)"
+                                                    title= "{{'AddToFavourite' | translate}}"
+                                                    tooltipposition="bottom">
+                                                </i>
+                                                <button title="{{'ExportToExcel' | translate}}" class="mr-2" type="button" pbutton=""
+                                                pripple="" icon="pi pi-file-excel" ptooltip="XLS" (click)="exportExcel1(dt)"
+                                                tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                                <img src="../../../../assets/dist/images/icons/excel.svg" width="20px">
+                                                </button>
+                                                <button title="{{'ExportToPdf' | translate}}" class="mr-2" type="button" pbutton=""
+                                                        pripple="" icon="pi pi-file-excel" ptooltip="PDF" (click)="exportPdf1(dt)"
+                                                        tooltipposition="bottom" class="button px-2 mr-1 mb-2 text-gray-700">
+                                                        <img src="../../../../assets/dist/images/icons/pdf.svg" width="20px">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>                                                                             
+                                            <th class="head_tb" style="width: 20% !important;" pSortableColumn="dealerNo">{{"CustomerNo"|translate}} <p-sortIcon field="dealerNo"></p-sortIcon></th>
+                                            <th class="head_tb" style="width: 30% !important;" pSortableColumn="dealerName">{{"Customer"|translate}} <p-sortIcon field="dealerName"></p-sortIcon></th>
+                                            <th class="head_tb" style="width: 20% !important;" pSortableColumn="balance">{{"Balance"|translate}} <p-sortIcon field="balance"></p-sortIcon></th>
+                                            <th style="width: 5%"><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+
+                                    </ng-template>
+                                    <ng-template pTemplate="body" class=".p-datatable-tbody" let-row let-i="rowIndex">
+                                        <tr>
+                                          <td [hidden]="true">{{ row.dealerId}}</td>
+                                          <td>{{ row.dealerNo}}</td>
+                                          <td>{{ row.dealerName }}</td>
+                                          <td>{{ row.balance | number: '1.3-3'  }}</td>
+                                          <!-- <td [hidden]="true">{{ row.accountOrder }}></td> -->
+                                          <td>
+                                            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                                <mat-icon class="">more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button mat-menu-item (click)="OpenAccountStatementForm(row.dealerId)">
+                                                    <i class="material-icons" style="color:blue">Show</i> &nbsp;{{"accountsstatement"|translate}} </button>
+                                                <!-- <button mat-menu-item (click)="DeleteAccount(accountList.id)"> <i class="material-icons"
+                                                        style="color:red">delete</i>
+                                                    &nbsp;{{"Delete"|translate}} </button> -->
+                                            </mat-menu>
+                                        </td>
+                                          
+                                          <td [hidden]="true"><input type="checkbox" [(ngModel)]="row.id" [ngModelOptions]="{standalone: true}"></td>                                                              
+                                        </tr>
+                                      </ng-template>
+                                      <ng-template pTemplate="emptymessage">
+                                        <tr class="odd">
+                                            <td valign="top" colspan="9"> {{"noEntriesFoundLabel"|translate}}</td>
+                                        </tr>
+                                    </ng-template>
+                                      <ng-template pTemplate="footer">
+                                        <tr>
+                                            <td style="flex: 0 0 90rem" colspan="1"></td>
+                                            <td style="flex: 0 0 7rem" >{{"total"|translate}}</td>
+                                            <td style="flex: 0 0 7rem">
+                                                <input type="text" [value]="this.total" style="width: 100%;"
+                                                    class="input border w-full mt-1"
+                                                     [disabled]="true">
+                                            </td>
+                                            <td style="flex: 0 0 33rem" [attr.colspan]="12"></td>
+                                            <!-- <td style="flex: 0 0 33rem" colspan="3"></td> -->
+                                        </tr>
+                                    </ng-template>
+
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+<!-- stadndered Table ============================================================================= ===================End  -->
+ 
+                      
+            </div>
+        </div>
+    </div>
+</form>

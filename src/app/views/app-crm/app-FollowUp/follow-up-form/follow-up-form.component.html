@@ -1,0 +1,84 @@
+<form [formGroup]="FollowUpForm" (ngSubmit)="OnSaveForms()">
+
+    <div class="content">
+        <div class="card">
+
+            <div class="card-header text-center mt-5">
+                <h1 class="text-3xl">{{data.title}}</h1>
+            </div>
+
+            <div class="intro-y box p-5 mt-12 sm:mt-5">
+                <div class="grid grid-cols-12 gap-5 mt-5">
+
+                    <input type="text" formControlName="id" class="form-control " hidden>
+                    <input type="text" formControlName="companyId" class="form-control " hidden>
+
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label for="sourceId"
+                                class="control-label font-weight-bold">{{"FollowUpType"|translate}}<span
+                                    class="required-asterisk">*</span></label>
+                            <p-dropdown id="followUpTypeId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="followUpTypeList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="followUpTypeId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                                [ngClass]="{ 'invalid-field': FollowUpForm.get('followUpTypeId')?.value <= 0}">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="relatedId"
+                                class="control-label font-weight-bold">{{"ClientOpportunityNumber"|translate}}</label>
+                            <input id="relatedId" type="number" formControlName="relatedId"  readonly
+                                class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label for="description" class="control-label font-weight-bold">{{"Subject"|translate}}<span
+                                    class="required-asterisk">*</span></label>
+                            <input id="description" type="text" formControlName="description"
+                                class="input border w-full mt-1 " [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-1">
+                            <label for="dueDate"
+                                class="control-label font-weight-bold">{{"Dateandtimeofimplementation"|translate}}</label>
+                            <input id="" type="datetime-local"  formControlName="dueDate" class="input border w-full mt-1 "
+                                [attr.disabled]="disableAll ? 'disabled' : null">
+                        </div>
+
+                        <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mt-1">
+                            <label for="assignedToUserId"
+                                class="control-label font-weight-bold">{{"Convertedto"|translate}}<span
+                                    class="required-asterisk">*</span></label>
+                            <p-dropdown id="assignedToUserId" emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}'
+                                [options]="ConvertedToList" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                styleClass="input border w-full mt-1" optionLabel="text" optionValue="id"
+                                [filter]="true" formControlName="assignedToUserId" filterBy="text" appendTo="body"
+                                autoWidth="false" [virtualScroll]="false" [disabled]="disableAll"
+                                [ngClass]="{ 'invalid-field': FollowUpForm.get('assignedToUserId').value <= 0}">
+                            </p-dropdown>
+                        </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1 flex justify-end"
+                mat-dialog-actions>
+                <p-button label='{{"Save"|translate}}' icon="pi pi-save" class="ml-4"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
+                    [disabled]="FollowUpForm.invalid  || disableSave" type="submit" [hidden]="showsave">
+                </p-button>
+
+                <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                    styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-6 text-white p-button p-component"
+                    (click)="dialogRef.close(false)">
+                </p-button>
+
+            </div>
+
+        </div>
+    </div>
+</form>

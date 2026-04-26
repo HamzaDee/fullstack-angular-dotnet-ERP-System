@@ -1,0 +1,20 @@
+td, th {
+    border: 1px solid #000000;
+    
+    padding: 8px;
+  }
+
+  @media print {
+    body * {
+        visibility: hidden; /* Hide everything */
+    }
+    #print-section, #print-section * {
+        visibility: visible; /* Show only the print section */
+    }
+    #print-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}  
