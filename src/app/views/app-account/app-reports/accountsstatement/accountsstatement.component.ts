@@ -937,6 +937,7 @@ export class AccountsstatementComponent implements OnInit {
     var invId=0;
     this.Lang = this.jwtAuth.getLang();
     
+    
     switch (catId) {      
       case 18 :   // Entry Voucher
           this.Lang = this.jwtAuth.getLang();
