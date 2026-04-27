@@ -489,7 +489,8 @@ export class ServiceInvoiceListComponent implements OnInit {
     if (this.Lang == "ar") {
       const reportUrl = `rptServiceInvoiceAR?VId=${voucherId}&Lang=${this.Lang}&Balance=${Balance}`;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
-      window.open(url, '_blank');           
+      window.open(url, '_blank');    
+             
     }
     else {
       const reportUrl = `rptServiceInvoiceEN?VId=${voucherId}&Lang=${this.Lang}&Balance=${Balance}`;
