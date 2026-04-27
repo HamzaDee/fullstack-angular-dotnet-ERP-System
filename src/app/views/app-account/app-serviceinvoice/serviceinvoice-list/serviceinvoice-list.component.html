@@ -90,7 +90,7 @@
                             <i class="material-icons" style="color:red">delete</i> &nbsp;{{"Delete"|translate}} </button>
                 <!--         <button mat-menu-item (click)="CopyServiceInvoice(openingbalance.id)" hidden> 
                             <i class="material-icons" style="color:rgba(0, 255, 76, 0.747)">repeat</i> &nbsp;{{"VoucherIteration"|translate}} </button> -->
-                        <button mat-menu-item (click)="PrintServiceInvoice(openingbalance.id)"> 
+                        <button mat-menu-item (click)="PrintServiceInvoice(openingbalance.id , openingbalance.amount)"> 
                             <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>
                         <button mat-menu-item (click)="CopyServiceInvoice(openingbalance.id)"> 
                             <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>

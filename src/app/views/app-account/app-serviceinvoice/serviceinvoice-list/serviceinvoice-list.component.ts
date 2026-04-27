@@ -483,16 +483,16 @@ export class ServiceInvoiceListComponent implements OnInit {
     }
   }
 
-  PrintServiceInvoice(voucherId: number) {
+  PrintServiceInvoice(voucherId: number , Balance : number) {
     debugger
     this.Lang = this.jwtAuth.getLang();
     if (this.Lang == "ar") {
-      const reportUrl = `rptServiceInvoiceAR?VId=${voucherId}&Lang=${this.Lang}`;
+      const reportUrl = `rptServiceInvoiceAR?VId=${voucherId}&Lang=${this.Lang}&Balance=${Balance}`;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }
     else {
-      const reportUrl = `rptServiceInvoiceEN?VId=${voucherId}&Lang=${this.Lang}`;
+      const reportUrl = `rptServiceInvoiceEN?VId=${voucherId}&Lang=${this.Lang}&Balance=${Balance}`;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }

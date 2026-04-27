@@ -420,7 +420,7 @@
                     [disabled]="ServiceInvoiceAddForm.invalid || !this.validDate "  type="submit"
                     [hidden]="this.opType == 'Show'"></p-button>
                     <!-- || this.disableSave -->
-                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintServiceInvoice(this.ServiceInvoiceAddForm.value.id)"
+                <p-button label='{{"Print"|translate}}' icon="pi pi-print" class="ml-4" (click)="PrintServiceInvoice(this.ServiceInvoiceAddForm.value.id,fNetTotal)"
                     styleClass="p-ripple p-element button w-32 mr-2 mb-2 items-center justify-center bg-theme-1 text-white p-button p-component"
                     [disabled]="ServiceInvoiceAddForm.invalid || !this.validDate" type="button"
                     [hidden]="this.opType == 'Show'"></p-button>

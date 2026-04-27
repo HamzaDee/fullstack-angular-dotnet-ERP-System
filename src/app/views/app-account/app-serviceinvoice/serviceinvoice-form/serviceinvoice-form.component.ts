@@ -541,7 +541,7 @@ export class ServiceInvoiceFormComponent implements OnInit {
 
           var PrintAfterSave = this.voucherTypeList.find(option => option.label === this.ServiceInvoiceAddForm.value.voucherTypeId)?.printAfterSave || false;
           if (PrintAfterSave == true) {
-            this.PrintServiceInvoice(Number(result.message));
+            this.PrintServiceInvoice(Number(result.message), Number(this.fNetTotal));
           }
 
           if (this.opType == 'Edit' || this.opType == 'Copy' || this.fromReserved == 1) {
@@ -1200,16 +1200,16 @@ export class ServiceInvoiceFormComponent implements OnInit {
     });
   }
 
-  PrintServiceInvoice(voucherId: number) {
+  PrintServiceInvoice(voucherId: number , Balance : number ) {
 
     this.Lang = this.jwtAuth.getLang();
     if (this.Lang == "ar") {
-      const reportUrl = `rptServiceInvoiceAR?VId=${voucherId}`;
+      const reportUrl = `rptServiceInvoiceAR?VId=${voucherId}&Balance=${Balance}`;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }
     else {
-      const reportUrl = `rptServiceInvoiceEN?VId=${voucherId}`;
+      const reportUrl = `rptServiceInvoiceEN?VId=${voucherId}&Balance=${Balance}`;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }
