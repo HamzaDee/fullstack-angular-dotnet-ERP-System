@@ -483,6 +483,7 @@ export class ServiceInvoiceListComponent implements OnInit {
     }
   }
 
+  
   PrintServiceInvoice(voucherId: number , Balance : number) {
     debugger
     this.Lang = this.jwtAuth.getLang();
