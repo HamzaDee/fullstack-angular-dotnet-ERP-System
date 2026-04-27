@@ -482,7 +482,6 @@ export class ServiceInvoiceListComponent implements OnInit {
       }, 0), 3);
     }
   }
-
   
   PrintServiceInvoice(voucherId: number , Balance : number) {
     debugger
