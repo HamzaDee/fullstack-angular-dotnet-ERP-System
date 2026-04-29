@@ -1,6 +1,6 @@
 export const config = {
   apiUrl: 'http://ui-lib-demo-api.herokuapp.com',
-      apiURL_Main: "http://localhost:7209",
+       apiURL_Main: "http://localhost:7209",
       // apiURL_Main: "http://94.249.83.196:7206",
       // apiURL_Main: "http://10.0.1.60:7209", // Galaxy Main
       // apiURL_Main: "http://10.0.1.60:7211", // ANAS Galaxy
@@ -43,7 +43,7 @@ export const config = {
       // apiURL_Main:window.location.hostname ==='localhost'?'http://localhost:9201' : window.location.hostname ==='10.0.0.60'?'http://10.0.1.60:9201':'http://10.0.1.60:9201', //GalaxyTest
       // apiURL_Main:window.location.hostname ==='localhost'?'http://localhost:7209' : window.location.hostname ==='79.133.46.214'?'http://79.133.46.214:7209':'http://79.133.46.214:7209', //E5tyarkom
       // apiURL_Main: "http://192.168.1.91:7209", //Hadethah 
-        //  apiURL_Main:window.location.hostname ==='localhost'?'http://localhost:7209' : window.location.hostname ==='192.168.100.18'?'http://192.168.100.18:7209':'http://92.253.22.204:7209', //Hadethah Static IP 
+      // apiURL_Main:window.location.hostname ==='localhost'?'http://localhost:7209' : window.location.hostname ==='192.168.100.18'?'http://192.168.100.18:7209':'http://92.253.22.204:7209', //Hadethah Static IP 
       // apiURL_Main:window.location.hostname ==='localhost'?'http://localhost:7209' : window.location.hostname ==='192.168.100.18'?'http://192.168.100.18:7209':'http://192.168.100.18:7209', //E5tyarkom
 
       

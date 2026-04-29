@@ -70,7 +70,7 @@
                     </label>
                     <p-dropdown emptyFilterMessage='{{"noEntriesFoundLabel"|translate}}' [options]="salesInvoiceList"
                         [style]="{'minWidth':'100%', 'width': '100%'}" styleClass="input border w-full mt-1"
-                        optionLabel="value" optionValue="label" [filter]="true"  filterBy="text"
+                        optionLabel="text" optionValue="id" [filter]="true"  filterBy="data1"
                         appendTo="body" autoWidth="false" [virtualScroll]="false"
                         formControlName="invoiceId"
                         (onChange)="GetSaleInvoices($event)" [disabled]="disableAll">

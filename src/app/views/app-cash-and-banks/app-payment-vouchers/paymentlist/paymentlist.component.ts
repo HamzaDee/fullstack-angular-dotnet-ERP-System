@@ -15,6 +15,7 @@ import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { AppCommonserviceService } from 'app/views/app-commonservice.service';
 import { AmiriRegular } from '../../../../../assets/fonts/amiri';
+import { PrintcheqsformComponent } from 'app/views/general/app-PrintCheqs/PrintCheqs-form/printcheqsform.component';
 
 @Component({
   selector: 'app-paymentlist',
@@ -22,17 +23,17 @@ import { AmiriRegular } from '../../../../../assets/fonts/amiri';
   styleUrls: ['./paymentlist.component.scss']
 })
 export class PaymentlistComponent implements OnInit {
-  @ViewChild(AppSearchFormComponent) childSearch: AppSearchFormComponent;
-  public TitlePage: string;
-  companyId: number;
-  tabelData: any[];
-  showLoader: boolean;
-  exportData: any[];
-  exportColumns: any[];
+  @ViewChild(AppSearchFormComponent) childSearch!: AppSearchFormComponent;
+  public TitlePage: string = '';
+  companyId: number = 0;
+  tabelData: any[] = [];
+  showLoader: boolean = false;
+  exportData: any[] = [];
+  exportColumns: any[] = [];
   screenId: number = 44;
-  custom: boolean;
-  data: any[];
-  Lang: string;
+  custom: boolean = false;
+  data: any[] = [];
+  Lang: string = '';
 
   constructor(
     private title: Title,
@@ -240,7 +241,7 @@ export class PaymentlistComponent implements OnInit {
   });
   }
 
-  getFavouriteStatus(screenId)
+  getFavouriteStatus(screenId : number)
   {
     debugger
     this.serv.GetFavouriteStatus(screenId).subscribe(result => {
@@ -257,7 +258,7 @@ export class PaymentlistComponent implements OnInit {
     })        
   }
 
-  refresPaymentlistArabic(data) {
+  refresPaymentlistArabic(data : any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -277,7 +278,7 @@ export class PaymentlistComponent implements OnInit {
     });
   }
 
-  refreshPaymentlistEnglish(data) {
+  refreshPaymentlistEnglish(data: any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -478,7 +479,7 @@ export class PaymentlistComponent implements OnInit {
     }
   }
 
-  PrintPaymentvoucher(voucherId: number, Balance) {
+  PrintPaymentvoucher(voucherId: number, Balance: number) {
     debugger
     this.Lang = this.jwtAuth.getLang();
     if (this.Lang == "ar") {
@@ -491,5 +492,20 @@ export class PaymentlistComponent implements OnInit {
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }
+  }
+
+   OpenChequesDialog(id: number) {
+    debugger      
+    let title = this.translateService.instant('PrintCheqsForm');
+    let dialogRef: MatDialogRef<any> = this.dialog.open(PrintcheqsformComponent, {
+      width: '900px',
+      disableClose: true,
+      direction: (this.jwtAuth.getLang() == "ar") ? 'rtl' : 'ltr',
+      data: { title: title, voucherId: id}
+    });
+    dialogRef.afterClosed()
+      .subscribe(res => {
+        
+      })
   }
 }

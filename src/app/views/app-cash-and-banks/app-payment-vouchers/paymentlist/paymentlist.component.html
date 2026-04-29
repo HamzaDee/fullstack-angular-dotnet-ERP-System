@@ -93,7 +93,9 @@
                         <button mat-menu-item (click)="CopyEntryvoucher(entryvouchers.id)"> 
                             <i class="material-icons" style="color:rgba(0, 255, 242, 0.507)">file_copy</i> &nbsp;{{"VoucherCopy"|translate}} </button>
                         <button mat-menu-item (click)="AttachmentEntryvoucher(entryvouchers.id)"> 
-                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>                        
+                            <i class="material-icons" style="color:black">attachment</i> &nbsp;{{"Attachments"|translate}} </button>  
+                        <button mat-menu-item (click)="OpenChequesDialog(entryvouchers.id)"> 
+                            <i class="material-icons" style="color:rgba(255, 0, 0, 0.836)">receipt_long</i> &nbsp;{{"Cheques"|translate}} </button>                      
                     </mat-menu>
                 </td>
             </tr>

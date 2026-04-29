@@ -18,10 +18,12 @@ import { PaymentformComponent } from './paymentform/paymentform.component';
 import { AppSearchModule } from 'app/views/general/app-searchs/app-searchs.module';
 import { AppFinancialvoucherModule } from 'app/views/general/app-Showfinancialdocuments/financialvoucher.module';
 import { AppCliqvoucherModule } from 'app/views/general/app-cliqvoucher/clickvoucher.module';
+import{AppPrintcheqsModule} from 'app/views/general/app-PrintCheqs/modules/printcheques.module';
 @NgModule({
   declarations: [
     PaymentlistComponent,
     PaymentformComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { AppCliqvoucherModule } from 'app/views/general/app-cliqvoucher/clickvou
     AppSearchModule,
     AppFinancialvoucherModule,
     AppCliqvoucherModule,
+    AppPrintcheqsModule,
     RouterModule.forChild(PaymentvoucherRoutingModule)
   ]
 })

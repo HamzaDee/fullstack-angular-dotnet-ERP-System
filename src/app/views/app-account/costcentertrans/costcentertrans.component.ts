@@ -186,6 +186,10 @@ export class CostcentertransComponent implements OnInit {
 CheckBudget(row)
 {
   debugger
+  if(row.amount == null || row.amount == undefined)
+  {
+    row.amount = 0;
+  }
   if(row.amount > 0)
     {
 

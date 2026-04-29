@@ -22,17 +22,17 @@ import { AmiriRegular } from '../../../../../assets/fonts/amiri';
   styleUrls: ['./receiptlist.component.scss']
 })
 export class ReceiptlistComponent implements OnInit {
-  @ViewChild(AppSearchFormComponent) childSearch: AppSearchFormComponent;
-  public TitlePage: string;
-  companyId: number;
-  tabelData: any[];
-  showLoader: boolean;
-  exportData: any[];
-  exportColumns: any[];
+  @ViewChild(AppSearchFormComponent) childSearch!: AppSearchFormComponent;
+  public TitlePage: string = '';
+  companyId: number = 0;
+  tabelData: any[] = [];
+  showLoader: boolean = false;
+  exportData: any[] = [];
+  exportColumns: any[] = [];
   screenId: number = 43;
-  custom: boolean;
-  data: any[];
-  Lang: string;
+  custom: boolean = false;
+  data: any[] = [];
+  Lang: string = '';
 
   constructor
     (
@@ -245,7 +245,7 @@ export class ReceiptlistComponent implements OnInit {
   });
   }
 
-  getFavouriteStatus(screenId)
+  getFavouriteStatus(screenId: number)
   {
     debugger
     this.serv.GetFavouriteStatus(screenId).subscribe(result => {
@@ -262,7 +262,7 @@ export class ReceiptlistComponent implements OnInit {
     })        
   }
 
-  refresReceiptlistArabic(data) {
+  refresReceiptlistArabic(data: any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -282,7 +282,7 @@ export class ReceiptlistComponent implements OnInit {
     });
   }
 
-  refreshReceiptlistEnglish(data) {
+  refreshReceiptlistEnglish(data: any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -481,7 +481,7 @@ export class ReceiptlistComponent implements OnInit {
     }
   }
 
-  PrintReciptvoucher(voucherId, Balance) {
+  PrintReciptvoucher(voucherId: number, Balance: number) {
     debugger
     this.Lang = this.jwtAuth.getLang();
     let User = this.jwtAuth.getUserId();

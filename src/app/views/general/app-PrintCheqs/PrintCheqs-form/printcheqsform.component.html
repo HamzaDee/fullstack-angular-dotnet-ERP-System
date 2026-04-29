@@ -1,0 +1,192 @@
+<div class="content">
+    <div class="card"> 
+        <div class="card-header text-center mt-5">
+            <h1>{{data.title}}</h1>
+        </div>
+        
+            <!-- <div class="grid grid-cols-12 gap-5 mt-5"> -->
+                <p-table #dt [value]="chequesList" [rows]="10"  [globalFilterFields]="['chequeNo']"    
+                    styleClass="p-datatable-gridlines" responsiveLayout="scroll" dataKey="id" [rowHover]="true" [scrollable]="true" scrollHeight="400px" 
+                    [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="grid grid-cols-12 gap-5 ">
+                                <div class="col-span-12 sm:col-span-2 xxl:col-span-2 cursor-pointer mt-3 mb-5">
+                                    <span class="p-input-icon-left" >
+                                        <i class="pi pi-search" style="left:0;"></i>
+                                        <input class="pInputText input border w-full mt-1" pInputText type="text" style="margin:5px;"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder=' {{"search"|translate}} ' />
+                                    </span>
+                                </div>                               
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 15%">{{ "ChequeNo" | translate }}</th>
+                                <th style="width: 15%">{{ "DueDate" | translate }}</th>
+                                <th style="width: 15%">{{ "Bank" | translate }}</th>
+                                <th style="width: 15%">{{ "TheAmount" | translate }}</th>
+                                <th style="width: 15%">{{ "DrawerName" | translate }}</th>
+                                <th style="width: 15%">{{ "CheqStamp" | translate }}</th>
+                                <th><i class="pi pi-cog" style="font-size: 1.2rem"></i></th>
+                            </tr>
+                        </ng-template>
+
+
+                        <ng-template pTemplate="body" class=".p-datatable-tbody " let-row let-i="rowIndex">
+                            <tr>
+                                <td>{{ row.chequeNo }}</td>
+                                <td>{{ row.dueDate | date:'yyyy-MM-dd' }}</td>
+                                <td>{{ row.bankName }}</td>
+                                <td>{{ row.amount }}</td>                                
+                                <td>{{ row.drawerName }}</td>
+                                <td>{{ row.cheqStamp }}</td>
+                                <td>
+                                    <button mat-menu-item (click)="printCheqe(row.chequeId,row.amount)"> <i
+                                        class="material-icons" style="color:rgba(0, 119, 255, 0.836)" title="{{'PrintAction'|translate}}">print</i>
+                                    </button>
+                                </td>
+                                <!-- <td style="width:5%">
+                                    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
+                                        <mat-icon class="">more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #userMenu="matMenu">
+                                        <button mat-menu-item (click)="printCheqe(i)"> 
+                                            <i class="material-icons" style="color:rgba(0, 119, 255, 0.836)">print</i> &nbsp;{{"PrintAction"|translate}} </button>                        
+                                    </mat-menu>
+                                </td> -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr class="odd">
+                                <td valign="top" colspan="8"> {{"noEntriesFoundLabel"|translate}}</td>
+                            </tr>
+                        </ng-template>
+                        <!-- <ng-template pTemplate="footer">
+                            <tr>
+                                <td valign="top" colspan="5"> </td>
+                                <td>{{"total"|translate}}</td>
+                                <td>{{CalculateTotal()}}</td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </ng-template> -->
+                    </p-table>
+            <!-- </div> -->
+        
+</div>
+
+
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1" mat-dialog-actions
+                    align="end">                 
+                    <p-button label='{{"Cancel"|translate}}' color="warn" icon="pi pi-undo"
+                        styleClass="p-ripple p-element button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white p-button p-component"
+                        (click)="dialogRef.close()"></p-button>
+                </div>
+<!-- <div class="loading-indicator" [hidden]="!showLoader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="intro-y box px-5 pb-5 mb-5">
+  <div class="card card-blue">  
+    <div class="intro-y tab-content"> 
+      <div class="intro-y box px-5 pt-5">
+        <div class="grid grid-cols-12 gap-5 mt-5">
+            <div class="col-span-12 sm:col-span-12 xxl:col-span-12 cursor-pointer mt-1">
+                <p-table #dt [value]="chequesList" dataKey="id" styleClass="p-datatable-gridlines"
+                            [rowHover]="true" [scrollable]="true" scrollHeight="400px" 
+                            >
+                            <ng-template pTemplate="caption">
+                                <div class="grid grid-cols-12 gap-5 ">
+                                    <div class="col-span-12 sm:col-span-4 xxl:col-span-4 cursor-pointer mb-5">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input class="pInputText input border w-full mt-1" pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                placeholder=' {{"search"|translate}} ' />
+                                        </span>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-3 xxl:col-span-3 cursor-pointer mt-3 mb-5">
+                                        <p-button label='{{"ReEnter"|translate}}'
+                                            styleClass="p-ripple p-element button w-full mr-2 ml-3 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            (click)="ReEnterValues()"></p-button>
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-5 xxl:col-span-5 cursor-pointer mt-3 mb-5">
+                                        <p-button label='{{"DistributeAmtToAllCenters"|translate}}'
+                                            styleClass="p-ripple p-element button w-full mr-2 ml-3 mb-5 flex items-center justify-center bg-theme-1 text-white p-button p-component"
+                                            (click)="DistributeAmtToAllCenters()"></p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                <th style="width: 15%">{{ "ChequeNo" | translate }}</th>
+                                <th style="width: 15%">{{ "DueDate" | translate }}</th>
+                                <th style="width: 15%">{{ "Bank" | translate }}</th>
+                                <th style="width: 15%">{{ "TheAmount" | translate }}</th>
+                                <th style="width: 15%">{{ "DrawerName" | translate }}</th>
+                                <th style="width: 15%">{{ "CheqStamp" | translate }}</th>
+                                <th style="width: 5%"></th>
+                                </tr>
+                            </ng-template>
+
+                            
+                            <ng-template pTemplate="body" let-row let-i="rowIndex">
+                                <tr>
+                                <td>{{ row.cheqNumber }}</td>
+                                <td>{{ row.estmiatedDate | date:'yyyy-MM-dd' }}</td>
+                                <td>{{ row.bank }}</td>
+                                <td>{{ row.amount }}</td>
+                                <td>{{ row.drawerName }}</td>
+                                <td>{{ row.cheqStamp }}</td>
+
+                       
+                                <td>
+                                    <button 
+                                    mat-icon-button
+                                    (click)="printCheqe(i)"
+                                    matTooltip="{{ 'Print' | translate }}">
+
+                                    <i class="material-icons" style="color:blue">print</i>
+                                    </button>
+                                </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                <td colspan="7">
+                                    {{"noEntriesFoundLabel"|translate}}
+                                </td>
+                                </tr>
+                            </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+        <br>                    
+                
+        
+
+      </div>
+    </div>
+  </div>
+</div> -->

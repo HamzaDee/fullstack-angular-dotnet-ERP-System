@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
+
 
 interface CliqVoucherDetail {
   id?: number;              // hidden

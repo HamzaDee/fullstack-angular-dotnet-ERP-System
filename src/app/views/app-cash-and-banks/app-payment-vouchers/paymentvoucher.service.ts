@@ -31,7 +31,7 @@ export class PaymentvoucherService {
     });
   }
 
-  public SavePaymentVoucher(post): Observable<any> {
+  public SavePaymentVoucher(post: any): Observable<any> {
     debugger
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.post<any>(`${environment.apiURL_Main + '/api/PaymentVoucher/SavePaymentVoucher/'
@@ -41,7 +41,7 @@ export class PaymentvoucherService {
       )
   }
   //post
-  public PostPaymentVoucher(voucherId): Observable<any> {
+  public PostPaymentVoucher(voucherId: number): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     var urlDelete = `${environment.apiURL_Main + '/api/PaymentVoucher/PostPaymentVoucher/' + voucherId +'/' + this.jwtAuth.getCompanyId() + '/' + this.jwtAuth.getUserId()}`;
     return this.http.post<any>(urlDelete,'',httpOptions)
@@ -50,7 +50,7 @@ export class PaymentvoucherService {
       );
   }
   //delete
-  public DeletePaymentVoucher(voucherId): Observable<any> {
+  public DeletePaymentVoucher(voucherId: number): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     var urlDelete = `${environment.apiURL_Main + '/api/PaymentVoucher/DeletePaymentVoucher/' + voucherId +'/' + this.jwtAuth.getCompanyId() + '/' + this.jwtAuth.getUserId()}`;
     return this.http.post<any>(urlDelete,'',httpOptions)
@@ -58,7 +58,7 @@ export class PaymentvoucherService {
         catchError(this.handleError)
       );
   }
-  public GetSerialVoucher(serialType, voucherTypeId, VoucherCategory, year, month): Observable<any> {
+  public GetSerialVoucher(serialType: string, voucherTypeId: number, VoucherCategory: string, year: number, month: number): Observable<any> {
     debugger
     return this.http.get(`${environment.apiURL_Main + '/api/EntryVouchers/GetSerialVoucher/'
       + this.jwtAuth.getCompanyId() + '/' + serialType + '/' + voucherTypeId + '/' + VoucherCategory + '/' + year + '/' + month} `)
@@ -66,7 +66,7 @@ export class PaymentvoucherService {
         catchError(this.handleError)
       )
   }
-  public GetInitailPaymentVoucher(voucherId, opType): Observable<any> {
+  public GetInitailPaymentVoucher(voucherId: number, opType: string): Observable<any> {
     if(voucherId > 0){
       if(opType == 'Copy'){
         return this.http.get(`${environment.apiURL_Main + '/api/PaymentVoucher/CopyPaymentVoucher/' + this.jwtAuth.getLang() 
@@ -106,7 +106,7 @@ export class PaymentvoucherService {
     }   
   }
 
-  public GetValidVoucherNo(VoucherNo, VoucherTypeId): Observable<any> {
+  public GetValidVoucherNo(VoucherNo: string, VoucherTypeId: number): Observable<any> {
     debugger
     return this.http.get(`${environment.apiURL_Main + '/api/PaymentVoucher/IsValidVoucherNo/' + this.jwtAuth.getCompanyId() + '/' + VoucherNo + '/' + VoucherTypeId}`)
       .pipe(
@@ -116,7 +116,7 @@ export class PaymentvoucherService {
 
 
 
-  public UpdateFavourite(screenId):Observable<any>
+  public UpdateFavourite(screenId: number):Observable<any>
   {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
       return this.http.post(`${environment.apiURL_Main + '/api/General/UpdateFavourite/'
@@ -125,7 +125,7 @@ export class PaymentvoucherService {
           catchError(this.handleError)
         )
   } 
-  public GetFavouriteStatus(screenId)
+  public GetFavouriteStatus(screenId: number):Observable<any>
   {
     return this.http.get(`${environment.apiURL_Main + '/api/General/GetFavouriteStatus/' + screenId } `)
     .pipe(
@@ -133,7 +133,7 @@ export class PaymentvoucherService {
     )
   }
 
-  public CheckDeleteStatus(voucherId,chqId)
+  public CheckDeleteStatus(voucherId: number, chqId: number)
   {
     return this.http.get(`${environment.apiURL_Main + '/api/General/CheckValidDelete/' + voucherId + '/' + chqId} `)
     .pipe(
@@ -141,7 +141,7 @@ export class PaymentvoucherService {
     )
   }
   
-  public GetAccountInfo(AccountId,BranchId): Observable<any> {
+  public GetAccountInfo(AccountId : number,BranchId: number): Observable<any> {
     debugger
     return this.http.get(`${environment.apiURL_Main + '/api/Common/GetAccountInfo/'
       + AccountId + '/' + this.jwtAuth.getCompanyId() + '/' + BranchId} `)
@@ -149,6 +149,10 @@ export class PaymentvoucherService {
         catchError(this.handleError)
       )
   }
+
+
+
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.log(error.error.message)

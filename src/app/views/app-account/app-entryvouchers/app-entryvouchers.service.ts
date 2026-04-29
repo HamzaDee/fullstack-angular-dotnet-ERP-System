@@ -117,6 +117,15 @@ export class AppEntryvouchersService {
       )    
   }
 
+    public GetPrintingCheques(VoucherId: number): Observable<any> {
+      debugger
+      return this.http.get(`${environment.apiURL_Main + '/api/EntryVouchers/GetPrintingCheques/'
+        + this.jwtAuth.getLang() + '/' + this.jwtAuth.getCompanyId() + '/' + this.jwtAuth.getUserId() + '/' + VoucherId} `)
+        .pipe(
+          catchError(this.handleError)
+        )
+    }
+
   public UpdateFavourite(screenId):Observable<any>
   {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };

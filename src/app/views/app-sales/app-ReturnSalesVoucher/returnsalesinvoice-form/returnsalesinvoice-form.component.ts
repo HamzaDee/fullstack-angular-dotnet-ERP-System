@@ -26,22 +26,22 @@ import { FinancialvoucherComponent } from 'app/views/general/app-Showfinancialdo
   styleUrls: ['./returnsalesinvoice-form.component.scss']
 })
 export class ReturnsalesinvoiceFormComponent implements OnInit {
-  @ViewChild(AppGeneralAttachmentComponent) childAttachment: AppGeneralAttachmentComponent;
-  @ViewChild(FinancialvoucherComponent) financialvoucher: FinancialvoucherComponent;
+  @ViewChild(AppGeneralAttachmentComponent) childAttachment!: AppGeneralAttachmentComponent;
+  @ViewChild(FinancialvoucherComponent) financialvoucher!: FinancialvoucherComponent;
   allowAccRepeat: any;
 
-  ReturnSalesInvoiceAddForm: FormGroup;
-  public TitlePage: string;
-  tabelData: any[];
-  loading: boolean;
-  opType: string;
-  showsave: boolean;
+  ReturnSalesInvoiceAddForm: FormGroup = new FormGroup({});
+  public TitlePage: string = '';
+  tabelData: any[] = [];
+  loading: boolean = false;
+  opType: string = "";
+  showsave: boolean = false;
   invoiceSerialsList: any[] = [];
   purInvoiceDTsList: any[] = [];
   purExpensesList: any[] = [];
   validDate = true;
   showLoader = false;
-  newAccNo: string;
+  newAccNo: string = '';
   isExistAccNo: boolean = true;
   selectedVoucherType: any;
   voucherId: any;
@@ -77,25 +77,25 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
   purchaseRequestList: any;
   receiptsList: any;
   isdisabled: boolean = false;
-  isCash: number;
-  pricewTax: number;
-  decimalPlaces: number;
-  defaultCurrencyId: number;
+  isCash: number = 0;
+  pricewTax: number = 0;
+  decimalPlaces: number = 0;
+  defaultCurrencyId: number = 0;
   // General Inventory Settings
-  costingMethod: number;
-  defaultStoreId: number;
-  inventoryType: number;
-  useAccountInGrid: boolean;
-  useBatch: boolean;
-  useCostCenter: boolean;
-  useExpiryDate: boolean;
-  useProductDate: boolean;
-  useSerial: boolean;
-  useStoreInGrid: boolean;
+  costingMethod: number = 0;
+  defaultStoreId: number = 0;
+  inventoryType: number = 0;
+  useAccountInGrid: boolean = false;
+  useBatch: boolean = false;
+  useCostCenter: boolean = false;
+  useExpiryDate: boolean = false;
+  useProductDate: boolean = false;
+  useSerial: boolean = false;
+  useStoreInGrid: boolean = false ;
   serialsListss: any;
   orginalSerialList: any;
   //End
-  expensese: number;
+  expensese: number = 0;
   fTotal: any;
   fTaxTotal: any;
   fNetTotal: any;
@@ -110,16 +110,16 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
   allowEditVoucherSerial: boolean = false;
   allowEditBranch: boolean = false;
   //End
-  UseTax: boolean;
+  UseTax: boolean = false;
   oldStoreId: any;
-  showRemainQty: boolean;
-  allowMultiCurrency: boolean;
-  disableCurrRate: boolean;
-  lang: string;
-  disableSave: boolean;
+  showRemainQty: boolean = false;
+  allowMultiCurrency: boolean = false;
+  disableCurrRate: boolean = false;
+  lang: string = '';
+  disableSave: boolean = false;
   disapleVoucherType: boolean = false;
-  voucherStoreId: number;
-  DefaultStoreId: number;
+  voucherStoreId: number = 0;
+  DefaultStoreId: number = 0;
   disableDetails:boolean = false;
   constructor
     (
@@ -244,7 +244,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       }
       result.voucherDate = formatDate(result.voucherDate, "yyyy-MM-dd", "en-US")
       result.referenceDate = formatDate(result.referenceDate, "yyyy-MM-dd", "en-US")
-      this.voucherTypeList = result.voucherTypeList.map((item) => ({
+      this.voucherTypeList = result.voucherTypeList.map((item : any) => ({
         label: item.id,
         value: lang == 'ar' ? item.voucherNameA : item.voucherNameE,
         isDefault: item.isDefault,
@@ -261,13 +261,13 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       }));
 
       debugger
-      this.salesInvoiceList = result.salesInvoiceList.map((item) => ({
-        label: item.id,
-        value: item.note,
-      }));
+      this.salesInvoiceList = result.salesInvoiceList;
+      // .map((item : any) => ({
+      //   label: item.id,
+      //   value: item.note,
+      // }));
 
-
-      this.itemsList = result.itemsList.map((item) => ({
+      this.itemsList = result.itemsList.map((item : any) => ({
         id: item.id,
         text: item.text,
         storeId: item.storeId,
@@ -275,7 +275,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
         hasSerial: item.hasSerial
       }));
 
-      this.customersList = result.customersList.map((item) => ({
+      this.customersList = result.customersList.map((item : any) => ({
         id: item.id,
         text: item.text,
         data2: item.data2,
@@ -284,7 +284,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
       this.branchesList = result.userCompanyBranchList;
       this.currencyList = result.currencyList;
-      this.decimalPlaces = result.currencyList.find(option => option.id === result.defaultCurrency).data2;
+      this.decimalPlaces = result.currencyList.find((option : any) => option.id === result.defaultCurrency).data2;
       // this.customersList = result.customersList;
       this.employeeList = result.employeeList;
       this.accountsList = result.accountsList;
@@ -335,10 +335,10 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
         this.purInvoiceDTsList.forEach(element => {
           debugger
-          this.itemsList.forEach(item => {
+          this.itemsList.forEach((item : any) => {
             if (item.id === element.itemId) {
-              this.unitsList[index] = this.allUntiesList.filter(unit => unit.id == element.unitId);
-              this.bounsunitsList[index] = this.allUntiesList.filter(unit => unit.id == element.bonusUnitId);
+              this.unitsList[index] = this.allUntiesList.filter((unit : any) => unit.id == element.unitId);
+              this.bounsunitsList[index] = this.allUntiesList.filter((unit : any) => unit.id == element.bonusUnitId);
               index++;
             }
           });
@@ -373,21 +373,21 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       this.purAccId = 0;
       if (this.opType !== 'Copy') {
         if (result.purchaseSerialsModelList !== null && result.purchaseSerialsModelList.length !== 0 && result.purchaseSerialsModelList !== undefined) {
-          this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue(result.purchaseSerialsModelList);
+          this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue(result.purchaseSerialsModelList);
         }
       }
       else {
-        this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue([]);
+        this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue([]);
       }
 
 
       if (result.generalAttachModelList !== null && result.generalAttachModelList.length !== 0 && result.generalAttachModelList !== undefined) {
-        this.ReturnSalesInvoiceAddForm.get("generalAttachModelList").setValue(result.generalAttachModelList);
+        this.ReturnSalesInvoiceAddForm.get("generalAttachModelList")?.setValue(result.generalAttachModelList);
         this.childAttachment.data = result.generalAttachModelList;
         this.childAttachment.ngOnInit();
       }
       if (this.voucherNo > 0) {
-        this.ReturnSalesInvoiceAddForm.get("purOrdersIds").setValue(this.voucherNo);
+        this.ReturnSalesInvoiceAddForm.get("purOrdersIds")?.setValue(this.voucherNo);
       }
 
       if (this.opType == 'Edit') {
@@ -399,73 +399,73 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       source$.pipe(delay(0)).subscribe(() => {
         this.isdisabled = false;
         if (this.voucherId > 0) {
-          this.ReturnSalesInvoiceAddForm.get("voucherTypeId").setValue(result.voucherTypeId);
-          this.ReturnSalesInvoiceAddForm.get("invoiceType").setValue(result.invoiceType);
-          this.ReturnSalesInvoiceAddForm.get("accountId").setValue(result.accountId);
-          this.ReturnSalesInvoiceAddForm.get("branchId").setValue(result.branchId);
-          this.ReturnSalesInvoiceAddForm.get("dealerId").setValue(result.dealerId);
-          this.ReturnSalesInvoiceAddForm.get("costCenterId").setValue(result.costCenterId);
-          this.ReturnSalesInvoiceAddForm.get("paymentTerm").setValue(result.paymentTerm);
-          this.ReturnSalesInvoiceAddForm.get("deliveryPeriod").setValue(result.deliveryPeriod);
-          this.ReturnSalesInvoiceAddForm.get("deliveryTime").setValue(result.deliveryTime);
-          this.ReturnSalesInvoiceAddForm.get("referenceNo").setValue(result.referenceNo);
-          this.ReturnSalesInvoiceAddForm.get("referenceDate").setValue(formatDate(result.referenceDate, "yyyy-MM-dd", "en-US"));
-          this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(result.currencyId);
-          this.ReturnSalesInvoiceAddForm.get("representId").setValue(result.representId);
-          this.ReturnSalesInvoiceAddForm.get("invoiceId").setValue(result.invoiceId);
+          this.ReturnSalesInvoiceAddForm.get("voucherTypeId")?.setValue(result.voucherTypeId);
+          this.ReturnSalesInvoiceAddForm.get("invoiceType")?.setValue(result.invoiceType);
+          this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(result.accountId);
+          this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(result.branchId);
+          this.ReturnSalesInvoiceAddForm.get("dealerId")?.setValue(result.dealerId);
+          this.ReturnSalesInvoiceAddForm.get("costCenterId")?.setValue(result.costCenterId);
+          this.ReturnSalesInvoiceAddForm.get("paymentTerm")?.setValue(result.paymentTerm);
+          this.ReturnSalesInvoiceAddForm.get("deliveryPeriod")?.setValue(result.deliveryPeriod);
+          this.ReturnSalesInvoiceAddForm.get("deliveryTime")?.setValue(result.deliveryTime);
+          this.ReturnSalesInvoiceAddForm.get("referenceNo")?.setValue(result.referenceNo);
+          this.ReturnSalesInvoiceAddForm.get("referenceDate")?.setValue(formatDate(result.referenceDate, "yyyy-MM-dd", "en-US"));
+          this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(result.currencyId);
+          this.ReturnSalesInvoiceAddForm.get("representId")?.setValue(result.representId);
+          this.ReturnSalesInvoiceAddForm.get("invoiceId")?.setValue(result.invoiceId);
 
-          this.decimalPlaces = result.currencyList.find(option => option.id === result.currencyId).data2;
+          this.decimalPlaces = result.currencyList.find((option :any) => option.id === result.currencyId).data2;
           for (let i = 0; i < this.purInvoiceDTsList.length; i++) {
             this.onCheckboxChange(0);
           }
           if (!this.useStoreInGrid) {
-            this.ReturnSalesInvoiceAddForm.get("storeId").setValue(result.storeId);
+            this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(result.storeId);
           }
-          this.ReturnSalesInvoiceAddForm.get("note").setValue(result.note);
+          this.ReturnSalesInvoiceAddForm.get("note")?.setValue(result.note);
 
           this.useCostCenter = result.useCostCenter;
           this.UseTax = result.useTax;
 
           if (result.allowMultiCurrency == false) {
-            const defaultCurrency = result.currencyList.find(currency => currency.id === result.currencyId);
+            const defaultCurrency = result.currencyList.find((currency :any) => currency.id === result.currencyId);
             this.currencyList = [defaultCurrency];
-            this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(result.currencyId);
+            this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(result.currencyId);
           }
           if (result.allowMultiBranch == false) {
-            const defaultBranche = result.userCompanyBranchList.find(branche => branche.id === result.branchId);
+            const defaultBranche = result.userCompanyBranchList.find((branche :any) => branche.id === result.branchId);
             this.branchesList = [defaultBranche];
-            this.ReturnSalesInvoiceAddForm.get("branchId").setValue(result.branchId);
+            this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(result.branchId);
           }
         }
         else {
-          this.ReturnSalesInvoiceAddForm.get("branchId").setValue(result.defaultBranchId);
+          this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(result.defaultBranchId);
           //var defaultVoucher = result.voucherTypeList.find(option => option.isDefault === true).id;
-          var defaultVoucher = result.voucherTypeList.find(option => option.isDefault === true)?.id ?? 0;
-          this.ReturnSalesInvoiceAddForm.get("voucherTypeId").setValue(defaultVoucher);
+          var defaultVoucher = result.voucherTypeList.find((option :any) => option.isDefault === true)?.id ?? 0;
+          this.ReturnSalesInvoiceAddForm.get("voucherTypeId")?.setValue(defaultVoucher);
           if (result.allowMultiCurrency == false) {
-            const defaultCurrency = result.currencyList.find(currency => currency.id === result.defaultCurrency);
+            const defaultCurrency = result.currencyList.find((currency :any) => currency.id === result.defaultCurrency);
             this.currencyList = [defaultCurrency];
-            this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(defaultCurrency.id);
-            this.ReturnSalesInvoiceAddForm.get("currRate").setValue(defaultCurrency.data1);
+            this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(defaultCurrency.id);
+            this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(defaultCurrency.data1);
           }
           this.getVoucherNo(defaultVoucher);
           if (this.ReturnSalesInvoiceAddForm.value.currencyId == 0) {
-            this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(this.defaultCurrencyId);
-            var currRate = this.currencyList.find(option => option.id === this.defaultCurrencyId).data1;
-            this.ReturnSalesInvoiceAddForm.get("currRate").setValue(currRate);
+            this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(this.defaultCurrencyId);
+            var currRate = this.currencyList.find((option :any) => option.id === this.defaultCurrencyId).data1;
+            this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(currRate);
           }
           this.useCostCenter = result.useCostCenter;
           this.UseTax = result.useTax;
           if (result.allowMultiBranch == false) {
-            const defaultBranche = result.userCompanyBranchList.find(branche => branche.id === result.defaultBranchId);
+            const defaultBranche = result.userCompanyBranchList.find((branche :any) => branche.id === result.defaultBranchId);
             this.branchesList = [defaultBranche];
-            this.ReturnSalesInvoiceAddForm.get("branchId").setValue(defaultBranche.id);
+            this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(defaultBranche.id);
           }
-          this.ReturnSalesInvoiceAddForm.get("representId").setValue(0);
-          this.ReturnSalesInvoiceAddForm.get("dealerId").setValue(0);
-          this.ReturnSalesInvoiceAddForm.get("costCenterId").setValue(0);
-          this.ReturnSalesInvoiceAddForm.get("paymentTerm").setValue(0);
-          this.ReturnSalesInvoiceAddForm.get("storeId").setValue(0);
+          this.ReturnSalesInvoiceAddForm.get("representId")?.setValue(0);
+          this.ReturnSalesInvoiceAddForm.get("dealerId")?.setValue(0);
+          this.ReturnSalesInvoiceAddForm.get("costCenterId")?.setValue(0);
+          this.ReturnSalesInvoiceAddForm.get("paymentTerm")?.setValue(0);
+          this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(0);
           this.DefaultStoreId = result.defaultStoreId;
         }
         this.GetVoucherTypeSetting(this.ReturnSalesInvoiceAddForm.value.voucherTypeId);
@@ -560,7 +560,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     for (let index = 0; index < this.purInvoiceDTsList.length; index++) {
       const element = this.purInvoiceDTsList[index];
       const itemId = element.itemId;
-      const item = this.itemsList.find(item => item.id === itemId);
+      const item = this.itemsList.find((item :any) => item.id === itemId);
 
       if (!item) {
         continue;
@@ -593,7 +593,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
             return false;
           }
 
-          const checkedItemCount = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.reduce((count, item) => {
+          const checkedItemCount = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.reduce((count: number, item: any) => {
             if (item.rowIndex === index) {
               return count + 1;
             }
@@ -607,7 +607,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
             return false;
           }
 
-          const item1 = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.find(item => item.itemId === itemId && item.rowIndex === index);
+          const item1 = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.find((item: any) => item.itemId === itemId && item.rowIndex === index);
           if (!item1) {
             this.alert.RemainimgQty("msgPleaseEnterSerial", item.text, 'error');
             stopExecution = true;
@@ -630,7 +630,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
     debugger
     for (let i = 0; i < this.purInvoiceDTsList.length; i++) {
-      var IsTaxable = this.customersList.find(x => x.id === this.ReturnSalesInvoiceAddForm.value.dealerId).IsTaxable;
+      var IsTaxable = this.customersList.find((x: any) => x.id === this.ReturnSalesInvoiceAddForm.value.dealerId).IsTaxable;
       if (IsTaxable == true && this.purInvoiceDTsList[i].taxId == 0) {
         this.alert.ShowAlert("msgMustSelectTaxForDealer", 'error');
         stopExecution = true;
@@ -642,8 +642,8 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     this.ReturnSalesInvoiceAddForm.value.userId = this.jwtAuth.getUserId();
     this.ReturnSalesInvoiceAddForm.value.voucherNo = this.ReturnSalesInvoiceAddForm.value.voucherNo.toString();
     this.ReturnSalesInvoiceAddForm.value.purchaseInvoiceModelList = this.purInvoiceDTsList;
-    this.ReturnSalesInvoiceAddForm.get("amount").setValue(parseFloat(this.fNetTotal));
-    this.ReturnSalesInvoiceAddForm.get("status").setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("amount")?.setValue(parseFloat(this.fNetTotal));
+    this.ReturnSalesInvoiceAddForm.get("status")?.setValue(0);
     this.ReturnSalesInvoiceAddForm.value.generalAttachModelList = this.childAttachment.getVoucherAttachData();
     debugger
     this.returnService.SaveReturnSalesInvoice(this.ReturnSalesInvoiceAddForm.value)
@@ -652,7 +652,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           this.alert.SaveSuccess();
 
           debugger
-          var PrintAfterSave = this.voucherTypeList.find(option => option.label === this.ReturnSalesInvoiceAddForm.value.voucherTypeId)?.printAfterSave || false;
+          var PrintAfterSave = this.voucherTypeList.find((option: any) => option.label === this.ReturnSalesInvoiceAddForm.value.voucherTypeId)?.printAfterSave || false;
           if (PrintAfterSave == true) {
             this.PrintReturnedSalesInvoice(Number(result.message));
           }
@@ -674,11 +674,11 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   ClearAfterSave() {
     debugger
-    this.ReturnSalesInvoiceAddForm.get("costCenterId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("currRate").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("note").setValue("");
-    this.ReturnSalesInvoiceAddForm.get("invoiceId").setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("costCenterId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("note")?.setValue("");
+    this.ReturnSalesInvoiceAddForm.get("invoiceId")?.setValue(0);
     this.fTotal = 0;
     this.fDiscount = 0;
     this.fTaxTotal = 0;
@@ -693,10 +693,10 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
   getVoucherNo(event: any) {
     this.clearFormdata();
     const selectedValue = event.value === undefined ? event : event.value;
-    var serialType = this.voucherTypeList.find(option => option.label === selectedValue).serialType;
-    var currencyId = this.voucherTypeList.find(option => option.label === selectedValue).currencyId;
-    var branchId = this.voucherTypeList.find(option => option.label === selectedValue).branchId;
-    this.allowAccRepeat = this.voucherTypeList.find(option => option.label === selectedValue).allowAccRepeat;
+    var serialType = this.voucherTypeList.find((option: any) => option.label === selectedValue).serialType;
+    var currencyId = this.voucherTypeList.find((option: any) => option.label === selectedValue).currencyId;
+    var branchId = this.voucherTypeList.find((option: any) => option.label === selectedValue).branchId;
+    this.allowAccRepeat = this.voucherTypeList.find((option: any) => option.label === selectedValue).allowAccRepeat;
     var voucherCategory = this.ReturnSalesInvoiceAddForm.value.voucherTypeEnum;
     var voucherTypeId = this.ReturnSalesInvoiceAddForm.value.voucherTypeId;
     var date = new Date(this.ReturnSalesInvoiceAddForm.value.voucherDate);
@@ -706,31 +706,31 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     if (voucherTypeId > 0) {
       this.returnService.GetSerialVoucher(serialType, voucherTypeId, voucherCategory, year, month).subscribe((results) => {
         if (results) {
-          this.ReturnSalesInvoiceAddForm.get("voucherNo").setValue(results);
+          this.ReturnSalesInvoiceAddForm.get("voucherNo")?.setValue(results);
         }
         else {
-          this.ReturnSalesInvoiceAddForm.get("voucherNo").setValue(1);
+          this.ReturnSalesInvoiceAddForm.get("voucherNo")?.setValue(1);
         }
       });
     }
     debugger
     if (branchId == null || branchId == undefined) {
       branchId = 0;
-      this.ReturnSalesInvoiceAddForm.get("branchId").setValue(branchId);
+      this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(branchId);
     }
     if (currencyId != 0 && currencyId != null && currencyId != undefined && this.allowMultiCurrency == true) {
-      this.decimalPlaces = this.currencyList.find(option => option.id === currencyId).data2;
+      this.decimalPlaces = this.currencyList.find((option: any) => option.id === currencyId)?.data2;
     }
     else {
-      this.decimalPlaces = this.currencyList.find(option => option.id === this.defaultCurrencyId).data2;
+      this.decimalPlaces = this.currencyList.find((option: any) => option.id === this.defaultCurrencyId)?.data2;
     }
     if (voucherTypeId != 0 && voucherTypeId != null && voucherTypeId != undefined) {
       this.GetVoucherTypeSetting(voucherTypeId);
     }
     if (currencyId != 0 && currencyId != null && currencyId != undefined && this.allowMultiCurrency == true) {
-      this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(currencyId);
-      var currRate = this.currencyList.find(option => option.id === currencyId).data1;
-      this.ReturnSalesInvoiceAddForm.get("currRate").setValue(currRate);
+      this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(currencyId);
+      var currRate = this.currencyList.find((option: any) => option.id === currencyId)?.data1;
+      this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(currRate);
       if (this.ReturnSalesInvoiceAddForm.value.currencyId == this.defaultCurrencyId) {
         this.disableCurrRate = true;
       }
@@ -739,9 +739,9 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       }
     }
     else {
-      this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(this.defaultCurrencyId);
-      var currRate = this.currencyList.find(option => option.id === this.defaultCurrencyId).data1;
-      this.ReturnSalesInvoiceAddForm.get("currRate").setValue(currRate);
+      this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(this.defaultCurrencyId);
+      var currRate = this.currencyList.find((option: any) => option.id === this.defaultCurrencyId)?.data1;
+      this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(currRate);
       if (this.ReturnSalesInvoiceAddForm.value.currencyId == this.defaultCurrencyId) {
         this.disableCurrRate = true;
       }
@@ -754,9 +754,9 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
   getCurrencyRate(event: any, CurrId: any) {
     if (event.value > 0) {
       const selectedValue = event.value;
-      var currRate = this.currencyList.find(option => option.id === selectedValue).data1;
-      this.decimalPlaces = this.currencyList.find(option => option.id === selectedValue).data2;
-      this.ReturnSalesInvoiceAddForm.get("currRate").setValue(currRate);
+      var currRate = this.currencyList.find((option: any) => option.id === selectedValue)?.data1;
+      this.decimalPlaces = this.currencyList.find((option: any) => option.id === selectedValue)?.data2;
+      this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(currRate);
       if (event.value == this.defaultCurrencyId) {
         this.disableCurrRate = true;
       }
@@ -769,9 +769,9 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
     else {
       const selectedValue = CurrId;
-      var currRate = this.currencyList.find(option => option.id === selectedValue).data1;
-      this.decimalPlaces = this.currencyList.find(option => option.id === selectedValue).data2;
-      this.ReturnSalesInvoiceAddForm.get("currRate").setValue(currRate);
+      var currRate = this.currencyList.find((option: any) => option.id === selectedValue)?.data1;
+      this.decimalPlaces = this.currencyList.find((option: any) => option.id === selectedValue)?.data2;
+      this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(currRate);
       if (event.value == this.defaultCurrencyId) {
         this.disableCurrRate = true;
       }
@@ -784,7 +784,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  getaccountId(voucherType, type, index) {
+  getaccountId(voucherType : number, type: number, index: number) {
     debugger
     if (this.disableAll == true) {
       return;
@@ -825,7 +825,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
         qty: "",
         price: "",
         cost: 0,
-        storeId: this.voucherStoreId,
+        storeId: this.voucherStoreId ?? 0,
         bonus: "",
         bonusUnitId: 0,
         bonusUnitRate: 0,
@@ -850,12 +850,12 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
         mainBouns: 0,
         index: ""
       });
-    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
 
 
   }
 
-  toggleIncludeCost(event, index) {
+  toggleIncludeCost(event: any, index: number) {
     this.purExpensesList[index].affectCost = event.currentTarget.checked;
   }
 
@@ -873,12 +873,12 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       this.bounsunitsList.splice(rowIndex, 1);
       if (this.ReturnSalesInvoiceAddForm.value.itemsSerialList != null && this.ReturnSalesInvoiceAddForm.value.itemsSerialList != undefined) {
         if (this.ReturnSalesInvoiceAddForm.value.itemsSerialList.length > 0) {
-          let indexToRemove = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.findIndex(element => element.rowIndex == rowIndex);
+          let indexToRemove = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.findIndex((element: any) => element.rowIndex == rowIndex);
           if (indexToRemove !== -1) {
             this.ReturnSalesInvoiceAddForm.value.itemsSerialList.splice(indexToRemove, 1);
           }
         }
-        this.ReturnSalesInvoiceAddForm.value.itemsSerialList.forEach(element => {
+        this.ReturnSalesInvoiceAddForm.value.itemsSerialList.forEach((element: any) => {
           if (element.rowIndex !== 0) {
             element.rowIndex = element.rowIndex - 1;
           }
@@ -888,17 +888,17 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
 
     this.purInvoiceDTsList.splice(rowIndex, 1);
-    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
     this.clearTotals();
     debugger
     this.onCheckboxChange(0);
   }
 
-  isEmpty(input) {
+  isEmpty(input : any): boolean {
     return input === '' || input === null;
   }
 
-  isValidVoucherDate(event) {
+  isValidVoucherDate(event: any) {
     this.validDate = true;
     if (event.target.value == "") {
       this.validDate = false;
@@ -951,7 +951,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     };
 
     this.purInvoiceDTsList.splice(rowIndex, 0, newRow);
-    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
   }
 
   OpenAccountStatementForm(acc: number) {
@@ -964,7 +964,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  onChangeItem(event, Row, i) {
+  onChangeItem(event: any, Row: any, i: number) {
     debugger
     if (event == 0) {
       if (Row.itemId == 0 || Row.itemId == null) {
@@ -978,13 +978,14 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           this.unitsList[i] = res;
           if (res.length == 2) {
             this.purInvoiceDTsList[i].unitId = res[1].id;
+            this.purInvoiceDTsList[i].price = res[1].data2;
           }
           else if (this.opType == "Edit") {
             /*         if (this.oldItem != Row.itemId) {
                       this.accVouchersDTsList[i].unitId = 0;
                       return;
                     } */
-            let unit = this.unitsList[i].find(r => r.id == Row.unitId);
+            let unit = this.unitsList[i].find((r: any) => r.id == Row.unitId);
             if (unit == 0 || unit == undefined || unit == null) {
               this.purInvoiceDTsList[i].unitId = 0;
               return;
@@ -1042,7 +1043,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
             if (res.length == 2) {
               this.purInvoiceDTsList[i].unitId = res[1].id;
               this.purInvoiceDTsList[i].unitRate = res[1].data3;
-
+              this.purInvoiceDTsList[i].price = res[1].data2;
             }
             if (res.length > 2) {
               this.purInvoiceDTsList[i].unitId = 0;
@@ -1088,7 +1089,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
 
     if (this.useStoreInGrid == true) {
-      var selectedItem = this.itemsList.find(x => x.id === event.value);
+      var selectedItem = this.itemsList.find((x: any) => x.id === event.value);
 
       if (selectedItem && selectedItem.storeId > 0) {
         var defaultStoreNo = selectedItem.storeId;
@@ -1132,7 +1133,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     this.onCheckboxChange(0);
   }
 
-  onChangeBouns(event, row, index) {
+  onChangeBouns(event: any, row: any, index: number) {
     debugger
     if (this.ReturnSalesInvoiceAddForm.value.invoiceId > 0) {
       if (row.bonusUnitRate == 0 || row.bonusUnitRate == null) {
@@ -1155,7 +1156,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  OnPriceBlur(row: any, index) {
+  OnPriceBlur(row: any, index: number) {
     if (row.price !== null && row.price !== undefined) {
       row.price = Number(row.price).toFixed(this.decimalPlaces);
       row.total = Number(row.total).toFixed(this.decimalPlaces);
@@ -1171,14 +1172,14 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     return this.appCommonserviceService.formatCurrency(value, this.decimalPlaces);
   }
 
-  onCheckboxChange(event) {
+  onCheckboxChange(event: any) {
     var i = 0;
     if (event !== 0) {
       if (event.currentTarget.checked) {
-        this.ReturnSalesInvoiceAddForm.get("priceWithTax").setValue(true);
+        this.ReturnSalesInvoiceAddForm.get("priceWithTax")?.setValue(true);
       }
       else {
-        this.ReturnSalesInvoiceAddForm.get("priceWithTax").setValue(false);
+        this.ReturnSalesInvoiceAddForm.get("priceWithTax")?.setValue(false);
       }
     }
 
@@ -1209,14 +1210,14 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  calculateValues(i) {
+  calculateValues(i: number) {
     this.fTotal = 0;
     this.fTaxTotal = 0;
     this.fNetTotal = 0;
     this.fDiscount = 0;
     this.fTotalGridNet = 0;
     if (this.purInvoiceDTsList.length > 0 && this.purInvoiceDTsList[i].taxId > 0)
-      this.purInvoiceDTsList[i].taxPerc = this.taxesList.find(option => option.id === this.purInvoiceDTsList[i].taxId).data1;
+      this.purInvoiceDTsList[i].taxPerc = this.taxesList.find((option: any) => option.id === this.purInvoiceDTsList[i].taxId).data1;
     debugger;
     if (this.pricewTax == 1) {
       if (isNaN(this.purInvoiceDTsList[i].qty) || isNaN(this.purInvoiceDTsList[i].price)) {
@@ -1320,6 +1321,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
         this.purInvoiceDTsList[index].batchNo = "";
         this.purInvoiceDTsList[index].orginalQty = 0;
         this.purInvoiceDTsList[index].newRow = 0;
+        this.purInvoiceDTsList[index].storeId = event.value ?? 0;
         this.showRemainQty = false;
         this.cdr.detectChanges();
         // }
@@ -1341,11 +1343,11 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           if (result.value) {
             this.purInvoiceDTsList = [];
             this.oldStoreId = event.value;
-            this.ReturnSalesInvoiceAddForm.get("invVouchersDTModelList").setValue(this.purInvoiceDTsList);
+            this.ReturnSalesInvoiceAddForm.get("invVouchersDTModelList")?.setValue(this.purInvoiceDTsList);
           }
           else if (result.dismiss === Swal.DismissReason.cancel) {
             debugger
-            this.ReturnSalesInvoiceAddForm.get("storeId").setValue(this.oldStoreId);
+            this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(this.oldStoreId);
           }
         })
       }
@@ -1356,7 +1358,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   }
 
-  onDiscountChange(i) {
+  onDiscountChange(i: number) {
     debugger
     if (this.purInvoiceDTsList[i].discountPerc !== null || this.purInvoiceDTsList[i].discountPerc !== 0) {
       // Calculate the discount percentage based on discountAmt
@@ -1375,7 +1377,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     this.onCheckboxChange(0);
   }
 
-  onDiscountAmtChange(i) {
+  onDiscountAmtChange(i: number) {
     if (this.purInvoiceDTsList[i].discountAmt !== null || this.purInvoiceDTsList[i].discountAmt !== 0) {
       // Calculate the discount amount based on discount
       if (this.purInvoiceDTsList[i].total > 0) {
@@ -1395,7 +1397,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     this.onCheckboxChange(0);
   }
 
-  onTaxChange(event, i) {
+  onTaxChange(event: any, i: number) {
     debugger
     if (event.value == 0) {
       this.purInvoiceDTsList.forEach(element => {
@@ -1406,9 +1408,9 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     this.onCheckboxChange(0);
   }
 
-  isRequierdEx(row: any, index) {
+  isRequierdEx(row: any, index: number) {
     const itemId = row.itemId;
-    const item = this.itemsList.find(item => item.id === itemId);
+    const item = this.itemsList.find((item: any) => item.id === itemId);
     if (item.hasExpiry && this.purInvoiceDTsList[index].expiryDate == "" || this.purInvoiceDTsList[index].expiryDate == null) {
       return true;
     }
@@ -1419,7 +1421,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   isRequierdBatch(row: any) {
     const itemId = row.itemId;
-    const item = this.itemsList.find(item => item.id === itemId);
+    const item = this.itemsList.find((item: any) => item.id === itemId);
 
     if (item.hasExpiry && row.batchNo == "" || row.batchNo == null) {
       return true;
@@ -1431,7 +1433,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   isRequierdSerial(row: any) {
     const itemId = row.itemId;
-    const item = this.itemsList.find(item => item.id === itemId);
+    const item = this.itemsList.find((item: any) => item.id === itemId);
 
     if (item.hasSerial) {
       return false;
@@ -1441,40 +1443,40 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  GetAccounts(event, voucherType: number) {
+  GetAccounts(event: any, voucherType: number) {
     if (event.currentTarget.checked && voucherType !== 0 && voucherType > 0) {
 
       this.returnService.GetAccounts(voucherType).subscribe(result => {
         if (result) {
           this.purAccId = result.creditAccId;
-          this.ReturnSalesInvoiceAddForm.get("accountId").setValue(result.debitAccId);
-          this.ReturnSalesInvoiceAddForm.get("isCash").setValue(true);
+          this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(result.debitAccId);
+          this.ReturnSalesInvoiceAddForm.get("isCash")?.setValue(true);
         }
       })
     }
     else {
-      this.ReturnSalesInvoiceAddForm.get("accountId").setValue(0);
-      this.ReturnSalesInvoiceAddForm.get("isCash").setValue(false);
+      this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(0);
+      this.ReturnSalesInvoiceAddForm.get("isCash")?.setValue(false);
     }
 
   }
 
-  getDealerAcc(event) {
+  getDealerAcc(event: any) {
     if (this.isCash == 0) {
       if (event.value) {
-        var acc = this.customersList.find(option => option.id === event.value).data2;
-        this.ReturnSalesInvoiceAddForm.get("accountId").setValue(acc);
+        var acc = this.customersList.find((option: any) => option.id === event.value)?.data2;
+        this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(acc);
       }
       else {
         if (event) {
-          var acc = this.customersList.find(option => option.id === event).data2;
-          this.ReturnSalesInvoiceAddForm.get("accountId").setValue(acc);
+          var acc = this.customersList.find((option: any) => option.id === event)?.data2;
+          this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(acc);
         }
       }
     }
   }
 
-  onChangeUnit(Row, i) {
+  onChangeUnit(Row : any, i: number) {
     debugger
     if (Row.qty > 0) {
       this.purInvoiceDTsList[i].qty = 0;
@@ -1486,7 +1488,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  onChangeBounsUnit(Row, i) {
+  onChangeBounsUnit(Row: any, i: number) {
     if (Row.bonus > 0) {
       if (Row.bonusUnitId !== 0 && Row.bonusUnitId !== null && Row.bonusUnitId !== undefined) {
         this.returnService.GetUnitRate(Row.itemId, Row.bonusUnitId).subscribe(res => {
@@ -1508,13 +1510,13 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
     row.firstOpen = row.firstOpen ?? true
     if (this.ReturnSalesInvoiceAddForm.value.itemsSerialList === null) {
-      this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue([]);
+      this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue([]);
     }
-    this.serialsListss = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.filter(item => item.itemId == row.itemId && item.rowIndex == rowIndex);
+    this.serialsListss = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.filter((item: any) => item.itemId == row.itemId && item.rowIndex == rowIndex);
     debugger
     if (this.opType == 'Edit') {
       if (row.qty != this.serialsListss.length) {
-        this.orginalSerialList = this.invoiceSerialsList.filter(item => item.itemId == row.itemId && item.rowIndex == rowIndex);
+        this.orginalSerialList = this.invoiceSerialsList.filter((item: any) => item.itemId == row.itemId && item.rowIndex == rowIndex);
       }
       else {
         this.orginalSerialList = this.serialsListss;
@@ -1526,12 +1528,12 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       }
       else {
         if (this.ReturnSalesInvoiceAddForm.value.invoiceId !== '' && this.ReturnSalesInvoiceAddForm.value.invoiceId !== null) {
-          this.orginalSerialList = this.serialsListss.filter(item => item.itemId == row.itemId && item.rowIndex == rowIndex);
+          this.orginalSerialList = this.serialsListss.filter((item: any) => item.itemId == row.itemId && item.rowIndex == rowIndex);
         }
       }
     }
 
-    var itemName = this.itemsList.find(option => option.id === row.itemId).text;
+    var itemName = this.itemsList.find((option: any) => option.id === row.itemId)?.text;
     let title = this.translateService.instant('itemSequencesForm');
     let dialogRef: MatDialogRef<any> = this.dialog.open(EntryitemsserialsComponent, {
       width: '900px',
@@ -1560,9 +1562,9 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
         debugger
         if (res !== null) {
           row.res = res;
-          var newList = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.filter(item => item.rowIndex !== rowIndex);
+          var newList = this.ReturnSalesInvoiceAddForm.value.itemsSerialList.filter((item: any) => item.rowIndex !== rowIndex);
           newList = [...newList, ...res];
-          this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue(newList);
+          this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue(newList);
           row.firstOpen = false;
           return;
         }
@@ -1582,7 +1584,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     return this.formatCurrency(this.purExpensesList.reduce((sum, item) => sum + parseFloat(item.amount), 0));
   }
 
-  CheckIfAllowEditBatch(row, index) {
+  CheckIfAllowEditBatch(row: any, index: number) {
     if ((row.batchNo !== '' || row.batchNo !== null || row.batchNo !== undefined) && row.itemId !== 0 || row.itemId !== null) {
       this.returnService.GetAllowEditBatch(row.batchNo, row.itemId).subscribe(result => {
         if (result) {
@@ -1597,7 +1599,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   }
 
-  GetSaleInvoices(event) {
+  GetSaleInvoices(event: any) {
     debugger
     this.purInvoiceDTsList = [];
     this.clearTotals();
@@ -1609,7 +1611,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           debugger
           this.disableDetails = true;
 
-          res.purchaseInvoiceModelList.forEach(element => {
+          res.purchaseInvoiceModelList.forEach((element: any) => {
             if (element.price > 0) {
               var price = parseFloat(element.price);
               element.price = price.toFixed(this.decimalPlaces);
@@ -1621,22 +1623,22 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           this.orginalSerialList = res.invoiceSerialsModelList;
 
           let index = 0;
-          this.purInvoiceDTsList.forEach(element => {
+          this.purInvoiceDTsList.forEach((element: any) => {
             element.expiryDate = formatDate(element.expiryDate, "yyyy-MM-dd", "en-US");
             element.productDate = formatDate(element.productDate, "yyyy-MM-dd", "en-US");
             element.total = element.qty * element.price;
           })
           if (res.purchaseSerialsModelList !== null && res.purchaseSerialsModelList.length !== 0 && res.purchaseSerialsModelList !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue(res.purchaseSerialsModelList);
+            this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue(res.purchaseSerialsModelList);
           }
           else {
-            this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue([]);
+            this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue([]);
           }
-          this.purInvoiceDTsList.forEach(element => {
-            this.itemsList.forEach(item => {
+          this.purInvoiceDTsList.forEach((element: any) => {
+            this.itemsList.forEach((item: any) => {
               if (item.id === element.itemId) {
-                this.unitsList[index] = this.allUntiesList.filter(unit => unit.id == element.unitId);
-                this.bounsunitsList[index] = this.allUntiesList.filter(unit => unit.id == element.bonusUnitId);
+                this.unitsList[index] = this.allUntiesList.filter((unit: any) => unit.id == element.unitId);
+                this.bounsunitsList[index] = this.allUntiesList.filter((unit: any) => unit.id == element.bonusUnitId);
                 index++;
               }
             });
@@ -1656,11 +1658,11 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           }
           if (res.isCash) {
             this.isCash = 1;
-            this.ReturnSalesInvoiceAddForm.get("isCash").setValue(true);
+            this.ReturnSalesInvoiceAddForm.get("isCash")?.setValue(true);
           }
           else {
             this.isCash = 0;
-            this.ReturnSalesInvoiceAddForm.get("isCash").setValue(false);
+            this.ReturnSalesInvoiceAddForm.get("isCash")?.setValue(false);
           }
           if (res.priceWithTax) {
             this.pricewTax = 1;
@@ -1673,45 +1675,45 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           }
           debugger
           if (res.branchId !== null && res.branchId !== 0 && res.branchId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("branchId").setValue(res.branchId);
+            this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(res.branchId);
           }
           if (res.dealerId !== null && res.dealerId !== 0 && res.dealerId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("dealerId").setValue(res.dealerId);
+            this.ReturnSalesInvoiceAddForm.get("dealerId")?.setValue(res.dealerId);
           }
           if (res.costCenterId !== null && res.costCenterId !== 0 && res.costCenterId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("costCenterId").setValue(res.costCenterId);
+            this.ReturnSalesInvoiceAddForm.get("costCenterId")?.setValue(res.costCenterId);
           }
           if (res.referenceNo !== null && res.referenceNo !== 0 && res.referenceNo !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("referenceNo").setValue(res.referenceNo);
+            this.ReturnSalesInvoiceAddForm.get("referenceNo")?.setValue(res.referenceNo);
           }
           if (res.referenceDate !== null && res.referenceDate !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("referenceDate").setValue(formatDate(res.referenceDate, "yyyy-MM-dd", "en-US"));
+            this.ReturnSalesInvoiceAddForm.get("referenceDate")?.setValue(formatDate(res.referenceDate, "yyyy-MM-dd", "en-US"));
           }
           if (res.currencyId !== null && res.currencyId !== 0 && res.currencyId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("currencyId").setValue(res.currencyId);
+            this.ReturnSalesInvoiceAddForm.get("currencyId")?.setValue(res.currencyId);
           }
           if (res.currRate !== null && res.currRate !== 0 && res.currRate !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("currRate").setValue(res.currRate);
+            this.ReturnSalesInvoiceAddForm.get("currRate")?.setValue(res.currRate);
           }
           if (res.storeId !== null && res.storeId !== 0 && res.storeId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("storeId").setValue(res.storeId);
+            this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(res.storeId);
           }
           if (res.note !== null && res.note !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("note").setValue(res.note);
+            this.ReturnSalesInvoiceAddForm.get("note")?.setValue(res.note);
           }
           if (res.amount !== null && res.amount !== 0 && res.amount !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("amount").setValue(res.amount);
+            this.ReturnSalesInvoiceAddForm.get("amount")?.setValue(res.amount);
           }
           if (res.accountId !== null && res.accountId !== 0 && res.accountId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("accountId").setValue(res.accountId);
+            this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(res.accountId);
           }
           if (res.paymentTerm !== null && res.paymentTerm !== 0 && res.paymentTerm !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("paymentTerm").setValue(res.paymentTerm);
+            this.ReturnSalesInvoiceAddForm.get("paymentTerm")?.setValue(res.paymentTerm);
           }
           if (res.representId !== null && res.representId !== 0 && res.representId !== undefined) {
-            this.ReturnSalesInvoiceAddForm.get("representId").setValue(res.representId);
+            this.ReturnSalesInvoiceAddForm.get("representId")?.setValue(res.representId);
           }
-          this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+          this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
         }
       })
     }
@@ -1721,7 +1723,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
       }
   }
 
-  GetBounsUnitsItem(event, Row, i) {
+  GetBounsUnitsItem(event : any, Row : any, i : number) {
     if (Row.itemId == 0 || Row.itemId == null) {
       this.unitsList[i] = [];
     }
@@ -1740,19 +1742,19 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   GetVoucherTypeSetting(voucherTypeId: number) {
     debugger
-    this.allowEditDate = this.voucherTypeList.find(option => option.label === voucherTypeId).preventChangeDate;
-    this.allowEditVoucherSerial = this.voucherTypeList.find(option => option.label === voucherTypeId).preventChangeSerial;
-    this.allowEditBranch = this.voucherTypeList.find(option => option.label === voucherTypeId).preventChangeBranch;
-    this.voucherStoreId = this.voucherTypeList.find(option => option.label === voucherTypeId).storeId;
+    this.allowEditDate = this.voucherTypeList.find((option: any) => option.label === voucherTypeId).preventChangeDate;
+    this.allowEditVoucherSerial = this.voucherTypeList.find((option: any) => option.label === voucherTypeId).preventChangeSerial;
+    this.allowEditBranch = this.voucherTypeList.find((option: any) => option.label === voucherTypeId).preventChangeBranch;
+    this.voucherStoreId = this.voucherTypeList.find((option: any) => option.label === voucherTypeId).storeId;
     if (this.opType == 'Add') {
       if (this.voucherStoreId > 0 && this.voucherStoreId != undefined && this.voucherStoreId != null) {
-        this.ReturnSalesInvoiceAddForm.get("storeId").setValue(this.voucherStoreId);
+        this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(this.voucherStoreId);
       }
       else if (this.DefaultStoreId > 0 && this.DefaultStoreId != undefined && this.DefaultStoreId != null) {
-        this.ReturnSalesInvoiceAddForm.get("storeId").setValue(this.DefaultStoreId);
+        this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(this.DefaultStoreId);
       }
       else {
-        this.ReturnSalesInvoiceAddForm.get("storeId").setValue(0);
+        this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(0);
       }
     }
   }
@@ -1771,7 +1773,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     }
   }
 
-  voucherNoBlur(VoucherTypeId, VoucherNo) {
+  voucherNoBlur(VoucherTypeId : number, VoucherNo : string) {
     debugger
     if (VoucherNo != "" && VoucherNo != null && VoucherNo != undefined) {
       this.returnService.IfExistVoucher(VoucherTypeId, VoucherNo).subscribe(res => {
@@ -1780,7 +1782,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           if (res.status == 66) {
             this.voucherId = res.id;
             this.opType = "Edit";
-            this.ReturnSalesInvoiceAddForm.get("generalAttachModelList").setValue([]);
+            this.ReturnSalesInvoiceAddForm.get("generalAttachModelList")?.setValue([]);
             this.childAttachment.data = [];
             this.disableAll = false;
             this.showsave = false;
@@ -1791,7 +1793,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           else if (res.status == 67 || res.status == 68) {
             this.voucherId = res.id;
             this.opType = "Show";
-            this.ReturnSalesInvoiceAddForm.get("generalAttachModelList").setValue([]);
+            this.ReturnSalesInvoiceAddForm.get("generalAttachModelList")?.setValue([]);
             this.childAttachment.data = [];
             this.showsave = true;
             this.cdr.detectChanges();
@@ -1816,34 +1818,34 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
 
   clearFormdata() {
     this.NewDate = new Date;
-    this.ReturnSalesInvoiceAddForm.get("id").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("invoiceType").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("accountId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("branchId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("dealerId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("costCenterId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("paymentTerm").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("deliveryPeriod").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("deliveryTime").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("referenceNo").setValue('');
-    this.ReturnSalesInvoiceAddForm.get("representId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("storeId").setValue(0);
-    this.ReturnSalesInvoiceAddForm.get("referenceDate").setValue(formatDate(this.NewDate, "yyyy-MM-dd", "en-US"));
-    this.ReturnSalesInvoiceAddForm.get("note").setValue('');
+    this.ReturnSalesInvoiceAddForm.get("id")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("invoiceType")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("accountId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("branchId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("dealerId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("costCenterId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("paymentTerm")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("deliveryPeriod")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("deliveryTime")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("referenceNo")?.setValue('');
+    this.ReturnSalesInvoiceAddForm.get("representId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("storeId")?.setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("referenceDate")?.setValue(formatDate(this.NewDate, "yyyy-MM-dd", "en-US"));
+    this.ReturnSalesInvoiceAddForm.get("note")?.setValue('');
     this.isCash = 0;
     this.pricewTax = 0;
-    this.ReturnSalesInvoiceAddForm.get("invoiceId").setValue(0);
+    this.ReturnSalesInvoiceAddForm.get("invoiceId")?.setValue(0);
     this.ReturnSalesInvoiceAddForm.value.purInvoiceDTsList = [];
-    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue([]);
-    this.ReturnSalesInvoiceAddForm.get("itemsSerialList").setValue([]);
-    this.ReturnSalesInvoiceAddForm.get("generalAttachModelList").setValue([]);
+    this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue([]);
+    this.ReturnSalesInvoiceAddForm.get("itemsSerialList")?.setValue([]);
+    this.ReturnSalesInvoiceAddForm.get("generalAttachModelList")?.setValue([]);
     this.childAttachment.data = [];
     this.purInvoiceDTsList = [];
     this.clearTotals();
 
   }
 
-  CopyRow(row, index) {
+  CopyRow(row : any, index : number) {
     debugger
 
     let inds = 0;
@@ -1889,7 +1891,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           mainBouns: 0,
           index: ""
         });
-      this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+      this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
     }
     else {
       this.purInvoiceDTsList.push(
@@ -1926,7 +1928,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
           mainBouns: 0,
           index: ""
         });
-      this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList").setValue(this.purInvoiceDTsList);
+      this.ReturnSalesInvoiceAddForm.get("purchaseInvoiceModelList")?.setValue(this.purInvoiceDTsList);
     }
     setTimeout(() => {
       this.returnService.GetItemUnitbyItemId(row.itemId).subscribe(res => {
@@ -1938,7 +1940,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
     return false;
   }
 
-  handleF3Key(event: KeyboardEvent, row, index) {
+  handleF3Key(event: KeyboardEvent, row: any, index: number) {
 
     if (event.key === 'F4') {
       this.CopyRow(row, index);
@@ -1946,7 +1948,7 @@ export class ReturnsalesinvoiceFormComponent implements OnInit {
   }
 
   loadLazyOptions(event: any) {
-    debugger
+    
     const { first, last } = event;
     
 

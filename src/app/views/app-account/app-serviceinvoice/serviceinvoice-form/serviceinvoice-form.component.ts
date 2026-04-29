@@ -17,7 +17,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AppGeneralAttachmentComponent } from 'app/views/general/app-general-attachment/app-general-attachment.component'
 import { FinancialvoucherComponent } from 'app/views/general/app-Showfinancialdocuments/financialdoc-voucher/financialvoucher.component';
 import Swal from 'sweetalert2';
-import { tr } from 'date-fns/locale';
+import { ta, tr } from 'date-fns/locale';
 
 @Component({
   selector: 'app-serviceinvoice-form',
@@ -782,8 +782,9 @@ export class ServiceInvoiceFormComponent implements OnInit {
   }
 
   onTaxChange(event, i) {
-
-    if (event.value > 0) {
+    debugger
+    let taxperc = this.taxlist.find((option: any) => option.id === event.value)?.data1;
+    if (event.value > 0 && Number(taxperc) > 0) {
       this.onCheckboxChange(0, 0, 0);
     }
     else {
