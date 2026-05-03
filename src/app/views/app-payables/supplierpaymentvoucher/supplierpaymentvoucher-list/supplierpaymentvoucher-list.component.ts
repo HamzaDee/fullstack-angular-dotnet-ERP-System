@@ -15,6 +15,7 @@ import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { AppCommonserviceService } from 'app/views/app-commonservice.service';
 import { AmiriRegular } from '../../../../../assets/fonts/amiri';
+import { PrintcheqsformComponent } from 'app/views/general/app-PrintCheqs/PrintCheqs-form/printcheqsform.component'; 
 
 @Component({
   selector: 'app-supplierpaymentvoucher-list',
@@ -22,16 +23,16 @@ import { AmiriRegular } from '../../../../../assets/fonts/amiri';
   styleUrls: ['./supplierpaymentvoucher-list.component.scss']
 })
 export class SupplierpaymentvoucherListComponent implements OnInit {
-  @ViewChild(AppSearchFormComponent) childSearch: AppSearchFormComponent;
-  public TitlePage: string;
-  companyId: number;
-  tabelData: any[];
-  showLoader: boolean;
-  exportData: any[];
-  exportColumns: any[];
+  @ViewChild(AppSearchFormComponent) childSearch!: AppSearchFormComponent;
+  public TitlePage: string = "";
+  companyId: number = 0;
+  tabelData: any[] = [];
+  showLoader: boolean = false;
+  exportData: any[] = [];
+  exportColumns: any[] =[] ;
   screenId: number = 92;
-  custom: boolean;
-  Lang: string;
+  custom: boolean = false;
+  Lang: string = "en";
 
   constructor
     (
@@ -62,9 +63,7 @@ export class SupplierpaymentvoucherListComponent implements OnInit {
   }
 
   GetPaymentVoucherList() {
-    var currentLang = this.jwtAuth.getLang();
-    const isArabic = currentLang === 'ar';
-
+    const currentLang = this.jwtAuth.getLang();
     this.showLoader = true;
     setTimeout(() => {
       this.supPaymentvoucherService.GetSuppPaymentVoucherList().subscribe(result => {
@@ -235,7 +234,7 @@ export class SupplierpaymentvoucherListComponent implements OnInit {
       })
   }
 
-  refreshSupplierpaymentvoucherListArabic(data) {
+  refreshSupplierpaymentvoucherListArabic(data :any) {
     this.exportData = data;
     this.exportData = this.tabelData.map(x => {
     const formattedDate = new Date(x.voucherDate).toLocaleDateString('ar-EG');
@@ -255,7 +254,7 @@ export class SupplierpaymentvoucherListComponent implements OnInit {
     });
   }
 
-  refreshSupplierpaymentvoucherListEnglish(data) {
+  refreshSupplierpaymentvoucherListEnglish(data :any) {
     this.exportData = data;
     this.exportData = this.tabelData.map(x => {
     const formattedDate = new Date(x.voucherDate).toLocaleDateString('en-GB');
@@ -462,7 +461,7 @@ export class SupplierpaymentvoucherListComponent implements OnInit {
     });
   }
 
-  getFavouriteStatus(screenId)
+  getFavouriteStatus(screenId : number)
   {
     debugger
     this.serv.GetFavouriteStatus(screenId).subscribe(result => {
@@ -502,5 +501,38 @@ export class SupplierpaymentvoucherListComponent implements OnInit {
       const url = this.router.serializeUrl(this.router.createUrlTree(['/report-viewer'], { queryParams: { reportUrl } }));
       window.open(url, '_blank');
     }
+  }
+
+  OpenChequesDialog(id: number) {
+    debugger      
+    let title = this.translateService.instant('PrintCheqsForm');
+    let dialogRef: MatDialogRef<any> = this.dialog.open(PrintcheqsformComponent, {
+      width: '900px',
+      disableClose: true,
+      direction: (this.jwtAuth.getLang() == "ar") ? 'rtl' : 'ltr',
+      data: { title: title, voucherId: id}
+    });
+    dialogRef.afterClosed()
+      .subscribe(res => {
+        
+      })
+  }
+
+   hasCheque(paymentMethods: any): boolean {
+    if (!paymentMethods) return false;
+
+    let value = '';
+
+    if (Array.isArray(paymentMethods)) {
+      value = paymentMethods.join(',');
+    } else if (typeof paymentMethods === 'string') {
+      value = paymentMethods;
+    } else {
+      return false;
+    }
+
+    const normalized = value.toLowerCase().replace(/\s/g, '');
+
+    return normalized.includes('cheq') || normalized.includes('شيك');
   }
 }

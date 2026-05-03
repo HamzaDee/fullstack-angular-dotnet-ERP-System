@@ -11,8 +11,8 @@ import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 export class CustomerPaymentvoucherService {
 
   constructor(
-    private http: HttpClient,
-    private jwtAuth: JwtAuthService,
+    private readonly http: HttpClient,
+    private readonly jwtAuth: JwtAuthService,
   ) { }
 
   public GetCustPaymentVoucherList(): Observable<any> {
@@ -31,7 +31,7 @@ export class CustomerPaymentvoucherService {
     });
   }
 
-  public SaveCustPaymentVoucher(post): Observable<any> {
+  public SaveCustPaymentVoucher(post : any): Observable<any> {
     debugger
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.post<any>(`${environment.apiURL_Main + '/api/CustomerPaymentVoucher/SaveCustomerPaymentVoucher/'
@@ -41,7 +41,7 @@ export class CustomerPaymentvoucherService {
       )
   }
 
-  public PostCustPaymentVoucher(voucherId): Observable<any> {
+  public PostCustPaymentVoucher(voucherId: number): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     var urlDelete = `${environment.apiURL_Main + '/api/CustomerPaymentVoucher/PostCustomerPaymentVoucher/' + voucherId +'/' + this.jwtAuth.getCompanyId() + '/' + this.jwtAuth.getUserId()}`;
     return this.http.post<any>(urlDelete,'',httpOptions)
@@ -50,7 +50,7 @@ export class CustomerPaymentvoucherService {
       );
   }
 
-  public DeleteCustPaymentVoucher(voucherId): Observable<any> {
+  public DeleteCustPaymentVoucher(voucherId: number): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     var urlDelete = `${environment.apiURL_Main + '/api/CustomerPaymentVoucher/DeleteCustomerPaymentVoucher/' + voucherId +'/' + this.jwtAuth.getCompanyId() + '/' + this.jwtAuth.getUserId()}`;
     return this.http.post<any>(urlDelete,'',httpOptions)
@@ -59,7 +59,7 @@ export class CustomerPaymentvoucherService {
       );
   }
 
-  public GetSerialVoucher(serialType, voucherTypeId, VoucherCategory, year, month): Observable<any> {
+  public GetSerialVoucher(serialType: string, voucherTypeId: number, VoucherCategory: string, year: number, month: number): Observable<any> {
     debugger
     return this.http.get(`${environment.apiURL_Main + '/api/EntryVouchers/GetSerialVoucher/'
       + this.jwtAuth.getCompanyId() + '/' + serialType + '/' + voucherTypeId + '/' + VoucherCategory + '/' + year + '/' + month} `)
@@ -68,7 +68,7 @@ export class CustomerPaymentvoucherService {
       )
   }
 
-  public GetInitailCustPaymentVoucher(voucherId, opType): Observable<any> {
+  public GetInitailCustPaymentVoucher(voucherId: number, opType: string): Observable<any> {
     if(voucherId > 0){
       if(opType == 'Copy'){
         return this.http.get(`${environment.apiURL_Main + '/api/CustomerPaymentVoucher/CopyCustomerPaymentVoucher/' + this.jwtAuth.getLang() 
@@ -109,7 +109,7 @@ export class CustomerPaymentvoucherService {
   }
 
 
-  public GetValidVoucherNo(VoucherNo, VoucherTypeId): Observable<any> {
+  public GetValidVoucherNo(VoucherNo: string, VoucherTypeId: number): Observable<any> {
     debugger
     return this.http.get(`${environment.apiURL_Main + '/api/CustomerPaymentVoucher/IsValidVoucherNo/' + this.jwtAuth.getCompanyId() + '/' + VoucherNo + '/' + VoucherTypeId}`)
       .pipe(
@@ -118,14 +118,14 @@ export class CustomerPaymentvoucherService {
   }
 
 
-  public GetPaymentBills(DealerId): Observable<any> {
+  public GetPaymentBills(DealerId: number): Observable<any> {
     return this.http.get(`${environment.apiURL_Main + '/api/CustomerReceiptVoucher/GetPaymentBills/' + DealerId + '/' + this.jwtAuth.getLang()} `)
     .pipe(
       catchError(this.handleError)
     )
   }
 
-  public GetDealerInfo(DealerId): Observable<any> {
+  public GetDealerInfo(DealerId: number): Observable<any> {
     return this.http.get(`${environment.apiURL_Main + '/api/Common/GetDealerInfo/'
       + DealerId  + '/' + this.jwtAuth.getCompanyId()} `)
       .pipe(
@@ -134,7 +134,7 @@ export class CustomerPaymentvoucherService {
   }
 
 
-  public UpdateFavourite(screenId):Observable<any>
+  public UpdateFavourite(screenId: number):Observable<any>
   {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
       return this.http.post(`${environment.apiURL_Main + '/api/General/UpdateFavourite/'
@@ -144,7 +144,7 @@ export class CustomerPaymentvoucherService {
         )
   }
   
-  public GetFavouriteStatus(screenId)
+  public GetFavouriteStatus(screenId: number)
   {
     return this.http.get(`${environment.apiURL_Main + '/api/General/GetFavouriteStatus/' + screenId  } `)
     .pipe(
@@ -153,7 +153,7 @@ export class CustomerPaymentvoucherService {
   }
 
 
-  public CheckDeleteStatus(voucherId,chqId)
+  public CheckDeleteStatus(voucherId: number, chqId: number): Observable<any>
   {
     return this.http.get(`${environment.apiURL_Main + '/api/General/CheckValidDelete/' + voucherId + '/' + chqId} `)
     .pipe(

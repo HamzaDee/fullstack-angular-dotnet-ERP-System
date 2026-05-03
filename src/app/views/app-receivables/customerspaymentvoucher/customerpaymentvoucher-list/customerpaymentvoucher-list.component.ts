@@ -15,6 +15,7 @@ import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { AppCommonserviceService } from 'app/views/app-commonservice.service';
 import { AmiriRegular } from '../../../../../assets/fonts/amiri';
+import { PrintcheqsformComponent } from 'app/views/general/app-PrintCheqs/PrintCheqs-form/printcheqsform.component'; 
 
 @Component({
   selector: 'app-customerpaymentvoucher-list',
@@ -22,19 +23,19 @@ import { AmiriRegular } from '../../../../../assets/fonts/amiri';
   styleUrls: ['./customerpaymentvoucher-list.component.scss']
 })
 export class CustomerpaymentvoucherListComponent implements OnInit {
-  @ViewChild(AppSearchFormComponent) childSearch: AppSearchFormComponent;
-  public TitlePage: string;
-  companyId: number;
-  tabelData: any[];
-  showLoader: boolean;
-  exportData: any[];
-  exportColumns: any[];
+  @ViewChild(AppSearchFormComponent) childSearch!: AppSearchFormComponent;
+  public TitlePage: string = "";
+  companyId: number = 0;
+  tabelData: any[] = [];
+  showLoader: boolean = false;
+  exportData: any[] = [];
+  exportColumns: any[] = [];
   screenId: number = 98;
-  custom: boolean;
-  data: any[];
-  Lang: string;
-  username: string;
-  password: string;
+  custom: boolean = false;
+  data: any[] = [];
+  Lang: string = '';
+  username: string = '';
+  password: string = '';
 
   constructor
     (
@@ -85,8 +86,6 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
 
   GetCustPaymentVoucherList() {
     var currentLang = this.jwtAuth.getLang();
-    const isArabic = currentLang === 'ar';
-
     this.showLoader = true;
     setTimeout(() => {
       this.cusPaymentvoucherService.GetCustPaymentVoucherList().subscribe(result => {
@@ -265,7 +264,7 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
   });
   }
 
-  getFavouriteStatus(screenId)
+  getFavouriteStatus(screenId :number)
   {
     debugger
     this.serv.GetFavouriteStatus(screenId).subscribe(result => {
@@ -282,7 +281,7 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
     })        
   }
 
-  refresCustomerpaymentvoucherArabic(data) {
+  refresCustomerpaymentvoucherArabic(data :any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -303,7 +302,7 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
     });
   }
 
-  refreshCustomerpaymentvoucherEnglish(data) {
+  refreshCustomerpaymentvoucherEnglish(data :any) {
     debugger
     this.data = data;
     this.exportData = this.data.map(x => {
@@ -323,6 +322,7 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
       }
     });
   }
+
   exportExcel() {
     debugger
     import("xlsx").then(xlsx => {
@@ -523,4 +523,38 @@ export class CustomerpaymentvoucherListComponent implements OnInit {
       window.open(url, '_blank');
     }
   }
+
+  OpenChequesDialog(id: number) {
+    debugger      
+    let title = this.translateService.instant('PrintCheqsForm');
+    let dialogRef: MatDialogRef<any> = this.dialog.open(PrintcheqsformComponent, {
+      width: '900px',
+      disableClose: true,
+      direction: (this.jwtAuth.getLang() == "ar") ? 'rtl' : 'ltr',
+      data: { title: title, voucherId: id}
+    });
+    dialogRef.afterClosed()
+      .subscribe(res => {
+        
+      })
+  }
+
+  hasCheque(paymentMethods: any): boolean {
+    if (!paymentMethods) return false;
+
+    let value = '';
+
+    if (Array.isArray(paymentMethods)) {
+      value = paymentMethods.join(',');
+    } else if (typeof paymentMethods === 'string') {
+      value = paymentMethods;
+    } else {
+      return false;
+    }
+
+    const normalized = value.toLowerCase().replace(/\s/g, '');
+
+    return normalized.includes('cheq') || normalized.includes('شيك');
+  }
+
 }

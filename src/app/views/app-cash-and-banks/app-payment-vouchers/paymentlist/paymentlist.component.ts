@@ -494,7 +494,7 @@ export class PaymentlistComponent implements OnInit {
     }
   }
 
-   OpenChequesDialog(id: number) {
+  OpenChequesDialog(id: number) {
     debugger      
     let title = this.translateService.instant('PrintCheqsForm');
     let dialogRef: MatDialogRef<any> = this.dialog.open(PrintcheqsformComponent, {
@@ -507,5 +507,23 @@ export class PaymentlistComponent implements OnInit {
       .subscribe(res => {
         
       })
+  }
+
+  hasCheque(paymentMethods: any): boolean {
+    if (!paymentMethods) return false;
+
+    let value = '';
+
+    if (Array.isArray(paymentMethods)) {
+      value = paymentMethods.join(',');
+    } else if (typeof paymentMethods === 'string') {
+      value = paymentMethods;
+    } else {
+      return false;
+    }
+
+    const normalized = value.toLowerCase().replace(/\s/g, '');
+
+    return normalized.includes('cheq') || normalized.includes('شيك');
   }
 }
